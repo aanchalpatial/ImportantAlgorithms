@@ -1,0 +1,52 @@
+#include <iostream>                                     //0(logn)
+#include<math.h>
+using namespace std;
+int getMedian(int ar1[],int ar2[],int size)
+{int median=0;
+int arr[size+1];
+int i=0,j=0,k=0;
+for(;k<=size;++k)
+{
+    if(i<size&&j<size)
+    {if(ar1[i]<=ar2[j])
+        {
+        arr[k]=ar1[i];
+        ++i;
+        }
+    else
+        {arr[k]=ar2[j];
+        ++j;
+        }
+    }
+    else if(i==size)
+        {for(;k<=size;++k)
+            {arr[k]=ar2[j];
+            ++j;}
+        }
+    else if(j==size)
+        {for(;k<=size;++k)
+            {arr[k]=ar1[i];
+            ++i;}
+        }
+        
+}
+median = abs((arr[k-2]+arr[k-1])/2);
+return median;
+}
+
+int main()
+{
+    int ar1[] = {1, 12, 15, 26, 38};
+    int ar2[] = {2, 13, 17, 30, 45};
+ 
+    int n1 = sizeof(ar1)/sizeof(ar1[0]);
+    int n2 = sizeof(ar2)/sizeof(ar2[0]);
+
+    int median=getMedian(ar1, ar2, n1);
+    if (n1 == n2)
+        cout<<"Median is: "<<median;
+    else
+        cout<<"Doesn't work for arrays of unequal size";
+    
+    return 0;
+}
