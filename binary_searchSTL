@@ -1,0 +1,17 @@
+// C++ code to demonstrate the working of binary_search()
+ 
+#include<bits/stdc++.h> 
+using namespace std;
+
+int main()
+{
+    vector<int> arr {2,4,6,8,8};
+    if(binary_search(arr.begin(), arr.end(), 4))
+    cout<<"found";
+    else
+    cout<<"not found.";
+    int pos=0;
+    pos= lower_bound(arr.begin(),arr.end(),2)-arr.begin();
+    cout<<"\nposition:"<<pos;
+    return 0;
+}
