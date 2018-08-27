@@ -1,0 +1,56 @@
+//stack based solution, Time complexity: 0(n)
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ull unsigned long long
+
+ull largest_area_histogram(ull arr[],int n){
+    ull max_area=0;
+    ull area;
+    int i=0,tp;
+    stack<int> st;
+    while(i<n){
+        if(st.empty()||arr[i]>=arr[st.top()]){
+            st.push(i);
+            ++i;
+        }
+        else{
+            tp=st.top();
+            st.pop();
+            if(st.empty()){
+                area=arr[tp]*i;
+            }
+            else{
+                area=arr[tp]*(i-st.top()-1);
+            }
+            if(max_area<area) max_area=area;
+        }
+    }
+    
+    while(st.empty()==false){
+            tp=st.top();
+            st.pop();
+            if(st.empty()){
+                area=arr[tp]*i;
+            }
+            else{
+                area=arr[tp]*(i-st.top()-1);
+            }
+            if(max_area<area) max_area=area;
+    }
+    
+    return max_area;
+}
+
+int main()
+{
+   int n;
+   cin>>n;
+   ull arr[n];
+   for(int i=0;i<n;++i){
+       cin>>arr[i];
+   }
+   ull result=largest_area_histogram(arr,n);
+   cout<<result;
+   return 0;
+}
