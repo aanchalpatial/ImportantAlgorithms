@@ -1,0 +1,20 @@
+//XOR of a number with itself is 0
+//XOR of a number with 0 is number itself
+//https://www.youtube.com/watch?v=5CRbjH0PmeE
+//** this method will not work if repeated numbers exist odd number of times.****
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;++i){
+        cin>>arr[i];
+    }
+    int result=arr[0];
+    for(int i=1;i<n;++i){
+        result=result^arr[i];
+    }
+    cout<<result;
+	return 0;
+}
