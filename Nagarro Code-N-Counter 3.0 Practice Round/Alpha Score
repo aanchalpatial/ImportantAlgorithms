@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main() {
+    int n;
+    cin>>n;
+    int arr[n];
+    for(int i=0;i<n;++i){
+        int x;
+        cin>>x;
+        arr[i]=x;
+    }
+    ll alpha=0;
+    for(int i=1;i<n;++i){
+        
+        int temp=arr[i];
+        for(int j=0;j<i;++j){
+            if(arr[j]<temp) alpha+=arr[j];
+        }
+    }
+    cout<<alpha%1000000007;
+	return 0;
+}
