@@ -1,0 +1,28 @@
+//2nd Solution on :=   https://www.geeksforgeeks.org/find-the-element-that-appears-once/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int main() {
+	int n;
+	cin>>n;
+	int arr[n];
+	for(int i=0;i<n;++i){
+	    cin>>arr[i];
+	}
+	int x,sum;
+	int result=0;
+	for(int i=0;i<32;++i){
+	    sum=0;
+	    x=(1<<i);
+	    for(int j=0;j<n;++j){
+	        if(arr[j]&x) ++sum;
+	    }
+	    if(sum%3){
+	        result=result|x;
+	    }
+	}
+	cout<<result;
+	return 0;
+}
