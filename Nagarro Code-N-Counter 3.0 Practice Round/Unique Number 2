@@ -1,0 +1,38 @@
+//https://www.geeksforgeeks.org/find-the-two-numbers-with-odd-occurences-in-an-unsorted-array/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main() {
+    int n;
+    cin>>n;
+    ll arr[n];
+    for(int i=0;i<n;++i){
+        cin>>arr[i];
+    }
+    ll xorr=arr[0];
+    for(int i=1;i<n;++i){
+        xorr=xorr^arr[i];
+    }
+    ll right_mst_set_bit=xorr&~(xorr-1);
+    ll x=0,y=0;
+    for(int i=0;i<n;++i){
+        if(right_mst_set_bit&arr[i]){
+            x=x^arr[i];
+        }
+        else{
+            y=y^arr[i];
+        }
+    }
+    vector<ll> v;
+    v.push_back(x);
+    v.push_back(y);
+    sort(v.begin(),v.end());
+    for(int i=0;i<v.size();++i){
+        cout<<v[i]<<" ";
+    }
+
+    
+	return 0;
+}
