@@ -1,9 +1,12 @@
 #include<bits/stdc++.h>
+#include<boost/math/common_factor.hpp>			//header file for lcm
 using namespace std;
 #define ll long long
 int main() {
     ll a,b;
     cin>>a>>b;
     cout<<__gcd(a,b);
+    cout<<endl;
+    cout<<boost::math::lcm(a,b);
 	return 0;
 }
