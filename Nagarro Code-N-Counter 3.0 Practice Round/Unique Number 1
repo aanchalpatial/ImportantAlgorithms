@@ -1,7 +1,7 @@
 //XOR of a number with itself is 0
 //XOR of a number with 0 is number itself
 //https://www.youtube.com/watch?v=5CRbjH0PmeE
-//** this method will not work if repeated numbers exist odd number of times.****
+//** this method will only when there is one unique number & repeated numbers occur even number of times.****
 #include<bits/stdc++.h>
 using namespace std;
 int main() {
