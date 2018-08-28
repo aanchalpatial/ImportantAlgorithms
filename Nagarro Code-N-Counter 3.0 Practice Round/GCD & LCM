@@ -8,5 +8,7 @@ int main() {
     cout<<__gcd(a,b);
     cout<<endl;
     cout<<boost::math::lcm(a,b);
+    cout<<endl<<"or"<endl;
+    cout<<"LCM="<<a*b/(__gcd(a,b));
 	return 0;
 }
