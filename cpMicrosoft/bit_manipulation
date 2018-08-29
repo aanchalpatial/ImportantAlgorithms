@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    //xor operation ^ : one when exactly one of x or y is 1
+    int m=22^26;
+    cout<<m<<endl;
+    
+    //bitwise NOT operator ~ is 1's complement i.e it flips all the bits
+    
+    //a number −x in a signed representation equals the number 2^n − x in an unsigned representation
+    int x=-43;
+    unsigned int y=x;
+    cout<<y<<endl;
+    
+    // ~x = −x − 1
+    cout<<~29<<endl;
+    
+    //x<<k corresponds to multipying by 2^k
+    int p= 10<<2;
+    cout<<p<<endl;
+    
+    //x>>k corresponds to dividing by 2^k rounded down to integer
+    int q=16>>2;
+    cout<<q<<endl;
+    
+    //left and right shift operation should not be used for negative numbers
+    
+    //APPLICATIONS
+    
+    //1)access kth bit : x&(1<<k)
+    
+    //2)bit representation of a int
+    int h=50;
+    for(int i=31;i>=0;--i){
+        if(h&(1<<i)) cout<<"1";
+        else cout<<"0";
+    }
+    cout<<endl;
+    
+    //3)modify bits
+    
+    //set kth bit to 1 : x|(1<<k)
+    
+    // set kth bit to 0 : x&~(1<<k)
+    
+    //invert kth bit : x^(1<<k)
+    
+    //x is of the form 2^k if : x&(x-1)=0
+    
+    //4)additional built in functions
+    cout<<__builtin_clz(h)<<endl;
+    cout<<__builtin_ctz(h)<<endl;
+    cout<<__builtin_popcount(h)<<endl;
+    cout<<__builtin_parity(h)<<endl;
+    
+    
+    //5)
+    
+    
+    
+    
+    return 0;
+}
