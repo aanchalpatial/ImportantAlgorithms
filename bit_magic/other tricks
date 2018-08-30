@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+
+//1)
+char ch='m';
+//uppercase to lowercase
+ch=ch|(1<<5);
+cout<<ch<<endl;
+//lowercase to uppercase
+ch=ch&~(1<<5);
+cout<<ch<<endl;
+
+//2)
+/*Find XOR of all subsets of a set. We can do it in O(1) time. 
+The answer is always 0 if given set has more than one elements.
+For set with single element, the answer is value of single element*/
+
+//3)
+
+
+
+
+return 0;}
