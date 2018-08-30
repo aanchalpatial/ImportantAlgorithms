@@ -59,13 +59,13 @@ int main()
     //x is of the form 2^k if : x&(x-1)=0
     
     //4)additional built in functions
-    cout<<__builtin_clz(h)<<endl;
-    cout<<__builtin_ctz(h)<<endl;
-    cout<<__builtin_popcount(h)<<endl;
-    cout<<__builtin_parity(h)<<endl;
+    cout<<__builtin_clz(h)<<endl;               // the number of zeros at the beginning of the number
+    cout<<__builtin_ctz(h)<<endl;               //the number of zeros at the end of the number
+    cout<<__builtin_popcount(h)<<endl;          //the number of ones in the number
+    cout<<__builtin_parity(h)<<endl;            //the parity (even or odd) of the number of ones
     
     
-    //5)
+    //5)Set Representation..... left
     
     
     
