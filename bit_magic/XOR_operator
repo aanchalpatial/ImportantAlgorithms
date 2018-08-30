@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{   
+    //APPLICATIONS OF BITWISE XOR OPERATOR
+    
+    //1) UNIQUE-1
+    //all elements occur even number of times except one number, find the odd occurring number
+    int arr[]={1,4,6,1,8,6,8};
+    int result=arr[0];
+    for(int i=1;i<7;++i){
+        result^=arr[i];
+    }
+    cout<<result<<endl<<endl;
+    
+    
+    //2)UNIQUE-2 from github: imp_algorithms/Nagarro Code-N-Counter 3.0 Practice Round/Unique Number 2
+    
+    
+    //3) You are given a list of n-1 integers and these integers are in the range of 1 to n
+    //Find the Missing Number
+    
+   /*1. XOR all the array elements, let the result of XOR be X1.
+     2. XOR all numbers from 1 to n, let XOR be X2.
+     3. XOR of X1 and X2 gives the missing number.*/
+     
+     int arrr[]={1,6,3,5,2};
+     int result1=1,result2=arrr[0];
+     for(int i=2;i<=6;++i){result1^=i;}
+     for(int i=1;i<5;++i){result2^=arrr[i];}
+     int result3=result1^result2;
+     cout<<result3<<endl<<endl;
+     
+     //4)swap two numbers without using a temporary variable
+     //note:xor method fails when a==b,so we must watch for this situation
+     int a=5,b=10;
+     if(a!=b)
+     {a=a^b;
+     b=a^b;
+     a=a^b;}
+     cout<<"a="<<a<<" b="<<b<<endl<<endl;
+     
+     
+     //5)Add two numbers without using arithmetic operators.....RRRRRR
+     // https://www.geeksforgeeks.org/add-two-numbers-without-using-arithmetic-operators/
+     // Iterate till there is no carry  
+    int x=30,y=40;
+    while (y != 0)
+    {// carry now contains common 
+        //set bits of x and y
+        int carry = x & y;  
+        // Sum of bits of x and y where at 
+        //least one of the bits is not set
+        x = x ^ y; 
+        // Carry is shifted by one so that adding
+        // it to x gives the required sum
+        y = carry << 1;}
+    cout<<x<<endl<<endl;
+     
+     
+     //6)Count number of bits to be flipped to convert A to B
+     int p=7,q=10;
+     int r=p^q;
+     //count set bits
+     int cnt=0;
+     for(int i=31;i>=0;--i){
+         if(r&(1<<i)) ++cnt;
+     }
+     cout<<cnt<<endl<<endl;
+     
+    
+    return 0;
+}
+
