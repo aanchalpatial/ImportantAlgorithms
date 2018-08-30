@@ -3,6 +3,15 @@ using namespace std;
 
 int main()
 {
+    /*The bitwise operators should not be used in place of logical operators.
+    The result of logical operators (&&, || and !) is either 0 or 1, but bitwise operators return an integer value.*/
+
+    //bitwise & operator can be used to check even or odd
+    int x=9;
+    if(x&1) cout<<"odd";
+    else cout<<"even";
+    cout<<endl;
+    
     //xor operation ^ : one when exactly one of x or y is 1
     int m=22^26;
     cout<<m<<endl;
