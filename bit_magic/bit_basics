@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    /*The bitwise operators should not be used in place of logical operators.
+    The result of logical operators (&&, || and !) is either 0 or 1, but bitwise operators return an integer value.*/
+
+    //bitwise & operator can be used to check even or odd
+    int x=9;
+    if(x&1) cout<<"odd";
+    else cout<<"even";
+    cout<<endl;
+    
+    //stripping of lowest SET bit
+    int l=50;
+    l=l&(l-1);
+    
+    //xor operation ^ : one when exactly one of x or y is 1
+    int m=22^26;
+    cout<<m<<endl;
+    
+    //bitwise NOT operator ~ is 1's complement i.e it flips all the bits
+    
+    //a number −x in a signed representation equals the number 2^n − x in an unsigned representation
+    int x=-43;
+    unsigned int y=x;
+    cout<<y<<endl;
+    
+    // ~x = −x − 1
+    cout<<~29<<endl;
+    //2's complement of a number is 1's complement +1
+    int d=33;
+    int e=(~d+1);
+    
+    //x<<k corresponds to multipying by 2^k
+    int p= 10<<2;
+    cout<<p<<endl;
+    
+    //x>>k corresponds to dividing by 2^k rounded down to integer
+    int q=16>>2;
+    cout<<q<<endl;
+    
+    //left and right shift operation should not be used for negative numbers
+    
+    //APPLICATIONS
+    
+    //1)access kth bit : x&(1<<k)
+    
+    //2)bit representation of a int
+    int h=50;
+    for(int i=31;i>=0;--i){
+        if(h&(1<<i)) cout<<"1";
+        else cout<<"0";
+    }
+    cout<<endl;
+    
+    //3)modify bits
+    
+    //set kth bit to 1 : x|(1<<k)
+    
+    // set kth bit to 0 : x&~(1<<k)
+    
+    //invert kth bit : x^(1<<k)
+    
+    //x is of the form 2^k if : x&(x-1)=0
+    
+    //4)additional built in functions
+    cout<<__builtin_clz(h)<<endl;               // the number of zeros at the beginning of the number
+    cout<<__builtin_ctz(h)<<endl;               //the number of zeros at the end of the number
+    cout<<__builtin_popcount(h)<<endl;          //the number of ones in the number
+    cout<<__builtin_parity(h)<<endl;            //the parity (even or odd) of the number of ones
+    
+    
+    //5)Set Representation..... left
+    //6)Bit Manipulation in Dynamic Programming
+    
+    
+    
+    
+    return 0;
+}
