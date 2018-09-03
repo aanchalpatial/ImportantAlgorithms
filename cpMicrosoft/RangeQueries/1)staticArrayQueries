@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+  /* Typical range queries are:
+    • sum query: calculate the sum of elements 
+    • minimum query: find the smallest element 
+    • maximum query: find the largest element
+    A simple way to process range queries is to go through all elements in the range, which
+    works in O(n) time.
+    there are ways to process range queries much more efficiently.*/
+    
+    //1st method is static array queries
+    //We use this method in situations where the array is static, 
+    //i.e., the elements are never modified between the queries
+    
+    
+    
+    //sum query using prefix sum array
+    int arr[]={3,5,1,7,3,8,4,9};
+    int prefixSum[8];
+    prefixSum[0]=arr[0];
+    //preprocessing
+    for(int i=1;i<8;++i){
+        prefixSum[i] = prefixSum[i-1] + arr[i];
+    }
+    //find sum of elements of arr btw index 2 to 6 in 0(1) time
+    int result = prefixSum[6]-prefixSum[2-1];
+    cout<<result<<endl;
+    
+    
+    //minimum query using 0(nlogn) preprocessing
+    
+    
+   
+    return 0;
+}
