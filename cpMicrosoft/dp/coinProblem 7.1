@@ -4,8 +4,12 @@ using as few coins as possible.The greedy algorithm does not necessarily produce
 #include<bits/stdc++.h>
 using namespace std;
 
-int arr[3]={1,3,4};
-int d[100];                  // array used for memoization
+int arr[3]={1,3,4};             //available coins
+int d[100]; 
+//The constant N(100 in our case) has to be chosen so that all required values of the function fit in the array.
+int e[100];
+// The new array indicates for each sum of money the first coin that should be chosen in an optimal solution
+
 int smallestNumberOfCoins(int x)
 {   
     int result = 10e6;       //The code assumes 10^6 denotes infinity.
@@ -14,19 +18,35 @@ int smallestNumberOfCoins(int x)
     if(d[x] != -1){ return d[x];}
     else {
         for(int i=0;i<3;++i){
-            result = min(result,smallestNumberOfCoins(x-arr[i])+1);}
+            int result2 = smallestNumberOfCoins(x-arr[i])+1;
+            if(result2 < result) e[x] = arr[i];
+            result = min(result,result2);}
     }
-    d[x] = result;          //memoization
+    d[x] = result;
     return d[x];
     
 }
 int main(){
     
-    memset(d, -1, sizeof(d));   //initialising all values of array with -1
+    memset(d, -1, sizeof(d));
     
-    for(int i=0;i<11;++i){
-        cout<<"f("<<i<<") = "<<smallestNumberOfCoins(i)<<"\n";
-    }
+    
+    int sum = 22;
+    
+    //for(int i=0;i<11;++i){
+        cout<<"f("<<sum<<") = "<<smallestNumberOfCoins(sum)<<"\n";
+        /*Sometimes we are asked both to find the value of an optimal solution 
+        and also to give an example how such a solution can be CONSTRUCTED.*/
+        cout<<"coins that produce the sum : "<<sum<<"\n";
+        //int sum = i;
+        while(sum>0){
+            cout<<"->"<<e[sum];
+            sum -= e[sum];
+        }
+        cout<<endl;
+    //}
     
     return 0;
 }
+
+//The time complexity of the resulting algorithm is O(xk) where the sum is x and the number of coins is k.
