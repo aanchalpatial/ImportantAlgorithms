@@ -4,6 +4,7 @@ using namespace std;
 #define ll long long
 int main() {
     ll a,b;
+    cout<<"enter numbers";
     cin>>a>>b;
     cout<<__gcd(a,b);
     cout<<endl;
