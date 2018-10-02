@@ -1,14 +1,20 @@
- #include<iostream>
+//Binary search in user-entered array
+#include<iostream>
 using namespace std;
 
 int main()
 {
-   int arr[]={2,4,6,8,10};
+   int arr[50],n;
+   cin>>n;
+   for(int i=0;i<n;i++)
+      cin>>arr[i];
+   
    int num;
    cin>>num;
+   
    int first,last,mid;
    first=0;
-   last=4;
+   last=n-1;
    bool flag=false;
    while(first<=last)
    {
