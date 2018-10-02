@@ -5,7 +5,8 @@ using as few coins as possible.The greedy algorithm does not necessarily produce
 using namespace std;
 
 int arr[3]={1,3,4};             //available coins
-int d1[100],d2[100];            //used for memoization
+int k = 3;                      //number of coins
+int d1[100],d2[100],d3[100];            //used for memoization
 //The constant N(100 in our case) has to be chosen so that all required values of the function fit in the array.
 int e[100];
 // The new array indicates for each sum of money the first coin that should be chosen in an optimal solution
@@ -44,14 +45,21 @@ int possibleNumberOfSolutions(int x){
     return result;
 }
 
+int possibleNumberOfDistinctSolutions(int c[],int k,int x){
+   //=>tbd
+}
+
+
 int main(){
     
     memset(d1, -1, sizeof(d1));
     memset(d2, 0, sizeof(d2));
+    memset(d3, 0, sizeof(d3));
     
     
     int sum = 9;
     
+        /*f (x) is the smallest number of coins required for constructing a sum x.*/
         //f(x)=min(f(x−c1),f(x−c2),...,f(x−ck))+1  ,  f(0)=0  ,  f(x)=∞ if x<0.
         cout<<"f("<<sum<<") = "<<smallestNumberOfCoins(sum)<<"\n";
         
@@ -70,6 +78,13 @@ int main(){
         //f(x)= f(x−c1)+f(x−c2)+···+f(x−ck)  ,  f(0)=1  ,  f(x)=0, when x<0. 
         //NOTE:- here for sum 5: (1,4) & (4,1) are 2 different solutions
         cout<<"f("<<sum<<") = "<<possibleNumberOfSolutions(sum)<<"\n";
+        
+        /*same as possibleNumberOfSolutions(sum) but this code gives DISTINCT solutions.*/
+        //f(arr,k,sum) = f(arr,k-1,sum) + f(arr,k,sum-arr[n])
+        //NOTE:- here for sum 5: (1,4) & (4,1) are same solutions
+        cout<<"f("<<sum<<") = "<<possibleNumberOfDistinctSolutions(arr,k,sum)<<"\n";
+        
+        
     
     return 0;
 }
