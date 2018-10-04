@@ -46,7 +46,16 @@ int possibleNumberOfSolutions(int x){
 }
 
 int possibleNumberOfDistinctSolutions(int c[],int k,int x){
-   //=>tbd
+   //earlier we were using memoization, now we will use tabulation
+   int table[x+1];
+   memset(table,0,sizeof(table));
+   table[0] = 1;
+   for(int i=0;i<k;++i){
+       for(int j=c[i];j<=x;++j){
+           table[j] += table[j-c[i]];
+       }
+   }
+   return table[x];
 }
 
 
