@@ -1,0 +1,21 @@
+// The Bell numbers (1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147, 115975, 678570, 4213597, ...) 
+// describe the number of ways a set with n elements can be partitioned into disjoint, non-empty subsets.
+/* Note:- Power Set has all subsets of a set , where bell number has disjoint non-empty subsets of a set.
+A={1,2,3},n(A) = 3
+P(A) = { {},{1},{2},{3},{1,2},{2,3},{1,3},{1,2,3} } , n(P(A)) = 8
+Bell Number  = 5
+Set {1, 2, 3} can be "partitioned" in the following ways:-
+{{1}, {2}, {3}}
+{{1, 2}, {3}}
+{{1, 3}, {2}}
+{{1}, {2, 3}}
+{{1, 2, 3}}
+*/
+/* Bell(n) =  Sigma k=0 to n for S(n,k) 
+Let S(n, k) be total number of partitions of n elements into k sets
+Value of S(n, k) :Stirling Number can be defined recursively as, S(n, k) = k*S(n-1, k) + S(n-1, k-1)
+*/
+/* A Simple Method to compute n’th Bell Number is to one by one compute S(n, k) for k = 1 to n 
+and return sum of all computed values(DP to be used).A BETTER Method is to use "Bell Triangle".
+*/
+

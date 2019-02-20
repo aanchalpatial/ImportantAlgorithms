@@ -1,6 +1,0 @@
-// The Bell numbers (1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147, 115975, 678570, 4213597, ...) 
-// describe the number of ways a set with n elements can be partitioned into disjoint, non-empty subsets.
-// Note:- Power Set has all subsets of a set , where bell number has disjoint non-empty subsets of a set.
-// Bell(n) =  \sum_{k=0}^{n}S(n,k) 
-// Value of S(n, k) can be defined recursively as, S(n+1, k) = k*S(n, k) + S(n, k-1)
-
