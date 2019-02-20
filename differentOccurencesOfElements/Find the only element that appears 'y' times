@@ -1,0 +1,27 @@
+/*Given an array where every element occurs 'x' times, except one element which occurs only 'y' times. 
+Find the element that occurs 'y' times. Expected time complexity is O(n) and O(1) extra space.
+Note:- x>y 
+*/
+/*Add each number once and multiply the sum by x, we will get x times the sum of each unique element of the array.
+Store it as x_sum. Subtract the sum of the whole array from the x_sum and divide the result by (x-y).
+The number we get is the required number (which appears y times in the array).*/
+
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+int main(){
+  int arr[] = { 1, 1, 2, 2, 2, 3, 3, 3 }; 
+  int size = sizeof(arr)/sizeof(arr[0]);
+  int x = 3, y = 2;
+  //As we know that set does not contain any duplicate element we will be using the set here.
+  set<int> s(arr,arr+size);
+  int array_sum = accumulate(arr,arr+size,0);
+  int set_sum = accumulate(s.begin(),s.end(),0);
+  int result = ((x*set_sum)-array_sum)/(x-y);
+  cout<<result;
+  
+    
+return 0;}
+
+//Note:- for x=2.y=1 we have even efficient algo of using doing XOR ( ^ ) between all numbers.Otherwise use this formula.
+
