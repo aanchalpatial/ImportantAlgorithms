@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+using namespace std;
+//random number in range [0,999]
+int randomize(){
+    return rand()%1000;
+}
+
+int main()
+{
+    // for different values each time we run the code 
+    srand(time(NULL));
+    
+    vector <int> v(10);
+    generate_n(v.begin(),5,randomize); //2nd argument states upto how many elements
+    
+    for(int i =0;i<v.size();++i){
+        cout<<v[i]<<" ";
+    }
+    
+    return 0;
+}
