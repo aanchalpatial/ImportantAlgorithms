@@ -1,0 +1,9 @@
+vector< pair <int,int> > vect;
+for (int i=0; i<n; i++) 
+        {vect.push_back( make_pair(arr[i],arr1[i]) );}
+        
+// sort() function to sort by first
+sort(vect.begin(), vect.end());
+
+// sort() function to sort by second    
+sort(vect.begin(), vect.end(), sortbysec);
