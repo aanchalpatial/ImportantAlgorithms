@@ -1,0 +1,36 @@
+/*Two strings are called k-anagrams if following two conditions are true.
+
+Both have same number of characters.
+Two strings can become anagram by changing at most k characters in a string.*/
+
+
+bool areKAnagrams(string str1, string str2, int k)
+  {
+    //add code here.
+    
+    char ch_count[26] = {0};
+    int count = 0;
+    
+    
+    if(str1.size() == str2.size()){
+        
+        for(int i=0;i<str1.size();++i){
+            ch_count[str1[i]-'a'] += 1;
+            }
+        for(int i=0;i<str2.size();++i){
+            ch_count[str2[i]-'a'] -=1;
+        }
+        for(int i=0;i<26;++i){
+            if(ch_count[i] < 0){
+                count += abs(ch_count[i]);
+            }
+        }
+        //cout<<count<<endl;
+        if(count <= k){
+            return true;
+        }
+        
+    }
+ 
+    return false;
+   }
