@@ -1,0 +1,12 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  char ch = 'p';
+  char u_ch = ch1 - 'a' + 'A';
+  cout<<u_ch;
+  char l_ch = u_ch - 'A' + 'a';
+  cout<<l_ch;
+}
+
+
