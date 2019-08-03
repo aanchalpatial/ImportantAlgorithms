@@ -1,0 +1,22 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+double average(int noOfElements, ...){
+    va_list numbers;
+    double sum = 0;
+    va_start(numbers, noOfElements);
+    for(int i=0;i<noOfElements;++i){
+        sum += va_arg(numbers, double);
+    }
+    va_end(numbers);
+    
+    return sum/noOfElements;
+    
+}
+
+int main()
+{
+        cout << average (3, 1, 2, 3) <<endl;
+    cout << average (5, 1, 2, 3, 4, 5) <<endl;
+     return 0;
+}
