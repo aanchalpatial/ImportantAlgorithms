@@ -1,0 +1,38 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#include <bits/stdc++.h> 
+using namespace std; 
+  
+class Node { 
+public: 
+    int data; 
+    Node* next;
+    
+    
+};
+
+void print(Node *head){
+        while(head != NULL){
+            cout<<head->data<<"->";
+            head = head->next;
+        }
+    }
+
+int main(){
+    Node* obj_ptr = new Node();
+    Node obj;
+    
+    obj_ptr->data = 5;
+    obj_ptr->next = &obj;
+    
+    obj.data = 8;
+    obj.next = NULL;
+    
+    print(obj_ptr);
+    
+    
+    
+    return 0;
+    
+}
