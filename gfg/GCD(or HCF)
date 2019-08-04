@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int gcd(int a,int b){
+  if(a==0) return b;
+  return gcd(b%a,a);
+  }
+  
+  
+int main(){
+  int a=10, b=85;
+  
+  int result = gcd(a,b);
+  cout<<result<<endl;
+  
+  return 0;}
