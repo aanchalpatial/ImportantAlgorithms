@@ -1,0 +1,23 @@
+//In C++
+/*Factorial of 100 has 158 digits. It is not possible to store these many digits even if we use long long int.
+Following is a simple solution where we use an array to store individual digits of the result. */
+//https://www.geeksforgeeks.org/factorial-large-number/
+//https://www.geeksforgeeks.org/find-sum-digits-factorial-number/
+//https://www.geeksforgeeks.org/first-digit-factorial-number/
+
+
+
+//In Python
+def factorial(n):
+    if n == 1:
+        return 1
+    else:
+        return n*factorial(n-1)
+        
+num = 100
+if num < 0:
+    print("Factorial cannot be found for negative numbers")
+elif num == 0:
+    print("Factorial of 0 is 1")
+else:
+    print("Factorial of", num, "is: ", factorial(num))
