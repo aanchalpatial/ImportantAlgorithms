@@ -1,0 +1,38 @@
+//Find how many numbers less than or equal to N have numbers of divisors exactly equal to 3.
+
+/*The logic behind this is, such numbers can have only three numbers as their divisor and also that include 1 and 
+that number itself resulting into just a single divisor other than number, so we can easily conclude that required are 
+those numbers which are squares of prime numbers so that they can have only three divisors (1, number itself and sqrt(number)).
+So all primes i, such that i*i is less than equal to N are three-prime numbers.
+Note: We can generate all primes within a set using any sieve method efficiently and then we should all primes i, 
+suct that i*i <=N.*/
+
+int exactly3Divisors(int N)
+{
+    //Your code here
+    int count = 0;
+    bool prime[N+1];
+    memset(prime,true,sizeof(prime));
+    
+    for(int i=2;i<= sqrt(N);++i){
+        if(prime[i]){
+            for(int j=i*i;j<=N;j+=i){
+                prime[j] = false;
+            }
+        }
+    }
+    
+    for(int i=2;i<=N;++i){
+        if(prime[i]){
+            if( (i*i) <= N ) {
+                //cout<<i<<"="<<i*i<<" "<<endl;
+                ++count;}
+            else{
+                break;
+            }
+        }
+    }
+    
+    return count;
+}
+
