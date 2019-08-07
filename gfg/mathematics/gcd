@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+findGCD(a, b)
+{
+    if (a == 0)
+        return b;
+
+    return gcd(b % a, a);
+}
+
+int main(){
+  int a,b;
+  cin>>a>>b;
+  
+  //METHOD 1:-
+  cout<<__gcd(a,b)<<endl;         //In built function for gcd
+  
+  //METHOD 2:-
+  //Euclidean method
+  cout<<findGCD(a,b);
+  
+  
+  return 0;}
