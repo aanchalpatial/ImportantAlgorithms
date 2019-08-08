@@ -25,11 +25,9 @@ int main()
     
     //3) You are given a list of n-1 integers and these integers are in the range of 1 to n
     //Find the Missing Number
-    
-   /*1. XOR all the array elements, let the result of XOR be X1.
+    /*1. XOR all the array elements, let the result of XOR be X1.
      2. XOR all numbers from 1 to n, let XOR be X2.
      3. XOR of X1 and X2 gives the missing number.*/
-     
      int arrr[]={1,6,3,5,2};
      int result1=1,result2=arrr[0];
      for(int i=2;i<=6;++i){result1^=i;}
@@ -73,6 +71,13 @@ int main()
          if(r&(1<<i)) ++cnt;
      }
      cout<<cnt<<endl<<endl;
+     
+     //7)Given a number N, the task is to find the XOR of all numbers from 1 to N.
+     /* Find the remainder of N by moduling it with 4.
+        If rem = 0, then xor will be same as N.
+        If rem = 1, then xor will be 1.
+        If rem = 2, then xor will be N+1.
+        If rem = 3 ,then xor will be 0.*/
      
     
     return 0;
