@@ -66,11 +66,8 @@ int main()
      int p=7,q=10;
      int r=p^q;
      //count set bits
-     int cnt=0;
-     for(int i=31;i>=0;--i){
-         if(r&(1<<i)) ++cnt;
-     }
-     cout<<cnt<<endl<<endl;
+     int cnt= __builtin_popcount(r);
+     cout<<cnt<<endl;
      
      //7)Given a number N, the task is to find the XOR of all numbers from 1 to N.
      /* Find the remainder of N by moduling it with 4.
