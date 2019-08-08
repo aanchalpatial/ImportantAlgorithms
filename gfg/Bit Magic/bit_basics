@@ -42,19 +42,6 @@ int main()
     
     
     //4)
-    //INVERT LOWEST SET BIT :   x = x&(x-1)
-
-            //X IS A POWER OF 2 IF
-            if( x&(x-1) == 0 ) cout<<"Yes";     //doesn't work if x = 0, check separately
-
-            //NUMBER OF ONE BITS ( Brian Karnighan Algorithm, 0(no of set bits) )
-            while(n>0){
-                x = x&(x-1)
-                ++count;
-            }
-
-
-    //5)
     //ACCESS Kth BIT(from right) : x&(1<<k)
 
             //BIT REPRESENTATION OF AN INTEGER
@@ -71,6 +58,22 @@ int main()
                 for(int j=0;i<n;++i){
                     if( i&(1<<j) != 0 ) cout<<str[j];
                     }}
+                    
+    
+    
+    //5)
+    //INVERT LOWEST SET BIT :   x = x&(x-1)
+
+            //X IS A POWER OF 2 IF
+            if( x&(x-1) == 0 ) cout<<"Yes";     //doesn't work if x = 0, check separately
+
+            //NUMBER OF ONE BITS ( Brian Karnighan Algorithm, 0(no of set bits) )
+            while(n>0){
+                x = x&(x-1)
+                ++count;
+            }
+
+
 
     //6)
     //BUILT IN FUNCTIONS
@@ -79,9 +82,7 @@ int main()
     cout<<__builtin_popcount(h)<<endl;          //the number of ones in the number
     cout<<__builtin_parity(h)<<endl;            //the parity (even or odd) of the number of ones
     
-    
-    
-    
+   
     
     
     return 0;
