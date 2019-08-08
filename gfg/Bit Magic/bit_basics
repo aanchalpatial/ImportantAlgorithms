@@ -3,26 +3,14 @@ using namespace std;
 
 int main()
 {
-    /*The bitwise operators should not be used in place of logical operators.
-    The result of logical operators (&&, || and !) is either 0 or 1, but bitwise operators return an integer value.*/
-
-    //bitwise & operator can be used to check even or odd
-    int x=9;
-    if(x&1) cout<<"odd";
-    else cout<<"even";
-    cout<<endl;
+    /*
+    The result of logical operators (&&, || and !) is either 0 or 1, but bitwise operators return an integer value.
+    Shift Operations must not be used with negative numbers.
+    Java doesn't support unsigned.
+    Java has one extra bitwise operator i.e unsigned right shift operator ">>>"       
+    */
     
-    //stripping of lowest SET bit
-    int l=50;
-    l=l&(l-1);
-    
-    //xor operation ^ : one when exactly one of x or y is 1
-    int m=22^26;
-    cout<<m<<endl;
-    
-    //bitwise NOT operator ~ is 1's complement i.e it flips all the bits
-    
-    //a number −x in a signed representation equals the number 2^n − x in an unsigned representation
+    //A number −x in a signed representation equals the number 2^n − x in an unsigned representation
     int x=-43;
     unsigned int y=x;
     cout<<y<<endl;
@@ -33,47 +21,65 @@ int main()
     int d=33;
     int e=(~d+1);
     
-    //x<<k corresponds to multipying by 2^k
-    int p= 10<<2;
-    cout<<p<<endl;
     
-    //x>>k corresponds to dividing by 2^k rounded down to integer
-    int q=16>>2;
-    cout<<q<<endl;
+    // =======================================**  APPLICATIONS    **=====================================================
     
-    //left and right shift operation should not be used for negative numbers
+    //1)
+    //CHECK EVEN/ODD
+    if(x&1) cout<<"odd";
+    else cout<<"even";
     
-    //APPLICATIONS
     
-    //1)access kth bit : x&(1<<k)
+    //2)
+    //MULTIPLY x BY 2^k :   x<<k
+    //DIVIDE x BY 2^k + use floor func on division result   :   x>>k
     
-    //2)bit representation of a int
-    int h=50;
-    for(int i=31;i>=0;--i){
-        if(h&(1<<i)) cout<<"1";
-        else cout<<"0";
-    }
-    cout<<endl;
     
-    //3)modify bits
+    //3)MODIFY PARTICULAR BITS
+    //set kth bit to 1          :     x = x|(1<<k)
+    // set kth bit to 0         :     x = x&~(1<<k)
+    //invert kth bit            :     x = x^(1<<k)
     
-    //set kth bit to 1 : x|(1<<k)
     
-    // set kth bit to 0 : x&~(1<<k)
-    
-    //invert kth bit : x^(1<<k)
-    
-    //x is of the form 2^k if : x&(x-1)=0
-    
-    //4)additional built in functions
+    //4)
+    //INVERT LOWEST SET BIT :   x = x&(x-1)
+
+            //X IS A POWER OF 2 IF
+            if( x&(x-1) == 0 ) cout<<"Yes";     //doesn't work if x = 0, check separately
+
+            //NUMBER OF ONE BITS ( Brian Karnighan Algorithm, 0(no of set bits) )
+            while(n>0){
+                x = x&(x-1)
+                ++count;
+            }
+
+
+    //5)
+    //ACCESS Kth BIT(from right) : x&(1<<k)
+
+            //BIT REPRESENTATION OF AN INTEGER
+            int h=50;
+            for(int i=31;i>=0;--i){
+                if(h&(1<<i)) cout<<"1";
+                else cout<<"0";
+            }
+
+            //GENERATE POWER SET
+            string str = "ABC";
+            int n = str.size();
+            for(int i=0;i<pow(2,n);++i){
+                for(int j=0;i<n;++i){
+                    if( i&(1<<j) != 0 ) cout<<str[j];
+                    }}
+
+    //6)
+    //BUILT IN FUNCTIONS
     cout<<__builtin_clz(h)<<endl;               // the number of zeros at the beginning of the number
     cout<<__builtin_ctz(h)<<endl;               //the number of zeros at the end of the number
     cout<<__builtin_popcount(h)<<endl;          //the number of ones in the number
     cout<<__builtin_parity(h)<<endl;            //the parity (even or odd) of the number of ones
     
     
-    //5)Set Representation..... left
-    //6)Bit Manipulation in Dynamic Programming
     
     
     
