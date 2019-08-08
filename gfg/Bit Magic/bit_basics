@@ -78,7 +78,7 @@ int main()
             if( x&(x-1) == 0 ) cout<<"Yes";     //doesn't work if x = 0, check separately
 
             //NUMBER OF ONE BITS ( Brian Karnighan Algorithm, 0(no of set bits) )
-            while(n>0){
+            while(x>0){
                 x = x&(x-1)
                 ++count;
             }
