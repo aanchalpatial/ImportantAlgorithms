@@ -2,6 +2,12 @@
 using namespace std;
 int main()
 {   
+    
+    /*Same Bits ->0
+    Different Bits ->1
+    */
+    
+    
     //APPLICATIONS OF BITWISE XOR OPERATOR
     
     //1) UNIQUE-1
