@@ -25,20 +25,30 @@ int main()
     // =======================================**  APPLICATIONS    **=====================================================
     
     //1)
-    //CHECK EVEN/ODD
-    if(x&1) cout<<"odd";
-    else cout<<"even";
+            //CHECK EVEN/ODD
+            if(x&1) cout<<"odd";
+            else cout<<"even";
     
     
     //2)
-    //MULTIPLY x BY 2^k :   x<<k
-    //DIVIDE x BY 2^k + use floor func on division result   :   x>>k
+            //MULTIPLY x BY 2^k :   x<<k
+            //DIVIDE x BY 2^k + use floor func on division result   :   x>>k
+            //Find log base 2 of a 32 bit integer : We right shift x repeatedly until it becomes 0
+            int log2(int x) 
+            { 
+            int res = 0; 
+            while (x >>= 1) 
+                res++; 
+            return res; }
+            //FIND MOST SIGNIFICANT BIT IN GIVEN NUMBER : log2(N) gives the position of the MSB in N.
+    
     
     
     //3)MODIFY PARTICULAR BITS
-    //set kth bit to 1          :     x = x|(1<<k)
-    // set kth bit to 0         :     x = x&~(1<<k)
-    //invert kth bit            :     x = x^(1<<k)
+            
+            //set kth bit to 1          :     x = x|(1<<k)
+            // set kth bit to 0         :     x = x&~(1<<k)
+            //invert kth bit            :     x = x^(1<<k)
     
     
     //4)
@@ -77,11 +87,11 @@ int main()
 
     //6)
     //BUILT IN FUNCTIONS
-    cout<<__builtin_clz(h)<<endl;               // the number of zeros at the beginning of the number
-    cout<<__builtin_ctz(h)<<endl;               //the number of zeros at the end of the number
-    cout<<__builtin_popcount(h)<<endl;          //the number of ones in the number
-    cout<<__builtin_parity(h)<<endl;            //the parity (even or odd) of the number of ones
-    
+            cout<<__builtin_clz(h)<<endl;               // the number of zeros at the beginning of the number
+            cout<<__builtin_ctz(h)<<endl;               //the number of zeros at the end of the number
+            cout<<__builtin_popcount(h)<<endl;          //the number of ones in the number
+            cout<<__builtin_parity(h)<<endl;            //the parity (even or odd) of the number of ones
+
    
     
     
