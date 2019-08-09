@@ -103,6 +103,11 @@ int main()
     for(;n;n=n>>1)
         b^=n;
     cout<<b;
+    
+    //9)
+    //MAXIMUM SUBSTRING OF CONSECUTIVE 1's              "LEFT"
+    
+    
    
     
     
