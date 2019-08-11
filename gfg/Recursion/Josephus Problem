@@ -1,0 +1,21 @@
+/*There are n people standing in a circle waiting to be executed.
+Given the total number of persons n and a number k which indicates that k-1 persons are skipped and kth person is killed
+in circle. The task is to choose the place in the initial circle so that you are the last one remaining and so survive.*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int Josephus_Problem(int n, int k){
+    if( n==1 ) return n;
+    
+    return ( Josephus_Problem(n-1, k) + (k-1) ) % (n+1);
+}
+
+int main()
+{
+    int n,k;
+    cin>>n>>k;
+    int winner = Josephus_Problem(n, k);
+    cout<<"Survivor of the game is: "<<winner<<endl;
+    return 0;
+}
