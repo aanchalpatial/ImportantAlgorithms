@@ -6,9 +6,10 @@ in circle. The task is to choose the place in the initial circle so that you are
 using namespace std;
 
 int Josephus_Problem(int n, int k){
-    if( n==1 ) return n;
     
-    return ( Josephus_Problem(n-1, k) + (k-1) ) % (n+1);
+    if( n==1 ) return n;
+    return ( Josephus_Problem(n-1, k) + (k-1) ) % n+1;
+    
 }
 
 int main()
