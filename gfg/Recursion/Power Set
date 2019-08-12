@@ -3,7 +3,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//METHOD 1: Recursion
+//=> METHOD 1: Recursion
 void power_set(string str, string curr = " ", int index = 0){
     
     if(index == str.size()){
@@ -15,7 +15,7 @@ void power_set(string str, string curr = " ", int index = 0){
     power_set(str, curr+str[index], index+1);
 }
 
-//METHOD 2: Bit Manipulation
+//=> METHOD 2: Bit Manipulation
 void power_set_bit(string str){
     int n = str.size();
             for(int i=0;i<pow(2,n);++i){
