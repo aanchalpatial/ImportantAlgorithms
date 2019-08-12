@@ -1,0 +1,27 @@
+//https://en.wikipedia.org/wiki/Tower_of_Hanoi
+//https://www.youtube.com/watch?time_continue=33&v=YstLjLCGmgg
+
+#include<bits/stdc++.h>
+using namespace std;
+
+long long moves = 0;
+
+void toh(int N, int from, int to, int aux, long long &moves) {
+    // Your code here
+    moves += 1;
+    if(N==1){
+       cout<<"move disk 1 from rod "<<from<<" to rod "<<to<<endl;
+       return;
+    }
+    toh(N-1,from,aux,to,moves);
+    cout<<"move disk "<<N<<" from rod "<<from<<" to rod "<<to<<endl;
+    toh(N-1,aux,to,from,moves);
+}
+int main(){
+  int n;
+  cin>>n;
+  
+  toh(n,1,3,2,moves);
+  cout<<moves;
+  
+  return 0;}
