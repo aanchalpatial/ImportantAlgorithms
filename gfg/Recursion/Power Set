@@ -1,1 +1,25 @@
+//Also done via Bit Manipulation in Bit Magic Section(Line 64) : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Bit%20Magic/bit_basics
 
+#include <bits/stdc++.h>
+using namespace std;
+
+void power_set(string str, string curr = " ", int index = 0){
+    
+    if(index == str.size()){
+        cout<<curr<<",\t";
+        return;
+    }
+    
+    power_set(str, curr, index+1);
+    power_set(str, curr+str[index], index+1);
+}
+
+
+
+int main()
+{
+    string str = "ABC";
+    power_set(str);
+    
+    return 0;
+}
