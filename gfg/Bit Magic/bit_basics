@@ -61,7 +61,7 @@ int main()
                 else cout<<"0";
             }
 
-            //GENERATE POWER SET
+            //GENERATE POWER SET (can also be done vis recurion : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Recursion/Power%20Set)
             string str = "ABC";
             int n = str.size();
             for(int i=0;i<pow(2,n);++i){
