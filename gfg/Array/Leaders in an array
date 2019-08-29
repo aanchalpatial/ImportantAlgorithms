@@ -1,0 +1,21 @@
+//An element is a leader if it is larger than any element on its right
+//Do it in linear time
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+  int arr[] = {2,5,10,3,6,1};
+  int size = 6;
+  int max = arr[size-1];
+  cout<<arr[size-1]<<" ";       //last element is always a leader
+  for(int i = size-2;i>=0;--i){
+      if(arr[i] > max){
+      max = arr[i];
+      cout<<arr[i]<<" ";
+      }  
+    }
+  
+
+  return 0;
+}
