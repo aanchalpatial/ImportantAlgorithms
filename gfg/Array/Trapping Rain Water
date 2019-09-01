@@ -1,0 +1,40 @@
+/*Given n non-negative integers representing an elevation map where the width of each bar is 1, 
+compute how much water it is able to trap after raining.*/
+// for every index find : minimum(maximum on the left side, maximum on the right side) - value of element
+//Do it in linear time, auxillary space O(n)
+//we first create 2 array. pre-compute highest bar on left and right of every bar in O(n) time. 
+//Then use these pre-computed values to find the amount of water in every array element.
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+  //int arr[] = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+  //int arr[] = {2, 0, 2};
+  int arr[] = {3, 0, 0, 2, 0, 4};
+  
+  int n = sizeof(arr)/sizeof(arr[0]);
+  
+  // leftMax[i] contains height of tallest bar to the 
+  // left of i'th bar **** including itself ****
+  int leftMax[n],rightMax[n];               
+  leftMax[0] = arr[0], rightMax[n-1] = arr[n-1];
+  
+  for(int i=1;i<n;++i){
+      if( leftMax[i-1] > arr[i]) leftMax[i] = leftMax[i-1];
+      else leftMax[i] = arr[i];
+    }  
+  for(int i=n-2;i>=0;--i){
+       if( rightMax[i+1] > arr[i]) rightMax[i] = rightMax[i+1];
+      else rightMax[i] = arr[i];
+    }
+    
+  int result = 0;
+  for(int i=0;i<n;++i){
+        result += ( min(leftMax[i], rightMax[i]) - arr[i] );
+    }
+    cout<<result;
+  
+  
+return 0;}
