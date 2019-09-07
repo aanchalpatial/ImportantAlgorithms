@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    
+    int arr[] = { 1, 4, 2, 10, 2, 3, 1, 0, 20 }; 
+    int k = 4; 
+    int n = sizeof(arr) / sizeof(arr[0]);
+    
+    int max_sum = 0;
+    for(int i=0;i<k;++i) max_sum += arr[i];
+    int temp_sum = max_sum;
+
+    for(int i=1;i<=(n-k);++i){
+        temp_sum =  temp_sum - arr[i-1] + arr[i+k-1];
+        if (temp_sum > max_sum) max_sum = temp_sum;
+    }
+    
+    cout<<"Result : "<<max_sum;
+    
+    return 0;
+}
