@@ -1,1 +1,1 @@
-# Peculiar-Code
+# An algorithm is like a recipe.
