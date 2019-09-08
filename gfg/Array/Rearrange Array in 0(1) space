@@ -1,0 +1,60 @@
+//APPROACH :- 
+/*There are multiple ways to solve this question.
+
+We would be discussing a more generalised approach here, which can be used for other type of Rearranging problems.
+
+For Rearranging array, we need to store a new value at the position of old value, but do not want to lose the old value too.
+Also, we cannot use extra space for this operation (else it would not be Rearrangement and is very easy to execute).
+
+Here, We will store both new value and old value at same position. But how is that possible..?? (No, I am not using pair)
+
+Here, We will use the formula Dividend = Divisor * Quotient + Remainder
+where Divisor = size of array
+           Quotient = New number at index i after rearrangement
+           Remainder = Old Number at index i before rearrangement
+           Dividend = The number stored at index i
+
+While Traversing the array, we will Look for the value at arr[arr[i]] (which is to be stored at index i), multiply it with Divisor (size of array), and add the old value present at arr[i] to it.
+Divisor is a value which is higher then values in array (in this case n - size of array, as array elements are between 0 to n-1)
+
+Obviously, don't forget to remove the multiplier n from the values while accessing and outputting the new values.
+*/
+
+
+
+/*
+1) Given an array arr[] of size N where every element is in range from 0 to n-1. Rearrange the given array so that arr[i] becomes arr[arr[i]]. 
+This should be done with O(1) extra space.
+*/
+void arrange(long long arr[], int n) {
+    // Your code here
+    int max = n;        //value greater than any value present in array
+    for(int i=0;i<n;++i){
+        arr[i] = (arr[arr[i]]%max)*max + arr[i];
+        //printArr(arr,n);
+    }
+    for(int i=0;i<n;++i){
+        arr[i] = arr[i]/max;
+    }   
+}
+/*
+2) Given a sorted array of positive integers. Your task is to rearrange  the array elements alternatively i.e first element should be max value, second should be min value, third should be second max, fourth should be second min and so on.
+Note: O(1) extra space is allowed. 
+*/
+void rearrange(int *arr, int n) 
+{ 
+	int max = arr[n-1]+1;    //greater than any value present in array
+	// Your code here
+	int k = 0,m = n-1;
+	for(int i=0;i<n;++i){
+	    if(i%2 == 0){
+	        arr[i] = ( (arr[m-(i/2)]%max) * max ) + arr[i];
+	    }else{
+	        arr[i] = ( (arr[k+(i/2)]%max) * max ) + arr[i];
+	    }
+	    //printArr(arr,n);	
+	}
+	for(int i=0;i<n;++i){
+	    arr[i] = arr[i]/max;
+	}
+}
