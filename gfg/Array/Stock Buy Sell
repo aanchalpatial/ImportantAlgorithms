@@ -24,6 +24,7 @@ int maximum_profit(int arr[], int n){
     
     for(int i=0;i<n;++i){
         while( (arr[i] >= arr[i+1]) && (i<n-1) ) ++i;
+        if (i == n - 1) break;
         minima = arr[i];
         while( (arr[i] <= arr[i+1]) && (i<n-1) ) ++i;
         maxima = arr[i];
