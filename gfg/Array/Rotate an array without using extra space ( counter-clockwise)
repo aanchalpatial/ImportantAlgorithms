@@ -1,3 +1,7 @@
+//Naive approach takes 0(n) time & 0(n) space
+//Two efficient approaches which takes 0(n) time & 0(1) space 
+
+//1) Reverse Method
 void rotateArr(int arr[], int d, int n){
     
    // Your code here
@@ -6,3 +10,5 @@ void rotateArr(int arr[], int d, int n){
    reverse(arr, arr+n);
    
 }
+
+//2) Juggling Method
