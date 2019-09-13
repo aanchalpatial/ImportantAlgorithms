@@ -1,0 +1,24 @@
+//find the sum of contiguous subarray within a one-dimensional array of numbers which has the largest sum.
+//kadane Algorithm : 0(n)
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int maxSubarraySum(int arr[], int n){
+    
+    //kadane Algorithm : Largest Sum Contigous Subarray
+    int max_so_far = arr[0];
+    int max_ending_here = arr[0];
+    
+    for(int i=1;i<n;++i){
+        max_ending_here = max(arr[i], max_ending_here+arr[i]);
+        max_so_far = max( max_ending_here, max_so_far);
+    }
+    return max_so_far;
+}
+
+int main()
+{
+  cout << maxSubarraySum(a, n) << endl;
+  return 0;
+    }
