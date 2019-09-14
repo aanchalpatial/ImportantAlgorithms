@@ -1,0 +1,38 @@
+/*Given an array arr[] of N integers arranged in a circular fashion. 
+Your task is to find the maximum contigious subarray sum.*/
+
+
+int kadane(int arr[], int n){
+    
+    //kadane Algorithm : Largest Sum Contigous Subarray
+    int max_so_far = arr[0];
+    int max_ending_here = arr[0];
+    
+    for(int i=1;i<n;++i){
+        max_ending_here = max(arr[i], max_ending_here+arr[i]);
+        max_so_far = max( max_ending_here, max_so_far);
+    }
+    return max_so_far;
+}
+int circularSubarraySum(int arr[], int num){                      //****************RRRRRRRR**************
+    
+    // your code here
+    int sum = 0;
+    for(int i=0;i<num;++i) sum += arr[i];
+    int max_kadane = kadane(arr, num);
+    
+    for(int i=0;i<num;++i) arr[i] *= -1;
+    int max_wrap = sum + kadane(arr, num);
+    
+    //cout<<max_kadane<<" "<<max_wrap<<endl;
+    return (max_wrap > max_kadane)? max_wrap: max_kadane;
+    
+}
+
+int main()
+{
+  int a[] = {8, -8, 9, -9, 10, -11, 12};
+  int n = 7;
+  cout << maxSubarraySum(a, n) << endl;
+  return 0;
+    }
