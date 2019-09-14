@@ -25,7 +25,7 @@ int circularSubarraySum(int arr[], int num){                      //************
     int max_wrap = sum + kadane(arr, num);
     
     //cout<<max_kadane<<" "<<max_wrap<<endl;
-    return (max_wrap > max_kadane)? max_wrap: max_kadane;
+    return ( abs(max_wrap) > abs(max_kadane) ) ? max_wrap: max_kadane;
     
 }
 
