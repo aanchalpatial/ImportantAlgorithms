@@ -1,0 +1,51 @@
+//Given n ranges. Find the element that occurs the maximum number of times.
+// Naive Approach : O(n * m) using hashing, where n is the number of ranges, m is the maximum size of ranges.
+
+//Using Prefix Sum : O(n) time, O(1) extra space
+
+#include <bits/stdc++.h>
+using namespace std;
+int arr[1000000];
+
+int maxOccured(int L[], int R[], int n, int maxx){
+    
+    // int cnt[maxx];
+    // memset(cnt,0,sizeof(cnt));
+    vector<int> cnt(maxx, 0);
+    
+    for(int i=0;i<n;++i){
+        cnt[L[i]] += 1;
+        cnt[R[i]+1] -= 1;
+    }
+    
+    for(int i=1;i<maxx;++i){
+        cnt[i] += cnt[i-1];
+    } 
+    
+    int result = 0, maximum = cnt[0];
+    for(int i=1;i<maxx;++i){
+        if(cnt[i]>maximum) {
+            maximum = cnt[i];
+            result = i;
+        }
+    }    
+    
+    return result;
+    
+}
+
+int main() {
+	
+
+	    int L[] = {1,5, 9, 13, 21};
+	    int R[] = {15, 8, 12, 20, 30};
+	    int n = 5;
+	    int maxx = 50;
+
+	    cout << maxOccured(L, R, n, maxx) << endl;
+	
+	
+	return 0;
+}
+
+
