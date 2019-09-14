@@ -9,15 +9,16 @@ Also, we cannot use extra space for this operation (else it would not be Rearran
 Here, We will store both new value and old value at same position. But how is that possible..?? (No, I am not using pair)
 
 Here, We will use the formula Dividend = Divisor * Quotient + Remainder
-where Divisor = size of array
+where Divisor = size of array or any value which is greater than all any elements in array
            Quotient = New number at index i after rearrangement
            Remainder = Old Number at index i before rearrangement
-           Dividend = The number stored at index i
+           Dividend = Number stored at index i
 
 While Traversing the array, we will Look for the value at arr[arr[i]] (which is to be stored at index i), multiply it with Divisor (size of array), and add the old value present at arr[i] to it.
 Divisor is a value which is higher then values in array (in this case n - size of array, as array elements are between 0 to n-1)
 
-Obviously, don't forget to remove the multiplier n from the values while accessing and outputting the new values.
+New Value =  Number stored at i / Divisor
+Old Value = Number stored at i % Divisor
 */
 
 
@@ -58,3 +59,25 @@ void rearrange(int *arr, int n)
 	    arr[i] = arr[i]/max;
 	}
 }
+3)Given an array A[] of N positive integers which can contain integers from 1 to N where elements can be repeated or can be absent from the array. Your task is to count frequency of all elements from 1 to N.
+//Note: O(1) extra space is allowed. 
+void printfrequency(int arr[], int n)
+{ 
+	int max = n+1;
+	
+	for(int i=0;i<n;++i){
+	    int actualValue = arr[i];
+	    int oldValue = actualValue%max;
+	    int newValue = actualValue/max;
+	   
+	    int newCount = (arr[oldValue-1]/max) +1;
+	    arr[oldValue-1] = (max * newCount) + (arr[oldValue-1]%max);
+	}
+
+	for(int i=0;i<n;++i){
+	    int count = arr[i]/max;
+	    cout<<count<<" ";
+	    
+	}
+	
+} 
