@@ -1,0 +1,13 @@
+/*Given an array of integers greater than zero, find if it is possible to split it in two subarrays 
+(without reordering the elements), such that the sum of the two subarrays is the same. Print the two subarrays.*/
+
+//THIS IS NOT SOLVED USING PREFIX SUM, BUT STILL THIS QUESTION IS PART OF THIS HEIRARCHY BEACUSE THERE 
+//EXISTS A SIMILAR QUESTION IN THIS HEIRARCHY FOR SPLITTING ARRAY INTO 3 EQUAL SUM PARTS WHICH IS SOLVED USING PREFIX SUM.
+
+//Approach :-
+/*An Efficient solution is to first compute the sum of the whole array from left to right.
+Now we traverse array from right and keep track of right sum, left sum can be computed by 
+subtracting current element from whole sum.
+Time Complexity : O(n)
+Auxiliary Space : O(1)
+*/
