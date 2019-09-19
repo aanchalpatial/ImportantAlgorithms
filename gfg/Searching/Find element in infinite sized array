@@ -1,5 +1,7 @@
 // C++ program to demonstrate working of an algorithm that finds 
 // an element in an array of infinite size 
+// Expected Time Complexity : O(log n)
+
 #include<iostream> 
 using namespace std; 
 
@@ -32,7 +34,8 @@ int findPos(int arr[], int key)
 	// Find h to do binary search 
 	while (val < key) 
 	{ 
-		l = h;	 // store previous high 
+		l = h;	 // store previous high
+		//As we know to achieve log n complexity we have to update counter by either multiplying by 2 or dividing by 2
 		h = 2*h;	 // double high index 
 		val = arr[h]; // update new val 
 	} 
