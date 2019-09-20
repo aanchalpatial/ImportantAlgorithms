@@ -1,0 +1,25 @@
+
+binary_search()
+binary_search(start_ptr, end_ptr, ele)
+Return Value : This function only checks if the element is present or not, 
+               it does not give any information about the location of the element if it exists.
+               * But we can find the index of elment by using lower_bound() with binary_search()
+
+upper_bound()
+upper_bound(first_itr, last_itr, ele)
+Return Value: ele < return_value            
+              Returns an iterator pointing to the element just greater than ele.
+              * if ele is greater than the largest array element(rightmost element) , largest element index is returned
+
+
+lower_bound()
+lower_bound(first_itr, last_itr, ele)   
+Return Value: return_value <= ele           
+              Returns an iterator pointing to the lower bound of the element ele. 
+              If ele exists in the container, it returns an iterator pointing to ele 
+              otherwise it returns an iterator pointing to lower bound ele.
+              * if ele is smaller than the smallest array element(leftmost element), smallest element index is returned
+              
+Note :- Unlike lower_bound , the value pointed by the iterator returned by this function 
+        cannot be equivalent to val , only greater.
+        upper_bound() & lower_bound() works only with sorted sequences
