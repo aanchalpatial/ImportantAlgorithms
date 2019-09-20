@@ -64,7 +64,7 @@ int main()
     
     //VARIATION 3) Find minimum element in sorted and then rotated array
     int min_index = max_index + 1;
-    cout<<"Minimum element : "<<arr[min_index]<<endl;
+    cout<<"Minimum element is : "<<arr[min_index]<<endl;
     
     return 0;
 }
