@@ -1,6 +1,8 @@
 //Find Peak element in an UNSORTED ARRAY
 //Peak element : Aa element which is not smaller than its neighbours
 // left_neighbour <= element >= right_element
+//if arr[0]>arr[1], then also it a peak element beacuse it is greater than all of its adjacent neighbours
+//Similary if arr[n]>arr[n-1[ then alsi it is a peak element (0th & n-1 th index elements have only 1 neighbour)
 //There can be more than one peak elements in array
 //Expected time complexity : O(log n) , Need to use binary search
 //This is the first question in which array is unsorted and we are using binary search
