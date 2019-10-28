@@ -16,7 +16,7 @@ int binary_search(int arr[], int low, int high, int x){
   else if(x>arr[mid]) return binary_search(arr,mid+1,high,x);
 }
 
-int find_local_maxima(int arr[], int n, int low, int high){
+int find_local_maxima(int arr[], int n, int low, int high){                                             //RR
     int left_corner = arr[0];
     int right_corner = arr[n-1];
     
