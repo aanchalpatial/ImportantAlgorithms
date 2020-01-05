@@ -14,4 +14,26 @@ for(int i=0;i<n;++i) {
  //2): ROTATE MATRIX BY 90 DEGRESS COUNTER-CLOCKWISE
  //do it without using any auxillary sapce
  //transpose matrix and then reverse individual columns
- 
+ for(int i=0;i<n;++i){				//tanspose
+        for(int j=i+1;j<n;++j){
+            swap(a[i][j], a[j][i]);
+        }
+    }
+    
+ for(int j=0;j<n;++j){				//reverse columns
+        for(int i=0;i<n/2;++i){
+            swap(a[i][j], a[n-i-1][j]);
+        }
+    }
+
+//3): SEARCH IN ROW & COLUMN SORTED MATRIX
+//Naive Soluton 0(R*C), do it in 0(R+C) time
+//You start from element A[0][C-1] i.e top right element. If the current element is greater than element to be searched, move to left. 
+//If the current element is smaller, move down. If current element is equal return index(i,j). If you can't move any further return "not found".
+
+//4): DETERMINANT OF A MATRIX
+
+
+
+
+//3): BOUNDARY TRAVERSAL IN CLOCKWISE MANNER
