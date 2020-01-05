@@ -1,0 +1,17 @@
+//NOTES: 
+//-> Row Major order is prefered over column major order beacuse it is cache friendly.
+
+
+//1): TRANSPOSE OF A MATRIX 
+//do it without using auxillary space
+for(int i=0;i<n;++i) {
+	    for(int j=i+1;j<n;++j){           //***j=i+1****                
+          //cout<<"("<<A[i][j]<<", "<<A[j][i]<<")"<<endl;
+	        swap(A[i][j], A[j][i]);
+	    }
+	}
+  
+ //2): ROTATE MATRIX BY 90 DEGRESS COUNTER-CLOCKWISE
+ //do it without using any auxillary sapce
+ //transpose matrix and then reverse individual columns
+ 
