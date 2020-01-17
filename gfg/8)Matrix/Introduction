@@ -30,10 +30,61 @@ for(int i=0;i<n;++i) {
 //Naive Soluton 0(R*C), do it in 0(R+C) time
 //You start from element A[0][C-1] i.e top right element. If the current element is greater than element to be searched, move to left. 
 //If the current element is smaller, move down. If current element is equal return index(i,j). If you can't move any further return "not found".
+int search( int n,int m, int x, int mat[SIZE][SIZE])
+{
+   // Your code here
+   for(int i=0;i<n;){
+       int lastElementOfRow = mat[i][m-1];
+       if (x>lastElementOfRow) {
+           ++i;
+       }else if (x<lastElementOfRow) {
+           //search in ith row
+           for(int j=0;j<m-1;++j){
+               if (mat[i][j]==x){
+                   return 1;
+               }
+           }
+           return 0;
+       }else {
+           return 1;
+       }
+   }
+   return 0;
+}
+
 
 //4): DETERMINANT OF A MATRIX
 
 
 
 
-//3): BOUNDARY TRAVERSAL IN CLOCKWISE MANNER
+//5): BOUNDARY TRAVERSAL IN CLOCKWISE MANNER
+//6): SPIRAL TRAVERSAL OF MATRIX
+void spirallyTraverse(int m, int n, int ar[SIZE][SIZE]){
+    //Your code here
+    int p=0, q=0;
+    while(p<m && q<n) {
+        for(int j=q;j<n;++j){
+            cout<<ar[p][j]<<" ";
+        }
+        ++p;
+        for(int i=p;i<m;++i) {
+            cout<<ar[i][n-1]<<" ";
+        }
+        --n;
+        if (p<m) {
+            for(int j=n-1;j>=q;--j) {
+                cout<<ar[m-1][j]<<" ";
+            }
+            --m;
+        }
+        if (q<n) {
+            for(int i=m-1;i>=p;--i){
+                cout<<ar[i][q]<<" ";
+            }
+            ++q;
+        }
+    }
+}
+
+
