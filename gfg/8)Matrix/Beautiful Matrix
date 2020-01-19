@@ -1,6 +1,7 @@
 /*Given a Square matrix mat[] of size NxN. Your task is to find MINIMUM number of operation(s) 
 that are required to make the matrix Beautiful. A Beautiful matrix is a matrix in which sum of elements 
 in each row and column is equal. In one operation you can only increment any value of cell of matrix by 1.*/
+//there are 2 ways to do this with same running time
 
 int findMinOpeartion(int matrix[][100], int n)
 {
@@ -29,6 +30,7 @@ int findMinOpeartion(int matrix[][100], int n)
         }
     }
     
+    //OPTION 1:-
     //updating first element of each row to make sum equal to max sum
     int count = 0;
     for(int i=0;i<n;++i){
@@ -51,4 +53,16 @@ int findMinOpeartion(int matrix[][100], int n)
     }
 
     return count;
+    
+    //OPTION 2:-
+    int count = 0;
+    int total = 0;
+    for(int i=0;i<n;++i){
+        for(int j=0;j<n;++j){
+            total += matrix[i][j];
+        }
+    }
+    return ((max * n)-total);
+    
+    
 }
