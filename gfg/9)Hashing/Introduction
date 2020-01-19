@@ -1,0 +1,32 @@
+//Hashing takes O(1) average time to search, insert or delete elements.
+//Used to implement dictionaries i.e key-value pairs
+
+//Hasing is an expert data structure when you have only search, insert and delete operations. 
+//BUT hasing is not useful for: find closest value,
+//sorted data (In these 2 operations we use self balancing trees instead) and  prefix searching(we use Trie data structure instead). 
+
+//APPLICATION:- Dictionaries, Database Indexing, Cryptography, Caches, Symbols Tables in compilers, Routers, Getting data from database, etc.
+
+//Direct Addres Table: Use keys as index of array. But this data structure has problems like large valued keys, floating valued keys,
+//keys that are string. So instaed we use HASHING data structure.
+
+//Hashing: Sort of Direct Address Table that uses a hashing function to deal with unfavourable keys.
+//Hash Functions:- Should UNIFORMLY distribute data, should be fast 0(1) for integers & 0(len(string)) for strings
+/*Collison Handling:- ->If data is known is advance, we have a technique called PERFECT hashing which ensures no collisons.
+                      ->If we don't know the data in advance, collisons are bound to happen.
+                      ->Birthday Paradox
+                      ->2 ways of collison handling - Chaining and Open Addressing
+*/
+
+ /* Chaining: Load factor = expected chain length = n/m (where n is the number of keys to be inserted and m is the size of hash table)
+ Data structure used for storing chains - Linked list, Dynamic sized arrays like vectors in c++, self balancing BST. 
+ First 2 data structure perform insert, delete and search in 0(lengthOfChain) while last data structure perform the same 
+ operations in 0(log(lengthOfChain)). First and third are not cache friendly whereas the second one is cache friendly.
+ */
+ 
+ /*3 types of open addressing - Linear Probing, Quadratic Probing & Double Hashing
+ Study Insertion, Searching & Deletion in Linear Probing. Problem with linear probing :-
+ Clustering(forms Primary Clusters: clusters that are contigous). We handle clustering by using quadratic probing or double hashing. 
+ Quadratic probing still forms secondary clusters. Quadratic probing guarantees finding empty elements only if 
+ load factor < 0.5 and hash table size is a prime number.
+ */
