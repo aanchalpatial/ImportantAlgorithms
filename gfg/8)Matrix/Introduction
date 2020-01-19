@@ -52,39 +52,4 @@ int search( int n,int m, int x, int mat[SIZE][SIZE])
    return 0;
 }
 
-
-//4): DETERMINANT OF A MATRIX
-
-
-
-
-//5): BOUNDARY TRAVERSAL IN CLOCKWISE MANNER
-//6): SPIRAL TRAVERSAL OF MATRIX
-void spirallyTraverse(int m, int n, int ar[SIZE][SIZE]){
-    //Your code here
-    int p=0, q=0;
-    while(p<m && q<n) {
-        for(int j=q;j<n;++j){
-            cout<<ar[p][j]<<" ";
-        }
-        ++p;
-        for(int i=p;i<m;++i) {
-            cout<<ar[i][n-1]<<" ";
-        }
-        --n;
-        if (p<m) {
-            for(int j=n-1;j>=q;--j) {
-                cout<<ar[m-1][j]<<" ";
-            }
-            --m;
-        }
-        if (q<n) {
-            for(int i=m-1;i>=p;--i){
-                cout<<ar[i][q]<<" ";
-            }
-            ++q;
-        }
-    }
-}
-
-
+//4): BOUNDARY TRAVERSAL IN CLOCKWISE MANNER
