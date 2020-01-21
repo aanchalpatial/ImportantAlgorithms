@@ -18,15 +18,40 @@
                       ->2 ways of collison handling - Chaining and Open Addressing
 */
 
- /* Chaining: Load factor = expected chain length = n/m (where n is the number of keys to be inserted and m is the size of hash table)
+ /* Chaining: Load factor = expected chain length = alpha = n/m (where n is the number of keys to be inserted and m is the size of hash table)
+ PERFORMANCE:  Chaining requires (1+alpha) comparisons for unsuccesful search
  Data structure used for storing chains - Linked list, Dynamic sized arrays like vectors in c++, self balancing BST. 
  First 2 data structure perform insert, delete and search in 0(lengthOfChain) while last data structure perform the same 
  operations in 0(log(lengthOfChain)). First and third are not cache friendly whereas the second one is cache friendly.
+ ->IMPLEMENTATION of chaining vedeo
  */
  
  /*3 types of open addressing - Linear Probing, Quadratic Probing & Double Hashing
- Study Insertion, Searching & Deletion in Linear Probing. Problem with linear probing :-
+ PERFORMANCE: Open Addressing requires 1/(1-alpha) comparisons for unsuccessful search
+ Study Insertion, Searching & Deletion in Linear Probing.IMPLEMENTATION of open addressing vedeo.
+ Linear probing GUARANTEES finding empty space if there is any.
+ Problem with linear probing :-
  Clustering(forms Primary Clusters: clusters that are contigous). We handle clustering by using quadratic probing or double hashing. 
- Quadratic probing still forms secondary clusters. Quadratic probing guarantees finding empty elements only if 
- load factor < 0.5 and hash table size is a prime number.
+ Quadratic probing still forms secondary clusters. Quadratic probing GUARANTEES finding empty elements only if 
+ load factor <= 0.5 and hash table size is a prime number.
  */
+ 
+ /*Double Hashing: When collison occur,hash(key,i) = ( h1(key) + i*h2(key) ) % m, eg: hash(key,i) = ( (key%7) + i*(6-(key%6)) )%7, 0<=i<=6
+ ->No clustering
+ ->Distributes data more uniformlyt than linear and quadratic probing
+ ->GUARANTEES finding empty element if m is relatively prime to h2(key)
+ ->design h2(key) in a way such that it should never return 0, eg: h2(key) = k-(key%k)
+ ->load factor(should be) <=1
+ ->search is unsuccessful if either whole table is searched or an epmty space is reached
+ */
+ 
+ /*Chaining VS Open Addressing 
+ ->When you know in advance the keys to be inserted perfect hashing is the best option. When you know the count of keys in advance 
+ open addressing is the best option. Otherwise chaining is the best option.
+ ->Advantage of Chaining: 1) Better performance eg: 1+alpha comparisons for unsuccesful search whereas there are 1/(1-alpha) comparisons 
+ for unsuccesfull search in open addressing.2) Reuires no dynamic size allocation(very expensive operation) as is 
+ required in open addressing 3) Less sensitive to the quality of hash function where as open addressing performance
+ is highly affected be the design of hash functions.
+ ->Advantage of open addressing: Cache Friendliness
+ */
+
