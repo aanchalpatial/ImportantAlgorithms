@@ -1,4 +1,5 @@
-//Hashing takes O(1) average time to search, insert or delete elements.
+//Hashing takes O(1) average time to search, insert or delete elements (under the ASSUMPTION that hash function distributes
+the data uniformly across the slots of hash table).
 //Used to implement dictionaries i.e key-value pairs
 
 //Hasing is an expert data structure when you have only search, insert and delete operations. 
