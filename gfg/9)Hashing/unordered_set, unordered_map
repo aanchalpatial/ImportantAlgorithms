@@ -1,0 +1,44 @@
+//A)
+//unordered_set data structure is implemented using hashing, where as set data structure uses self balancing binary trees
+//duplicates are ignored in this data structure
+//insert, find & erase takes 0(1) time on average beacuse unordered set is implemented using hashing.
+
+unordered_set<int> us;
+//1) INSERT
+us.insert(5);
+us.insert(10);
+us.insert(13);
+for(auto i: us) {
+  cout<<i<<" ";
+}
+for(auto itr = us.begin();itr!=us.end();++itr{          //us.end() points to an iterator beyond the last element
+  cout<<(*itr)<<" ";  
+}
+us.clear();                                 //function used to empty unordered set
+
+//2)SEARCH
+if ( us.find(5) != us.end() ) cout<<"FOUND";    // returns iterator of the key if it exists otherwise returns us.end()
+else cout<<"NOT FOUND";
+
+//count() function can also be used to search an element, it returs 1 if key exists otherwise it return 0
+if( us.count(5) == 1 ) cout<<"FOUND";
+else cout<<"NOT FOUND";
+
+//3) DELETE : erase()
+//Erase function can have 3 types of parameters 
+//->us.erase(key)
+//->us.erase(iterator)
+//->us.erase(us.begin(), us.end())   //left is included and right parameter is excluded
+
+
+//B)
+//unordered map data structure is implemented using hashing, where as map data structure uses self balancing binary trees 
+//SAME functions & time as unordered set same except for it has member access operator as well
+unordered_map<string, int> um;
+um["abc"] = 007;
+for(auto i:um) {
+  cout<<i.first<<":"<<i.second;         //dot operator here
+}
+for(auto itr = um.begin();itr!=um.end();++itr){
+   cout<<itr->first<<":"<<itr->second;      //arrow operator here
+}
