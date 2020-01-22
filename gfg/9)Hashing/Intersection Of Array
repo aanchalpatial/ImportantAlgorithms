@@ -1,0 +1,26 @@
+//Naive solution is 0(m*(m+n)), do it in 0(m+n) and 0(m) auxillary space
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+  
+  int result = 0;
+  int arr1[] = {10,5,5,12,3,3};
+  int arr2[] = {5,10,5,33};
+  int m = sizeof(arr1)/sizeof(arr1[0]);
+  int n = sizeof(arr2)/sizeof(arr2[0]);
+  
+  unordered_set<int> s1;
+  for(int i=0;i<m;++i){
+      s1.insert(arr1[i]);
+  }
+  for(int i=0;i<n;++i){
+      if(s1.find(arr2[i]) != s1.end()) {
+          ++result;
+          s1.erase(arr2[i]);
+      }
+  }
+  
+  cout<<"intersection of arrays contains "<<result<<" elements.";
+  
+  return 0;
+}
