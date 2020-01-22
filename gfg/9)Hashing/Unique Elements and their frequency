@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+  
+  int arr[] = {10,5,12,6,6,5};
+  int size = sizeof(arr)/sizeof(arr[0]);
+  
+  //1) UNIQUE ELEMENTS OF ARRAY
+  unordered_set<int> s;
+  for(int i=0;i<size;++i){
+    s.insert(arr[i]);
+  }
+  for(auto i: s){
+      cout<<i<<" ";
+  }
+  cout<<endl;
+  
+  //2) FREQUENCY OF UNIQUE ELEMENTS OF ARRAY
+  unordered_map<int, int> mp;
+  for(int i=0;i<size;++i){
+    mp[arr[i]]++;
+  }
+   for(auto i: mp){
+      cout<<"{"<<i.first<<","<<i.second<<"} ";
+  }
+  cout<<endl;
+  
+  //3) FREQUENCY OF UNIQUE ELEMENTS IN THE ORDER OF FIRST OCCURENCE ?????? LinkedHashMap<type, type> lhm in java
+  
+  
+  return 0;
+}
