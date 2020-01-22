@@ -6,6 +6,7 @@ int main() {
   int size = sizeof(arr)/sizeof(arr[0]);
   
   //1) UNIQUE ELEMENTS OF ARRAY
+  //Naive solution is 0(n^2), do it is 0(n)
   unordered_set<int> s;
   for(int i=0;i<size;++i){
     s.insert(arr[i]);
@@ -16,6 +17,7 @@ int main() {
   cout<<endl;
   
   //2) FREQUENCY OF UNIQUE ELEMENTS OF ARRAY
+  //Naive solution is 0(n^2), do it is 0(n)
   unordered_map<int, int> mp;
   for(int i=0;i<size;++i){
     mp[arr[i]]++;
