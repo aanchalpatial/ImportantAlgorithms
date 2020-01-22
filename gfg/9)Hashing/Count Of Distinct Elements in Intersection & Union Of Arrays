@@ -1,4 +1,3 @@
-//Naive solution is 0(m*(m+n)), do it in 0(m+n) and 0(m) auxillary space
 #include<bits/stdc++.h>
 using namespace std;
 int main() {
@@ -9,6 +8,8 @@ int main() {
   int m = sizeof(arr1)/sizeof(arr1[0]);
   int n = sizeof(arr2)/sizeof(arr2[0]);
   
+  //UNIQUE INTERSECTION COUNT
+  //Naive solution is 0(m*(m+n)), do it in 0(m+n) and 0(m) auxillary space
   unordered_set<int> s1;
   for(int i=0;i<m;++i){
       s1.insert(arr1[i]);
@@ -21,6 +22,17 @@ int main() {
   }
   
   cout<<"intersection of arrays contains "<<result<<" elements.";
+  
+  //UNIQUE UNION COUNT
+  //Naive solution is 0((m+n)*(m+n)), do it in 0(m+n) and 0(m+n) auxillary space
+  unordered_set<int> s2;
+  for(int i=0;i<m;++i){
+    s2.insert(arr1[i]);
+    }
+  for(int i=0;i<n;++i){
+  s2.insert(arr2[i]);}
+  
+  cout<<endl<<"union of array contains "<<s2.size()<<" elements";
   
   return 0;
 }
