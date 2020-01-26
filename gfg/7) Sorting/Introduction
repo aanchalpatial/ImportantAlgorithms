@@ -1,0 +1,12 @@
+//sort() stl can be used to sort containers that allow random access such as arrays, vectors & deques.
+/*sort(first_parameter, second_parameter, comparison_function) where first_parameter is the iterator to the first element of container 
+and second_parameter is the iterator AFTER the last element of the container. Third parameter is optional and is used to define the order 
+of sorting the conatiner, eg: default order is increasing and we use "greater<int>" to reverse the order of sorting to decreasing or we 
+can create a new function specify our own order of sorting.
+*/
+//sort() stl takes 0(nlogn) on average & worst cases. It is a hybrid of quicksort, heapsort and insertion sort.
+
+//stable_sort() stl for stable sorting of containers
+//Bubble, Insertion & Merge Sort are stable.
+//Selection, Quick & Heap Sort are unstable.
+
