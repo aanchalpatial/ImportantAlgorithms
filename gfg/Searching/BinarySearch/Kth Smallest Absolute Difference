@@ -1,0 +1,5 @@
+/*Naive Method is to find all the n*(n-1)/2 possible absolute differences in O(n^2) and store them in an array.
+Then sort this array and print the k-th minimum value from this array. This will 
+take time O(n^2 + n^2 * log(n^2)) = O(n^2 + 2*n^2*log(n)).*/
+//An Efficient Solution is based on Binary Search.
+//https://www.geeksforgeeks.org/k-th-smallest-absolute-difference-two-elements-array/
