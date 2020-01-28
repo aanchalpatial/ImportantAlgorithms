@@ -1,4 +1,4 @@
-//sort() stl can be used to sort containers that allow random access such as arrays, vectors & deques.
+//sort() stl can be used to sort CONTAINERS that allow random access such as arrays, vectors & deques.
 /*sort(first_parameter, second_parameter, comparison_function) where first_parameter is the iterator to the first element of container 
 and second_parameter is the iterator AFTER the last element of the container. Third parameter is optional and is used to define the order 
 of sorting the conatiner, eg: default order is increasing and we use "greater<int>" to reverse the order of sorting to decreasing or we 
@@ -10,3 +10,10 @@ can create a new function specify our own order of sorting.
 //Bubble, Insertion & Merge Sort are stable.
 //Selection, Quick & Heap Sort are unstable.
 
+
+
+//INSERTION SORT: This sorting algorithm is the best sorting algorithm when the array to be sorted is SMALL. It also beats quicksort in 
+//case the array is small. Recursive algo such as merge sort & quicksort perform poor when the array size is below a certain threshold.
+//In Place, Stable, Best Case: When array is sorted & worst case when array us reverse sorted
+
+//MERGE SORT: Not In Place in typical implementation( requires 0(n) space), well suited for linked list, used in external sorting
