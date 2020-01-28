@@ -37,8 +37,8 @@ int main()
 }
 
 
-//APPLICATIONS of merge function of mergesort
-//1) INTERSECTION OF 2 SORTED ARRAY 
+//**** APPLICATIONS of merge function of mergesort *****
+//1) INTERSECTION & UNION OF 2 SORTED ARRAY 
 //Naive solution is 0(m*n), aux space 0(1), do it in 0(m+n) time and 0(1) space
 //Note:- Hashing Version is used to find intersection & union of 2 arrays( not necessarily sorted) in 0(m+n) time BUT in 0(m) space.
 #include <bits/stdc++.h>
