@@ -68,9 +68,13 @@ void intersectionOfSortedArrays(int arr1[], int arr2[], int m, int n){
 void unionOfSortedArrays(int arr1[], int arr2[], int m, int n){
     int i=0,j=0;
     while(i<m&&j<n){
-        //skipping duplicates in array 1
+        //skipping duplicates in array 1 & 2
         if(i>0&&arr1[i-1]==arr1[i]){
             ++i;
+            continue;
+        }
+        if(j>0&&arr2[j-1]==arr2[j]){
+            ++j;
             continue;
         }
         
