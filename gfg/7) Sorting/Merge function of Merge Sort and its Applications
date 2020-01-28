@@ -1,43 +1,40 @@
 //Merge function used in merge sort
-#include <bits/stdc++.h>
-using namespace std;
-int main()
-{
-    int arr1[] = {10,20,30,40};
-    int arr2[] = {3,15,19};
-    int size1 = sizeof(arr1)/sizeof(arr1[0]);
-    int size2 = sizeof(arr2)/sizeof(arr2[0]);
-    int i=0,j=0;
-    int arr3[size1+size2];
-    int index = -1;
-   
-    //0(size1+size2)
-    while(i<size1 && j<size2){
-        if(arr1[i] <= arr2[j]){                 //presence of equals here is necessary to main stability
-            arr3[++index] = arr1[i];
+void merge(int arr[], int l, int h, int m){
+    int size1 = m-l+1;
+    int size2 = h-m;
+    int arr1[size1];
+    int arr2[size2];
+    for(int i=0;i<size1;++i){
+        arr1[i] = arr[l+i];
+    }
+    for(int i=0;i<size2;++i){
+        arr2[i] = arr[i+m+1];
+    }
+    int i=0,j=0,k=l;
+    while(i<size1&&j<size2){
+        if(arr1[i]<=arr2[j]){
+            arr[k] = arr1[i];
             ++i;
-        }else {
-             arr3[++index] = arr2[j];
+        }else{
+            arr[k] = arr2[j];
             ++j;
         }
+        ++k;
     }
-    if(i==size1){
-        for(int k=j;k<size2;++k){
-            arr3[++index] = arr2[k];
-        }
-    }else  if(j==size2){
-        for(int k=i;k<size1;++k){
-            arr3[++index] = arr1[k];
-        }
+    while(i<size1){
+        arr[k] = arr1[i];
+        ++i;
+        ++k;
     }
-    for(int i=0;i<(size1+size2);++i){
-        cout<<arr3[i]<<" ";
+    while(j<size2){
+        arr[k] = arr2[j];
+        ++j;
+        ++k;
     }
-    return 0;
+    
 }
 
-
-//**** APPLICATIONS of merge function of mergesort *****
+//**** 2 APPLICATIONS of merge function of mergesort *****
 //1) INTERSECTION & UNION OF 2 SORTED ARRAY 
 //Naive solution is 0(m*n), aux space 0(1), do it in 0(m+n) time and 0(1) space
 //Note:- Hashing Version is used to find intersection & union of 2 arrays( not necessarily sorted) in 0(m+n) time BUT in 0(m) space.
@@ -123,3 +120,71 @@ int main()
     unionOfSortedArrays(arr1, arr2, m, n);
     return 0;
 }
+
+//2) COUNT INVERSIONS IN ARRAY
+//Naive solution is 0(n^2), do it in 0(nlogn) time
+//Approach is based on merge sort. While implementing merge sort total number of inversions is equal:-
+//number of inversions in left half + inversions in right half +inversion while merging
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int countMergeInversions(int arr[], int l, int h, int m){
+    int size1 = m-l+1;
+    int size2 = h-m;
+    int arr1[size1];
+    int arr2[size2];
+    for(int i=0;i<size1;++i){
+        arr1[i] = arr[l+i];
+    }
+    for(int i=0;i<size2;++i){
+        arr2[i] = arr[i+m+1];
+    }
+    int i=0,j=0,k=l;
+    int mergeCount = 0;
+    while(i<size1&&j<size2){
+        if(arr1[i]<=arr2[j]){
+            arr[k] = arr1[i];
+            ++i;
+        }else{
+            arr[k] = arr2[j];
+            ++j;
+            mergeCount += size1-i;              //******** important ********
+        }
+        ++k;
+    }
+    while(i<size1){
+        arr[k] = arr1[i];
+        ++i;
+        ++k;
+    }
+    while(j<size2){
+        arr[k] = arr2[j];
+        ++j;
+        ++k;
+    }
+    return mergeCount;
+    
+}
+int countInversions(int arr[], int l, int h){
+    int result = 0;
+    if(l<h){
+        int m = l +(h-l)/2;
+        result += countInversions(arr, l, m);
+        result += countInversions(arr, m+1, h);
+        result += countMergeInversions(arr, l, h, m);
+    }
+   return result; 
+}
+int main()
+{
+   int arr[] = {40, 30, 20, 10, 4};
+   int n = sizeof(arr)/sizeof(arr[0]);
+   
+   int result = countInversions(arr, 0, n-1);
+   cout<<"Number of inversions: "<<result;
+   
+   return 0;
+}
+
+
