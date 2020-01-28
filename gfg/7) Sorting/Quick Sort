@@ -1,0 +1,41 @@
+//PARTITON function of quicksort can be designed in 3 ways
+
+
+#include <iostream>
+using namespace std;
+
+//1): Naive solution : 0(n) time & 0(n) space (takes 3 traversals of given array)
+void naivePartition(int arr[], int l, int h){
+    
+}
+
+//2): Lomuto Partition: 0(n) time & 0(1) space (takes 1 traversal of given array only)
+void lomutoPartition(int arr[], int l, int h){
+    //last element is the pivot always BUT it can also work on any specified pivot by swapping the pivot 
+    //with the last element first and then performing lomuto.
+    int piv = arr[h];     
+    int i= l-1;
+    for(int j=0;j<h;++j){
+        if(arr[j]<piv){
+            ++i;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[h]);
+}
+
+//3): Hoare Partition: Works better than Lomuto, 0(n) time & 0(1) space (takes 1 traversal)
+
+int main()
+{
+    
+    int arr[] = {10,80,30,90,40,50,70};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    lomutoPartition(arr, 0, n-1);
+    for(int i=0;i<n;++i){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+    return 0;
+}
