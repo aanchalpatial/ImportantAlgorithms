@@ -1,8 +1,13 @@
 //QUICKSORT: Advantages:- In Place, Cache Friendly(Locality of Reference in Pertition function) & Tail Recursive. 
 //Best suited for arrays. Mergesort is suited for linked list. https://www.geeksforgeeks.org/why-quick-sort-preferred-for-arrays-and-merge-sort-for-linked-lists/
-//Best case: When selected pivot equally halves the array, Worst case: when all elements are on one side of the selected pivot, Average case: n/10 elements on one side & 9n/10 elements on the other side.
+//Best case: When selected pivot equally halves the array
+//Worst case: when n-1 elements are on one side & 1 element on the other side of the selected pivot
+//Average case: (Example) n/10 elements on one side & 9n/10 elements on the other side.
 //0(nlogn) in best & average case. 0(n^2) in worst case.
-//Space analysis of quicksort : from GFG
+//We use randomized version of quicksort in practise.
+//Space analysis of quicksort : from *GFG*
+//Since quicksort is tail recursive, you can use tail call eliminationation to optimise space used in recursive calls: *GFG*
+
 
 //PARTITON function of quicksort can be designed in 3 ways
 #include <iostream>
