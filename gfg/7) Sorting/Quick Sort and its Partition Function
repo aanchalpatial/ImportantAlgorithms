@@ -1,0 +1,90 @@
+//QUICKSORT: Advantages:- In Place, Cache Friendly(Locality of Reference in Pertition function) & Tail Recursive. 
+//Best suited for arrays. Mergesort is suited for linked list. https://www.geeksforgeeks.org/why-quick-sort-preferred-for-arrays-and-merge-sort-for-linked-lists/
+//Best case: When selected pivot equally halves the array, Worst case: when all elements are on one side of the selected pivot, Average case: n/10 elements on one side & 9n/10 elements on the other side.
+//0(nlogn) in best & average case. 0(n^2) in worst case.
+//Space analysis of quicksort : from GFG
+
+//PARTITON function of quicksort can be designed in 3 ways
+#include <iostream>
+using namespace std;
+
+//1): Naive solution : 0(n) time & 0(n) space (takes 3 traversals of given array). Stable.
+void naivePartition(int arr[], int l, int h){
+    
+}
+
+//2): Lomuto Partition: 0(n) time & 0(1) space (takes 1 traversal of given array only). Not Stable Hence quicksort is not stable.
+//In Lomuto, ensures that there is element<pivot on the left side and element>=pivot on right side and also ensures 
+//that pivot is at its correct place.
+
+int lomutoPartition(int arr[], int l, int h){
+    int piv = arr[h];     //last element is the pivot, it can also work on any specified pivot by swapping the pivot with the last element than performing lomuto
+    int i= l-1;
+    for(int j=l;j<h;++j){
+        if(arr[j]<piv){
+            ++i;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[h]);
+    return i+1;
+}
+
+//3): Hoare Partition: 0(n) time & 0(1) space (takes 1 traversal). Not Stable Hence quicksort is not stable.
+//Works BETTER than Lomuto as it takes less number of comparisons in general
+//In Hoare, ensures that there is element<=pivot on the left side of j(including j) and element>=pivot on right side of j BUT not 
+//the correct position of pivot element.
+
+int hoarePartition(int arr[], int l, int h){
+    int i = l-1;
+    int j = h+1;
+    int piv = arr[l];   //first element is the pivot
+    while(true){
+        do{
+            ++i;
+        }while(arr[i]<piv);
+        do{
+            --j;
+        }while(arr[j]>piv);
+        
+        if(i>=j) return j;
+        swap(arr[i], arr[j]);
+        
+    }
+}
+
+void lomutoQuickSort(int arr[], int l, int h){
+    if(l<h){
+        int p = lomutoPartition(arr, l, h);
+        lomutoQuickSort(arr, l, p-1);
+        lomutoQuickSort(arr, p+1, h);
+    }
+}
+
+void hoareQuickSort(int arr[], int l, int h){
+    if(l<h){
+        int p = hoarePartition(arr, l, h);
+        hoareQuickSort(arr,l,p);                // ***** here we have (p) instead of (p-1) beacause unlike in lomuto partition ,
+                                                //hoare partition doesn't ensure the correct location of the pivot *****
+        hoareQuickSort(arr,p+1,h);
+    }
+}
+
+int main()
+{
+    
+    int arr[] = {10,80,30,90,40,50,70};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    //int pivotIndex = lomutoPartition(arr, 0, n-1);
+    //int pivotIndex = hoarePartition(arr, 0, n-1);
+    //cout<<"pivot index is: "<<pivotIndex<<endl;
+    
+    //lomutoQuickSort(arr,0,n-1);
+    hoareQuickSort(arr,0,n-1);
+    for(int i=0;i<n;++i){
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+    return 0;
+}
