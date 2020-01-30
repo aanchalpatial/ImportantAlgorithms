@@ -1,0 +1,26 @@
+//Given n packets of chocolates with different different quantity. Choose m packets out of n packets to be given to m children such 
+//that the difference between the maximum & minimum packets of m chosen packets is minimum.Each child must get only 1 packet.
+//Do it in 0(nlogn) time
+
+#include <bits/stdc++.h>
+using namespace std;
+int minDifference(int arr[], int n, int m){
+    if(m>n) return -1;
+    sort(arr, arr+n);
+    int result = arr[m-1]-arr[0];
+    for(int i=1;i<(n-m+1);++i){
+        result = min(result, arr[i+m-1]-arr[i]);
+    }
+    return result;
+    
+}
+
+int main() {
+
+    int arr[] = {7, 3, 2, 6, 9, 12, 56};
+    int m = 7;
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int result = minDifference(arr, n, m);
+    cout<<"Minimum Difference: "<<result<<endl;
+	return 0;
+}
