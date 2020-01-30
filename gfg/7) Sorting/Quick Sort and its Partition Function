@@ -93,3 +93,42 @@ int main()
     cout<<endl;
     return 0;
 }
+
+
+//**** _ APPLICATIONS of partition function of quicksort *****
+//1): Find K-th smallest element in array
+//Naive solution is sort first & then output kth element of sorted array which is 0(nlogn)
+/*QUICKSELECT: Better solution uses lomuto partition as a subroutine. This solution is 0(n^2) in worst case (which can be avoided 
+by using a randomized pivot instead) and 0(n) in average case.
+There is one more solution to find k-th smallest element which involves MEDIAN ORDER STATISTICS and is 0(n) even in worst case BUT
+but quickselect works better in practise because of some high hidden constants in median order statistic solution
+*/
+int kThSmallestElement(int arr[],int l, int h, int k){
+    
+    while(l<=h){
+        int p = lomutoPartition(arr,l,h);
+        if(p==(k-1)) return p;
+        else if(p<(k-1)) l = p+1;
+        else h = p-1;
+    }
+    return -1;
+    
+}
+
+int main()
+{
+    
+    int arr[] = {50, 40, 30 ,10, 60, 5, 110};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    int k = 2;
+    int index = kThSmallestElement(arr,0,n-1,k);
+    
+    if(index != -1){
+        cout<<k<<"-th smallest element in array is : "<<arr[index];
+    }else {
+        cout<<"Invalid input";
+    }
+    cout<<endl;
+    return 0;
+}
