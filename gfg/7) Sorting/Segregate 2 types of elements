@@ -1,0 +1,50 @@
+//SORT 2 TYPES OF ELEMENTS
+//2 types of elements can either be  negative and positive elements OR even and odd elements OR 0s&1s in a binary array
+//Naive solution takes 0(n) time & 3 traversals of array
+//Instead use either lomuto or hoare partition to segregate in 0(n) time & 1 traversal of array
+#include <iostream>
+using namespace std;
+
+void segregateLomuto(int arr[], int n){
+    int i = 0;
+    for(int j=i;j<n;++j){
+        if(arr[j]%2 ==0){
+            swap(arr[i], arr[j]);
+            ++i;
+        }
+    }
+}
+
+void segregateHoare(int arr[], int n){
+    int i = -1, j = n;
+    while(true){
+        do{
+            ++i;
+        }while(arr[i]%2==0);      
+        do{
+            --j;
+        }while(arr[j]%2==1);
+        if(i>=j) {
+            //return j;
+            return;
+        }
+        swap(arr[i], arr[j]);
+    }
+}
+
+int main() {
+	// your code goes here
+	//int arr[] = {5,3,-2,-1,0,4,-1,5};         //segregate +ve, -ve elements
+	int arr[] = {2,4,5,77,3,8,1,11};            //segregate odd, even elements
+	//int arr[] = {1,0,1,1,1,0,1,0,0};          //segregate 0's, 1's in binary array
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	
+	//segregateLomuto(arr, n);
+	segregateHoare(arr, n);
+	for(int i=0;i<n;++i){
+	    cout<<arr[i]<<" ";
+	}
+	cout<<endl;
+	return 0;
+}
