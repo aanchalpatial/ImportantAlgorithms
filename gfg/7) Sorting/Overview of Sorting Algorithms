@@ -1,0 +1,14 @@
+//SPECIAL CASES:-
+//Sort Binary Array: Partition function of Quicksort
+//Array with 3 values: 3 way partitioning i.e dutch flag algorithm
+//Array of size n and small ranged values: Count sort
+//Array of size n and range is of size n^2 or n^3: Radix Sort
+//Array of uniformly distributed data over a range: Bucket Sort
+//When memory writes are costly: selection sort, even better algo: cycle sort
+//when only adjacent swaps allowed: Bubble sort
+//When array size is small OR array is already(or almost) sorted OR all elements are identical: INSERTION SORT
+/*when available extra space is less: selection, insertion & bubble sort don't use extra space BUT shall sort doesn't use extra space and 
+is 0(nlogn) time*/
+/*The array has this property that every element in array is at most k distance from its position in sorted array
+where k is a positive integer smaller than size of array: Heap Sort with time 0(nlogk) */
+//External sorting: Merge Sort
