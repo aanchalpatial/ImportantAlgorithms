@@ -1,6 +1,6 @@
 //NOT a comparison based sorting algorithm
-//Count sort is a linear time sorting algorithm WHEN input elements are in SMALL RANGE.
-//0(n+k) time is taken to sort n elements in range from 0 to k-1.
+//Count sort is a linear time sorting algorithm WHEN input elements are in SMALL RANGE. Used a subroutine in RADIX SORT.
+//0(n+k) time & 0(n+k) space is taken to sort n elements in range from 0 to k-1.
 //counting sort is useful only when k is linear in terms with n. If k is nlogn or n^2 then this algo becomes inefficient.
 // C++ program to implement cycle sort 
 #include <bits/stdc++.h> 
