@@ -1,0 +1,45 @@
+//**** DUTCH NATIONAL FLAG ALGORITHM *****
+//This question can take many forms such as:
+//->sort an array's of 0s, 1s & 2s
+//->3 way partitioning when multiple occurrence of a pivot may exist
+//->Partitioning around a range
+
+//Do it in 0(n) & *1* traversal of array (Naive solution needs 4 traversals of array) & requires 0(1) extra space.
+//https://ibb.co/YRMfCsD
+//Approach: 3 way partioning
+//We maintain 3 pointers: i,m,j . 0->i-1 contains all zero, i->m-1 contains all one, m to j-1 contains unknown(not yet sorted) elements,
+                                  j->(size-1) contains all two.
+                                  
+ #include <iostream>
+using namespace std;
+
+void dutchFlagAlo(int arr[], int l, int h){
+    int i=l,m=l,j=h;
+    
+    while(m<=j){
+        switch(arr[m]){
+            case 0: swap(arr[i], arr[m]);
+                    ++i,++m;
+                    break;
+            case 1: ++m;
+                    break;
+            case 2: swap(arr[m], arr[j]);
+                    --j;
+                    break;
+        }
+    }
+}
+
+int main() {
+	
+	int arr[] = {2,1,0,0,1,0,2,2,0};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	
+	dutchFlagAlo(arr,0,n-1);
+	for(int i=0;i<n;++i){
+	    cout<<arr[i]<<" ";
+	}
+	cout<<endl;
+	return 0;
+}
