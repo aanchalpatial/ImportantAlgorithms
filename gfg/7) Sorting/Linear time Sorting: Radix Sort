@@ -2,6 +2,8 @@
 // if the elements are in range from 1 to n2, We can’t use counting sort because counting sort will take O(n2)
 //Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit.
 //Uses a stable algo(such as counting sort) as a subroutine.
+//Time Complexity: 0(d*(n+b)) where d: maximum number of digits possible in an element, b: base
+//Space : 0(n+b)
 /*Is Radix Sort PREFERABLE to Comparison based sorting algorithms like Quick-Sort?
 If we have log2n bits for every digit, the running time of Radix appears to be better than Quick Sort for a wide range
 of input numbers. The constant factors hidden in asymptotic notation are higher for Radix Sort and Quick-Sort uses hardware 
