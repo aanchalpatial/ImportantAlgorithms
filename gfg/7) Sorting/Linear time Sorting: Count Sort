@@ -29,7 +29,7 @@ void countSort(int arr[], int n, int k){
     //     result[freq[arr[i]]-1] = arr[i];
     //     --freq[arr[i]];
     // }
-    for(int i=n-1;i>=0;--i){            //to maintain stability
+    for(int i=n-1;i>=0;--i){            //******* to maintain stability ********
         result[freq[arr[i]]-1] = arr[i];
         --freq[arr[i]];
     }
