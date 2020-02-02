@@ -25,7 +25,7 @@ void countSort(int arr[], int n, int k){
         freq[i] += freq[i-1];
     }
     int result[n];
-    // for(int i=0;i<n;++i){            //makes unstable
+    // for(int i=0;i<n;++i){            //makes unstable, THEN it can't be used as a subroutine for RADIX sort.
     //     result[freq[arr[i]]-1] = arr[i];
     //     --freq[arr[i]];
     // }
