@@ -3,6 +3,11 @@
 //0(n+k) time & 0(n+k) space is taken to sort n elements in range from 0 to k-1.
 //counting sort is useful only when k is linear in terms with n. If k is nlogn or n^2 then this algo becomes inefficient.
 // C++ program to implement cycle sort 
+//NOT a comparison based sorting algorithm
+//Count sort is a linear time sorting algorithm WHEN input elements are in SMALL RANGE. Used a subroutine in RADIX SORT.
+//0(n+k) time & 0(n+k) space is taken to sort n elements in range from 0 to k-1.
+//counting sort is useful only when k is linear in terms with n. If k is nlogn or n^2 then this algo becomes inefficient.
+// C++ program to implement cycle sort 
 #include <bits/stdc++.h> 
 using namespace std; 
 
@@ -34,11 +39,41 @@ void countSort(int arr[], int n, int k){
     
 }
 
+//Simple count sort is for range 0 to k-1, EXTEND it for a given arbitrary range.
+void arbitraryRangeCountSort(int arr[], int n, int min, int max){
+    int k = max-min+1;
+    for(int i=0;i<n;++i){       //array modified
+        arr[i] -= min;
+    }
+    int freq[k];
+    memset(freq,0,sizeof(freq));
+    for(int i=0;i<n;++i){
+        freq[arr[i]]++;
+    }
+    for(int i=1;i<k;++i){
+        freq[i] += freq[i-1];
+    }
+    int result[n];
+    // for(int i=0;i<n;++i){            //makes unstable
+    //     result[freq[arr[i]]-1] = arr[i];
+    //     --freq[arr[i]];
+    // }
+    for(int i=n-1;i>=0;--i){            //to maintain stability
+        result[freq[arr[i]]-1] = arr[i];
+        --freq[arr[i]];
+    }
+    
+    for (int i = 0; i < n; i++) 
+		arr[i] = result[i] + min;     //modifcation restored
+    
+}
+
+
+
 // Driver program to test above function 
 int main() 
 { 
 	int arr[] = { 1, 8, 3, 9, 2, 4, 8}; 
-	
 	int n = sizeof(arr) / sizeof(arr[0]); 
 	int k = 10;
 	countSort(arr, n, k); 
@@ -47,5 +82,19 @@ int main()
 	for(int i=0;i<n;++i)
 	    cout<<arr[i]<<" ";
 	cout<<endl;
+	
+	int arr2[] = {5, 7 , 6, 10, 5, 8, -3, -1, -5}; 
+	int n2 = sizeof(arr2) / sizeof(arr2[0]); 
+	int m = -5;
+	int M = 10;
+	//[min, max]
+	arbitraryRangeCountSort(arr2, n2, m, M); 
+	
+	cout<<"After extended count sort:"<<endl;
+	for(int i=0;i<n2;++i)
+	    cout<<arr2[i]<<" ";
+	cout<<endl;
+	
+	
 	return 0; 
 } 
