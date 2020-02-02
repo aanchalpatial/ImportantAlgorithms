@@ -1,0 +1,72 @@
+//Another sorting algo to sort in linear time when elements are not in range proportional to n.
+// if the elements are in range from 1 to n2, We can’t use counting sort because counting sort will take O(n2)
+//Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit.
+//Uses a stable algo(such as counting sort) as a subroutine.
+/*Is Radix Sort PREFERABLE to Comparison based sorting algorithms like Quick-Sort?
+If we have log2n bits for every digit, the running time of Radix appears to be better than Quick Sort for a wide range
+of input numbers. The constant factors hidden in asymptotic notation are higher for Radix Sort and Quick-Sort uses hardware 
+caches more effectively. Also, Radix sort uses counting sort as a subroutine and counting sort takes extra space to sort numbers.*/
+
+//NOT a comparison based sorting algorithm
+//Count sort is a linear time sorting algorithm WHEN input elements are in SMALL RANGE. Used a subroutine in RADIX SORT.
+//0(n+k) time & 0(n+k) space is taken to sort n elements in range from 0 to k-1.
+//counting sort is useful only when k is linear in terms with n. If k is nlogn or n^2 then this algo becomes inefficient.
+// C++ program to implement cycle sort 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+// C++ program to implement cycle sort 
+#include <bits/stdc++.h> 
+using namespace std; 
+
+void countSort(int arr[], int n, int k, int exp){
+    int freq[k];
+    memset(freq,0,sizeof(freq));
+    for(int i=0;i<n;++i){
+        freq[(arr[i]/exp)%10]++;
+    }
+    for(int i=1;i<k;++i){
+        freq[i] += freq[i-1];
+    }
+    int result[n];
+    
+    for(int i=n-1;i>=0;--i){            //*** to maintain stability ***
+        result[freq[(arr[i]/exp)%10]-1] = arr[i];
+        --freq[(arr[i]/exp)%10];
+    }
+    
+    for (int i = 0; i < n; i++) 
+		arr[i] = result[i];
+    
+}
+
+void radixSort(int arr[], int n, int k){
+    int maxElement = arr[0];
+    for(int i=1;i<n;++i){
+        if(arr[i]>maxElement) maxElement = arr[i];
+    }
+    int maxDigitCount = log10(maxElement)+1;
+    //cout<<"maxDigitCount : "<<maxDigitCount<<endl;
+    for(int i=0;i<maxDigitCount;++i){
+        countSort(arr, n, k, pow(10,i));
+    }
+}
+
+// Driver program to test above function 
+int main() 
+{ 
+	int arr[] = { 319, 212, 6, 8, 100, 50}; 
+	int n = sizeof(arr) / sizeof(arr[0]); 
+	int k = 10;
+	radixSort(arr, n, k); 
+	
+	cout<<"After radix sort:"<<endl;
+	for(int i=0;i<n;++i)
+	    cout<<arr[i]<<" ";
+	cout<<endl;
+	
+	
+	
+	
+	return 0; 
+} 
