@@ -1,0 +1,7 @@
+//Two pointers is really an easy and effective technique which is typically used for SEARCHING PAIRS IN A SORTED ARRAY.
+//https://www.geeksforgeeks.org/two-pointers-technique/
+
+/*Count the number of possible triangles: Given an unsorted array of positive integers.
+Find the number of triangles that can be formed with three different array elements as three sides of triangles. 
+https://www.geeksforgeeks.org/find-number-of-triangles-possible/
+*/
