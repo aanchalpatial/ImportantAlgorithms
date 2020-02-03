@@ -16,8 +16,8 @@ using namespace std;
 void dutchFlagAlo(int arr[], int l, int h){
     int i=l,m=l,j=h;
     
-    while(m<=j){
-        switch(arr[m]){
+    while(m<=j){					
+        switch(arr[m]){						//****** arr[m] ********
             case 0: swap(arr[i], arr[m]);
                     ++i,++m;
                     break;
