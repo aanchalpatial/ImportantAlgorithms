@@ -25,7 +25,7 @@ void naivePartition(int arr[], int l, int h){
 int lomutoPartition(int arr[], int l, int h){
     int piv = arr[h];     //last element is the pivot, it can also work on any specified pivot by swapping the pivot with the last element than performing lomuto
     int i= l-1;
-    for(int j=l;j<h;++j){
+    for(int j=l;j<h;++j){               //**** j should be equal to low not zero ****
         if(arr[j]<piv){
             ++i;
             swap(arr[i], arr[j]);
