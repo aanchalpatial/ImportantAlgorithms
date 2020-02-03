@@ -1,7 +1,86 @@
-//Two pointers is really an easy and effective technique which is typically used for SEARCHING PAIRS IN A SORTED ARRAY.
+//Two pointers is really an easy and effective technique which is typically used for SEARCHING PAIRS IN A SORTED ARRAY in 0(n) time
+//In Naive implementation same approach takes 0(n^2) time.
 //https://www.geeksforgeeks.org/two-pointers-technique/
 
-/*Count the number of possible triangles: Given an unsorted array of positive integers.
-Find the number of triangles that can be formed with three different array elements as three sides of triangles. 
-https://www.geeksforgeeks.org/find-number-of-triangles-possible/
-*/
+
+//3 APPLICATIONS:-
+//1) Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements (A[i], A[j])
+//such that their sum is equal to X
+#include <iostream>
+using namespace std;
+
+//Linear time
+bool pairWithGivenSumExists(int arr[], int n, int sum){
+    int l=0;
+	int r=n-1;
+	while(l<r){
+	    if(arr[l]+arr[r] == sum) return true;
+	    else if(arr[l]+arr[r]>sum) --r;
+	    else ++l;
+	}
+	return false;
+}
+
+int main() {
+	int arr[] = { 1,5,7,9,11};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	if(pairWithGivenSumExists(arr, n, 16)) cout<<"Yes";
+	else cout<<"No";
+	
+	return 0;
+}
+
+
+//2) Find triplets with zero sum
+//Given an array A[] of N elements. The task is to complete the function which returns true if triplets exists in array A whose sum is zero else returns false.
+//Naive implementation is 0(n^3), we will do it in 0(n^2) using 2 pointer approach
+bool findTriplets(int arr[], int n)
+{ 
+    //Your code here
+    sort(arr, arr+n);
+    for(int i=0;i<n-1;++i){
+        int l=i+1, r=n-1;
+        while(l<r){
+            if(arr[l]+arr[r]+arr[i] == 0) return true;
+            else if(arr[l]+arr[r]+arr[i]>0) --r;
+            else ++l;
+        }
+    }
+    return false;
+}
+
+
+
+//3) Count the number of possible triangles: Given an unsorted array of positive integers.
+//Find the number of triangles that can be formed with three different array elements as three sides of triangles. 
+//https://www.geeksforgeeks.org/find-number-of-triangles-possible/
+//Naive implementation is 0(n^3), we will do it in 0(n^2) using 2 pointer approach
+/*Approach: The time complexity can be greatly reduced using Two pointer method in just two nested loops.
+Lets suppose the array given is {4,3,5,7,6}. On sorting the array becomes {3,4,5,6,7}.
+We take three variables l ,r and i, pointing to start , end-1 and array element starting
+from end of the array.
+Now if we can form triange using arr[l] and arr[r] then we can obviously form triangles
+from a[l+1],a[l+2]…..a[r-1], arr[r] and a[i], because the array is sorted
+which we can directly calculate using (r-l). So the overall complexity of iterating
+through all array elements reduces.*/
+long long findNumberOfTriangles(long long n)
+{
+    //Your code here
+    long long cnt = 0;
+    sort(arr, arr+n);
+    for(int i=n-1;i>=1;--i){          ///***** important *****
+        int l= 0, r=i-1;
+        while(l<r){
+            if(arr[l]+arr[r]>arr[i]){
+                cnt += r-l;
+                --r;
+            }else{
+                ++l;
+            }
+        }
+    }
+    return cnt;
+}
+
+
