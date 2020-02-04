@@ -103,6 +103,22 @@ by using a randomized pivot instead) and 0(n) in average case.
 There is one more solution to find k-th smallest element which involves MEDIAN ORDER STATISTICS and is 0(n) even in worst case BUT
 but quickselect works better in practise because of some high hidden constants in median order statistic solution
 */
+
+int lomutoPartition(int arr[], int l, int h){
+    int randomIndex = (rand() % (h-l+1)) + l;       //**** randomized pivot *****
+    swap(arr[randomIndex], arr[h]);
+    
+    int piv = arr[h];     //last element is the pivot, it can also work on any specified pivot by swapping the pivot with the last element than performing lomuto
+    int i= l-1;
+    for(int j=l;j<h;++j){               //**** j should be equal to low not zero ****
+        if(arr[j]<piv){
+            ++i;
+            swap(arr[i], arr[j]);
+        }
+    }
+    swap(arr[i+1], arr[h]);
+    return i+1;
+}    
 int kThSmallestElement(int arr[],int l, int h, int k){
     
     while(l<=h){
