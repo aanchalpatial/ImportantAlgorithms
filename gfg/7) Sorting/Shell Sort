@@ -1,0 +1,32 @@
+/*A variation of insertion sort: In insertion sort, we move elements only one position ahead.The idea of shellSort is to
+allow exchange of far items. In shellSort, we make the array h-sorted for a large value of h. We keep reducing
+the value of h until it becomes 1 */
+//Idea behind shell short: A g-sorted array remains g-sorted after h-sorting it.
+//O(n^2) time
+
+void shellSort(int arr[], int n){
+    for(int gap = n/2;gap>0;gap/=2){
+        for(int i=gap;i<n;++i){
+            int k = i;
+            int j = i-gap;
+            while(j>=0){
+                if(arr[j]>arr[k]){
+                    swap(arr[j], arr[k]);
+                    k = j;
+                    j -=gap;
+                }else {
+                    break;
+                }
+            }
+        }
+        cout<<"gap "<<gap<<" : ";
+        for(int i=0;i<n;++i) cout<<arr[i]<<" ";
+        cout<<endl;
+    }
+}
+
+//APPLICATION 1) 
+/*The task is to merge the two sorted arrays in place, then we need to put first n elements of these sorted in first array
+and remaining m elements in second array.
+*/
+//***** Do it in 0(1) space ******
