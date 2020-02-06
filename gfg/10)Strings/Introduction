@@ -6,7 +6,70 @@
 //1) Given a string, check if they are an anagram of each other in LINEAR time.
 //Solution : Use hashmap
 
-//2) Given a string, find the leftmost character that repeats in LINEAR time and 1 TRAVERSAL OF ARRAY.
+//2) Given a string, find the leftmost character that repeats (*4* different approaches)
+//->Naive approach is 0(n^2)
+//->Another Approach is create a hashmap of character and their frequency during first traversal and then in the second traversal look for
+//the first element with frequrncy more than 1. This approach is 0(n) but still need 2 TRAVERSALS.
+//->0(n) & 1 traversal
+void leftmostCharacterThatRepeats(string str){
+    //0(n) & 1 traversal
+    int result = str.size();
+    map<char, int> m;
+    for(int i=0;i<str.size();++i){
+        if(m.find(str[i]) == m.end() ) {
+            m.insert(make_pair(str[i], i));
+        }else {
+            result = min(result, m[str[i]]);
+        }
+        
+    }
+    if(result != str.size()) { cout<<"left most character that repeats: "<<str[result]; }
+    else cout<<"No repeating character";
+    
+}
+//->Even Better Approach: 0(n) & 1 Traversal & even less comparisons that the above approach
+void leftmostCharacterThatRepeats(string str){
+    //0(n) & 1 traversal
+    int result = str.size();
+    map<char, int> m;
+    for(int i=str.size()-1;i>=0;--i){
+        if(m.find(str[i]) == m.end() ) {    //** when we traverse from right we needn't min(,) comparisons **
+            m.insert(make_pair(str[i], i));
+        }else {
+            result = m[str[i]];             //** when we traverse from right we needn't min(,) comparisons **
+        }
+        
+    }
+    if(result != str.size()) { cout<<"left most character that repeats: "<<str[result]; }
+    else cout<<"No repeating character";
+
+
+//3) Given a string, find the leftmost character that does not repeats
+//1st & 2nd approaches are same as above question
+//->0(n) time & 1 traversal
+void leftmostCharacterThatDoesNotRepeats(string str){
+    //0(n) & 1 traversal
+    
+    map<char, int> m;
+    for(int i=0;i<str.size();++i){
+        if(m.find(str[i]) == m.end()){
+            m.insert(make_pair(str[i], i));
+        }else {
+            m[str[i]] = str.size();
+        }
+    }
+    int result = str.size();
+    for(auto i: m){     //constant time i.e 0(256)
+        if(i.second < result) result = i.second;
+    }
+    if(result != str.size()) { cout<<"left most character that does not repeats: "<<str[result]; }
+    else cout<<"No non-repeating character";
+    
+}
+
+//4) Given a string, find its lexicographic rank of it.
+//Naive approach is considering all permutations of string which 0(n!) in worst case
+//Do it in linear time, we have to use a mathematical formula
 
 
 
