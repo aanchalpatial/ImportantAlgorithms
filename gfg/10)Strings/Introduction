@@ -68,8 +68,21 @@ void leftmostCharacterThatDoesNotRepeats(string str){
 }
 
 //4) Given a string, find its lexicographic rank of it.
-//Naive approach is considering all permutations of string which 0(n!) in worst case
-//Do it in linear time, we have to use a mathematical formula
+//->Naive approach is considering all permutations of string which exponential time in worst case
+void naiveLexographicRank(string str){
+    int rank = 1;
+    string temp = str;
+    sort(temp.begin(), temp.end());
+    while(next_permutation(temp.begin(), temp.end())){
+        ++rank;
+        if(temp == str) break;
+        //cout<<temp<<", ";
+    }
+    cout<<endl<<"Rank: "<<rank;
+}
+
+//->Do it in linear time, we have to use a mathematical formula: **RR**
+
 
 
 
