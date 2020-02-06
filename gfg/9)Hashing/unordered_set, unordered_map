@@ -1,3 +1,8 @@
+//**** There are 3 versions of set & map each *******
+//i.e set(ordered & unique keys), multiset(ordered & multiple identical keys) & unordered_set(unordered & unique keys)
+//i.e map, multimap & unordered_map
+
+
 //A)
 //unordered_set data structure is implemented using hashing, where as set data structure uses self balancing binary trees
 //duplicates are ignored in this data structure
