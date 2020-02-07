@@ -19,6 +19,7 @@ https://drive.google.com/file/d/13BJUAHiYyJU2AibcSUAHBEkbCRNuhBYP/view?usp=shari
 //4) KMP Algorithm: O(n) in worst case
 //Preprocesses pattern to create LPS[m](i.e longest proper prefix suffix array) which for every index contains the longest proper prefix
 //which is also a suffix.Then this LPS[] array is used to skip matching duplicating patters to increase efficiency.
+//Naive solution of calculating LPS[] is O(n^3), instead we use a linear time algo to compute LPS[] in KMP
 
 /*3rd and 4th algorithm PRE-PROCESSES PATTERN and thus are efficient in cases where string keeps changing.*/
 
