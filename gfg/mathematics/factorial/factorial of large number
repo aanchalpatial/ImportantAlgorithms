@@ -6,7 +6,6 @@ Following is a simple solution where we use an array to store individual digits 
 //https://www.geeksforgeeks.org/first-digit-factorial-number/
 
 
-
 //In Python
 def factorial(n):
     if n == 1:
