@@ -1,0 +1,13 @@
+//Note:- n & m are lengths of string & pattern respectively.
+
+//1) str.find(pattern) is used to find the first index of the first occurence of pattern in str. If not found it returns string::npos.
+//2) Naive Approach takes O((n-m+1)*m), simply O(n*m).
+
+//3)Rabin Karp Algorithm: O((n-m+1)*m) in worst case, but works better than naive on average
+//Approach: Using hash & sliding window(i.e rolling hash), same as done in anagramSearch in 2nd appication of String in introduction file.
+
+//4) KMP Algorithm: O(n) in worst case
+/*3rd and 4th algorithm PRE-PROCESSES PATTERN and thus are efficient in cases where string keeps changing.*/
+
+//5) Suffix Tree: O(m) in worst case (Only mentioned, not studied)
+//5th algorithm PRE-PROCESSES STRING and thus are efficient in cases where pattern keeps changing.
