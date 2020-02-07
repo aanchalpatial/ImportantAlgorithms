@@ -1,12 +1,25 @@
 //Note:- n & m are lengths of string & pattern respectively.
 
 //1) str.find(pattern) is used to find the first index of the first occurence of pattern in str. If not found it returns string::npos.
-//2) Naive Approach takes O((n-m+1)*m), simply O(n*m).
 
-//3)Rabin Karp Algorithm: O((n-m+1)*m) in worst case, but works better than naive on average
-//Approach: Using hash & sliding window(i.e rolling hash), same as done in anagramSearch in 2nd appication of String in introduction file.
+//2) Naive Approach takes O((n-m+1)*m), simply O(n*m).
+//Naive approach can be modified to work in O(n) time IN CASE when all characters in pattern are distinct(Not implemented)
+
+//3) Rabin Karp Algorithm: O((n-m+1)*m) in worst case, but works better than naive on average
+//Worst case occurs in cases such as when str = "AAAAAA" & patt = "AAA"
+/*Approach: Using hash & sliding window(i.e ROLLING HASH), same as done in anagramSearch in 2nd appication of String in introduction file.
+We compare hashvalue SUM(eg: hashvalue sum of "abc" is 97+98+99) of pattern and current window of str and if they match
+then ONLY we start comparing individual characters.*/
+/*Modified Approach: In the above approach of matching hashvalue sum , there are many false matches beacuse any permutation of pattern will give same hash
+To improve on this situation we instead use WEIGHTED hashvalue sum.
+https://drive.google.com/file/d/13BJUAHiYyJU2AibcSUAHBEkbCRNuhBYP/view?usp=sharing*/
+//We use Horner's Rule to compute weighted hashvalue of pattern in O(n)
+//Code Implementation LEFT
 
 //4) KMP Algorithm: O(n) in worst case
+//Preprocesses pattern to create LPS[m](i.e longest proper prefix suffix array) which for every index contains the longest proper prefix
+//which is also a suffix.Then this LPS[] array is used to skip matching duplicating patters to increase efficiency.
+
 /*3rd and 4th algorithm PRE-PROCESSES PATTERN and thus are efficient in cases where string keeps changing.*/
 
 //5) Suffix Tree: O(m) in worst case (Only mentioned, not studied)
