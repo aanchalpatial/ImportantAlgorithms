@@ -1,7 +1,10 @@
 //number of digits in number n : floor(log10(n)+1)
 //log(a*b) = log(a) + log(b)
-//log( n! ) = log(1*2*3....... * n) 
-//          = log(1) + log(2) + ........ +log(n)
+//Number of digits in factorial of n:
+//log( n! ) = log(1*2*3....... * n) = log(1) + log(2) + ........ +log(n)
+
+//Number of digits in factorial of n raise to the power n i.e (n!)^n
+//log((n!)^n) = n*( log(1) + log(2) + .... + log(n) )
 
 int digitsInFactorial(int N)
 {
