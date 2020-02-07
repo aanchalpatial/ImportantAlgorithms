@@ -7,7 +7,7 @@
 
 //3) Rabin Karp Algorithm: O((n-m+1)*m) in worst case, but works better than naive on average
 //Worst case occurs in cases such as when str = "AAAAAA" & patt = "AAA"
-/*Approach: Using hash & sliding window(i.e ROLLING HASH), same as done in anagramSearch in 2nd appication of String in introduction file.
+/*Approach: Using hash & sliding window(i.e ROLLING HASH).
 We compare hashvalue SUM(eg: hashvalue sum of "abc" is 97+98+99) of pattern and current window of str and if they match
 then ONLY we start comparing individual characters.*/
 /*Modified Approach: In the above approach of matching hashvalue sum , there are many false matches beacuse any permutation of pattern will give same hash
