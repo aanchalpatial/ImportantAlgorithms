@@ -1,4 +1,5 @@
 // the task is to count number of trailing zeroes in factorial of N
+//Trailing 0s in n! = Count of 5s in prime factors of n!
 
 #include <iostream> 
 using namespace std; 
