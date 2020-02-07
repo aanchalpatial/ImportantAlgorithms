@@ -1,12 +1,51 @@
 //Strings is a special data structure because its charcters are bound to be one of the 256(i.e ascii) values possible.
-//Most efficient way to sort a string is to use cound sort beacuse strings has limited range. Thus the fastest we can sort a string is
-//linear time.
+//Most efficient way to sort a string is to use cound sort beacuse strings has limited range. Thus the fastest we can sort a string is 0(n).
+//str.find(pattern) returns the first index of pattern if it exists in string, otherwise returns string::npos.
+//str.substr(index, length);
 
-//APPLICATION:
-//1) Given a string, check if they are an anagram of each other in LINEAR time.
+
+//6 APPLICATIONs:
+//1) Given 2 string, check if they are an anagram(permutation) of each other in LINEAR time.
 //Solution : Use hashmap
 
-//2) Given a string, find the leftmost character that repeats (*4* different approaches)
+
+//2) Given a string and pattern string, find if a permutation of pattern exists in string at contigous locations.
+//Naive Approach is 0( (n-m+1)*m), do it in 0(n) using sliding window
+bool checkHashEqual(int h1[], int h2[]){
+    for(int i=0;i<256;++i){
+        if(h1[i] != h2[i]) return false;
+    }
+    return true;
+}
+
+bool anagramSearch(string str, string patt){
+    int countStr[256] = {0};
+    int countPatt[256] = {0};
+    for(int i=0;i<patt.size();++i) countPatt[patt[i]]++;
+    
+    for(int i=0;i<patt.size();++i){
+        countStr[str[i]]++;
+    }
+    
+    if(checkHashEqual(countStr, countPatt)) return true;
+    for(int i=1;i<str.size()-patt.size()+1;++i){
+        --countStr[str[i-1]];
+        ++countStr[str[i+patt.size()-1]];
+        //printHash(countStr);
+        if(checkHashEqual(countStr, countPatt)) return true;
+    }
+    return false;
+}
+int main() {
+    string str = "acbkadkljas";
+    string patt = "jlk";
+    if (anagramSearch(str, patt)) cout<<"Yes";
+    else cout<<"No";
+}
+
+
+
+//3) Given a string, find the leftmost character that repeats (*4* different approaches)
 //->Naive approach is 0(n^2)
 //->Another Approach is create a hashmap of character and their frequency during first traversal and then in the second traversal look for
 //the first element with frequrncy more than 1. This approach is 0(n) but still need 2 TRAVERSALS.
@@ -44,7 +83,7 @@ void leftmostCharacterThatRepeats(string str){
     else cout<<"No repeating character";
 
 
-//3) Given a string, find the leftmost character that does not repeats
+//4) Given a string, find the leftmost character that does not repeats
 //1st & 2nd approaches are same as above question
 //->0(n) time & 1 traversal
 void leftmostCharacterThatDoesNotRepeats(string str){
@@ -67,9 +106,9 @@ void leftmostCharacterThatDoesNotRepeats(string str){
     
 }
 
-//4) Given a string, find its lexicographic rank of it.
+//5) Given a string, find its lexicographic rank of it.
 //->Naive approach is considering all permutations of string which exponential time in worst case
-void naiveLexographicRank(string str){
+void naiveLexographicRank(string str){          //*** works for duplicate characters as well ****
     int rank = 1;
     string temp = str;
     sort(temp.begin(), temp.end());
@@ -82,6 +121,51 @@ void naiveLexographicRank(string str){
 }
 
 //->Do it in linear time, we have to use a mathematical formula: **RR**
+//*** does not work for duplicate characters ****
+long long int fact(int n){
+    long long int result = 1;
+    while(n>0){
+        result *= n;
+        --n;
+    }
+    return result;
+}
+
+int linearTimeLexographicRank(string str){          //*** does not work for duplicate characters ****
+    int count[256] = {0};
+    for(int i=0;i<str.size();++i){
+        count[str[i]]++;
+    }
+    for(int i=1;i<256;++i) count[i] += count[i-1];
+    
+    long long int f = fact(str.size());
+    
+    int rank = 1; //formula requires 1 to be added
+    for(int i=0;i<str.size();++i){
+        f /= (str.size()-i);
+        rank += (count[str[i]-1] * f);
+        for(int j = str[i];j<256;++j) --count[j];
+    }
+    
+    cout<<"Lexicographic Rank: "<<rank;
+}
+
+int main() {
+    string str = "string";
+    linearTimeLexographicRank(str);
+}
+
+//6) Given 2 strings, check if they are rotation of each other.
+//When there are multiple occurences of character, then naive solution becomes quadratic
+//Do it in linear time.
+//Approach: //concatenate first string and then search for string 2 in the new concatenated string 1.
+//Note:- str.find(pattern) returns string::npos if pattern is not found, else returns the starting index.
+
+bool isRotation(string str1, string str2){
+    str1 += str1;       //RR
+    if(str1.find(str2) != string::npos) return true;
+    else return false;
+}
 
 
 
