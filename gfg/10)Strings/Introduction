@@ -10,7 +10,9 @@
 
 
 //2) Given a string and pattern string, find if a permutation of pattern exists in string at contigous locations.
-//Naive Approach is 0( (n-m+1)*m), do it in 0(n) using sliding window
+//Naive Approach is 0( (n-m+1)*m).
+//do it in 0(n) using sliding window and hash
+//Note:- Above approach is also used in Rabin Karp Algorithm for pattern searching
 bool checkHashEqual(int h1[], int h2[]){
     for(int i=0;i<256;++i){
         if(h1[i] != h2[i]) return false;
