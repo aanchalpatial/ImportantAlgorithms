@@ -1,1 +1,54 @@
-//
+/*Given a string S and text P. Output the smallest window in the string S having all characters of the text P.
+Both the string S and text P contains lowercase english alphabets.*/
+
+//Naive solution is O(n^2), do it in O(n)
+/*Approach: https://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
+First check if the length of string is less than the length of the given pattern, if yes then “no such window can exist “.
+Store the occurrence of characters of the given pattern in a hash_pat[].
+Start matching the characters of pattern with the characters of string i.e. increment count if a character matches.
+Check if (count == length of pattern ) this means a window is found.
+If such window found, try to minimize it by removing extra characters from the beginning of the current window.
+Update min_length.
+Print the minimum length window.
+*/
+string smallestWindow (string s, string pat){
+    if(pat.size()>s.size()) return "-1";
+    else {
+        unordered_map<int, int> h_pat;
+        for(int i=0;i<pat.size();++i){
+            h_pat[pat[i]]++;
+        }
+        int cnt = 0;
+        int start = 0;
+        unordered_map<int, int> h_str;
+        string min_window = s+"x";
+        for(int i=0;i<s.size();++i){
+            start = i;
+            for(int j=i;j<s.size();++j){
+                if((h_pat.find(s[j])!=h_pat.end())&&(h_pat[s[j]]>h_str[s[j]])) ++cnt;
+                h_str[s[j]]++;
+                if(j==s.size()-1&&cnt!=pat.size()) goto comeOut;
+                if(cnt == pat.size()) {
+                    while((h_pat.find(s[start]) == h_pat.end()) || ( h_str[s[start]]>h_pat[s[start]] )){
+                        ++start;
+                        if(h_pat.find(s[start]) != h_pat.end()) h_str[s[start]]--;
+                    }
+                    i = start;
+                    cnt = 0;
+                    h_str.clear();
+                    string temp = "";
+                    for(int k=start;k<j+1;++k){
+                         temp += s[k];
+                    }
+                    if(temp.size()<min_window.size()&&temp.size()>=pat.size()) min_window = temp;
+                    break;
+                }             
+            }  
+        }
+        comeOut:
+        if(min_window.size() == s.size()+1) return "-1";
+        else return min_window;
+        
+    }
+    
+}
