@@ -136,7 +136,8 @@ long long int fact(int n){
 int linearTimeLexographicRank(string str){          //*** does not work for duplicate characters ****
     int count[256] = {0};
     for(int i=0;i<str.size();++i){
-        count[str[i]]++;
+        if(count[str[i]] == 0) count[str[i]]++;
+        else return -1;                             //rank is -1 when there are duplicate characters present, coz this algo doesn't work when there are duplicate characters
     }
     for(int i=1;i<256;++i) count[i] += count[i-1];
     
