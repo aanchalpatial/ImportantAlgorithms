@@ -1,1 +1,23 @@
-//
+/*
+Why linked list over arrays?
+1)size has to be known in advance
+2) If we use dynamically sized array(like vectors), then in that case insertion when array is full(worst case) takes O(n) time
+3)Insertion & Deletion in middle is costly
+4)Implementation data structures such as queue and deque is complex(not costly)
+*/
+
+//Variations:
+/*1)Doubly Linked List:
+Advantages  ->traversal in both direction
+            ->delete a given node in O(1) 
+            (Trick Question :- Deletion singly linked list can be made O(1) by copying data and pointer of next node 
+            and then deleting the next node but this trick fails if the last node is to be deleted)
+            ->insert/delete a node BEFORE(AFTER is O(1) in both singly & doubly linked list) given node in O(1)
+            ->You can't implement deque with singly linked list
+Disadvantages-extra space for previous pointer, complex
+*/
+/*
+2)Circular Linked List:
+*/
+
+
