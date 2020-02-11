@@ -6,18 +6,43 @@ Why linked list over arrays?
 4)Implementation data structures such as queue and deque is complex(not costly)
 */
 
-//Variations:
-/*1)Doubly Linked List:
+//VARIATIONS:
+//1)Singly Linked List
+/*2)Doubly Linked List:
 Advantages  ->traversal in both direction
             ->delete a given node in O(1) 
             (Trick Question :- Deletion singly linked list can be made O(1) by copying data and pointer of next node 
             and then deleting the next node but this trick fails if the last node is to be deleted)
             ->insert/delete a node BEFORE(AFTER is O(1) in both singly & doubly linked list) given node in O(1)
             ->You can't implement deque with singly linked list
-Disadvantages-extra space for previous pointer, complex
+Disadvantages->extra space for previous pointer, complex
 */
 /*
-2)Circular Linked List:
+3)Circular Linked List: (2 types-singly circular linked list and doubly circular linked list)
+Advantages  ->can traverse the whole list from any node
+            ->insert item at begin & end in O(1)
+            ->useful in implementing queue & round robin
+Disadvantages-> complex
 */
 
+//APPLICATIONS
+//1)Find middle of singly linked list (3 Approaches)
+//Naive approach takes 2 TRAVERSAL of linked list: First find length of linked list and then its middle element
+//Efficient Method: Do it in 1 TRAVERSAL(i.e without finding length of linked list)
+//Approach: Start with 2 pointers one of which is incrementing one node at a time and other is incrementing 2 nodes at a time
+void searchMiddleElement(Node *head){
+    Node *slow = head;
+    Node *fast = head;
+    while(fast!=NULL&&fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    cout<<"middle node: "<<slow->key<<endl;
+}
+//Another Approach of 1 TRAVERSAL: we main a variables count & a pointer mid and we move mid pointer ahead only if count is odd.
+
+
+//2) nth node from end of linked list
+//Naive approach takes 2 TRAVERSALS: First find length of linked list & then (length-n+1)th element
+//Efficient Method: Do it in 1 TRAVERSAL(i.e without finding length of linked list)
 
