@@ -1,0 +1,14 @@
+//Detect Loop in Singly Linked List
+//Method 1) Naive approach: O(n^2)
+//for every ith node we check if its next node has same address as one of the 0 to i-1 nodes, If yes then there is a loop.
+
+//Method 2) If modification in linked list structure is allowed, we add a visited flag in linked list definition and if an
+//already visited node is again visited then we say linked list has a loop in O(n) time and extra space visited flag on every node
+
+//Method 3) In this method instead of modifiying sturcture of linked list , we modify pointers of linked list
+//O(n) time and no extra space, but MODIFIES the linked list
+//Approach: We use a dummy node. while traversing the linked list for every node, after saving the next node point the 
+//next pointer of current node to dummy node. And if current node is already pointing to the dummy node, there exists a loop.
+//https://drive.google.com/file/d/1b_uT8WSv0RJ4a7Os7-QFKJ_XTBibODd4/view?usp=sharing
+
+
