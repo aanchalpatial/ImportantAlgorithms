@@ -35,6 +35,7 @@ Disadvantages-> complex
 //Naive approach takes 2 TRAVERSAL of linked list: First find length of linked list and then its middle element
 //Efficient Method: Do it in 1 TRAVERSAL(i.e without finding length of linked list)
 //Approach: Start with 2 pointers one of which is incrementing one node at a time and other is incrementing 2 nodes at a time
+//Similar kind of approach is used Floyd's Loop Detection also.
 void searchMiddleElement(Node *head){
     Node *slow = head;
     Node *fast = head;
