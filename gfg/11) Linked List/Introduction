@@ -1,3 +1,8 @@
+//Linked List in STL:
+->forward_list<data_type> name; implements singly linked list
+->list<data_type> name: implements doubly linked list
+We have functions like: front(), back(),push_front(value), pop_front(),push_bacl(value), pop_back(), reverse(), sort()
+
 /*
 Why linked list over arrays?
 1)size has to be known in advance
@@ -39,10 +44,54 @@ void searchMiddleElement(Node *head){
     }
     cout<<"middle node: "<<slow->key<<endl;
 }
-//Another Approach of 1 TRAVERSAL: we main a variables count & a pointer mid and we move mid pointer ahead only if count is odd.
+//Another Approach of 1 TRAVERSAL: we maintain a variables count & a pointer mid and we move mid pointer ahead only if count is odd.
 
 
 //2) nth node from end of linked list
 //Naive approach takes 2 TRAVERSALS: First find length of linked list & then (length-n+1)th element
-//Efficient Method: Do it in 1 TRAVERSAL(i.e without finding length of linked list)
+//Efficient Method: Do it without finding length of linked list: Take 2 pointers, move one of them n nodes ahead.Then start travering them
+//simultanously until the ahead pointer reaches end. At this moment behind pointer is at nth node from end.
+void nodeFromEnd(Node *head, int n){
+    Node *ahead = head;
+    Node *behind = head;
+    int i=0;
+    while(i<n){
+        if(ahead==NULL) {
+        cout<<"Invalid value of n !!"<<endl;
+        return;
+    }
+        ++i;
+        ahead = ahead->next;
+    }
+    
+    while(ahead!=NULL){
+        ahead = ahead->next;
+        behind = behind->next;
+    }
+    cout<<n<<"th node from end: "<<behind->key<<endl;
+}
+
+
+//3)Reverse a singly linked list
+//A) Naive solution requires 2 traversal & O(n) space: We copy data from linked list into a dynamically sized array(i.e vectors) and then 
+//copy it back into the linked list in reverse order
+
+//B) Efficient solution: 1 traversal & O(1) space
+//Approach: Reverse the links rather than reversing the data (we use 3 pointers PREVIOUS, CURRENT and NEXT).
+Node *reverseSinglyLinkedList(Node *head){
+    Node *prevNode = NULL;      //RR
+        Node *currNode = head;      //RR
+        
+        while(currNode!=NULL){
+            Node *nextNode = currNode->next;
+            currNode->next = prevNode;
+            
+            
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+    return prevNode;
+}
+//C) Recursive solution to reverse a linked list
+
 
