@@ -16,7 +16,7 @@ struct Node{
 };
 
 //Method 3) In this method instead of modifiying sturcture of linked list , we modify pointers of linked list
-//O(n) time and no extra space, but MODIFIES the linked list(doesn't remains the same).
+//O(n) time and O(1) space, but MODIFIES the linked list(doesn't remains the same).
 //Approach: We use a dummy node. while traversing the linked list for every node, after saving the next node point the 
 //next pointer of current node to dummy node. And if current node is already pointing to the dummy node, there exists a loop.
 //https://drive.google.com/file/d/1b_uT8WSv0RJ4a7Os7-QFKJ_XTBibODd4/view?usp=sharing
@@ -33,5 +33,33 @@ bool detectLoop3(Node *head){   //O(n)time & O(1)space
     }
     return false;
 }
+//Mehod 4) O(n) time, O(n) space, doesn't modify linked list structure or pointers.
+//Use HASHING
+bool detectLoop4(Node *head){
+    unordered_set<Node *> s;
+    Node *temp = head;
+    while(temp!=NULL){
+        if(s.find(temp)==s.end()) s.insert(temp);
+        else return true;
+        temp = temp->next;
+    }
+    return false;
+}
+
+//Method 5) O(n) time, O(1) space, doesn't modify linked list structure or pointers
+//***FLOYD DETECTION METHOD*** (very popular algo)
+//Approach: We maintain 2 pointers i.e slow and fast. If there is a loop in linked list then these 2 will definately meet and if not
+//then fast pointer will reach end .
+bool floydDetectLoop(Node *head){
+    Node *slow = head;
+    Node *fast = head;
+    while(fast!=NULL&&fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+        if(slow==fast) return true;
+    }
+    return false;
+}
+
 
 
