@@ -92,6 +92,21 @@ Node *reverseSinglyLinkedList(Node *head){
         }
     return prevNode;
 }
-//C) Recursive solution to reverse a linked list
+//C) Recursive solution to reverse a linked list: 2 recursive solutions
+//C1: Recursive version of iterative solution B
+Node *recursiveReverseSinglyLinkedList(Node *prev, Node *curr){
+    if(curr==NULL) return prev;
+    Node *next = curr->next;
+    curr->next = prev;
+    return recursiveReverseSinglyLinkedList(curr, next);
+}
 
-
+//C2:
+Node *recursive2ReverseSinglyLinkedList(Node *head){
+    if(head == NULL||head->next==NULL) return head;
+    Node *rest_head = recursive2ReverseSinglyLinkedList(head->next);
+    Node *rest_tail = head->next;
+    rest_tail->next = head;
+    head->next = NULL;
+    return rest_head;
+}
