@@ -1,0 +1,41 @@
+//Given a linked list, where each node has 2 pointers, one simple next pointer pointing to next node and other random pointer pointing 
+//to any node. Clone this linked list.
+
+//Method 1) O(n) time & O(n) space:             //TBD!!
+https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
+
+//Method 2) O(n) time & O(1) space
+Node *cloneLinkedListWithRandomPointers(Node *head){
+    //Step 1: Add a duplicate node ahead of every node i.e 1->2->3-> to 1->1->2->2->3->3->
+    Node *temp = head;
+    while(temp!=NULL){
+        Node *c = new Node(temp->key);
+        Node * next = temp->next;
+        temp->next = c;
+        c->next = next;
+        
+        temp = temp->next->next;
+    }
+    
+    //Step 2: Add random pointers to duplicate node using random pointers of original nodes
+    temp = head;
+    while(temp!=NULL){
+        temp->next->rand = temp->rand;
+        
+        temp = temp->next->next;
+    }
+    
+    //Step 3: Separate original & duplicate list
+    Node *original = head;
+    Node *clone = head->next;
+    Node *cloneHead = head->next;
+    while(clone!=NULL&&original!=NULL){
+        original->next = original->next?original->next->next:original->next;    //RR    
+        clone->next = clone->next?clone->next->next:clone->next;                //RR
+        
+        original = original->next;
+        clone = clone->next;
+    }
+    
+    return cloneHead;
+}
