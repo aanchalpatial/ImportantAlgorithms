@@ -1,0 +1,46 @@
+//Find the node at which 2 given linked list intersect.
+
+//Method 1) O(m+n) time, O(m) space
+//Approach: use unordered_set<Node *> s;
+
+//Method 2) O(m+n) time, O(1) space
+//Approach: Find length of both linked list, say L1 & L2. Find x = abs(L1-L2). Start traversing both the lists but first move ahead
+//the pointer of LONGER list by 'x' number of nodes. And now when they meet is the intersection point & if they don't then
+//there is no intersection point.
+void intersectionOfLinkedLists(Node *head1, Node *head2){
+    int length1 = 0, length2 = 0;
+    Node *temp1 = head1, *temp2 = head2;
+    while(temp1!=NULL){
+        ++length1;
+        temp1 = temp1->next;
+    }
+    while(temp2!=NULL){
+        ++length2;
+        temp2 = temp2->next;
+    }
+    
+    int x = abs(length1-length2);
+    
+    if(length1>=length2){
+        //advance first linked list
+        while(x>0){
+            head1 = head1->next;
+            --x;
+        }
+    }else {
+        //advance second linked list
+        while(x>0){
+            head2 = head2->next;
+            --x;
+        }
+    }
+    while(head1!=NULL && head2!=NULL){
+        if(head1==head2){
+            cout<<"Intersection point: "<<head1->key<<endl;
+            return;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+    }
+    cout<<"No intersection point."<<endl;
+}
