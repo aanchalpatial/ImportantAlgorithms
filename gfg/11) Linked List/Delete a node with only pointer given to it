@@ -1,0 +1,15 @@
+//We have to do delete a node when only its pointer is given and no head is given
+//This is a TRICK question
+//Approach: copy the data of the next node to the node to be deleted and then delete the next node
+//Note:- This approach won't work if node to be deleted is the last node
+void deleteNodeWithoutHeadPointer(Node *ptr){
+    if(ptr->next!=NULL){
+        ptr->key = ptr->next->key;
+        //delete nodeToBeDeleted->next
+        ptr->next = ptr->next->next; 
+        cout<<"Node deleted."<<endl;
+    }else{
+        cout<<"Can't delete last node with this approach"<<endl;
+    }
+    
+}
