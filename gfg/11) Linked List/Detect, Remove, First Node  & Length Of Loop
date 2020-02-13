@@ -54,7 +54,7 @@ bool detectLoop4(Node *head){
 bool floydDetectLoop(Node *head){
     Node *slow = head;
     Node *fast = head;
-    while(fast!=NULL&&fast->next!=NULL){
+    while(fast!=NULL&&fast->next!=NULL){        //RR
         slow = slow->next;
         fast = fast->next->next;
         if(slow==fast) return true;
