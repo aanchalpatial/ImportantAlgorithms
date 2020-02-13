@@ -80,7 +80,7 @@ void removeLoopIfExists(Node *head){
     
     Node *dummy = new Node(-1);
     dummy->next = head;
-    head = dummy;
+    head = dummy;           //RR
     
     Node *slow = head;
     Node *fast = head;
