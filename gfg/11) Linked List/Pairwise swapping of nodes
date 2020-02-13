@@ -1,0 +1,32 @@
+//Method 1)Naive Soulution is O(n) time & O(1) space BUT requires swapping of data
+//Approach: Save current->next->next and then swap(current->data, current->next->data)
+
+//METHOD 2) If data in a node a complex data then swapping of data is not an efficient option. This in cases where swapping of data is 
+//inefficient Method 2 will be used.
+//Approach: Instead of swapping data we will modify pointers
+//We maintain 2 pointers: first we separately swap head & head-> next. then we maintain prev & curr pointers
+
+Node *pairwiseSwap(Node *head){
+    if(head==NULL||head->next==NULL) return head;
+    
+    //Separately modify heah & head->next
+    Node *temp = head->next;
+    head->next = temp->next;
+    temp->next = head;
+    head = temp;
+    
+    //then modify links of prev, curr & curr->next
+    Node *prev = head->next;
+    Node *curr = head->next->next;
+    while(curr!=NULL&&curr->next!=NULL){
+        prev->next = curr->next;
+        Node *temp = curr->next->next;
+        curr->next->next = curr;
+        prev = curr;
+        curr = temp;   
+    }
+    
+    //Link last node 
+    prev->next = curr;
+    return head;
+}
