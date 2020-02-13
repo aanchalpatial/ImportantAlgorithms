@@ -1,0 +1,40 @@
+//Segragate odd & even nodes of linked list in the same order as they appear in linked list.
+//eg: 2->9->4->8->5->6-> into 2->4->8->6->9->5->
+
+//Naive approach: 2 traversals
+first find the last node of the linked list.then again traverse the linked list and if we find an odd node , remove this
+//node from here and add it at the end;
+
+//Efficient: 1 traversal
+//We maintain 4 pointers i.e even_start, even_end, odd_start & odd_end. later we link even_end & odd_start after traversal of linked list
+Node *segregateEvenOdd(Node *head){
+    Node *es = NULL, *ee = NULL, *os = NULL, *oe = NULL;
+    Node *temp = head;
+    while(temp!=NULL){
+        if(temp->key%2==0){
+            if(es==NULL){
+                es = temp;
+                ee = es;
+            }else{
+                ee->next = temp;
+                ee = ee->next;
+            }
+        }else{
+            if(os==NULL){
+                os = temp;
+                oe = os;
+            }else{
+                oe->next = temp;
+                oe = oe->next;
+            }
+            
+        }
+        temp = temp->next;
+    }
+    if(es==NULL||os==NULL) return head;
+    
+    ee->next = os;
+    oe->next = NULL;
+    return es;
+    
+}
