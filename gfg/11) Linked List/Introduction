@@ -111,3 +111,60 @@ Node *recursive2ReverseSinglyLinkedList(Node *head){
     head->next = NULL;
     return rest_head;
 }
+
+//4) Remove duplicate elements from linked list
+//4A) from SORTED linked list: O(n) time
+Node *removeDuplicates(Node *root)
+{
+ // your code goes here
+ Node *temp = root;
+ while(temp!=NULL&&temp->next!=NULL){
+     if(temp->data==temp->next->data){
+         //duplicate node
+         temp->next = temp->next->next;
+     }
+     if(temp->next!=NULL&&temp->data!=temp->next->data) temp = temp->next;
+ }
+ return root;
+}
+//4B) from UNSORTED linked list: Naive is O(n^2) time, do it in O(n): Appraoch - Use hashing
+Node * removeDuplicates( Node *head) 
+{
+    //Naive: O(n^2)
+    // Node *temp = head;
+    // while(temp!=NULL){
+    //     Node *prev = temp;
+    //     Node *curr = temp->next;
+    //     while(curr!=NULL){
+    //         if(curr->data==temp->data){
+    //             prev->next = curr->next;
+    //             curr = curr->next;
+    //         }else {
+    //             prev = curr;
+    //             curr = curr->next;
+    //         }
+    //     }
+    //     temp = temp->next;
+    // }
+    // return head;
+    
+    
+    //Efficient: O(n) using hashing
+    unordered_set<int> s;
+    Node *prev = NULL;
+    Node *curr = head;
+    while(curr!=NULL){
+        if(s.find(curr->data)!=s.end()){
+            //already existing element
+            prev->next = curr->next;
+            curr = curr->next;
+            
+        }else {
+            s.insert(curr->data);
+            prev = curr;
+            curr = curr->next;
+        }
+    }
+    
+    return head;
+}
