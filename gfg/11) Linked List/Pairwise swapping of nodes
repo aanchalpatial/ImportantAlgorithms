@@ -18,7 +18,7 @@ Node *pairwiseSwap(Node *head){
     //then modify links of prev, curr & curr->next
     Node *prev = head->next;
     Node *curr = head->next->next;
-    while(curr!=NULL&&curr->next!=NULL){
+    while(curr!=NULL&&curr->next!=NULL){                        //RR
         prev->next = curr->next;
         Node *temp = curr->next->next;
         curr->next->next = curr;
