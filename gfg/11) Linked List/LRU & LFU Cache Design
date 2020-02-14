@@ -1,0 +1,22 @@
+/*
+Cache is based on the principle of locality of reference. There are 2 ways with which data or instruction is fetched from main memory
+and get stored in cache memory:-
+1)Temporal locality refers to the reuse of specific data, and/or resources, within a relatively small time duration. 
+2)Spatial locality refers to the use of data elements within relatively close storage locations.*/
+
+
+//1) LRU Cache Design
+//Least Recently Used Cache Design: In this cache the item that is most recently used appears at the very start and the least used item
+//appears at the end. And if the cache is full the least recently used item is removed in order to make space for new item
+
+//Design a data structure to implement LRU cache.
+  //A) Naive: Use Array, O(n) insertion & O(n) deletion
+
+  //B) Efficient: Use Hash Map of(page_number, node_address) + Queue, O(1) insertion & O(1) deletion
+  //Queue is implemented using DOUBLY LINKED LIST
+  //Doubly Linked list is used to maintain relative order since hashing alone is not able to do so
+  //We have maintain both head & tail pointers in doubly linked list
+
+
+//2)LFU Cache Design
+//Least Frequently Used Cache Design:
