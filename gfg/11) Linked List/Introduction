@@ -168,3 +168,13 @@ Node * removeDuplicates( Node *head)
     
     return head;
 }
+
+//5) Swap kth node from beggining & end
+//Use Approach used in 2nd application + consider special situations separately
+/*Consider the following testcases:
+Let X be the kth node from beginning and Y be the kth node from end. Following are the interesting cases that must be handled.
+1) Y is next to X or vice versa
+2) first & last node is to be swapped( k==1||k==numberOfNodeInLinkedList )
+3) X and Y are same
+4) X and Y don’t exist (k is more than number of nodes in linked list)
+*/
