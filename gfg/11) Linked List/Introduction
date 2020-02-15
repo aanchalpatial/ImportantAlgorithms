@@ -178,3 +178,14 @@ Let X be the kth node from beginning and Y be the kth node from end. Following a
 3) X and Y are same
 4) X and Y don’t exist (k is more than number of nodes in linked list)
 */
+
+//6) Check if linked list is a palidrome
+/*
+Approach 1:-            O(n) time & O(n) space
+1. To check if linked list is palindrome, you need the data of first n/2 nodes of the the linked list.
+2. Just use a data structure called STACk to store data of the first n/2 nodes of the linked list.
+3. Now, start traversing from mid of the linked list and compare data of the linked list with that on the top of the stack,
+each time incrementing the middle and popping the top element from the stack.
+Approach 2:-            O(n) time & O(n) space
+Create a duplicate linked list and then REVERSE it. Then compare reversed and original linked list. 
+*/
