@@ -1,0 +1,8 @@
+/*Why mergesort is preferred for linked list ??
+->In Linked list, we can insert items in the middle in O(1) extra space and O(1) time. 
+Therefore merge operation of merge sort can be implemented WITHOUT EXTRA SPACE for linked lists.
+->Quick Sort requires a lot RANDOM ACCESS thus the overhead increases for quick sort.
+Merge sort accesses data sequentially and the need of random access is low.
+*/
+
+//Merge Function for linked list
