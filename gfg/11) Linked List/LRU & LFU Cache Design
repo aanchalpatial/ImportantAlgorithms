@@ -87,3 +87,5 @@ int main() {
 
 //2)LFU Cache Design
 //Least Frequently Used Cache Design:
+//https://www.geeksforgeeks.org/least-frequently-used-lfu-cache-implementation/
+//vector is ordered in the form of a min-heap + A hashmap
