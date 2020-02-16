@@ -43,21 +43,24 @@ Node *mergeSorted(Node *head1, Node *head2){
 }
 void mergeSortLinkedList(Node **headRef){
     Node* head = *headRef; 
+    
+    //Dividing the linked list in 2 halves
     Node *temp = head;
     if(temp==NULL||temp->next==NULL) return ;
     Node *slow = head;
-    Node *fast = head->next;                    //??
+    Node *fast = head->next;                                             // ?? & RR
     while(fast!=NULL&&fast->next!=NULL){
         slow = slow->next;
         fast = fast->next->next;
-    }
-    
-               
+    }           
     Node *midNext = slow->next;     //mid is included in first half of linked list
     slow->next = NULL;
     
+    //Recursive calls
      mergeSortLinkedList(&head);
      mergeSortLinkedList(&midNext);
+     
+     //Merging 2 sorted linked lists
      *headRef = merge(head, midNext);
     
 }
