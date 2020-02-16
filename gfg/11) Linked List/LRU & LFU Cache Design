@@ -12,10 +12,77 @@ and get stored in cache memory:-
 //Design a data structure to implement LRU cache.
   //A) Naive: Use Array, O(n) insertion & O(n) deletion
 
-  //B) Efficient: Use Hash Map of(page_number, node_address) + Queue, O(1) insertion & O(1) deletion
+  //B) EFFICIENT: Use Hash Map of(page_number, node_address) + Queue, O(1) insertion & O(1) deletion
   //Queue is implemented using DOUBLY LINKED LIST
   //Doubly Linked list is used to maintain relative order since hashing alone is not able to do so
   //We have maintain both head & tail pointers in doubly linked list
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// We can use stl container list as a double 
+// ended queue to store the cache keys, with 
+// the descending time of reference from front 
+// to back and a set container to check presence 
+// of a key. But to fetch the address of the key 
+// in the list using find(), it takes O(N) time. 
+// This can be optimized by storing a reference 
+//     (iterator) to each key in a hash map.
+
+class LRUCache {
+    int cacheSize;
+    list <int> dq;      //double ended queue implemneted using linked list
+    unordered_map <int, list<int>::iterator> h;
+    
+    public:
+    LRUCache(int n){
+        cacheSize = n;
+    }
+    
+    void displayCacheContents(){
+        cout<<"|";
+        for(auto i=dq.begin(); i!=dq.end(); ++i){
+            cout<<*i<<"|";
+        }
+        cout<<endl;
+    }
+    
+    void refer(int x){
+        if(h.find(x)!=h.end()){
+            //element exists in cache
+            dq.erase(h[x]);
+        }else {
+            //element doesn't exists in cache
+            if(h.size()==cacheSize){
+                int last = dq.back();
+                dq.pop_back();
+                h.erase(last);
+            }
+        }
+        dq.push_front(x);
+        h[x] = dq.begin();
+    }
+};
+
+int main() {
+	LRUCache ca(4); 
+  
+    ca.refer(1);
+    ca.displayCacheContents();
+    ca.refer(2); 
+    ca.displayCacheContents();
+    ca.refer(3); 
+    ca.displayCacheContents();
+    ca.refer(1); 
+    ca.displayCacheContents();
+    ca.refer(4); 
+    ca.displayCacheContents();
+    ca.refer(5); 
+    ca.displayCacheContents();
+    ca.refer(6); 
+    ca.displayCacheContents();
+	return 0;
+}
 
 
 //2)LFU Cache Design
