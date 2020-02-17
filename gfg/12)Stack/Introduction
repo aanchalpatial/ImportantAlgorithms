@@ -3,6 +3,9 @@
 
 //There are 2 ways to implement a stack: Using array & Using linked list(push & pop at head of linked list)
 
+//Note: While using stack, if we look for top() or try to pop() when stack is empty results in segmentation error. Use
+// !stack.empty() for safe checking then using top() or pop()
+
 //Stack stl :- satck <data_type> stack_name;
 //functions :- empty(), size(), top(), push(g) & pop(). All these functins work in O(1) time.
 
