@@ -1,0 +1,10 @@
+//Linear data structure
+//Stack underflow & overflow
+
+//There are 2 ways to implement a stack: Using array & Using linked list
+
+//Applications: Function call stack, reverse, palindrome, balanced paranthesis, infix to pre/postfix, pref/postfix evaluation,
+//undo/redo, forward/back, STOCK SPAN PROBLEM and its variations
+
+//Stack stl :- satck <data_type> stack_name;
+//functions :- empty(), size(), top(), push(g) & pop(). All these functins work in O(1) time.
