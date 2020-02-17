@@ -38,7 +38,7 @@ void nextGreaterElement(int arr[], int size){
 }
 
 void nextGreaterElementInSameOrder(int arr[], int size){
-    //The next greater elements should be printed in same order as input array.
+    //** The next greater elements should be printed in same order as input array **
     stack <int> st;
     int result[size];
     
