@@ -12,7 +12,7 @@
 
 
 //APLLICATIONS: Function call stack, reverse, palindrome, balanced paranthesis, infix to pre/postfix, pref/postfix evaluation,
-//undo/redo, forward/back, STOCK SPAN PROBLEM and its variations
+//undo/redo, forward/back, remove consecutive duplicates & STOCK SPAN PROBLEM and its variations
 
 //Application 1): print the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the FIRST greater
 //element on the right side of x in array. Elements for which no greater element exist, consider next greater element as -1.
@@ -141,4 +141,32 @@ int main() {
     ts.push1(99);
     ts.displayArray();  
 	return 0;
+}
+
+//Application 3): 
+//Stacks can be used to remove duplicate characters from a string that are stacked next to each other. 
+//For example, we take the string aabbccccc and convert it into abc. We can push the first character into a stack and skip if 
+//the top of the stack is equal to current character.
+string removeConsecutiveDuplicates(string s)
+{
+    // Your code here
+    stack <char> st;
+    for(int i=0;i<s.length();++i){
+        if(!st.empty()&&st.top()==s[i]) continue;       //ignoring consecutive duplicates
+        else {
+            st.push(s[i]);
+        }
+    }
+    stack <char> st2;
+    while(!st.empty()){         //using another stack to reverse contents of first stack
+        char x = st.top();
+        st2.push(x);
+        st.pop();
+    }
+    string result = "";
+    while(!st2.empty()){
+        result += st2.top();
+        st2.pop();
+    }
+    return result;
 }
