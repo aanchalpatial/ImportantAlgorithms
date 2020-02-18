@@ -36,11 +36,75 @@ void stockSpan(int arr[], int n){
     cout<<endl;
 }
 
+//Application 1): Given an array of distinct integers, find the closest (positive wise) greater on left of every element.
+//If there is no greater element on l;eft, then print -1
+//Note: In stock span problem we were storing index in stack, where as in this and next problem we will store the element itself.
+int previousGreaterElement(int arr[], int n){
+    stack <int> st;
+    int result[n];
+    
+    for(int i=0;i<n;++i){
+        while(!st.empty()&&st.top()<=arr[i]){
+            st.pop();
+        }
+        if(st.empty()) result[i] = -1;
+        else result[i] = st.top();
+        st.push(arr[i]);
+    }
+    cout<<"Previous Greater Element: ";
+    for(int i=0;i<n;++i) cout<<result[i]<<" ";
+    cout<<endl;
+}
+
+//Application 2): print the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the FIRST greater
+//element on the right side of x in array. Elements for which no greater element exist, consider next greater element as -1.
+//Naive is O(n^2), do it in O(n) time & O(n) space(stack in this case)
+#include <bits/stdc++.h>
+using namespace std;
+
+void nextGreaterElement(int arr[], int size){		//Not Important, can be left
+    stack <int> st;
+    
+    st.push(arr[0]);
+    for(int i=1;i<size;++i){
+        while(!st.empty()&&st.top()<arr[i]){
+            cout<<st.top()<<"->"<<arr[i]<<endl;
+            st.pop();
+        }
+        st.push(arr[i]);
+    }
+    while(!st.empty()){
+        cout<<st.top()<<"->"<<"-1"<<endl;
+        st.pop();
+    }
+}
+
+void nextGreaterElementInSameOrder(int arr[], int size){		
+    //Note:- SAME as previous greater element with traversal of array from behind
+    //** The next greater elements should be printed in same order as input array **
+    stack <int> st;
+    int result[size];
+    
+    for(int i=size-1;i>=0;--i){
+        while(!st.empty()&&st.top()<=arr[i]){
+            st.pop();
+        }
+        if(st.empty()) result[i] = -1;
+        else result[i] = st.top();
+        st.push(arr[i]);
+    }
+    for(int i=0;i<size;++i) cout<<arr[i]<<"-> "<<result[i]<<endl;
+}
+
 int main() {
 	int arr[] = {15,13,12,14,16,8,6,4,10,30};
 	int n = sizeof(arr)/sizeof(arr[0]);
 	
-	stockSpan(arr, n);
+	//stockSpan(arr, n);
+	int arr2[] = {15, 10, 18, 12, 4, 6, 2, 8};
+	int n2 = sizeof(arr2)/sizeof(arr2[0]);
+	previousGreaterElement(arr2, n2);
+	nextGreaterElementInSameOrder(arr, n);
 	
 	return 0;
 }
