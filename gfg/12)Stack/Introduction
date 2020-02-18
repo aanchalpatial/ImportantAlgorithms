@@ -52,6 +52,23 @@ int main() {
 
 //Problem 2): ** Implement stack using 2 queues:- https://www.youtube.com/watch?v=xBugrptVRUQ&feature=emb_logo
 
+//Problem 3): Delete mid element of stack without using any additional data structure
+//Hint: use recursion
+stack<int> deleteMid(stack<int>s,int sizeOfStack,int current)
+{
+    //Your code here
+    
+    if(current==sizeOfStack/2) {
+        s.pop();
+        return s;
+    }
+    int x = s.top();
+    s.pop();
+    s = deleteMid(s,sizeOfStack,++current);
+    s.push(x);
+    
+    return s;
+}
 
 
 //APLLICATIONS: Function call stack, reverse, palindrome, balanced paranthesis, infix to pre/postfix, pref/postfix evaluation,
