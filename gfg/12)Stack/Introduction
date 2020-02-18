@@ -50,6 +50,10 @@ int main() {
 	return 0;
 }
 
+//Problem 2): ** Implement stack using 2 queues:- https://www.youtube.com/watch?v=xBugrptVRUQ&feature=emb_logo
+
+
+
 //APLLICATIONS: Function call stack, reverse, palindrome, balanced paranthesis, infix to pre/postfix, pref/postfix evaluation,
 //undo/redo, forward/back, remove consecutive duplicates & STOCK SPAN PROBLEM and its variations
 
