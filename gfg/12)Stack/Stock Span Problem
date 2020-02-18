@@ -1,0 +1,46 @@
+/*
+The stock span problem is a financial problem where we have a series of n daily price quotes for a stock and we need to calculate
+span of stock’s price for all n days. The span Si of the stock’s price on a given day i is defined as the maximum number of
+consecutive days just before the given day(including the given day), for which the price of the stock on the current day is 
+less than or equal to its price on the given day.
+For example, if an array of 7 days prices is given as {100, 80, 60, 70, 60, 75, 85}, then the span values for 
+corresponding 7 days are {1, 1, 1, 2, 1, 4, 6}
+*/
+
+//Naive is O(n^2), do it in O(n)time & O(n) space: 2n operation on stack
+//Approach: we use a stack, When we go from day i-1 to i, we pop the days when the price of the stock was less than or equal to price[i] and
+//update span of current element & then push the value of day i back into the stack.
+#include <bits/stdc++.h>
+using namespace std;
+
+void stockSpan(int arr[], int n){
+    stack <int> st;
+    int span[n];
+    
+    st.push(0);
+    span[0] = 1;
+    
+    for(int i=1;i<n;++i){
+        //pop all smaller elements from stack
+        while(!st.empty()&&arr[st.top()]<=arr[i]){
+            st.pop();
+        }
+        
+        if(st.empty()) span[i] = i+1;
+        else span[i] = i-st.top();
+        
+        st.push(i);
+    }
+    cout<<"StockSpan: ";
+    for(int i=0;i<n;++i) cout<<span[i]<<" ";
+    cout<<endl;
+}
+
+int main() {
+	int arr[] = {15,13,12,14,16,8,6,4,10,30};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	stockSpan(arr, n);
+	
+	return 0;
+}
