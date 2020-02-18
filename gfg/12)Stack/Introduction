@@ -14,55 +14,7 @@
 //APLLICATIONS: Function call stack, reverse, palindrome, balanced paranthesis, infix to pre/postfix, pref/postfix evaluation,
 //undo/redo, forward/back, remove consecutive duplicates & STOCK SPAN PROBLEM and its variations
 
-//Application 1): print the Next Greater Element (NGE) for every element. The Next greater Element for an element x is the FIRST greater
-//element on the right side of x in array. Elements for which no greater element exist, consider next greater element as -1.
-//Naive is O(n^2), do it in O(n) time & O(n) space(stack in this case)
-#include <bits/stdc++.h>
-using namespace std;
-
-void nextGreaterElement(int arr[], int size){
-    stack <int> st;
-    
-    st.push(arr[0]);
-    for(int i=1;i<size;++i){
-        while(!st.empty()&&st.top()<arr[i]){
-            cout<<st.top()<<"->"<<arr[i]<<endl;
-            st.pop();
-        }
-        st.push(arr[i]);
-    }
-    while(!st.empty()){
-        cout<<st.top()<<"->"<<"-1"<<endl;
-        st.pop();
-    }
-}
-
-void nextGreaterElementInSameOrder(int arr[], int size){
-    //** The next greater elements should be printed in same order as input array **
-    stack <int> st;
-    int result[size];
-    
-    for(int i=size-1;i>=0;--i){
-        while(!st.empty()&&st.top()<=arr[i]){
-            st.pop();
-        }
-        if(st.empty()) result[i] = -1;
-        else result[i] = st.top();
-        st.push(arr[i]);
-    }
-    for(int i=0;i<size;++i) cout<<arr[i]<<"-> "<<result[i]<<endl;
-}
-
-int main() {
-	int arr[] = { 11, 13, 21, 7 };
-	int n = sizeof(arr)/sizeof(arr[0]);
-	//nextGreaterElement(arr, n);
-	nextGreaterElementInSameOrder(arr, n);
-	return 0;
-}
-
-
-//Application 2): 
+//Application 1): 
 //Stacks can be used to remove duplicate characters from a string that are stacked next to each other. 
 //For example, we take the string aabbccccc and convert it into abc. We can push the first character into a stack and skip if 
 //the top of the stack is equal to current character.
