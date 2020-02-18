@@ -1,7 +1,7 @@
 //Linear data structure
 //Stack underflow & overflow
 
-//There are 2 ways to implement a stack: Using array & Using linked list(push & pop at head of linked list)
+//Ways to implement a stack: Using array/vector, Using linked list(push & pop at head of linked list), Using deque(By default in c++)
 
 //Note: While using stack, if we look for top() or try to pop() when stack is empty results in segmentation error. Use
 // !stack.empty() for safe checking then using top() or pop()
@@ -62,88 +62,7 @@ int main() {
 }
 
 
-
-//Application 2):
-//The task is to create a data structure "twoStacks" that represents two stacks.Implementation of twoStacks should use only one array
-//Method 1 (Divide the space in two halves)
-//Method 2 (A space-efficient implementation): Both stacks grow (or shrink) in opposite
-//direction. To check for overflow, all we need to check is for space between top elements of both stacks.
-
-#include <bits/stdc++.h>
-using namespace std;
-
-class twoStacks {
-    int *arr;
-    int size;
-    int top1, top2;
-    
-    public:
-    twoStacks(int n){
-        size = n;
-        top1 = -1;
-        top2 = n;
-        arr = new int[size];
-        for(int i=0;i<size;++i) arr[i] = -1;
-    }
-    
-    void push1(int x){
-        if(top2-top1>1){
-            ++top1;
-            arr[top1] = x;
-        }else{
-            cout<<"Stack 1 Overflow!!"<<endl;
-        }
-    }
-    void push2(int x){
-        if(top2-top1>1){
-            --top2;
-            arr[top2] = x;
-        }else{
-            cout<<"Stack 2 Overflow!!"<<endl;
-        }
-    }
-    void pop1(){
-        if(top1>-1){
-            arr[top1] = -1;
-            --top1;
-        }else{
-            cout<<"Stack 1 Underflow!!"<<endl;
-        }
-    }
-    void pop2(){
-        if(top2<size){
-            arr[top2] = -1;
-            ++top2;
-        }else{
-            cout<<"Stack 2 Underflow!!"<<endl;
-        }
-    }
-    
-    void displayArray(){
-        for(int i=0;i<size;++i) cout<<arr[i]<<"|";
-        cout<<endl;
-    }  
-};
-
-int main() {
-    //Implementing 2 stacks using 1 array
-    twoStacks ts = twoStacks(5);
-    ts.displayArray();
-    ts.pop1();
-    ts.pop2();
-    ts.displayArray();
-    ts.push1(12);
-    ts.push2(5);
-    ts.displayArray();
-    ts.push1(4);
-    ts.push1(3);
-    ts.displayArray();
-    ts.push1(99);
-    ts.displayArray();  
-	return 0;
-}
-
-//Application 3): 
+//Application 2): 
 //Stacks can be used to remove duplicate characters from a string that are stacked next to each other. 
 //For example, we take the string aabbccccc and convert it into abc. We can push the first character into a stack and skip if 
 //the top of the stack is equal to current character.
