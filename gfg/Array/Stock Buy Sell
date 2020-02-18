@@ -29,6 +29,7 @@ int maximum_profit(int arr[], int n){
         while( (arr[i] <= arr[i+1]) && (i<n-1) ) ++i;
         maxima = arr[i];
         result += maxima-minima;
+        //cout<<"minima: "<<minima<<", "<<"maxima: "<<maxima<<endl;
     }
     
     return result;
@@ -37,7 +38,7 @@ int maximum_profit(int arr[], int n){
 
 int main(){
 
-  int arr[] = {1, 5, 3, 8, 12};
+  int arr[] = {4 ,1, 5, 3, 8, 12, 10, 20};
   //int arr[] = {1,2,3,4,5};
   //int arr[] = {5,4,3,2,1};
   int n = sizeof(arr)/sizeof(arr[0]);
