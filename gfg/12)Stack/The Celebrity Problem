@@ -1,0 +1,66 @@
+/*You are in a party of N people, where only one person is known to everyone. Such a person may be present in the party,
+if yes, (s)he doesn’t know anyone in the party. Your task is to find the stranger (celebrity) in party.
+You will be given a square matrix M[][] where if an element of row i and column j  is set to 1 it means ith person knows jth person.
+You need to complete the function getId() which finds the id of the celebrity if present else return -1.
+*/
+
+//Expected time complexity is O(N) with constant extra space.
+
+/*Hints:
+Use the following observation based on elimination technique 
+
+If A knows B, then A can’t be celebrity. Discard A, and B may be celebrity.
+If A doesn’t know B, then B can’t be celebrity. Discard B, and A may be celebrity.
+Repeat above two steps till we left with only one person.
+Ensure the remained person is celebrity.
+*/
+/*
+Use stack to verity celebrity.
+
+Push all the celebrities into a stack.
+Pop off top two persons from the stack, discard one person based on return status of Mat(A, B).
+Push the remained person onto stack.
+Repeat step 2 and 3 until only one person remains in the stack.
+Check the remained person in stack doesn’t have acquaintance with anyone else or not.
+*/
+
+int getId(int M[MAX][MAX], int n)
+{
+    //Your code here
+    //I have to find a row whose all values are 0 in O(n) time & O(1) space
+    stack <int> st;
+    for(int i=0;i<n;++i) st.push(i);
+    
+    while(st.size()!=1){
+        int x = st.top();
+        st.pop();
+        int y = st.top();
+        st.pop();
+        
+        if(M[x][y]==1) st.push(y);
+        else if(M[x][y]==0) st.push(x);
+    }
+    
+    //Now ensuring the only person left in stack is celebrity or not
+    //person k is a celebrity if there are all 0's in k row & all 1's in 
+    //k column(except when row & column meet)
+    int k = st.top();
+    bool flag = true;
+    for(int j=0;j<n;++j){
+        if(M[k][j]==1){
+            flag = false;
+            goto label;
+        }
+    }
+    for(int i=0;i<n;++i){
+        if(i==k) continue;
+        else if(M[i][k]!=1){
+            flag = false;
+            break;
+        }
+    }
+    label:
+    if(flag) return k;
+    else return -1;
+    
+}
