@@ -50,7 +50,7 @@ void printMaxOfMin(int arr[], int n){
     for(int i=n-1;i>=1;--i) result[i] = max(result[i], result[i+1]);
     
     
-    for(int i=0;i<=n;++i) cout<<result[i]<<" ";     //window sized 0 is irrelevant
+    for(int i=1;i<=n;++i) cout<<result[i]<<" ";     //window sized 0 is irrelevant i.e 0th index can be ignored in output
     cout<<endl;
 }
 
