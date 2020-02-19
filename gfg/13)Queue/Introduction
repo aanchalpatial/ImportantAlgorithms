@@ -1,1 +1,13 @@
-// stl: queue <int> g; functions: push(), pop(), size(), front(), back()
+// stl: queue <int> g; functions: push(), pop(), size(), front(), back(), empty()
+
+//Applications: 
+//->Synchronization between slow & fast devices ( queue is used as buffer)
+//->In OS: Semaphores, FCFS scheduling, spooling in keyboard
+//-> In routers to manage slow and fast networks together
+
+//Variations: 
+//1) Dequeu - Implemente using linked list
+//2) Priority Queue - Implemented using heap
+//3) Double ended priority queue - Implemented using self balancing BST
+
+//Queue Implementations: Using array & using linked list
