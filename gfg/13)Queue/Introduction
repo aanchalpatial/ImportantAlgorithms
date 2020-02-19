@@ -10,4 +10,7 @@
 //2) Priority Queue - Implemented using heap
 //3) Double ended priority queue - Implemented using self balancing BST
 
-//Queue Implementations: Using array & using linked list
+//Queue Implementations: 
+//1) Using array : In naive implementation, enqueue is O(n) & dequeue is O(1). To achieve O(1) in all operations of queue we 
+// use CIRCULAR array.
+//2) Using linked list
