@@ -1,0 +1,63 @@
+//ANOTHER APPLICATION OF STOCKSPAN PROBLEM
+//Given an integer array A[] of size N. The task is to find the maximum of the minimum of every window size in the array.
+//Note: Window size varies from 1 to n.
+//https://www.geeksforgeeks.org/find-the-maximum-of-minimums-for-every-window-size-in-a-given-array/
+
+//Naive is O(n^3), do it in O(n)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void printMaxOfMin(int arr[], int n){
+    //Find maximum of minimum for every window size in a given array
+    stack<int> st;
+    int prev[n];
+    for(int i=0;i<n;++i){
+        while(!st.empty()&&arr[st.top()]>=arr[i]){
+            st.pop();
+        }
+        if(st.empty()) prev[i] = -1;
+        else prev[i] = st.top();
+        
+        st.push(i);
+    }
+    
+    stack<int> st2;
+    int next[n];
+    for(int i=n-1;i>=0;--i){
+        while(!st2.empty()&&arr[st2.top()]>=arr[i]){
+            st2.pop();
+        }
+        if(st2.empty()) next[i] = n;
+        else next[i] = st2.top();
+        
+        st2.push(i);
+    }
+    
+    // for(int i=0;i<n;++i) cout<<prev[i]<<" ";
+    // cout<<endl;
+    // for(int i=0;i<n;++i) cout<<next[i]<<" ";
+    // cout<<endl;
+    
+    //this array will store max of min of window sized i at index i;
+    int result[n+1] = {0};          //size of window varies from 0 to n i.e n+1
+    
+    for(int i=0;i<n;++i){
+        int len = next[i]-prev[i]-1;
+        result[len] = max(result[len], arr[i]);
+    }
+    //some of the entries must still be zero
+    for(int i=n-1;i>=1;--i) result[i] = max(result[i], result[i+1]);
+    
+    
+    for(int i=0;i<=n;++i) cout<<result[i]<<" ";     //window sized 0 is irrelevant
+    cout<<endl;
+}
+
+int main() {
+	int arr[] = {10, 20, 30, 50, 10, 70, 30}; 
+    int n = sizeof(arr)/sizeof(arr[0]); 
+    printMaxOfMin(arr, n); 
+    return 0; 
+}
+
