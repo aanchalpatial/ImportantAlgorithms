@@ -1,0 +1,5 @@
+// https://www.youtube.com/watch?v=xBugrptVRUQ&feature=emb_logo
+
+//1) Implement stack using 2 queues (by making push operation costly)
+//2) Implement stack using 2 queues (by making pop operaton costly)
+//3) Implement stack using 1 queue (using recursion call stack)
