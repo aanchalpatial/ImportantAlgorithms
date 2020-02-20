@@ -1,0 +1,49 @@
+//We are given an array and a number k, we need to find maximums of all subarrays of size k.
+//Naive is O(n^2)
+//do it in O(n): we are doing 2n operation below solution
+/*We create a Deque, Qi of capacity k, that stores only useful elements of current window of k elements.
+An element is useful if it is in current window and is greater than all other elements on left side of it in current window*/
+//https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void printkMax(int arr[],int n, int k){
+    deque<int> dq;
+    for(int i=0;i<k;++i){
+        //
+        while(!dq.empty()&&arr[dq.back()]<=arr[i]){         //** <= **
+            dq.pop_back();
+        }
+        dq.push_back(i);
+    }
+    for(int i=k;i<n;++i){
+        cout<<arr[dq.front()]<<", ";
+        while(!dq.empty()&&dq.front()<=i-k){            //Remove indexes of all those indexes which don't belong in current window
+            dq.pop_front();
+        }
+        while(!dq.empty()&&arr[dq.back()]<=arr[i]){         //** <= **
+            dq.pop_back();
+        }
+        dq.push_back(i);
+        
+    }
+    cout<<arr[dq.front()]<<endl;
+}
+
+int main() {
+	int arr[] = {20, 40, 40, 10, 60};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	int k = 3;
+	printkMax(arr, n, k);
+	return 0;
+}
+
+
+
+//***** Note ******
+//There are MANY ways to solve this problem. Naive is O(n^2).This problem can be solved using:
+//1) Dequeue (discussed above): O(n), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
+//2) Self balancing BST(left): O(nlogk), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
+//2) Stack(left): O(n), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k-using-stack-in-on-time/
+//3) Sliding window technique + Set(left) : O(nlogn), https://www.geeksforgeeks.org/maximum-of-all-subarrays-of-size-k-using-set-in-cpp-stl/
