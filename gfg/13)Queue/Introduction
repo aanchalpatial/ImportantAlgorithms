@@ -8,12 +8,12 @@
 
 //Variations: 
 //1) Dequeu - Implemented using linked list: Insertion & Deletion at both ends
-//stl: deque <int> dq; functions: push_back(x),push_front(x), pop_back(), pop_front(), size(), max_size(), front(), back()
+//stl: deque <int> dq; functions: push_back(x),push_front(x), pop_back(), pop_front(), size(), max_size(), front(), back() all are O(1)
 
 //2) Priority Queue - Implemented using heap: Priority queues are a type of container adapters, specifically designed such that the
 //first element of the queue is the greatest of all elements in the queue and elements are 
 //in non increasing order(hence we can see that each element of the queue has a priority{fixed order}).
-//stl: priority_queue <int> pq; functions: push(), pop(), size()
+//stl: priority_queue <int> pq; functions: push(), pop(), size() all are O(1)
 
 //3) Double ended priority queue - Implemented using self balancing BST
 
