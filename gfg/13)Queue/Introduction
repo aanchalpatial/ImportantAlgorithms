@@ -1,4 +1,5 @@
-// stl: queue <int> g; functions: push(), pop(), size(), front(), back(), empty()
+//Queue is a container adaptor
+// stl: queue <int> g; functions: push(), pop(), size(), front(), back(), empty() all are O(1) 
 
 //Applications: 
 //->Synchronization between slow & fast devices ( queue is used as buffer)
@@ -13,4 +14,58 @@
 //Queue Implementations: 
 //1) Using array : In naive implementation, enqueue is O(n) & dequeue is O(1). To achieve O(1) in all operations of queue we 
 // use CIRCULAR array.
-//2) Using linked list
+#include <bits/stdc++.h>
+using namespace std;
+
+//queue implementation using circular array
+struct myQueue {
+    int *arr;
+    int size;   //** number of elements in queue
+    int cap;    //capacity of queue
+    int front;
+    myQueue(int n){
+        cap = n;
+        size = 0;       //there are 0 elements in queue in the start
+        front = 0;
+        arr = new int[n];
+        for(int i=0;i<n;++i) arr[i] = 0;
+    }
+    
+    void push(int x){
+        if(size==cap) {
+            cout<<"Overflow !!"<<endl;
+            return;
+        }
+        int rear = (front + size - 1)% cap; //**imp**
+        rear = (rear+1)%cap;
+        arr[rear] = x;
+        ++size;
+    }
+    void pop(){
+        if(size==0) {
+            cout<<"Underflow !!";
+            return;
+        }
+        arr[front] = 0; //optional
+        front = (front+1)%cap;
+        --size;
+    }
+    
+    bool isFull(){
+        if(cap==size) return true;
+        else return false;
+    }
+    
+    boll isEmpty(){
+        if(size==0) return true;
+        else return false;
+    }
+    
+    
+    void displayArray(){
+        for(int i=0;i<cap;++i) cout<<arr[i]<<" ";
+        cout<<endl;
+    }
+};
+
+//2) Using linked list: we maintain head & rear pointers
