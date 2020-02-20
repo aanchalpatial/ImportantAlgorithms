@@ -69,3 +69,49 @@ struct myQueue {
 };
 
 //2) Using linked list: we maintain head & rear pointers
+
+
+//Problem 1) Reverse a queue
+//2 versions: Iterative & Recursive
+#include <bits/stdc++.h>
+using namespace std;
+
+void recursiveReverse(queue<int> &q){
+    if(q.empty()) return;
+    
+    int x = q.front();
+    q.pop();
+    recursiveReverse(q);
+    q.push(x);
+}
+
+void iterativeReverse(queue<int> &q){
+    stack<int> s;
+    while(!q.empty()){
+        s.push(q.front());
+        q.pop();
+    }
+    while(!s.empty()){
+        q.push(s.top());
+        s.pop();
+    }
+}
+
+int main() {
+    queue <int> q;
+    q.push(2);
+    q.push(4);
+    q.push(6);
+    q.push(8);
+    q.push(10);
+    //iterativeReverse(q);
+    recursiveReverse(q);
+    while(!q.empty()){
+        cout<<q.front()<<", ";
+        q.pop();
+    }
+    cout<<endl;
+    
+    
+	return 0;
+}
