@@ -1,0 +1,3 @@
+//1) Implement queue using 2 stacks (by making push operation costly)
+//2) Implement queue using 2 stacks (by making pop operaton costly)
+//3) Implement queue using 1 stacks (using recursion call stack)
