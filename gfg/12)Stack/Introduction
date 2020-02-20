@@ -50,9 +50,8 @@ int main() {
 	return 0;
 }
 
-//Problem 2): ** Implement stack using 2 queues:- https://www.youtube.com/watch?v=xBugrptVRUQ&feature=emb_logo
 
-//Problem 3): Delete mid element of stack without using any additional data structure
+//Problem 2): Delete mid element of stack without using any additional data structure
 //Hint: use recursion
 stack<int> deleteMid(stack<int>s,int sizeOfStack,int current)
 {
