@@ -1,3 +1,131 @@
+//https://www.geeksforgeeks.org/queue-using-stacks/
+
 //1) Implement queue using 2 stacks (by making push operation costly)
+class myQueue1 {
+    stack<int> st1;
+    stack<int> st2;
+    
+    public:
+    void push(int x){       //making enqueue costly
+        while(!st1.empty()){
+            st2.push(st1.top());
+            st1.pop();
+        }
+        st1.push(x);
+        while(!st2.empty()){
+            st1.push(st2.top());
+            st2.pop();
+        }
+        
+    }
+    void pop(){
+        if(st1.empty()) cout<<"Underlow !!"<<endl;
+        else {
+            cout<<"popped: "<<st1.top()<<endl;
+            st1.pop();
+        }
+    }
+    
+    void display(){
+        stack<int> temp = st1;
+        while(!temp.empty()){
+            cout<<temp.top()<<", ";
+            temp.pop();
+        }
+        cout<<endl;
+    }
+};
+
+
 //2) Implement queue using 2 stacks (by making pop operaton costly)
-//3) Implement queue using 1 stacks (using recursion call stack)
+class myQueue2 {
+    stack<int> st1;
+    stack<int> st2;
+    
+    public:
+    void push(int x){ 
+        st1.push(x);
+    }
+    void pop(){         //making dequeue costly
+        if(st1.empty()) cout<<"Underflow !!"<<endl;
+        else {
+            while(!st1.empty()){
+                st2.push(st1.top());
+                st1.pop();
+            }
+            cout<<"popped: "<<st2.top()<<endl;
+            st2.pop();
+            while(!st2.empty()){
+                st1.push(st2.top());
+                st2.pop();
+            }
+        }
+    }
+    
+    void display(){
+        stack<int> temp = st1;
+        while(!temp.empty()){
+            cout<<temp.top()<<", ";
+            temp.pop();
+        }
+        cout<<endl;
+    }
+};
+
+
+//3) Implement queue using 1 stacks (using one stack and one function call stack)
+
+class myQueue3 {
+    stack<int> st;
+    
+    public:
+    void push(int x){ 
+        st.push(x);
+    }
+    void pop(){         //using function call stack here
+        if(st.empty()) cout<<"Underflow !!"<<endl;
+        else if (st.size()==1) {
+            cout<<"popped: "<<st.top()<<endl;
+            st.pop();
+        }else {
+            int x = st.top();
+            st.pop();
+            pop();          //recursive call of void pop() of myQueue3
+            st.push(x);
+        }
+    }
+    
+    void display(){
+        stack<int> temp = st;
+        while(!temp.empty()){
+            cout<<temp.top()<<", ";
+            temp.pop();
+        }
+        cout<<endl;
+    }
+    
+};
+
+
+
+int main() {
+    //myQueue1 q = myQueue1();
+	//myQueue2 q = myQueue2();
+	myQueue3 q = myQueue3();
+	q.pop();
+	q.push(5);
+	q.push(6);
+	q.push(7);
+	q.display();
+	q.pop();
+	q.display();
+	q.pop();
+	q.pop();
+	q.display();
+	return 0;
+}
+
+
+
+
+
