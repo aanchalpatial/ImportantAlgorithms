@@ -21,7 +21,14 @@ Advantages  ->traversal in both direction
             ->insert/delete a node BEFORE(AFTER is O(1) in both singly & doubly linked list) given node in O(1)
             ->You can't implement deque with singly linked list
 Disadvantages->extra space for previous pointer, complex
+
+A MEMORY EFFICIENT Doubly Linked List: In the XOR linked list, instead of storing actual memory addresses, every node stores
+the XOR of addresses of previous and next nodes.
+ While traversing the list we need to remember the address of the previously accessed node in order to calculate the next node’s address.
+ For example when we are at node C, we must have address of B. XOR of add(B) and npx of C gives us the add(D). 
 */
+
+
 /*
 3)Circular Linked List: (2 types-singly circular linked list and doubly circular linked list)
 Advantages  ->can traverse the whole list from any node
