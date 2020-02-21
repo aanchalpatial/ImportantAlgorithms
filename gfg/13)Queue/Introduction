@@ -7,8 +7,9 @@
 //-> In routers to manage slow and fast networks together
 
 //Variations: 
-//1) Dequeu - Implemented using linked list: Insertion & Deletion at both ends
+//1) Dequeue - Implemented using linked list: Insertion & Deletion at both ends
 //stl: deque <int> dq; functions: push_back(x),push_front(x), pop_back(), pop_front(), size(), max_size(), front(), back() all are O(1)
+//Note:- We have Dequeue Operation & Dequeue Data Structure
 
 //2) Priority Queue - Implemented using heap: Priority queues are a type of container adapters, specifically designed such that the
 //first element of the queue is the greatest of all elements in the queue and elements are 
