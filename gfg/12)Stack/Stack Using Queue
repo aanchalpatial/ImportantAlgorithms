@@ -1,5 +1,136 @@
-// https://www.youtube.com/watch?v=xBugrptVRUQ&feature=emb_logo
+// https://www.youtube.com/watch?v=xBugrptVRUQ&feature=emb_logo :- Method 1 & 2
+//https://www.youtube.com/watch?v=hC1UplBFEj0 :- Method 3
 
 //1) Implement stack using 2 queues (by making push operation costly)
+class myStack1 {        //top is the left end of q1
+    queue<int> q1;
+    queue<int> q2;
+    
+    public:
+    void push(int x){       //making push operation costly
+        q2.push(x);
+        while(!q1.empty()){
+            q2.push(q1.front());
+            q1.pop();
+        }
+        queue<int> temp = q1;
+        q1 = q2;
+        q2 = temp;
+        
+    }
+    void pop(){             //O(1)
+        if(q1.empty()) cout<<"Underflow!!"<<endl;
+        else {
+            cout<<"popped: "<<q1.front()<<endl;
+            q1.pop();
+        }
+        
+    }
+    void display(){
+        queue<int> temp = q1;
+        while(!temp.empty()){
+            cout<<temp.front()<<", ";
+            temp.pop();
+        }
+        cout<<endl;
+    }
+};
+
 //2) Implement stack using 2 queues (by making pop operaton costly)
+class myStack2 {        //top is the right end of q1
+    queue<int> q1;
+    queue<int> q2;
+    
+    public:
+    void push(int x){   //O(1)
+        q1.push(x);
+    }
+    void pop(){     //making pop operation costly
+        if(q1.empty()) cout<<"Underflow !!"<<endl;
+        else {
+            while(q1.size()!=1){
+                q2.push(q1.front());
+                q1.pop();
+            }
+            cout<<"popped: "<<q1.front()<<endl;
+            queue<int> temp = q1;
+            q1 = q2;
+            q2 = temp;
+        }
+    }
+    void display(){
+        queue<int> temp = q1;
+        while(!temp.empty()){
+            cout<<temp.front()<<", ";
+            temp.pop();
+        }
+        cout<<endl;
+    }
+};
 //3) Implement stack using 1 queue (using recursion call stack)
+/*Approach:
+// x is the element to be pushed and s is stack
+push(s, x) 
+  1) Let size of q be s. 
+  1) Enqueue x to q
+  2) One by one Dequeue s items from queue and enqueue them.
+  
+// Removes an item from stack
+pop(s)
+  1) Dequeue an item from q
+*/
+class myStack3 {
+    queue<int> q;
+    int size;
+    
+    public:
+    myStack3(){
+        size = 0;
+    }
+    void push(int x){
+        if(size==0) q.push(x);
+        else {
+            q.push(x);
+            int i = 0;
+            while(i<size){
+                int x = q.front();
+                q.pop();
+                q.push(x);
+                ++i;
+            }
+        }
+        ++size;
+    }
+    void pop(){
+        if(size==0) cout<<"Underflow !!"<<endl;
+        else {
+            cout<<"popped: "<<q.front()<<endl;
+            q.pop();
+            --size;
+        }
+        
+    }
+    void display(){
+        queue<int> temp = q;
+        while(!temp.empty()){
+            cout<<temp.front()<<", ";
+            temp.pop();
+        }
+        cout<<endl;
+    }
+};
+
+
+
+int main() {
+    //myStack1 st = myStack1();
+	//myStack2 st = myStack2();
+	myStack3 st = myStack3();
+	st.push(5);
+	st.push(6);
+	st.push(7);
+	st.display();
+	st.pop();
+	st.display();
+	return 0;
+}
