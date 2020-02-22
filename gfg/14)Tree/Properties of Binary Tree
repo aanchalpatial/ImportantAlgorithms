@@ -1,0 +1,170 @@
+/*
+Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, left view, children sum property, balanced &
+maximum width are studied here in LINEAR TIME & LINEAR SPACE.
+*/
+
+
+//1) Find SIZE of binary tree : 2 versions
+//Recursive version : O(n) time & O(h) space , preferred for perfect trees
+int getSize(Node *root){        
+    if(root==NULL) return 0;
+    else {
+        return 1+getSize(root->left)+getSize(root->right);
+    }
+}
+//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
+
+
+//2) Find MAXIMUM in binary tree : 2 versions
+//Recursive version : O(n) time & O(h) space , preferred for perfect trees
+int getMax(Node *root){
+    if(root==NULL) return INT_MIN;
+    else {
+        return max(root->key, max(getMax(root->left),getMax(root->right)));
+    }
+}
+//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
+
+
+
+//3) Find HEIGHT of binary tree : O(n) time & O(h) space
+int getHeight(Node *root){
+    if(root==NULL) return 0;
+    else {
+        return max(1+getHeight(root->left), 1+getHeight(root->right));
+    }
+}
+
+
+//4) Print nodes at a distance K : 2 versions
+//Recursive version : O(n) time & O(h) space , preferred for perfect trees
+void nodesAtDistanceK(Node *root, int k){
+    if(root==NULL) return;
+    else if(k==0) cout<<root->key<<", ";
+    else{
+        nodesAtDistanceK(root->left, k-1);
+        nodesAtDistanceK(root->right, k-1);
+    }
+}
+//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
+
+
+//5) Print LEFT VIEW of binary tree : 2 versions
+//left view means left most node(can be a left child or a right child) of every level in binary tree
+//Recursive version : O(n) time & O(h) space , preferred for perfect trees
+int maxLevel = 0;
+void leftViewRecursive(Node *root, int level){    //initial value of level is 1
+    //Uses preorder traversal
+    if(root!=NULL){
+        if(maxLevel<level){     //avoid printing anything except left most node
+            cout<<root->key<<endl;
+            maxLevel = level;
+        }
+        leftViewRecursive(root->left, level+1);
+        leftViewRecursive(root->right, level+1);
+    }
+}
+//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
+void leftViewIterative(Node *root){
+    //uses line by line bfs traversal
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                if(i==0){       //avoid printing anything except left most node
+                    cout<<temp->key<<" ";
+                }
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+            cout<<endl;
+        }
+    }
+}
+
+
+//6) Find whether tree follows CHILDREN SUM PROPERTY : O(n) time & O(h) space
+//Children Sum Property is a property in which the sum of values of the left child and right child should be equal to the value of
+their node if both children are present. Else if only one child is present then the value of the child should be equal to its node value.
+//Note:- A tree with zero or one node also follows children sum property
+bool childrenSumProperty(Node *root){
+    if(root==NULL) return true; //No node
+    else if(root->left==NULL&&root->right!=NULL){   //no left child
+        bool res = (root->key==root->right->key&&childrenSumProperty(root->right));
+        return res;
+    }
+    else if(root->left!=NULL&&root->right==NULL){   //no right child
+        bool res = (root->key==root->left->key&&childrenSumProperty(root->left));
+        return res;
+    }
+    else if(root->left==NULL&&root->right==NULL) return true;   //One node
+    else {
+        bool res = (root->key==root->left->key+root->right->key&&childrenSumProperty(root->left)&&childrenSumProperty(root->right));
+        return res;
+        
+    }   
+}
+
+
+//7) Check if binary tree is HEIGHT BALANCED or not
+//A binary tree is balanced if for every node the difference between left sub tree and right sub tree should not be more than 1
+//Naive is O(n^2), do it in O(n)
+bool naiveIsBalanced(Node *root){
+  if(root==NULL) return true;
+  int x = getHeight(root->left);
+  int y = getHeight(root->right);
+  return (abs(x-y)<=1)&&naiveIsBalanced(root->left)&&naiveIsBalanced(root->right);
+  }
+//**EFFICIENT linear time approach: our function now returns an integer value where if returned value is -1 it implies tree is not 
+//balanced and is if returned valued is positive(including 0) it implies tree is balanced and it return the height of tree by the
+//returned integer value i.e returned integer value will imply 2 things i)what is the height of tree ii)whether tree is balanced or not
+int isBalanced(Node *root){
+    if(root==NULL) return 0;
+    else {
+        int x = isBalanced(root->left);
+        int y = isBalanced(root->right);
+        return x>-1&&y>-1&&abs(x-y)<=1?1+max(x,y):-1;
+    }
+}
+
+//8) Find MAXIMUM WIDTH of binary tree : O(n) time & O(w) space
+//Maximum Width of Binary tree is the maximum number of nodes present in a level of the Tree
+Hint:- we use level order traversal line by line logic to find maximum width of the Binary Tree.
+void bfsLineByLine2(Node *root){
+    int maxWidth = 0;
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();   //number of nodes in current level of binary tree;
+            maxWidth = max(maxWidth, cnt);
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                //cout<<temp->key<<" ";
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+            //cout<<endl;
+        }
+    }
+    cout<<"Maximum Width of binary tree: "<<maxWidth<<endl;
+}
+
+
+
+
