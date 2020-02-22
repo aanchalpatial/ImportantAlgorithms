@@ -2,7 +2,7 @@
 
 
 //1) breadth first/ level order traversal: 0(n) time & O(n) space;
-//space complexity is O(w) where w is width of tree, w can go upto (n+1)/2 (in a perfect binary tree) so basically space complexity is O(n)
+//***space complexity is O(w) where w is width of tree, w can go upto (n+1)/2 (in a perfect binary tree) so basically space complexity is O(n)
 void bfs(Node *root){
     if(root!=NULL){
         queue<Node *> q;
