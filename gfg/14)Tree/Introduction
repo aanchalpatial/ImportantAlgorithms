@@ -1,1 +1,15 @@
-//
+//used to represent HEIRARCHIAL data
+//previously studied data structures were all linear such as arrays, linked list, stack and queue whereas tree is NON LINEAR
+
+//descendants of a given node:- every node that lies in the subtree rooted with given node except itself. A descendant refers to any
+//element that is connected lower down the hierarchy tree – no matter how many levels lower.
+//ancestor-: An ancestor is any element which is connected further up in the hierarchy tree – no matter how many levels higher
+
+//Applications:- binary search tree, binary heap(used to implement priority queue), B & B+ Trees, spanning & shortest path in computer
+//networks, parsing in compilers
+
+//Variation:
+//->Trie : used to implement dictionaries
+//->suffix tree : used in fastest possible pattern searching
+//binary index tree : range queries
+//->segment tree : range queries
