@@ -1,0 +1,19 @@
+//Convert a binary tree to doubly linked list IN PLACE(without use new space for nodes)
+//left pointer will be used as prev pointer & right pointer will be used as next pointer
+//O(n) time & O(h) space
+
+Node *previous = NULL;
+Node *inorder(Node *root){
+    if(root==NULL) return root;
+    else {
+        Node *head = inorder(root->left);
+        if(previous==NULL) head = root;
+        else {
+            root->left = previous;
+            previous->right = root;
+        }
+        previous = root;
+        inorder(root->right);
+        return head;
+    }
+}
