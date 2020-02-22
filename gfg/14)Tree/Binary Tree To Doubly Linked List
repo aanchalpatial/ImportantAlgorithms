@@ -7,13 +7,13 @@ Node *inorder(Node *root){
     if(root==NULL) return root;
     else {
         Node *head = inorder(root->left);
-        if(previous==NULL) head = root;
+        if(previous==NULL) head = root;         //used once to identify first node in inorder traversal as head
         else {
             root->left = previous;
             previous->right = root;
         }
         previous = root;
         inorder(root->right);
-        return head;
+        return head;            //if previous is not NULL then you simply return whatever left recursive call returned
     }
 }
