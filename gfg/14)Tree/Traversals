@@ -1,0 +1,97 @@
+//Binary Tree TRAVERSALS :
+
+
+//1) breadth first/ level order traversal: 0(n) time & O(n) space;
+//space complexity is O(w) where w is width of tree, w can go upto (n+1)/2 (in a perfect binary tree) so basically space complexity is O(n)
+void bfs(Node *root){
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            Node *temp = q.front();
+            cout<<temp->key<<" ";
+            q.pop();
+            if(temp->left!=NULL){
+                q.push(temp->left);
+            }
+            if(temp->right!=NULL){
+                q.push(temp->right);
+            }
+        }
+    }
+}
+//bfs traversal LINE BY LINE : 2 methods
+//method 1: single loop
+void bfsLineByLine(Node *root){       //O(n+h) time & 0(w)
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        q.push(NULL);
+        while(q.size()>1){      //**
+            Node *temp = q.front();
+            q.pop();
+            if(temp==NULL) {
+                cout<<endl;
+                q.push(NULL);
+            }else {
+                cout<<temp->key<<" ";
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }            
+            }
+
+        }
+    }    
+}
+//method 2: nested loop
+void bfsLineByLine2(Node *root){
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                cout<<temp->key<<" ";
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+            cout<<endl;
+        }
+    }
+}
+
+//2) depth first traversal: 
+//2a)inorder: O(n) time & O(h) space; where h is height of tree
+void inorder(Node *root){
+    if(root!=NULL){
+        inorder(root->left);
+        cout<<root->key<<", ";
+        inorder(root->right);
+    }
+}
+//2b)preorder: O(n) time & O(h) space
+void preorder(Node *root){
+    if(root!=NULL){
+        cout<<root->key<<", ";
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+//2c)postorder: O(n) time & O(h) space
+void postorder(Node *root){
+    if(root!=NULL){
+        postorder(root->left);
+        postorder(root->right);
+        cout<<root->key<<", ";
+    }
+}
