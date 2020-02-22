@@ -22,6 +22,7 @@ void bfs(Node *root){
     }
 }
 //bfs traversal LINE BY LINE : 2 methods
+//**used in finding maximum width , iterative version of leftview & iterative versions of other properties of binary tree 
 //method 1: single loop
 void bfsLineByLine(Node *root){       //O(n+h) time & 0(w)
     if(root!=NULL){
