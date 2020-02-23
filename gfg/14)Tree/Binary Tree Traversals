@@ -22,7 +22,6 @@ void bfs(Node *root){
     }
 }
 //bfs traversal LINE BY LINE : 2 methods
-//**used in finding maximum width , iterative version of leftview & iterative versions of other properties of binary tree 
 //method 1: single loop
 void bfsLineByLine(Node *root){       //O(n+h) time & 0(w)
     if(root!=NULL){
@@ -49,12 +48,13 @@ void bfsLineByLine(Node *root){       //O(n+h) time & 0(w)
     }    
 }
 //method 2: nested loop
+//**used in finding maximum width ,tree traversal in spiral form, iterative version of leftview & iterative versions of other properties of binary tree 
 void bfsLineByLine2(Node *root){
     if(root!=NULL){
         queue<Node *> q;
         q.push(root);
         while(!q.empty()){
-            int cnt = q.size();
+            int cnt = q.size();                 //*** most important step ***
             for(int i=0;i<cnt;++i){
                 Node *temp = q.front();
                 q.pop();
