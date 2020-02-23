@@ -166,6 +166,7 @@ void bfsLineByLine2(Node *root){
 }
 
 //9) Trace path of node in binary tree
+//used in naive solution of LCA Problem
 //Below function returns false if a node with given value doesn't exists
 bool findPath(Node *root, vector<Node *> &path, int x){             //vector path is passed by reference & stores the path of given node
     if(root==NULL) return false;
