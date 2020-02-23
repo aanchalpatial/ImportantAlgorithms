@@ -1,0 +1,42 @@
+//Construction of a Binary Tree from given Inorder and Preorder traversals.
+//Note: we can only construct a binary tree if inorder and one other (either preorder or postorder) traversal is given
+
+//Approach : we construct the tree while preordrder traversal and use inorder traversal to determine positioning of nodes
+//In a Preorder sequence, leftmost element is the root of the tree. So we know ‘A’ is root for given sequences. By searching ‘A’ 
+//in Inorder sequence, we can find out all elements on left side of ‘A’ are in left subtree and elements on right are in right subtree.
+/*
+Algorithm: buildTree()
+1) Pick an element from Preorder. Increment a Preorder Index Variable (preIndex in below code) to pick next element in next recursive call.
+2) Create a new tree node tNode with the data as picked element.
+3) Find the picked element’s index in Inorder. Let the index be inIndex.
+4) Call buildTree for elements before inIndex and make the built tree as left subtree of tNode.
+5) Call buildTree for elements after inIndex and make the built tree as right subtree of tNode.
+6) return tNode
+*/
+
+int preIndex = 0;
+Node *traversalToTree(int in[], int pre[], int l, int h){
+    if(l>h) {
+        cout<<l<<","<<h<<endl;
+        return NULL;    //no node
+        }
+    Node *root = new Node(pre[preIndex]);
+    ++preIndex; //incrementing by 1 gives the correct next node because 
+                //we ar using preorder array in preorder traversal
+    
+    int index = searchIndex(in, l, h, root->key);
+    
+    root->left = traversalToTree(in, pre, l,index-1);
+    root->right = traversalToTree(in, pre, index+1, h);
+    return root;
+}
+
+int main() {
+
+  int inorder[] = {20, 10, 40, 30, 50};
+  int n = sizeof(inorder)/sizeof(inorder[0]);
+  int preorder[] = {10, 20, 30, 40, 50};
+	Node *root = traversalToTree(inorder, preorder, 0, n-1 );
+
+	return 0;
+}
