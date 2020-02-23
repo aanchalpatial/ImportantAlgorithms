@@ -1,6 +1,6 @@
 /*
-Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, left view, children sum property, balanced &
-maximum width are studied here in LINEAR TIME & LINEAR SPACE.
+Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, left view, children sum property, balanced,
+maximum width & path of a node are studied here in LINEAR TIME & LINEAR SPACE.
 */
 
 
@@ -163,6 +163,18 @@ void bfsLineByLine2(Node *root){
         }
     }
     cout<<"Maximum Width of binary tree: "<<maxWidth<<endl;
+}
+
+//9) Trace path of node in binary tree
+bool findPath(Node *root, vector<Node *> &path, int x){             //vector path is passed by reference & stores the path of given node
+    if(root==NULL) return false;
+    path.push_back(root);
+    
+    if(root->key==x) return true;
+    if(findPath(root->left, path, x)||findPath(root->right, path, x)) return true;
+    
+    path.pop_back();
+    return false;
 }
 
 
