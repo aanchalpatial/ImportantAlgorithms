@@ -1,0 +1,96 @@
+//Famoulsy know as LCA Problem
+//Ancestors of a node are ITSELF, its parent, parent of its parent, parent of parent of its parent and so on... till we reach root.
+//We have to first find common ancestors of 2 given keys and then return the lowest(NOT MINIMUM) node of them.
+
+//Application: LCA is useful in finding DISTANCE BETWEEN 2 NODES i.e 
+//distance between 2 nodes = (distance between node 1 & LCA) + (distance between node 2 & LCA)
+
+//Method 1) Generate path arrays for both given nodes. Traverse both arrays simultanously and return the value 
+//just before the first different values in arrays
+// O(n) time , 3 Traversals of binary tree & O(n) space
+
+bool findPath(Node *root, vector<Node *> &path, int x){
+    if(root==NULL) return false;
+    path.push_back(root);
+    
+    if(root->key==x) return true;
+    if(findPath(root->left, path, x)||findPath(root->right, path, x)) return true;
+    
+    path.pop_back();
+    return false;
+}
+
+Node *naiveLCA(Node *root,int x, int y){
+    vector<Node *> path1,path2;
+    if(!findPath(root, path1, x)||!findPath(root, path2, y)) {
+        return NULL;    //either x or y or both don't exists
+    }
+    for(int i=0;i<path1.size();++i) cout<<path1[i]->key<<"->";
+        cout<<endl;
+    for(int i=0;i<path2.size();++i) cout<<path2[i]->key<<"->";
+        cout<<endl;
+    //Compare the paths to get the first different value
+    int i;
+    for(i=0;path1.size() && i < path2.size() ; i++){ 
+        if (path1[i] != path2[i]) break; 
+    }
+    return path1[i-1];
+}
+
+
+//Method 2): Efficient with restrictions				//RRR
+// O(n) time , 1 Traversals of binary tree & O(h) space
+//** ASSUMPTION: 2 given nodes do exists, otherwise this approach gives INCORRECT results
+/*
+The idea is to traverse the tree starting from root. If any of the given keys (n1 and n2) matches with root, 
+then root is LCA (assuming that both keys are present). If root doesn’t match with any of the keys, we recur for left and right subtree. 
+***The node which has one key present in its left subtree and the other key present in right subtree is the LCA***. If both keys lie in
+left subtree, then left subtree has LCA also, otherwise LCA lies in right subtree.
+*/
+
+Node *efficientLCA(Node *root, int x, int y){
+    //We do normal preorder recursive traversal
+    //Following cases may arise:
+    
+    if(root==NULL) return NULL;
+    //If root is same as x or y or both i.e current node is LCA
+    if(root->key==x||root->key==y) return root;
+    
+    Node *leftRoot = efficientLCA(root->left,x,y);
+    Node *righRoot = efficientLCA(root->right,x,y);
+    //4 possibilities:
+    
+    //Case 1:leftRoot != NULL, righRoot != NULL
+    //If one subtree contains x and other contains y i.e current node is LCA
+    if(leftRoot!=NULL&&righRoot!=NULL) return root;
+    
+    //Case 2:leftRoot != NULL, righRoot = NULL
+    //If left subtree contains both x and y i.e left subtree contains LCA
+    if(leftRoot!=NULL) return leftRoot;
+    
+    //Case 3:leftRoot = NULL, righRoot != NULL & Case 4:leftRoot = NULL, righRoot = NULL
+    //If EITHER right subtree contains both x and y OR rightRoot is also NULL
+    else return righRoot;
+}
+
+int main() {
+	Node *root = new Node(10);
+	root->left = new Node(20);
+	root->right = new Node(60);
+	root->left->left = new Node(30);
+	root->left->left->left = new Node(40);
+	root->left->left->right = new Node(50);
+	root->left->right = new Node(80);
+	root->left->right->right = new Node(90);
+	root->left->right->right->right = new Node(18);
+	
+	
+    //Node *lca = naiveLCA(root, 80, 60);
+    Node *lca = efficientLCA(root, 80, 90);
+    if(lca !=NULL) cout<<"Lowest Common Ancestor is: "<<lca->key<<endl;
+    else cout<<" No LCA !!"<<endl;
+    
+    
+      
+    return 0;
+}
