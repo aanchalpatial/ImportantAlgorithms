@@ -48,4 +48,4 @@ int main() {
 }
 
 //Time complexity of above approach is O(n^2) ( because traversalToTree() is called for each node once and it includes a loop(searchIndex) in itself )
-//***We can reduce time complexity to O(n) by using hash of (value, index) instead of searchIndex() func
+//**We can reduce time complexity to O(n) by using hash of (value, index) instead of searchIndex() func
