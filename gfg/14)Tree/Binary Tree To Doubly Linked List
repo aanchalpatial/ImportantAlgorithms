@@ -2,6 +2,7 @@
 //left pointer will be used as prev pointer & right pointer will be used as next pointer
 //O(n) time & O(h) space
 
+
 Node *previous = NULL;
 Node *inorder(Node *root){
     if(root==NULL) return root;
