@@ -1,0 +1,56 @@
+//Famoulsy know as LCA Problem
+//Ancestors of a node are ITSELF, its parent, parent of its parent, parent of parent of its parent and so on... till we reach root.
+//We have to first find common ancestors of 2 given nodes and then return the lowest(NOT MINIMUM) of them.
+
+//Application: LCA is useful in finding DISTANCE BETWEEN 2 NODES i.e 
+//distance between 2 nodes = (distance between node 1 & LCA) + (distance between node 2 & LCA)
+
+//Method 1) Generate path arrays for both given nodes. Traverse both arrays simultanously and return the value 
+//just before the first different values in arrays
+
+bool findPath(Node *root, vector<Node *> &path, int x){
+    if(root==NULL) return false;
+    path.push_back(root);
+    
+    if(root->key==x) return true;
+    if(findPath(root->left, path, x)||findPath(root->right, path, x)) return true;
+    
+    path.pop_back();
+    return false;
+}
+
+Node *naiveLCA(Node *root,int x, int y){
+    vector<Node *> path1,path2;
+    if(!findPath(root, path1, x)||!findPath(root, path2, y)) {
+        return NULL;    //either x or y doesn't exists
+    }
+    for(int i=0;i<path1.size();++i) cout<<path1[i]->key<<"->";
+        cout<<endl;
+    for(int i=0;i<path2.size();++i) cout<<path2[i]->key<<"->";
+        cout<<endl;
+    //Compare the paths to get the first different value
+    int i;
+    for(i=0;path1.size() && i < path2.size() ; i++){ 
+        if (path1[i] != path2[i]) break; 
+    }
+    return path1[i-1];
+}
+
+int main() {
+	Node *root = new Node(10);
+	root->left = new Node(20);
+	root->right = new Node(60);
+	root->left->left = new Node(30);
+	root->left->left->left = new Node(40);
+	root->left->left->right = new Node(50);
+	root->left->right = new Node(80);
+	root->left->right->right = new Node(90);
+	root->left->right->right->right = new Node(18);
+	
+    Node *lca = naiveLCA(root, 80, 60);
+    if(lca !=NULL) cout<<"Lowest Common Ancestor is: "<<lca->key<<endl;
+    else cout<<" No LCA !!"<<endl;
+    
+    return 0;
+}
+
