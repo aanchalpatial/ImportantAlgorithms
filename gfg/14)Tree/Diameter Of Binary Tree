@@ -1,7 +1,7 @@
 //Diameter of binary tree is Number of nodes on the longest path between 2 leaf nodes
 //diameter of tree with zero nodes is 0 & tree with one node is 1
 
-//Naive is O(n^2) time & O(1) space: worst case happens when tree is skewed
+//Naive is O(n^2) time & O(h) space: worst case happens when tree is skewed
 int getHeight(Node *root){
     if(root==NULL) return 0;
     
@@ -51,7 +51,7 @@ int findDiameter(Node *root){
 }
 
 
-//Method 3) O(n) time & O(1) space
+//Method 3) O(n) time & O(h) space
 int max_width = 0;              //this variable stores the maximum diameter
 int getHeight(Node *root){
     if(root==NULL) return 0;
