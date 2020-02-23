@@ -1,0 +1,89 @@
+//Level order traversal in spiral form i.e left to right in first level, right to left in next level , left to right in next to next level
+//and so on..
+
+//Method 1) use bfsLineByLine() and change order of printing on alternate levels
+//Upperbounded by 4n (a node at max can be enqueued once, dequeued once, pushed once & popped once)
+//time complexity is O(n)
+
+void bfsLineByLine(Node *root){
+    if(root==NULL) return;
+    queue<Node *> q;
+    q.push(root);
+    int k = 0;
+    while(!q.empty()){
+        int cnt = q.size();
+        if(k%2==0){
+            //left to right
+            for(int i=0;i<cnt;++i){
+            Node *temp = q.front();
+            cout<<temp->key<<" ";
+            q.pop();
+            if(temp->left!=NULL) q.push(temp->left);
+            if(temp->right!=NULL) q.push(temp->right);
+            }   
+        }else {
+            //right to left
+            stack<Node *> s;
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                s.push(temp);
+                q.pop();
+                if(temp->left!=NULL) q.push(temp->left);
+                if(temp->right!=NULL) q.push(temp->right);
+            } 
+            while(!s.empty()){
+                cout<<s.top()->key<<" ";
+                s.pop();
+            }
+        }
+        ++k;
+        cout<<endl;
+    }
+}
+
+//Method 2) : Efficient
+//Method 1 seems to do extra work for nodes which are to be printed from right to left
+/*Approach:                     //RR
+i)push root into stack 1
+ii)while any of stack 1 or stack 2 is not empty
+      iiA)while stack 1 is not empty
+          ->pop a node and print it
+          ->push popped node children to stack 2
+      iiB)while stack 2 is not empty
+          ->pop a node and print it
+          ->push popped node children to stack 1 in REVERSE ORDER i.e right child first then left child
+*/
+//Upperbounded by 2n (a node at max can be pushed once & popped once)
+//time complexity is O(n)
+void spiralLevelOrderTraversal(Node *root){
+    stack<Node *> s1;
+    stack<Node *>s2;
+    
+    s1.push(root);
+    
+    while(!s1.empty()||!s2.empty()){
+        while(!s1.empty()){
+            Node *temp = s1.top();
+            cout<<temp->key<<" ";
+            s1.pop();
+            
+            //left child then right child
+            if(temp->left!=NULL) s2.push(temp->left);
+            if(temp->right!=NULL) s2.push(temp->right);
+        }
+        cout<<endl;
+        while(!s2.empty()){
+            Node *temp = s2.top();
+            cout<<temp->key<<" ";
+            s2.pop();
+            
+            //right child then left child
+            if(temp->right!=NULL) s1.push(temp->right);
+            if(temp->left!=NULL) s1.push(temp->left);
+        }
+        cout<<endl;
+    }
+}
+
+
+
