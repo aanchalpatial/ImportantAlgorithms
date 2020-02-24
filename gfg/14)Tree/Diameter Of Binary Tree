@@ -1,5 +1,7 @@
 //Diameter of binary tree is Number of nodes on the longest path between 2 leaf nodes
 //diameter of tree with zero nodes is 0 & tree with one node is 1
+//HINT: iameter of a binary tree is nothing but the maximum of left subtree height + right subtree height + 1 for all
+//the nodes that are present in the binary tree
 
 //Naive is O(n^2) time & O(h) space: worst case happens when tree is skewed
 int getHeight(Node *root){
@@ -51,12 +53,11 @@ int findDiameter(Node *root){
 }
 
 
-//Method 3) O(n) time & O(h) space
-int max_width = 0;              //this variable stores the maximum diameter
-int getHeight(Node *root){
+//Method 3) O(n) time & O(h) space          
+int getHeight(Node *root, int &max_width){
     if(root==NULL) return 0;
-    int lh = getHeight(root->left);
-    int rh = getHeight(root->right);
+    int lh = getHeight(root->left, max_width);
+    int rh = getHeight(root->right, max_width);
     max_width = max(max_width, 1+lh+rh);  //**imp
     return 1+max(lh, rh);
 }
@@ -70,8 +71,8 @@ int main() {
 	root->left->right = new Node(80);
 	root->left->right->right = new Node(90);
 	root->left->right->right->right = new Node(18);
-    
-  getHeight(root);
+  int max_width = 0;		//this variable stores the maximum diameter, it is passed by reference
+  getHeight(root, max_width);
   cout<<"Diameter of binary tree: "<<max_width<<endl;
   return 0;
 }
