@@ -1,0 +1,106 @@
+// Given two binary trees with head reference as T and S. The task is to check if S is present as subtree in T.
+
+//1) Naive Solution: O(mn) where m and n are number of nodes in given two trees.
+//Traverse the tree T in preorder fashion. For every visited node in the traversal, 
+//see if the subtree rooted with this node is identical to S.
+vector<Node *> v;
+void preorder(Node *root, Node *S){
+    if(root!=NULL) {
+        if(root->data==S->data) {
+            v.push_back(root);          //node of value of root2 exists in tree1
+        }
+        preorder(root->left, S);
+        preorder(root->right, S);
+    }
+}
+bool checkIdentical(Node *r1, Node *r2){
+    if((r1!=NULL&&r2==NULL)||(r1==NULL&&r2!=NULL)) return false;
+    if(r1==NULL&&r2==NULL) return true;
+    if((r1->data==r2->data)&&checkIdentical(r1->left, r2->left)&&checkIdentical(r1->right, r2->right)) return true;
+    return false;
+}
+bool isSubTree(Node* T, Node* S) {
+    // Your code here
+    // return 1 if S is subtree of T else 0
+    preorder(T,S);
+    //cout<<foundNode->data<<endl;
+    for(int i=0;i<v.size();++i){
+        if (checkIdentical(v[i], S)) return true;
+    }
+    
+    return false;
+}
+
+//2) EFFICIENT Solution: O(n) time & O(n) space
+//The idea is based on the fact that inorder and preorder/postorder uniquely identify a binary tree. Tree S is a subtree of T 
+//if both inorder and preorder traversals of S arew substrings of inorder and preorder traversals of T respectively.
+
+void inorder(Node *root, string &str){
+    if(root==NULL){
+        str += "#";       //special character
+        return;
+    }
+        inorder(root->left, str);
+        str += to_string(root->data);
+        inorder(root->right, str);
+    
+}
+void preorder(Node *root, string &str){
+    if(root==NULL){
+        str += "#";         //special character
+        return;
+    }
+        str += to_string(root->data);
+        preorder(root->left, str);
+        preorder(root->right, str);
+    
+}
+
+bool isSubTree(Node *T, Node *S){
+    if(S==NULL) return true;
+    if(T==NULL) return false;
+    string iT, pT, iS, pS;
+    
+    inorder(T, iT);
+    inorder(S, iS);
+    
+    preorder(T, pT);
+    preorder(S, pS);
+    
+    
+    
+    if( (iT.find(iS)!=string::npos)&&(pT.find(pS)!=string::npos) ) return true;
+    return false;
+}
+/*NOTE :-
+The above algorithm doesn't work for cases where a tree is present
+in another tree, but not as a subtree. Consider the following example.
+
+        Tree1
+          x 
+        /    \
+      a       b
+     /        
+    c         
+
+
+        Tree2
+          x 
+        /    \
+      a       b
+     /         \
+    c            d
+
+Inorder and Preorder traversals of the big tree or Tree2 are.
+
+Inorder and Preorder traversals of small tree or Tree1 are
+
+The Tree2 is not a subtree of Tree1, but inS[] and preS[] are
+subarrays of inT[] and preT[] respectively.
+The above algorithm can be extended to handle such cases by adding a SPECIAL CHARACTER (in our case "#") whenever we encounter NULL in 
+inorder and preorder traversals.
+*/
+
+
+
+
