@@ -1,6 +1,6 @@
 /*
 Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, children sum property, balanced,
-maximum width & path of a node are studied here in LINEAR TIME & LINEAR SPACE.
+maximum width, path of a node & mirror of a binary tree are studied here in LINEAR TIME & LINEAR SPACE.
 */
 
 
@@ -134,6 +134,23 @@ bool findPath(Node *root, vector<Node *> &path, int x){             //vector pat
     
     path.pop_back();
     return false;
+}
+
+//9) Convert a Binary Tree into its Mirror Tree
+//Hint: The idea is to recursively call for left and right subtrees of a given node. On each recursive call
+//SWAP the pointers of the children nodes.
+
+void mirrorTree(Node *root){
+    if(root==NULL) return;
+    
+    mirrorTree(root->left);
+    mirrorTree(root->right);
+    
+    //swap pointers
+    Node *temp = root->right;
+    root->right = root->left;
+    root->left = temp;
+    
 }
 
 
