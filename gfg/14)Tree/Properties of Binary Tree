@@ -165,7 +165,7 @@ bool isIdentical(Node *r1, Node *r2)
     
 }
 
-//Given a Binary Tree of N nodes. The task is to find the vertical width of the tree.
+//11) Given a Binary Tree of N nodes. The task is to find the vertical width of the tree.
 //The width of a binary tree is the number of vertical paths in that tree.
 void findVerticalWidth(Node *root, int level, set<int> &h){
     if(root==NULL) return;
