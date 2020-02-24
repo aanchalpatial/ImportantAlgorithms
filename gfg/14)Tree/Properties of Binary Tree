@@ -1,5 +1,5 @@
 /*
-Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, left view, children sum property, balanced,
+Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, children sum property, balanced,
 maximum width & path of a node are studied here in LINEAR TIME & LINEAR SPACE.
 */
 
@@ -49,50 +49,7 @@ void nodesAtDistanceK(Node *root, int k){
 //Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
 
 
-//5) Print LEFT VIEW of binary tree : 2 versions
-//left view means left most node(can be a left child or a right child) of every level in binary tree
-//Recursive version : O(n) time & O(h) space , preferred for perfect trees
-int maxLevel = 0;
-void leftViewRecursive(Node *root, int level){    //initial value of level is 1
-    //Uses preorder traversal
-    if(root!=NULL){
-        if(maxLevel<level){     //avoid printing anything except left most node
-            cout<<root->key<<endl;
-            maxLevel = level;
-        }
-        leftViewRecursive(root->left, level+1);
-        leftViewRecursive(root->right, level+1);
-    }
-}
-//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
-void leftViewIterative(Node *root){
-    //uses line by line bfs traversal
-    if(root!=NULL){
-        queue<Node *> q;
-        q.push(root);
-        while(!q.empty()){
-            int cnt = q.size();
-            for(int i=0;i<cnt;++i){
-                Node *temp = q.front();
-                q.pop();
-                if(i==0){       //avoid printing anything except left most node
-                    cout<<temp->key<<" ";
-                }
-                if(temp->left!=NULL){
-                    q.push(temp->left);
-                }
-                if(temp->right!=NULL){
-                    q.push(temp->right);
-                }
-                
-            }
-            cout<<endl;
-        }
-    }
-}
-
-
-//6) Find whether tree follows CHILDREN SUM PROPERTY : O(n) time & O(h) space
+//5) Find whether tree follows CHILDREN SUM PROPERTY : O(n) time & O(h) space
 //Children Sum Property is a property in which the sum of values of the left child and right child should be equal to the value of
 their node if both children are present. Else if only one child is present then the value of the child should be equal to its node value.
 //Note:- A tree with zero or one node also follows children sum property
@@ -115,7 +72,7 @@ bool childrenSumProperty(Node *root){
 }
 
 
-//7) Check if binary tree is HEIGHT BALANCED or not
+//6) Check if binary tree is HEIGHT BALANCED or not
 //A binary tree is balanced if for every node the difference between left sub tree and right sub tree should not be more than 1
 //Naive is O(n^2), do it in O(n)
 bool naiveIsBalanced(Node *root){
@@ -136,7 +93,7 @@ int isBalanced(Node *root){
     }
 }
 
-//8) Find MAXIMUM WIDTH of binary tree : O(n) time & O(w) space
+//7) Find MAXIMUM WIDTH of binary tree : O(n) time & O(w) space
 //Maximum Width of Binary tree is the maximum number of nodes present in a level of the Tree
 Hint:- we use level order traversal line by line logic to find maximum width of the Binary Tree.
 void bfsLineByLine2(Node *root){
@@ -165,7 +122,7 @@ void bfsLineByLine2(Node *root){
     cout<<"Maximum Width of binary tree: "<<maxWidth<<endl;
 }
 
-//9) Trace path of node in binary tree
+//8) Trace path of node in binary tree
 //used in naive solution of LCA Problem
 //Below function returns false if a node with given value doesn't exists
 bool findPath(Node *root, vector<Node *> &path, int x){             //vector path is passed by reference & stores the path of given node
