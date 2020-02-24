@@ -1,0 +1,75 @@
+//We are given a binary tree and a leaf node, we need to find time to burn the completeBinary Tree if we burn the given leaf at 0-th second. 
+//At each second all the adjacent nodes of current NODES are burnt
+
+// HINT: For given leaf node we need to find the FARTHEST NODE from it in binary tree and //And Farthest node must be reachable
+//through one of the ancestors of given leaf
+/*
+APPROACH:
+So, for the minimum time required to burn any subtree will be:
+The time required for fire to reach the root node from initial burnt leaf + depth of the opposite side
+
+Therefore, to find time required to burn the complete tree, we need to calculate the above value for every node,
+and take maximum of that value.
+ans = max(ans, (time required for fire to reach current node + depth of other subtree))
+*/
+/*
+SOLUTION:
+So the solution is to apply recursion and for every node calculate the below-required values:
+1)Left Depth.
+2)Right Depth.
+3)The time required for fire to reach the current node.
+4)Is the current subtree conatins initial burnt leaf node.*/
+
+//Naive Solution
+int getHeight(Node *root){
+    if(root==NULL) return 0;
+    return 1+max(getHeight(root->left), getHeight(root->right));
+}
+bool findPath(Node *root, vector<Node *> &path, int x){
+    if(root==NULL) return false;
+    path.push_back(root);
+    if(root->key==x) return true;
+    if(findPath(root->left, path, x)||findPath(root->right, path, x)) return true;
+    path.pop_back();
+    return false;
+    
+}
+int burnOutTreeTime(Node *root, int leafValue){
+    vector<Node *> path;
+    if(!findPath(root, path, leafValue)) return -1;
+    int maxDistance = -1;
+    for(int i=0;i<path.size()-1;++i) {
+        int leafToAncestor = path.size()-i-1;
+        
+        int ancestorToFarthestNodeOnOtherSide = 0;
+        if(path[i]->left==path[i+1]&&path[i]->right!=NULL){
+            ancestorToFarthestNodeOnOtherSide = getHeight(path[i]->right);
+        }else if(path[i]->left!=NULL) {
+            ancestorToFarthestNodeOnOtherSide = getHeight(path[i]->left);
+        }
+        
+        int d = leafToAncestor + ancestorToFarthestNodeOnOtherSide;
+        cout<<leafToAncestor<<", "<<ancestorToFarthestNodeOnOtherSide<<" d: "<<d<<endl;
+        maxDistance = max(maxDistance, d);
+    }
+    
+    return maxDistance;
+}
+int main() {
+	
+	Node *root = new Node(10);
+	root->left = new Node(20);
+	root->right = new Node(30);
+	root->right->right = new Node(60);
+	root->left->left = new Node(40);
+	root->left->right = new Node(50);
+	root->left->left->right = new Node(100);
+    root->left->left->right->left = new Node(120);
+    root->left->left->right->left->left = new Node(140);
+    
+    int leafValue = 50;
+    int time = burnOutTreeTime(root, leafValue);
+    if(time!=-1) cout<<"Time taken to burn binary tree starting from leaf "<<leafValue<<" is: "<<time<<" seconds."<<endl;    
+    else cout<<"No Leaf Node with given values exists!!"<<endl;
+    return 0;
+}
