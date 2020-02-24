@@ -1,6 +1,6 @@
 /*
 Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, children sum property, balanced,
-maximum width, path of a node, mirror of a binary tree & are 2 trees identical are studied here in LINEAR TIME & LINEAR SPACE.
+maximum width, path of a node, mirror of a binary tree, are 2 trees identical & vertical width are studied here in LINEAR TIME & LINEAR SPACE.
 */
 
 
@@ -165,6 +165,24 @@ bool isIdentical(Node *r1, Node *r2)
     
 }
 
+//Given a Binary Tree of N nodes. The task is to find the vertical width of the tree.
+//The width of a binary tree is the number of vertical paths in that tree.
+void findVerticalWidth(Node *root, int level, set<int> &h){
+    if(root==NULL) return;
+    if(h.find(level)==h.end()){
+        h.insert(level);
+    }
+    findVerticalWidth(root->left, level-1, h);
+    findVerticalWidth(root->right, level+1, h);
+}
+
+int verticalWidth(Node* root)
+{
+    // Code here
+    set<int> h;
+    findVerticalWidth(root, 0, h);
+    return h.size();
+}
 
 
 
