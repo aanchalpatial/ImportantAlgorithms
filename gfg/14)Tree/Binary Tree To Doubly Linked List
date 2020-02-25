@@ -1,4 +1,4 @@
-//Convert a binary tree to doubly linked list IN PLACE(without use new space for nodes)
+//1) Convert a binary tree to doubly linked list IN PLACE(without use new space for nodes)
 //left pointer will be used as prev pointer & right pointer will be used as next pointer
 //O(n) time & O(h) space
 
@@ -18,3 +18,15 @@ Node *inorder(Node *root){
         return head;            //if previous is not NULL then you simply return whatever left recursive call returned
     }
 }
+
+//2) Make Binary Tree From Singly Linked List
+//Given a Linked List Representation of Complete Binary Tree. The task is to construct the Binary tree.
+/*
+Solution:
+1. Create an empty queue.
+2. Make the first node of the list as root, and enqueue it to the queue.
+3. Until we reach the end of the list, do the following.
+………a. Dequeue one node from the queue. This is the current parent.
+………b. Traverse two nodes in the list, add them as children of the current parent.
+………c. Enqueue the two nodes into the queue.
+*/
