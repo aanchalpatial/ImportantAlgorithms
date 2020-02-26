@@ -27,7 +27,7 @@ Node *traversalToTree(int in[], int pre[], int l, int h){
         return NULL;    //no node
         }
     Node *root = new Node(pre[preIndex]);
-    if(l==h) return root;
+    if(l==h) return root;				//**imp
     ++preIndex; //incrementing by 1 gives the correct next node because 
                 //we ar using preorder array in preorder traversal
     
