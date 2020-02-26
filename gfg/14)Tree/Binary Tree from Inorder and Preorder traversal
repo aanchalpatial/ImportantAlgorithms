@@ -20,13 +20,14 @@ int searchIndex(int arr[], int l, int h, int x){		//O(n)
     }
     return -1;
 }
-int preIndex = 0;
+int preIndex = 0;			//global variable to to access correct value from pre[] during preorder traversal
 Node *traversalToTree(int in[], int pre[], int l, int h){
     if(l>h) {
         cout<<l<<","<<h<<endl;
         return NULL;    //no node
         }
     Node *root = new Node(pre[preIndex]);
+    if(l==h) return root;
     ++preIndex; //incrementing by 1 gives the correct next node because 
                 //we ar using preorder array in preorder traversal
     
@@ -49,3 +50,9 @@ int main() {
 
 //Time complexity of above approach is O(n^2) ( because traversalToTree() is called for each node once and it includes a loop(searchIndex) in itself )
 //**We can reduce time complexity to O(n) by using hash of (value, index) instead of searchIndex() func
+
+
+
+
+//When we are building binary tree using inorder & POSTORDER we will decrement global variable starting from n-1 & right child recursive
+//call will be before left child recursive call.
