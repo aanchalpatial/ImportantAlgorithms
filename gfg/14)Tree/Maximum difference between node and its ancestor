@@ -1,0 +1,32 @@
+//Given a Binary Tree, you need to find the maximum value which you can get by subtracting the value of node B from the value of node A,
+//where A and B are two nodes of the binary tree and A is an ancestor of B.
+
+/*
+APPROACH: 
+1. As we are given a binary tree, there is no relationship between node values so we need to traverse whole binary tree to get 
+max difference and we can obtain the result in one traversal only by following below steps :
+If we are at leaf node then just return its value because it can’t be ancestor of any node. Then at each internal node we will try
+to get minimum value from left subtree and right subtree and calculate the difference between node value and this minimum value
+and according to that we will update the result.
+As we are calculating minimum value while retuning in recurrence we will check all optimal possibilities (checking node value
+with minimum subtree value only) of differences and hence calculate the result in one traversal only.*/
+
+int res;
+int inorder(Node *root){
+    if(root==NULL) return INT_MAX;
+    if(root->left==NULL&&root->right==NULL) return root->data;
+    
+    int l = inorder(root->left);
+    int r = inorder(root->right);
+    
+    res = max(res, root->data-min(l, r));
+    return min(root->data, min(l, r));
+}
+
+int maxDiff(Node* root)
+{
+    // Your code here 
+    res = INT_MIN;
+    inorder(root);
+    return res;
+}
