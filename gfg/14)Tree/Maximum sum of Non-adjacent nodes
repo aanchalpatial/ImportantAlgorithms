@@ -1,0 +1,36 @@
+//Given a binary tree with a value associated with each node, we need to choose a subset of these nodes such that sum of chosen nodes
+//is maximum under a constraint that no two chosen node in subset should be directly connected that is, if we have taken a node in our
+//sum then we can’t take its any children in consideration and vice versa.
+
+/*
+ both node and its children can’t be in sum at same time, so when we take a node into our sum we will call recursively for 
+ its grandchildren or when we don’t take this node we will call for all its children nodes and finally we will choose maximum 
+ from both of these results
+ */
+
+int getMaxSum(Node *root) 
+{
+    // Add your code here
+    if(root==NULL) return 0;
+    if(root->left==NULL&&root->right==NULL) return root->data;
+    
+    int lc = getMaxSum(root->left);     //left child
+    int rc = getMaxSum(root->right);    //right child
+    
+    int llc = 0;    //left of left child
+    int lrc = 0;    //right of left child
+    int rrc = 0;    //right of right child
+    int rlc = 0;    //left of right child
+    
+    if(root->left!=NULL) {
+        llc =  getMaxSum(root->left->left);
+        lrc = getMaxSum(root->left->right);
+    }
+    if(root->right!=NULL) {
+        rrc =  getMaxSum(root->right->right);
+        rlc = getMaxSum(root->right->left);
+    }
+    
+    return max( llc+lrc+rrc+rlc+root->data, lc+rc );
+    
+}
