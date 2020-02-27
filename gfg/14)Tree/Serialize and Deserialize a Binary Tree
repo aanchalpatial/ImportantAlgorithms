@@ -1,0 +1,50 @@
+//Serialization is to store a tree in an array so that it can be later restored and Deserialization is reading tree back from the array.
+
+/*this  function serializes 
+the binary tree and stores 
+it in the vector A*/
+
+void preorder(Node *root, vector<int> &A){
+    if(root==NULL) {
+        A.push_back(-1);    //**** most important step *****
+        return;
+    }
+    
+    A.push_back(root->data);
+    preorder(root->left, A);
+    preorder(root->right, A);
+}
+void serialize(Node *root,vector<int> &A)
+{
+    //Your code here
+    preorder(root, A);
+    // for(int i=0;i<A.size();++i) cout<<A[i]<<" ";
+    // cout<<endl;
+}
+
+/*this function deserializes
+ the serialized vector A*/
+int ind;
+
+Node *preorderDeserialize(vector<int> &A){
+    
+   if(ind>=A.size()||A[ind]==-1) {      //**** most important step *****
+       ++ind;                               
+       return NULL;
+   }
+   Node *temp = new Node(A[ind]);
+   ++ind;
+   
+   temp->left = preorderDeserialize(A);
+   temp->right = preorderDeserialize(A);
+   
+   return temp;
+}
+
+Node * deSerialize(vector<int> &A)
+{
+   //Your code here
+   ind = 0;
+   Node *root = preorderDeserialize(A);
+   return root;
+}
