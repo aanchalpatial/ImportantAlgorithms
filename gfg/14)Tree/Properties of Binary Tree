@@ -36,7 +36,7 @@ int getHeight(Node *root){
 }
 
 
-//4) Print nodes at a distance K : 2 versions
+//4) Print nodes at a distance K from ROOT : 2 versions
 //Recursive version : O(n) time & O(h) space , preferred for perfect trees
 void nodesAtDistanceK(Node *root, int k){
     if(root==NULL) return;
