@@ -1,0 +1,51 @@
+//Find nodes at distance k: from ROOT & from LEAF NODES
+
+
+//1) Print nodes at a distance K from ROOT : 2 versions
+//Recursive version : O(n) time & O(h) space , preferred for perfect trees
+void nodesAtDistanceK(Node *root, int k){
+    if(root==NULL) return;
+    else if(k==0) cout<<root->key<<", ";
+    else{
+        nodesAtDistanceK(root->left, k-1);
+        nodesAtDistanceK(root->right, k-1);
+    }
+}
+//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
+
+
+//2) count all distinct nodes that are distance k from a leaf node. Here, k distance from leaf means k levels higher than a leaf node.
+//For example, if k is more than the height of Binary Tree, then nothing should be counted.
+/*
+Approach:
+The idea is to traverse the tree. Keep storing all ancestors till we hit a leaf node. When we reach a leaf node, 
+we print the ancestor at distance k. We also need to keep track of nodes that are already printed as output.
+For that we use a hash set.
+*/
+void inorder(Node *root, int k, vector<Node *> &path, unordered_set<Node *> &h, int pathLength){
+    if(root==NULL) return;
+    
+    path.push_back(root);
+    ++pathLength;
+    
+    if(root->left==NULL&&root->right==NULL&&pathLength-k-1>=0){
+        //current node is a leaf node
+        if(h.find(path[pathLength-k-1])==h.end()) h.insert(path[pathLength-k-1]);
+        path.pop_back();
+        return;
+    }
+    
+    inorder(root->left, k, path, h, pathLength);
+    inorder(root->right, k, path, h, pathLength);
+    
+    path.pop_back();
+}
+
+int printKDistantfromLeaf(Node* node, int k)
+{
+	//Add your code here. 
+	vector<Node *> path;
+	unordered_set<Node *> h;
+	inorder(node, k, path, h, 0);
+	return h.size();
+}
