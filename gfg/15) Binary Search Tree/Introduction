@@ -1,0 +1,2 @@
+//If we only have search, insert and delete or a subset of these operations then hash table is the most efficient implementation
+//BUT if along with search, insert and delete we also have either find closest or sorted traversal or both then BST is most efficient data structure
