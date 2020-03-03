@@ -126,6 +126,81 @@ Node *recursiveDeleteBST(Node *root, int x){        //O(h) time & O(h) space
     return root;
 }
 
+//4) Floor in a BST
+//For a given value, return the node with the largest of the smaller values.
+//If a node with same given value exists return it and if no node with smaller or equal values exists return NULL
+//Naive is to do simple traversal of whole BST and update answer accordingly: O(n) time & O(h) extra space
+
+/*Efficient Solution:
+A) Root data is equal to key. We are done, root data is floor value.
+B) Root data > key value, certainly the floor value can’t be in right subtree.
+Proceed to search on left subtree as reduced problem instance.
+C) Root data < key value, the ceil value may be in right subtree. We may find a node with is larger data than key value in right subtree,
+if not the root itself will be floor node.
+*/
+
+Node *recursiveFloorBST(Node *root, int x){     //O(h) time & O(h) space
+    if(root==NULL) return NULL;
+    if(root->data==x) return root;
+    else if(root->data>x){
+        return recursiveFloorBST(root->left, x);
+    }else if(root->data<x){
+        Node *temp = recursiveFloorBST(root->right, x);
+        if(temp ==NULL) return root;
+        else return temp;
+    }
+}
+
+Node *iterativeFloorBST(Node *root, int x){     //O(h) time & O(1) space, better than recursive solution
+    if(root==NULL) return NULL;
+    Node *temp = root;
+    Node *result = NULL;
+    while(temp!=NULL){
+        if(temp->data==x) {
+            result = temp;
+            break;
+        }
+        else if(temp->data>x){
+            temp = temp->left;
+        }else if(temp->data<x){
+            result = temp;
+            temp = temp->right;
+        }
+    }
+    return result;
+}
+
+//5) Ceil in a BST
+//For a given value, return the node with the smallest of the larger values.
+//If a node with same given value exists return it and if no node with greater or equal values exists return NULL
+//Naive is to do simple traversal of whole BST and update answer accordingly: O(n) time & O(h) extra space
+
+/*Efficient Solution:
+A) Root data is equal to key. We are done, root data is ceil value.
+B) Root data < key value, certainly the ceil value can’t be in left subtree.
+Proceed to search on right subtree as reduced problem instance.
+C) Root data > key value, the ceil value may be in left subtree. We may find a node with is larger data than key value in left subtree,
+if not the root itself will be ceil node.
+*/
+Node *iterativeCeilBST(Node *root, int x){     //O(h) time & O(1) space, better than recursive solution
+    if(root==NULL) return NULL;
+    Node *temp = root;
+    Node *result = NULL;
+    while(temp!=NULL){
+        if(temp->data==x) {
+            result = temp;
+            break;
+        }
+        else if(temp->data<x){
+            temp = temp->right;
+        }else if(temp->data>x){
+            result = temp;
+            temp = temp->left;
+        }
+    }
+    return result;
+}
+
 
 
 
