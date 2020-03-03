@@ -1,2 +1,131 @@
 //If we only have search, insert and delete or a subset of these operations then hash table is the most efficient implementation
-//BUT if along with search, insert and delete we also have either find closest or sorted traversal or both then BST is most efficient data structure
+//BUT if along with search, insert and delete we also have either find closest or sorted traversal or both 
+//then BALANCED BINARY SEARCH TREE is the most efficient data structure
+
+//Note : In a skewed BST h = n and in a balanced BST h is maintained to be log n
+
+//All keys in BST is typically assumed to be distinct
+//Balanced BST is implemented in c++ in map, set, multiset & multimap
+
+//3 operations of BST: Search, Insert & Delete
+
+//1) SEARCH :
+//Iterative version is better due to constant space complexity
+bool recursiveSearchBST(Node *root, int x){     //O(h) time & O(h) space 
+        if(root==NULL) return false;
+        else if(root->data==x) return true;
+        else if(root->data<x) return searchBST(root->right, x);
+        else return searchBST(root->left, x);
+}
+    
+bool iterativeSearchBST(Node *root, int x){ //O(h) time & O(1) space
+    while(root!=NULL){
+        if(root->data==x) return true;
+        else if(root->data<x) root = root->right;
+        else root = root->left;
+    }
+    return false;
+}
+
+
+//2) INSERT: 
+//we first search for the key and if the key is not present in the BST then we insert the key with the leaf node.
+//Else if the key is already present in the BST then we do nothing.
+//Iterative version is better due to constant space complexity
+Node *recursiveInsertBST(Node *root, int x){    //O(h) time & O(h) space
+    if(root==NULL) return new Node(x);
+    else if(root->data>x){
+        root->left = recursiveInsertBST(root->left,x);
+    }else if(root->data<x) {
+        root->right = recursiveInsertBST(root->right,x);
+    }
+    //else if(root->data==x) {//do nothing}
+    
+    return root;
+}
+
+Node *iterativeInsertBST(Node *root, int x){        //O(h) time & O(1) space
+    if(root==NULL) {        //Boundary case: if root is NULL
+        cout<<"inserted at root"<<endl;
+        root = new Node(x); 
+    }else {
+        Node *temp = root;
+        bool alreadyExists = false;
+        Node *prev = NULL;
+        while(temp!=NULL){
+            if(temp->data==x) {
+                alreadyExists = true;
+                cout<<"Same element already exists !!";
+                break; //if same element already exists, do nothing
+            }else if(temp->data>x) {
+                prev = temp;
+                temp = temp->left;
+            }else {
+                prev = temp;
+                temp = temp->right;
+            }
+        }
+        if(!alreadyExists) {
+            if(prev->data>x){
+                cout<<"inserted to the left of "<<prev->data<<endl; 
+                prev->left = new Node(x);
+            }else {
+                cout<<"inserted to the left of "<<prev->data<<endl; 
+                prev->right = new Node(x);
+            }
+        }
+    }
+    return root;
+}
+
+
+//3) DELETION: 
+/*
+To delete a node from a Binary Search There are three posibilities:
+1.Node to be deleted is a leaf node.
+2.Node to be deleted has only one child.
+3.Node to be deleted has two children
+*/
+Node *getInorderSuccesor(Node *root){
+    //this function gives inorder successor of node correctly only if its
+    //right child is not empty. In general this function won't work but for 
+    //delete this is sufficient because in cases when right child of a node is
+    //NULL is handled in other cases of delete prior to this
+    
+    //inorder successor is the left most node in right subtree
+    root = root->right;     //right subtree;
+    while(root!=NULL&&root->left!=NULL) {
+        root = root->left;  //left most node of right subtree
+    }
+    return root;
+}
+Node *recursiveDeleteBST(Node *root, int x){        //O(h) time & O(h) space
+    if(root==NULL) return NULL;
+    else if(root->data>x) root->left = recursiveDeleteBST(root->left, x);
+    else if(root->data<x) root->right = recursiveDeleteBST(root->right, x);
+    else {
+        //we found the node to be deleted
+        //3 cases
+        if(root->left==NULL){
+            Node *temp = root->right;
+            delete(root);
+            return temp;
+        }else if(root->right==NULL){
+            Node *temp = root->left;
+            delete(root);
+            return temp;
+        }else {
+            //node to be deleted has 2 children
+            //look for inorder successor: left most node of the right subtree
+            Node *inSucc = getInorderSuccesor(root);
+            root->data = inSucc->data;
+            root->right = recursiveDeleteBST(root->right, inSucc->data);
+            
+        }
+    }
+    return root;
+}
+
+
+
+
