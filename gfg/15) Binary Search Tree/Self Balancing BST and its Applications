@@ -1,0 +1,81 @@
+//Given an array of random keys, create a BALANCED BST from it.
+//Note: For a given a set of keys, the structure of BST depends on the order in which we insert these keys.
+//Solution: Sort the array. Pick MEDIAN make it root and left part of array goes to left subtree & right part of array goes to right
+//subarray. Keep doinf this until we reach leaf node
+
+
+
+//In BST, we have seen time complexity of many problems have been O(h) where h is the height of BST. So if tree is skewed height of
+//tree becomes n and thus time complexity becomes O(n). BUT if tree is balanced, height of tree become log n and thus time complexity
+//becomes O(log n). 
+//That's why balanced BST is better than normal BST
+
+
+
+
+//We are going to study about 2 self balancing BST i.e AVL Trees & Red Black Trees
+//1) AVL Trees : BST + balance factor <=1
+//the idea is to do RESTRUCTURING while doing insertion or deletion to maintain balance factor
+//search is same as normal BST search
+/*Insertion :
+a) do normal BST insertion
+b) traverse ancestors of new node(going upwards) and if found an ancestor which is unbalanced, 
+restructure it using one of the 4 cases: LL, LR, RR & RL
+
+Note:- if an ancestor is restructured using step b then we don't need to look for any more ancestors, they are automatically balanced
+      But in deletion if we restructure an ancestor we still have to ensure balance factor of all other ancestors as well. 
+      
+Time Complexity: The rotation operations (left and right rotate) take constant time as only a few pointers are being changed there.
+Updating the height and getting the balance factor also takes constant time. So the time complexity of AVL insert remains same as 
+BST insert which is O(h) where h is the height of the tree. Since AVL tree is balanced, the height is O(Logn). 
+So time complexity of AVL insert is O(Logn).
+*/
+
+
+
+//2) Red Black Trees: Used in set & map library of c++ stl
+
+/*
+Comparison with AVL Tree: 
+1) Red Black Tree is loosly balanced as compared to AVL Tree
+
+2) In AVL Tree the absolute difference between left & right subtree of any node has to be <= 1
+ Whereas in, Red Black Tree the number of nodes from a node to its farthest descendant leaf is no more than twice as 
+ the number of nodes to the nearest descendant leaf.
+
+3) The AVL tree and other self-balancing search trees like Red Black are useful to get all basic operations done in O(log n) time.
+ The AVL trees are more balanced compared to Red-Black Trees, but they may cause more rotations during insertion and deletion. 
+ So if your application involves many frequent insertions and deletions, then Red Black trees should be preferred. 
+ And if the insertions and deletions are less frequent and search is the more frequent operation, then AVL tree should be 
+ preferred over Red Black Tree.
+
+4)Every AVL Tree with n nodes has height <= 1.4404Log2(n+2)-1.3277
+ Every Red Black Tree with n nodes has height <= 2Log2(n+1)
+*/
+
+/*
+Properties that maintain balance in Red Black Tree:
+1) A node is either red or black
+2) Root node is always black
+3) No consecutive red nodes
+4)Every path from a node (including itself) to any of its descendant NULL node has the same number of black nodes*/
+
+
+
+
+
+/*APPLICATIONS:
+1) Maintain a sorted stream of data( sorted set of data) 
+2) To implement doubly ended priority queue(also singly implemented priority queue are best implemented by heap)
+3) To solve problems like: find ceil/floor/greater/count greater/smaller/count smaller in a stream of data
+4) If we have to perform just search, insert & delete operation or subset of them then hash table is the prefered data structure
+but if along with these 3 we have other operations like maintain data in sorted order, find floor/ceil then
+BST is the prefered data structure.
+*/
+
+
+
+
+
+
+
