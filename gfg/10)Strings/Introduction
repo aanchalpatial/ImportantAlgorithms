@@ -1,6 +1,6 @@
 //Strings is a special data structure because its charcters are bound to be one of the 256(i.e ascii) values possible.
 //Most efficient way to sort a string is to use cound sort beacuse strings has limited range. Thus the fastest we can sort a string is 0(n).
-//str.find(pattern) returns the first index of pattern if it exists in string, otherwise returns string::npos.
+//**str.find(pattern) returns the first index of pattern if it exists in string, otherwise returns string::npos.
 //str.substr(index, length);
 
 
