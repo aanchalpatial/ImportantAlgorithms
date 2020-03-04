@@ -1,0 +1,47 @@
+//Given a binary tree, check if it is a Binary Search Tree
+
+//1) INCORRECT Solution: For every node check if it greater than its left child and smaller than its right child
+
+//2) Naive Solution: O(n^2)
+//Approach: For every node, check if node is greater than the maximum in left subtree & smaller than the minimum in right subtree
+
+//3) Efficient Solution: O(n) time & O(1) time
+/*Approach:
+Pass a valid RANGE for every node. 
+For root range is -infinity to +infinity. 
+For leftchild we change upper bound to current node's value
+and for right child we change lower bound to current node's value
+*/
+bool checkIfBST(Node *root, int l, int h){
+    if(root==NULL) return true;
+    bool p = checkIfBST(root->left, l, root->data);
+    
+    bool q;
+    if(root->data>l&&root->data<h) q = true;
+    else q = false;
+    
+    bool r = checkIfBST(root->right, root->data, h);
+    
+    return p&&q&&r;
+}
+
+//4) Efficient Solution involving inorder traversal: O(n) time & O(h) space
+//Note: A Binary Tree is a BST only if it's inorder traversal is a sorted array
+int prev_value = INT_MIN;
+bool checkIfBST2(Node *root){
+    if(root==NULL) return true;
+    bool p = checkIfBST2(root->left);
+    
+    bool q;
+    if(root->data>prev_value) q = true;
+    else q = false;
+    prev_value = root->data;
+    
+    bool r = checkIfBST2(root->right);
+    
+    return p&&q&&r;
+}
+
+
+
+
