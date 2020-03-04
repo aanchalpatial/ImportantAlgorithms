@@ -1,0 +1,24 @@
+// For every element of the array, one needs to find the Ceiling on Left Side.
+
+//Naive approach is O(n^2) time & O(1) space
+
+//do it in O(nlogn) & O(n) space
+//hint: one can find ceil in logn in a balanced BST, hence use it
+//in c++ stl, set & map are implemented using balanced BST
+
+void ceilOnLeft(int arr[], int n){
+    set<int> s;
+    int ceil[n] = {-1};
+    s.insert(arr[0]);
+    for(int i=1;i<n;++i){
+        auto it = s.lower_bound(arr[i]);
+        if(it!=s.end()) {
+            ceil[i] = *it;
+        }else ceil[i] = -1;
+        s.insert(arr[i]);
+    }
+    
+    for(int i=0;i<n;++i) cout<<ceil[i]<<" ";
+    cout<<endl;
+    
+}
