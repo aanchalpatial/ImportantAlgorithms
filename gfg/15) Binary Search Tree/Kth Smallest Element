@@ -1,0 +1,53 @@
+//Design a data structure which perform below operations efficiently:
+//Search, Insert, Delete & Kth-Smallest Element
+
+
+/*Note:- You can find kth smallest element in a given array in O(n) using QUICKSELECT 
+(https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Quick%20Sort%20and%20its%20Partition%20Function) 
+but in this question have to design a data structure such that all 4 operation are efficient i.e
+
+If we use an array then insert is O(1), search is O(log n) and delete & kth smallest element are O(n) and if we use
+hash table then insert, delete & search are O(1) but kth smallest element is O(n) whereas in 
+Balanced BST all 4 operations are O(logn)
+*/
+
+
+//Naive approach is do inorder traversal of BST & return kth element from traversal
+//Note: Inorder traversal of BST produces a sorted array
+//Time is O(h+k) : we recurr to the left most node and then print kth node
+int cnt = 0;
+void inorder(Node *root, int k){
+  if(root==NULL) return;
+  inorder(root->left,k);
+  ++cnt;
+  if(cnt==k) {
+    cout<<root->data;
+    return;
+  }
+  inorder(root->right,k);
+}
+
+//Efficient Approach: O(h)
+//Hint: Use AUGMENTED BST, add lCount variable is node struct which counts the number of nodes in left subtree
+struct Node {
+    int data;
+    Node *left;
+    Node *right;
+    int lCount;
+    
+    Node(int x){
+        data = x;
+        left = NULL;
+        right = NULL;
+        lCount = 0;
+    }
+}
+/*Approach:
+Assume that the root is having N nodes in its left subtree. If K = N + 1, root is K-th node. If K < N, we will continue 
+our search (recursion) for the Kth smallest element in the left subtree of root. If K > N + 1, we continue our search in 
+the right subtree for the (K – N – 1)-th smallest element. Note that we need the count of elements in left subtree only.
+https://www.geeksforgeeks.org/find-k-th-smallest-element-in-bst-order-statistics-in-bst/
+*/
+
+
+
