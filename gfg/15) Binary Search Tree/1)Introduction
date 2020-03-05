@@ -9,7 +9,7 @@
 
 //INORDER TRAVERSAL OF BST RESULTS IN SORTED ARRAY
 
-//3 operations of BST: Search, Insert & Delete
+//3 operations of BST: Search, Insert & **Delete**
 
 //1) SEARCH :
 //Iterative version is better due to constant space complexity
