@@ -1,0 +1,49 @@
+//Finding whether a pair of nodes exists such that their sum is equal to given sum in given Binary Search Tree
+
+
+//Method 1): do inorder traversal and store it in an array. resulting array will be sorted. then use 2 pointer approach to find if
+//pair with given sum exists
+
+void inorder(Node *root, vector<int> &v){
+    if(root==NULL) return;
+    inorder(root->left, v);
+    v.push_back(root->data);
+    inorder(root->right, v);
+}
+
+bool pairWithGivenSum(Node *root, int sum){     //O(n) time & O(n) space
+    vector<int> v;    //stores inorder traversal of BST
+    //inorder traversal of BST results in sorted array
+    inorder(root, v);
+    for(int i=0;i<v.size();++i) cout<<v[i]<<" ";
+    cout<<endl;
+    
+    //finding pair with given sum using 2 pointer approach
+    int l=0,r=v.size()-1;
+    while(l<r){
+        if(v[l]+v[r]==sum) return true;
+        else if(v[l]+v[r]<sum) ++l;
+        else --r;
+    }
+    return false;
+}
+
+//Method 2) 
+//while doing inorder traversal, check if sum-current node value exists in hash table, if yes return true & 
+//if no add current node value in hash
+//Slightly better than method 1 because it return as soon as it find a valid pair even before complete traversal of BST
+//This method will also work for a Binary Tree because unlike 1st method there is no need of sorted data in this method
+bool pairWithGivenSum2(Node *root, unordered_set<int> &s, int sum){   //O(n) time & O(n) space
+    if(root==NULL) return false;
+    bool p = pairWithGivenSum2(root->left,s,sum);
+    
+    bool q;
+    if(s.find(sum-root->data)!=s.end()) q = true;
+    else q= false;
+    s.insert(root->data);
+    
+    bool r = pairWithGivenSum2(root->right,s,sum);
+    
+    return p||q||r;
+}
+
