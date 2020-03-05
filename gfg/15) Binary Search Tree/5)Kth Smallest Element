@@ -51,3 +51,9 @@ https://www.geeksforgeeks.org/find-k-th-smallest-element-in-bst-order-statistics
 
 
 
+//2) Find Kth LARGEST element in BST
+//The idea is to do reverse inorder traversal of BST. The reverse inorder traversal traverses all nodes in decreasing order.
+//While doing the traversal, we keep track of count of nodes visited so far. When the count becomes equal to k, we stop the traversal
+//and print the key
+
+
