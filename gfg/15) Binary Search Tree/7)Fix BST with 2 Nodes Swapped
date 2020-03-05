@@ -1,2 +1,43 @@
 //Given a binary search tree with two swapped nodes, the task is to fix the binary search tree by swapping them back.
 
+/*Approach:
+So a simple method is to store inorder traversal of the input tree in an auxiliary array. Sort the auxiliary array.
+Finally, insert the auxiilary array elements back to the BST, keeping the structure of the BST same. Time complexity of 
+this method is O(nLogn) and auxiliary space needed is O(n).
+
+We can solve this in O(n) time and with a single traversal of the given BST. Since inorder traversal of BST is always a sorted array,
+the problem can be reduced to a problem where two elements of a sorted array are swapped. There are two cases that we need to handle:
+1. The swapped nodes are not adjacent in the inorder traversal of the BST.
+2. The swapped nodes are adjacent in the inorder traversal of BST.
+
+How to Solve? We will maintain 2 pointers, first and second. When we find the first point where current node value is 
+smaller than previous node value, we update the first with the previous node & second with the current node. When we find the second point
+where current node value is smaller than previous node value, we update the second with the current node. In case #2, first will not
+be NULL. So, first pointer will not be updated. After processing, first & second will be pointing to 2 misplaced nodes that need
+to be swapped.
+*/
+
+Node *prevNode = NULL, *first = NULL, *second = NULL;
+void inorder(Node *root){
+    if(root==NULL) return;
+    
+    inorder(root->left);
+    
+    if(prevNode!=NULL && prevNode->data>root->data){
+        if(first==NULL) first = prevNode;
+        second = root;
+    }
+    prevNode = root;
+    
+    inorder(root->right);
+}
+
+void fixBST(Node *root){
+    inorder(root);
+    
+    //Swap data of 2 misplaced nodes
+    int temp = first->data;
+    first->data = second->data;
+    second->data = temp;
+}
+
