@@ -7,6 +7,8 @@
 //All keys in BST is typically assumed to be distinct
 //Balanced BST is implemented in c++ in map, set, multiset & multimap
 
+//INORDER TRAVERSAL OF BST RESULTS IN SORTED ARRAY
+
 //3 operations of BST: Search, Insert & Delete
 
 //1) SEARCH :
