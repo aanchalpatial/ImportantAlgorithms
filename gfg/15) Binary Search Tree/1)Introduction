@@ -121,7 +121,7 @@ Node *recursiveDeleteBST(Node *root, int x){        //O(h) time & O(h) space
             //look for inorder successor: left most node of the right subtree
             Node *inSucc = getInorderSuccesor(root);
             root->data = inSucc->data;
-            root->right = recursiveDeleteBST(root->right, inSucc->data);
+            root->right = recursiveDeleteBST(root->right, inSucc->data);                //**imp**
             
         }
     }
