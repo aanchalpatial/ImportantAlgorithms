@@ -1,0 +1,47 @@
+//1): Given a binary tree, we need to find sum of nodes in all vertical lines starting from **leftmost line to rightmost**.
+//Time Complexity: O( nlogd ) where d in total number of possible horizontal distances
+
+void inorder(Node *root, map<int, int> &m, int level){
+    if(root==NULL) return;
+    
+    inorder(root->left, m, level-1);
+    
+    m[level] += root->data;
+    
+    inorder(root->right, m, level+1);
+}
+
+void verticalSum(Node *root){ 
+    map<int, int> m;        //we use map instead of unordered map because we have to print sum from leftmost level to rightmost level
+    inorder(root, m, 0);
+    
+    for(auto i: m) cout<<i.first<<", "<<i.second<<endl;
+}
+
+
+//2): Given a binary tree, print nodes in all vertical lines starting from leftmost line to rightmost.
+//Time Complexity: O( nlogd ) where d in total number of possible horizontal distances
+
+void inorder(Node *root, map<int, vector<int>> &m, int level){
+    if(root==NULL) return;
+    
+    inorder(root->left, m, level-1);
+    
+    
+    m[level].push_back(root->data);
+    
+    inorder(root->right, m, level+1);
+}
+void verticalTraversal(Node *root){
+    map<int, vector<int>> m;
+    inorder(root, m, 0);
+    
+    for(auto i: m) {
+        cout<<i.first<<"-> ";
+        for(int j=0;j<i.second.size();++j) cout<<i.second[j]<<", ";
+    
+        cout<<endl;
+    }
+}
+//Note:- If we need to print top level nodes before bottom level nodes in a particular level, then do LEVEL ORDER traversal 
+//instead of INORDER TRAVERSAL
