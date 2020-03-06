@@ -1,6 +1,7 @@
 //If we only have search, insert and delete or a subset of these operations then hash table is the most efficient implementation
 //BUT if along with search, insert and delete we also have either find closest or sorted traversal or both 
 //then BALANCED BINARY SEARCH TREE is the most efficient data structure
+//https://www.geeksforgeeks.org/advantages-of-bst-over-hash-table/
 
 //Note : In a skewed BST h = n and in a balanced BST h is maintained to be log n
 
