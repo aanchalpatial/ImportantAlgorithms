@@ -1,0 +1,30 @@
+/*INTODUCTION
+Trie is a tree-based data structure, which is used for efficient retrieval of a key in a large data-set of strings. Trie is an efficient 
+information reTrieval data structure. Using Trie, search complexities can be brought to optimal limit (key length). 
+Unlike a binary search tree, where node in the tree stores the key associated with that node, in trie node’s position in the
+tree defines the key with which it is associated and the key are only associated with the leaves. It is also known as prefix tree as
+all descendants of a node have a common prefix of the string associated with that node, and the root is associated with the empty string.
+*/
+
+// Trie node
+struct TrieNode
+{
+     struct TrieNode *children[ALPHABET_SIZE];    //hash of 26 charcters of english alphabet
+
+     // isEndOfWord is true if the node
+     // represents end of a word
+     bool isEndOfWord;
+};
+
+
+/*ADVANTAGES of Trie Data Structure over BST & Hash
+1) With Trie, we can insert and find strings in O(L) time where L represent the length of a single word. This is obviously faster than BST.
+This is also faster than Hashing because of the ways it is implemented. We do not need to compute any hash function.
+No collision handling is required (like we do in open addressing and separate chaining)
+2) Another advantage of Trie is, we can easily print all words in alphabetical order which is not easily possible with hashing.
+3) We can efficiently do prefix search (or auto-complete) with Trie.
+*/
+/*DISADVANTAGES
+The main disadvantage of tries is that they need a lot of memory for storing the strings. For each node we have
+too many node pointers(equal to number of characters of the alphabet),
+*/
