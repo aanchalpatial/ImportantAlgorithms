@@ -57,9 +57,9 @@ void leftViewIterative(Node *root){
 
 
 
-//2) Print LEFT VIEW of binary tree : 2 versions
-//left view means right most node(can be a left child or a right child) of every level in binary tree
-void leftViewIterative(Node *root){
+//2) Print RIGHT VIEW of binary tree : 2 versions
+//right view means right most node(can be a left child or a right child) of every level in binary tree
+void rightViewIterative(Node *root){
     //uses line by line bfs traversal
     if(root!=NULL){
         queue<Node *> q;
