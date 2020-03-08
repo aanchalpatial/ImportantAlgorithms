@@ -72,8 +72,10 @@ void bfsLineByLine2(Node *root){
     }
 }
 
-//2) depth first traversal: 
+//2) depth first traversal: recursion(standard) VS iterative methods
+
 //2a)inorder: O(n) time & O(h) space; where h is height of tree
+//RECURSIVE METHOD
 void inorder(Node *root){
     if(root!=NULL){
         inorder(root->left);
@@ -81,7 +83,44 @@ void inorder(Node *root){
         inorder(root->right);
     }
 }
+//ITERATIVE METHOD
+//hint: Use Stacks
+/*Approach:
+1) Create an empty stack S.
+2) Initialize current node as root
+3) Push the current node to S and set current = current->left until current is NULL
+4) If current is NULL and stack is not empty then 
+     a) Pop the top item from stack.
+     b) Print the popped item, set current = popped_item->right 
+     c) Go to step 3.
+5) If current is NULL and stack is empty then we are done.
+*/
+void inOrder(struct Node *root) 
+{ 
+    stack<Node *> s; 
+    Node *curr = root; 
+  
+    while (curr != NULL || s.empty() == false) 
+    { 
+        while (curr !=  NULL) 
+        { 
+            s.push(curr); 
+            curr = curr->left; 
+        } 
+        curr = s.top(); 
+        s.pop(); 
+  
+        cout << curr->data << " "; 
+        
+        curr = curr->right; 
+    } 
+}
+
+
+
+
 //2b)preorder: O(n) time & O(h) space
+//RECURSIVE METHOD
 void preorder(Node *root){
     if(root!=NULL){
         cout<<root->key<<", ";
@@ -89,6 +128,18 @@ void preorder(Node *root){
         preorder(root->right);
     }
 }
+//ITERATIVE METHOD
+/*Approach:
+1) Create an empty stack nodeStack and push root node to stack.
+2) Do following while nodeStack is not empty.
+….a) Pop an item from stack and print it.
+….b) Push right child of popped item to stack
+….c) Push left child of popped item to stack
+
+Right child is pushed before left child to make sure that left subtree is processed first.
+
+*/
+
 //2c)postorder: O(n) time & O(h) space
 void postorder(Node *root){
     if(root!=NULL){
