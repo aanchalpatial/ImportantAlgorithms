@@ -1,0 +1,388 @@
+/*
+       1
+    /     \
+   2       3
+  /  \    / \
+ 4    5  6   7
+
+Left View of above Tree will be: 1, 2, 4
+Right View of above Tree will be: 1, 3, 7
+Top View of above Tree will be: 4, 2, 1, 3, 7
+Bottom View of above Tree will be: 4, 5, 6, 7
+Boundary View of above Tree will be: 1, 2, 4, 5, 6, 7, 3
+*/
+
+
+
+//1) Print LEFT VIEW of binary tree : 2 versions
+//left view means left most node(can be a left child or a right child) of every level in binary tree
+//Recursive version : O(n) time & O(h) space , preferred for perfect trees
+int maxLevel = 0;
+void leftViewRecursive(Node *root, int level){    //initial value of level is 1
+    //Uses preorder traversal
+    if(root!=NULL){
+        if(maxLevel<level){     //avoid printing anything except left most node
+            cout<<root->key<<endl;
+            maxLevel = level;
+        }
+        leftViewRecursive(root->left, level+1);
+        leftViewRecursive(root->right, level+1);
+    }
+}
+//Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
+void leftViewIterative(Node *root){
+    //uses line by line bfs traversal
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                if(i==0){       //avoid printing anything except left most node
+                    cout<<temp->key<<" ";
+                }
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+            cout<<endl;
+        }
+    }
+}
+
+
+
+//2) Print RIGHT VIEW of binary tree : 2 versions
+//right view means right most node(can be a left child or a right child) of every level in binary tree
+void rightViewIterative(Node *root){
+    //uses line by line bfs traversal
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                if(i==cnt-1){       //avoid printing anything except right most node
+                    cout<<temp->key<<" ";
+                }
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+            cout<<endl;
+        }
+    }
+}
+
+
+//3) Print TOP VIEW of binary tree
+//Top view of a binary tree is the set of nodes visible when the tree is viewed from the top
+        1
+      /   \
+    2       3
+      \   
+        4  
+          \
+            5
+             \
+               6
+Top view of the above binary tree is
+2 1 3 6
+//The output nodes can be printed in any order. Expected time complexity is O(n)
+/*HINT:
+A node x is there in output if x is the topmost node at its horizontal distance. Horizontal distance of left child of a node x is
+equal to horizontal distance of x minus 1, and that of right child is horizontal distance of x plus 1.
+*/
+void printTopView(Node *root){
+    unordered_map<int, int> m;        //key: level of node, value: value of node
+    queue<pair<Node *,int>> q;
+    q.push(make_pair(root,0));
+    while(!q.empty()){
+        int cnt = q.size();
+        for(int i=0;i<cnt;++i){
+            Node *temp = q.front().first;
+            int level = q.front().second;
+            q.pop();
+            if(m.find(horizontalDistance)==m.end()) {
+                m[horizontalDistance] = temp->key;
+            }
+            
+            if(temp->left!=NULL) q.push(make_pair(temp->left, horizontalDistance-1));
+            if(temp->right!=NULL) q.push(make_pair(temp->right, horizontalDistance+1));
+        }
+    }
+    
+    for(auto i: m) cout<<i.second<<" ";
+    cout<<endl;
+}
+
+
+//4) Print BOTTOM VIEW of binary tree
+//A node x is there in output if x is the bottom most instead of the top most node at its horizontal distance.
+/*The process of printing the bottom view is almost the same as that of top view with a little modification that while storing 
+the node's data along with a particular horizontal distance in the map, keep updating the node's data in the map for a
+particular horizontal distance so that the map contains the last node appearing with a particular horizontal distance instead of first.
+*/
+void printBottomView(Node *root){
+    unordered_map<int, int> m;        //key: level of node, value: value of node
+    queue<pair<Node *,int>> q;
+    q.push(make_pair(root,0));
+    while(!q.empty()){
+        int cnt = q.size();
+        for(int i=0;i<cnt;++i){
+            Node *temp = q.front().first;
+            int horizontalDistance = q.front().second;
+            q.pop();
+            m[horizontalDistance] = temp->key;   //keep updating so it stores the bottomost node a 
+            
+            if(temp->left!=NULL) q.push(make_pair(temp->left, horizontalDistance-1));
+            if(temp->right!=NULL) q.push(make_pair(temp->right, horizontalDistance+1));
+        }
+    }
+    
+    for(auto i: m) cout<<i.second<<" ";
+    cout<<endl;
+}
+
+int main() {
+    Node *root = new Node(10);
+    root->right = new Node(30);
+    root->left = new Node(20);
+    root->left->right = new Node(40);
+    root->left->right->right = new Node(50);
+    root->left->right->right->right = new Node(60);
+    
+    //printTopView(root);
+    printBottomView(root);
+    
+	return 0;
+}
+
+
+
+//5) Print boundary nodes of the binary tree Anti-Clockwise starting from the root : Iterative & Recursice
+/*
+Given a binary tree. Given a binary tree, return the values of its boundary in anti-clockwise direction starting from the root.
+Boundary includes left boundary, leaves, and right boundary in order without duplicate nodes.
+
+Left boundary is defined as the path from the root to the left-most node.
+Right boundary is defined as the path from the root to the right-most node.
+
+*****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
+
+Note this definition only applies to the input binary tree, and not applies to any subtrees.
+
+The left-most node is defined as a leaf node you could reach when you always firstly travel to the left subtree if exists. 
+If not, travel to the right subtree. Repeat until you reach a leaf node.
+
+The right-most node is also defined by the same way with left and right exchanged.
+
+Return an array of integers denoting the boundary values of tree in anti-clockwise order.
+
+Input 1:
+               _____1_____
+              /           \
+             2             3
+            / \            / 
+           4   5          6   
+              / \        / \
+             7   8      9  10  
+Output 1:
+    [1, 2, 4, 7, 8, 9, 10, 6, 3]
+    Explanation 1:
+        The left boundary are node 1,2,4. (4 is the left-most node according to definition)
+        The leaves are node 4,7,8,9,10.
+        The right boundary are node 1,3,6,10. (10 is the right-most node).
+        So order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3].
+        
+IMPORTANT EXAMPLE :- 
+****Input 2:*****
+                1
+               / 
+              2  
+             / \ 
+            4   5
+Output 2:
+     [1, 2, 4, 5] 
+     *****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
+*/
+
+//ITERATIVE SOLUTION
+set<Node *> hsh;			//to avoid printing duplicate nodes
+void leftViewIterative(Node *root, vector<int> &v){
+    //uses line by line bfs traversal
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                if(i==0){       //avoid printing anything except left most node
+                    v.push_back(temp->data);
+                    hsh.insert(temp);
+                }
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+        }
+    }
+}
+void inorder(Node *root, vector<int> &v){
+    if(root==NULL) return;
+    inorder(root->left, v);
+    
+    if(root->left==NULL&&root->right==NULL) {
+        if(hsh.find(root)==hsh.end()) {
+            v.push_back(root->data);
+            hsh.insert(root);
+        }
+        
+    }
+    
+    inorder(root->right, v);
+}
+void rightViewIterative(Node *root, vector<int> &v2){
+    //uses line by line bfs traversal
+    if(root!=NULL){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *temp = q.front();
+                q.pop();
+                if(i==cnt-1&&hsh.find(temp)==hsh.end()){       //avoid printing anything except right most node
+                    v2.push_back(temp->data);
+                    hsh.insert(temp);
+                }
+                if(temp->left!=NULL){
+                    q.push(temp->left);
+                }
+                if(temp->right!=NULL){
+                    q.push(temp->right);
+                }
+                
+            }
+        }
+    }
+}
+void printBoundary(Node *root)
+{
+    
+     //Your code here
+     if(root==NULL) return;
+     hsh.clear();
+     vector<int> v;
+     v.push_back(root->data);
+     leftViewIterative(root->left, v);							//RRRRR
+     inorder(root, v);
+     vector<int> v2;
+     rightViewIterative(root->right, v2);						//RRRRR
+    
+     for(int i=v2.size()-1;i>=0;--i) v.push_back(v2[i]);
+     
+     for(int i=0;i<v.size();++i) cout<<v[i]<<" ";
+}
+
+//RECURSIVE SOLUTION
+// A simple function to print leaf nodes of a binary tree 
+void printLeaves(Node* root) 
+{ 
+    if (root == NULL) 
+        return; 
+  
+    printLeaves(root->left); 
+  
+    // Print it if it is a leaf node 
+    if (!(root->left) && !(root->right)) 
+        printf("%d ", root->data); 
+  
+    printLeaves(root->right); 
+} 
+  
+// A function to print all left boundary nodes, except a leaf node. 
+// Print the nodes in TOP DOWN manner 
+void printBoundaryLeft(Node* root) 
+{ 
+    if (root == NULL) 
+        return; 
+  
+    if (root->left) { 
+  
+        // to ensure top down order, print the node 
+        // before calling itself for left subtree 
+        printf("%d ", root->data); 
+        printBoundaryLeft(root->left); 
+    } 
+    else if (root->right) { 
+        printf("%d ", root->data); 
+        printBoundaryLeft(root->right); 
+    } 
+    // do nothing if it is a leaf node, this way we avoid 
+    // duplicates in output 
+} 
+  
+// A function to print all right boundary nodes, except a leaf node 
+// Print the nodes in BOTTOM UP manner 
+void printBoundaryRight(Node* root) 
+{ 
+    if (root == NULL) 
+        return; 
+  
+    if (root->right) { 
+        // to ensure bottom up order, first call for right 
+        // subtree, then print this node 
+        printBoundaryRight(root->right); 
+        printf("%d ", root->data); 
+    } 
+    else if (root->left) { 
+        printBoundaryRight(root->left); 
+        printf("%d ", root->data); 
+    } 
+    // do nothing if it is a leaf node, this way we avoid 
+    // duplicates in output 
+} 
+  
+// A function to do boundary traversal of a given binary tree 
+void printBoundary(Node* root) 
+{ 
+    if (root == NULL) 
+        return; 
+  
+    printf("%d ", root->data); 
+  
+    // Print the left boundary in top-down manner. 
+    printBoundaryLeft(root->left); 				//RR
+  
+    // Print all leaf nodes 
+    printLeaves(root->left); 
+    printLeaves(root->right); 
+  
+    // Print the right boundary in bottom-up manner 
+    printBoundaryRight(root->right); 					//RR
+} 
+
+
+
+
+
+
