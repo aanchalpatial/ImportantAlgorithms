@@ -1,0 +1,64 @@
+//Given two BST, you need to print the elements of both BSTs in sorted form.
+/*Approach:
+The idea is to use iterative inorder traversal. We use two auxiliary stacks for two BSTs. Since we need to print the elements
+in sorted form, whenever we get a smaller element from any of the trees, we print it. If the element is greater, then we push
+it back to stack for the next iteration.*/
+
+void inorder(Node *root)  
+{  
+    if (root != NULL)  
+    {  
+        inorder(root->left);  
+        cout<<root->data<<" ";  
+        inorder(root->right);  
+    }  
+} 
+/*You are required to complete below method */
+void merge(Node *root1, Node *root2)
+{
+   //Your code here
+   //we will use iterative inorder raversal
+   stack<Node *> s1;
+   stack<Node *> s2;
+   
+   while(root1!=NULL||root2!=NULL||(!s1.empty()&&!s2.empty())) {
+       
+       while(root1!=NULL){
+           s1.push(root1);
+           root1 = root1->left;
+       }
+       while(root2!=NULL){
+           s2.push(root2);
+           root2 = root2->left;
+       }
+       Node *temp1 = s1.top();
+       Node *temp2 = s2.top();
+       if(temp1->data<=temp2->data){
+           cout<<temp1->data<<" ";
+           s1.pop();
+           if(temp1->right!=NULL) root1 = temp1->right;
+       }else {
+           cout<<temp2->data<<" ";
+           s2.pop();
+           if(temp2->right!=NULL) root2 = temp2->right;
+       }
+
+   }
+   
+   //When either of the stacks are empty, print the recursive inorder traversal of every element in non epmty stack while ignoring their
+   //left subtrees because they are already handled
+   while(!s1.empty()) {
+        Node *current1 = s1.top(); 
+        s1.pop();
+        current1->left = NULL;          //RR
+        inorder(current1);
+   }
+   while(!s2.empty()) {
+        Node *current2 = s2.top(); 
+        s2.pop();
+        current2->left = NULL;          //RR
+        inorder(current2);
+   }
+   
+   
+}
