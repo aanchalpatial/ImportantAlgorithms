@@ -1,0 +1,109 @@
+//Construct BST from its given level order traversal
+/*
+Input : {7, 4, 12, 3, 6, 8, 1, 5, 10}
+Output : BST: 
+        7        
+       / \       
+      4   12      
+     / \  /     
+    3  6 8    
+   /  /   \
+  1   5   10
+
+*/
+
+//2 Different Approaches:  Recursive & Range Approach
+
+//1) Recursive Approach
+/*Approach:
+1) First pick the first element of the array and make it root.
+2) Pick the second element, if it’s value is smaller than root node value make it left child,
+3) Else make it right child
+4) Now recursively call the step (2) and step (3) to make a BST from its level Order Traversal
+*/
+Node *traversal(Node *root, int x){
+    if(root==NULL){
+        Node *temp = new Node(x);
+        return temp;
+    }else if(root->data<x){
+        root->right = traversal(root->right, x);
+    }else if(root->data>=x){
+        root->left = traversal(root->left, x);
+    }
+    return root;
+}
+Node* constructBst(int arr[], int n)
+{
+    
+    // Code here
+    if(n==0) return NULL;
+    Node *root = NULL;
+    for(int i=0;i<n;++i){
+        root = traversal(root, arr[i]);
+    }
+    return root;
+	
+}
+
+
+//2) Recursive Approach
+/*Approach :
+The idea is to make a struct element NodeDetails which contains a pointer to the node , minimum data and maximum data of the ancestor.
+Push the root node to the queue of type NodeDetails.
+Extract NodeDetails of a node from the queue and compare them with the minimum and maximum values.
+Check whether there are more elements in the arr[] and arr[i] can be left child of ‘tempDetails.ptr’ or not .
+Check whether there are more elements in the arr[] and arr[i] can be right child of ‘tempDetails.ptr’ or not .
+End the loop when the queue becomes empty.*/
+struct NodeDetails {
+    Node *ptr;
+    int min;
+    int max;
+    NodeDetails(Node *temp, int m, int M){
+        ptr = temp;
+        min = m;
+        max = M;
+    }
+};
+Node *levelOrder(Node *root, int arr[], int n){
+    queue<NodeDetails *> q;
+    root = new Node(arr[0]);
+    NodeDetails *nd = new NodeDetails(root, INT_MIN, INT_MAX);
+    q.push(nd);
+    int index = 1;
+    while(index!=n){
+        NodeDetails *tempDetails = q.front();
+        Node *temp = tempDetails->ptr;
+        int tempMin = tempDetails->min;
+        int tempMax = tempDetails->max;
+        q.pop();
+        
+        if(index<n&&temp->data>arr[index]&&arr[index]>tempMin){
+            Node *newNode = new Node(arr[index]);
+            ++index;
+            NodeDetails *newNodeDetails = new NodeDetails(newNode, tempMin, temp->data);
+            q.push(newNodeDetails);
+            
+            temp->left = newNode;
+        }
+        //NOT else if
+        if(index<n&&temp->data<arr[index]&&arr[index]<tempMax){
+            Node *newNode = new Node(arr[index]);
+            ++index;
+            NodeDetails *newNodeDetails = new NodeDetails(newNode, temp->data, tempMax);
+            q.push(newNodeDetails);
+            temp->right = newNode;
+        }
+    }
+    return root;   
+}
+Node* constructBst(int arr[], int n)
+{
+    
+    // Code here
+    if(n==0) return NULL;
+    Node *root = NULL;
+    
+    root = levelOrder(root, arr, n);
+    return root;
+	
+}
