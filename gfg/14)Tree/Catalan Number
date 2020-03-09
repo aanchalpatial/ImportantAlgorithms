@@ -1,0 +1,6 @@
+//The first few Catalan numbers for n = 0, 1, 2, 3, … are 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, …
+
+//Recursive Solution:
+Catalan numbers satisfy the following recursive formula.
+C_0=1 \ and \ C_n_+_1=\sum_{i=0}^{n}C_iC_n_-_i \ for \ n\geq 0;
+<sup>abc</sup>
