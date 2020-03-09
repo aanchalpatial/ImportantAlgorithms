@@ -1,0 +1,27 @@
+//The first few Catalan numbers for n = 0, 1, 2, 3, … are 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, …
+//https://www.geeksforgeeks.org/program-nth-catalan-number/
+
+//Recursive Solution: Exponential Time
+Catalan numbers satisfy the following recursive formula.
+C_0 = 1 & C_(n+1) = Sigmai=0ton( C_i*C_(n-i) ) for n>=0
+
+
+//Better Solution
+//We can also use the below formula to find nth catalan number in O(n) time.
+C_n = 1/(n+1)  *  2nCn
+
+//APPLICATION:
+//https://www.geeksforgeeks.org/applications-of-catalan-numbers/
+/*
+1) Count the number of expressions containing n pairs of parentheses which are correctly matched. 
+For n = 3, possible expressions are ((())), ()(()), ()()(), (())(), (()()).
+
+2) Count the number of possible Binary Search Trees with n keys
+
+3) Count the number of full binary trees (A rooted binary tree is full if every vertex has either two children or no children) with
+n+1 leaves.
+
+4) Number of different Unlabeled Binary Trees can be there with n nodes
+*/
+
+
