@@ -30,9 +30,10 @@ struct Node{
 
 /*Types of Binary Tree
 
-1) Full Binary Tree: A Binary Tree is full if every node has 0 or 2 children i.e a full binary tree is a binary tree in which
+1) Full(or Strict) Binary Tree: A Binary Tree is full if every node has 0 or 2 children i.e a full binary tree is a binary tree in which
 all nodes except leaves have two children.
 In a Full Binary, number of leaf nodes is number of internal nodes plus 1
+A full binary tree with n leaves contains 2n-1 nodes
 
 2)Complete Binary Tree: A Binary Tree is complete Binary Tree if all levels are completely filled except possibly the last level
 and the last level has all keys as left as possible 
