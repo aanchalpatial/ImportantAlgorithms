@@ -1,1 +1,30 @@
-//Heap Data Structure
+//Internally Heap is represented as an array
+
+/*Binary Heap is a COMPLETE Binary Tree
+Note:- Complete Binary Tree: A Binary Tree is complete Binary Tree if all levels are completely filled except possibly the last level
+and the last level has all keys as left as possible
+
+REASON for binary heap to be complete binary tree:-
+1) in case of it's array representation there will be no in between spaces
+2) cache friendliness (locality of reference)
+3) minimum possible height of binary tree with given number of nodes  is achieved if it is COMPLETE
+4) random access is possible
+
+Left child of ith node = 2i+1 th node
+Right Child of ith node = 2i+2 th node
+Parent of ith node = Floor( (i-1)/2 )
+*/
+
+//2 Types: 
+//MinHeap (complete binary tree where every node has value smaller than all of it's descendants)
+//MaxHeap (complete binary tree where every node has value greater than all of it's descendants)
+
+/*APPLICATIONS:
+1) HeapSort
+2) Implementation of priority queue
+3) Used in Graph Algorithms like Dijkstra’s Shortest Path and Prim’s Minimum Spanning Tree.
+4) Many problems can be efficiently solved using Heaps. See following for example.
+a) K’th Largest Element in an array.
+b) Sort an almost sorted array/
+c) Merge K Sorted Arrays.
+*/
