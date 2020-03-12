@@ -28,3 +28,151 @@ a) K’th Largest Element in an array.
 b) Sort an almost sorted array/
 c) Merge K Sorted Arrays.
 */
+
+
+//OPERATIONS on heap data structure: Insert, Heapify, Get Minimum, Extract Minimum, Decrease Key, Delete & Build Heap
+//Min Heap operations in particular is studied below
+class MinHeap{
+    int *arr;
+    int size;
+    int capacity;
+    
+    public:
+    MinHeap(int c){
+        arr = new int[c];
+        capacity = c;
+        size = 0;
+    }
+    
+    int left(int i) {
+        return 2*i+1;
+    }
+    int right(int i) {
+        return 2*i+2;
+    }
+    int parent(int i) {
+        return (i-1)/2;
+    }
+    
+    void insert(int x){         //O(logn)
+        if(size==capacity) cout<<"Overflow!!";
+        else {
+            //Step 1: Insert new element at end
+            ++size;
+            arr[size-1] = x;
+            
+            //Step 2: Modify Heap to restore possibly 
+            //violated min heap property
+            int i = size-1;
+            while(i!=0&&arr[parent(i)]>arr[i]){
+                swap(arr[parent(i)], arr[i]);
+                i = parent(i);
+            }
+        }
+    }
+    void display(){
+        for(int i=0;i<size;++i) cout<<arr[i]<<", ";
+        cout<<endl;
+    }
+    
+    //heapify is used as a subroutine in Build Heap & Extract Minimum
+    //Given a binary tree with AT MOST 1 possible violation,FIX it
+    void heapify(int i){        //O(logn) time
+        int l;
+        if(left(i)<size) l = left(i);
+        else l = -1;                   //when left child doesn't exist
+        int r;
+        if(right(i)<size) r = right(i);
+        else r = -1;                   //when right child doesn't exist
+        
+        int minValuedIndex = i;
+        if(l!=-1&&arr[l]<arr[i]) minValuedIndex = l;
+        if(r!=-1&&arr[r]<arr[minValuedIndex]) minValuedIndex = r;
+        
+        
+        //assumption is if the given node(i.e arr[i]) is not violating min heap property, then no other node is doing so
+        //if the given node is violating, fix it & then fix either of the left or right subtree accordingly
+        if(minValuedIndex!=i){      
+            swap(arr[i], arr[minValuedIndex]);
+            heapify(minValuedIndex);
+        }
+        
+    }
+    
+    //this function only returns minimum value in Min Heap
+    int getMin(){           //O(1)     
+        if(size>0) return arr[0];
+        cout<<"heap is empty!!"<<endl;
+        return INT_MAX;
+    }
+    
+    //this function not only return minimum value but also removes it from the heap
+    int extractMin(){       //O(logn)
+        if(size<1) {
+            cout<<"heap is empty!!"<<endl;
+            return INT_MAX;
+        }
+        if(size==1){
+            --size;
+            return arr[0];
+        }
+        
+        int result = arr[0];        //minimum value in min heap
+        swap(arr[0], arr[size-1]);  //swap first node with last node
+        --size;
+        heapify(0);     //because only the first node is violating the min heap property
+        return result;
+    }
+    
+    //change value at arr[i] to x
+    void decreaseKey(int i, int x){     //O(logn)
+        if(i>size-1) {
+            cout<<"invalid index!!"<<endl;
+            return;
+        }
+        
+        arr[i] = x ;
+        
+        while(i!=0&&arr[parent(i)]>arr[i]){ //similar to insert function
+            swap(arr[parent(i)], arr[i]);
+            i = parent(i);
+        }
+    }
+    
+    void deleteKey(int i){      //O(logn)
+        if(i>size-1) {
+            cout<<"invalid index!!"<<endl;
+            return;
+        }
+        //Step 1: decrease value for node to be deleted to minimum possible (as it will become root)
+        decreaseKey(i, INT_MIN);
+        //Step 2:  extract root
+        extractMin();
+    }
+    
+    //given a random array, rearrange its elements to form a min heap
+    void buildHeap(){       //O(n) : explained below
+        
+        //Step 1: find the bottom most & right most INTERNAL node
+        int k = parent(size-1);
+        
+        //Step 2:
+        for(int i=k;i>=0;--i){
+            heapify(i);
+        }
+    }
+    /*Time Complexity:-
+    Simple idea is to heapify the complete binary tree formed from the array
+    in reverse level order following top-down approach i.e first heapify, the last node
+    in level order traversal of the tree, then heapify the second last node and so on
+    Time complexity will be O(N*logN)
+    
+    BUT the above approach can be optimized by observing the fact that the leaf nodes need
+    not to be heapified as they already follow the heap property.So the idea is to find the 
+    position of the last non-leaf node and perform the heapify operation of each non-leaf node
+    in reverse level order.
+    Optimised time complexity will O(n) which is based on a mathematical proof.
+    
+    */
+       
+};
