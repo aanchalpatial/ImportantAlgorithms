@@ -1,0 +1,60 @@
+//HEAP SORT: An improvement over Selection Sort
+//Heap Sort is based on the idea of Selection Sort i.e Search for the maximum element and swap it with last element
+//But instead of linearly searching for maximum element we will use heap data structure
+
+//Use Max Heap for Increasing Order & Min Heap for Decreasing Order
+
+/*Time Complexity:
+Heap Sort takes O(nlogn) in all cases.
+BUT constant of Merge Sort & Quick Sort are relatively lower hence they are used commonly in practise.
+Heap sort is used usually in hybrid sorting algorithm along with quick sort  such as In Sort(C++ library sorting algo).
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+void maxHeapify(int arr[], int n, int i){   //O(logn)
+    
+    int l = 2*i+1;
+    int r = 2*i+2;
+    
+    int maxValuedIndex = i;
+    if(l<n&&arr[l]>arr[i]) maxValuedIndex = l;
+    if(r<n&&arr[r]>arr[maxValuedIndex]) maxValuedIndex = r;
+    
+    if(maxValuedIndex!=i){
+        swap(arr[i], arr[maxValuedIndex]);
+        maxHeapify(arr, n, maxValuedIndex);
+    }
+}
+
+void buildMaxHeap(int arr[], int n){    //O(n)
+    int k = ((n-1)-1)/2;        //parent of n-1
+    for(int i=k;i>=0;--i){
+        maxHeapify(arr, n, i);
+    }
+}
+
+void heapSort(int arr[], int n){
+    //Step 1: Build a Max Heap
+    buildMaxHeap(arr, n);       //O(n)
+    
+    //Step 2: Swap root with last node , reduce heap size by 1 & heapify
+    while(n>0){                 //O(nlogn)
+        swap(arr[0], arr[n-1]);
+        --n;
+        maxHeapify(arr, n, 0);
+    }
+}
+
+int main() {
+	
+	int arr[] = {10, 15, 50, 4, 20};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	heapSort(arr, n);
+	
+	for(int i=0;i<n;++i) cout<<arr[i]<<", ";
+	cout<<endl;
+	return 0;
+}
+
