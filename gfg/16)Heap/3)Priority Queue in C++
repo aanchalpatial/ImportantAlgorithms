@@ -1,0 +1,20 @@
+//Priority Queue is always implemented using Heap Data Structure
+
+//MAX Heap(**default**) in C++ STL priority_queue<int> pq; 
+//MIN Heap in C++ STL priority_queue<int, vector<int>, greater<int>> pq;
+//https://www.geeksforgeeks.org/implement-min-heap-using-stl/
+//Functions push() for insert, pop() for extract maximum/minimum, top() for get maximum/minimum
+//Note:- C++ priority queue doesn't support decrease key function
+
+//Create a priority queue from an array DIRECTLY
+int arr[] = {10, 5, 15};
+int n = sizeof(arr)/sizeof(arr[0]);
+priority_queue<int> pq(arr, arr+n);
+
+/*APPLICATIONS:
+1) Djikstra
+2) Prims
+3) Huffman 
+4) Heap Sort
+5) Any other place where heap is to be used
+*/
