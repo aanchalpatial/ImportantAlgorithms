@@ -1,0 +1,50 @@
+//Problem of calculating the K Largest Elements in an unsorted array
+
+//Naive is increase Sort first and print last k elements: O(nlogn) time
+
+//Better is Using Max Heap: O( n+klogn )
+void kLargestElementsUsingMaxHeap(int arr[], int n, int k){     
+    priority_queue<int> pq(arr, arr+n);
+    cout<<"Largest K Elements:  ";
+    while(k>0){                 //O(klogn)
+        cout<<pq.top()<<", ";
+        pq.pop();
+        --k;
+    }
+    cout<<endl;
+}
+
+//Best Approach is to use Min Heap: O( k+(n-k)logk )
+void kLargestElementsUsingMinHeap(int arr[], int n, int k){
+    priority_queue<int, vector<int>, greater<int>> pq(arr, arr+k);    O(k)
+    for(int i=k;i<n;++i){         //(n-k)*logk
+        if(arr[i]>pq.top()){
+            pq.pop();
+            pq.push(arr[i]);
+        }
+    }
+    cout<<"Largest K Elements:  ";
+    while(!pq.empty()){         //k*logk
+        cout<<pq.top()<<", ";
+        pq.pop();
+    }
+    cout<<endl;
+    
+}
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    int arr[] = {1, 12, 111, 200, 5};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int k = 2;
+    
+    //kLargestElementsUsingMaxHeap(arr, n, k);
+    kLargestElementsUsingMinHeap(arr, n, k);
+    
+    return 0;
+}
