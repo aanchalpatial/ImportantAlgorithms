@@ -151,7 +151,7 @@ class MinHeap{
     }
     
     //given a random array, rearrange its elements to form a min heap
-    void buildHeap(){       //O(n) : explained below
+    void buildHeap(){       //O(n) : explained below    ******RR******
         
         //Step 1: find the bottom most & right most INTERNAL node
         int k = parent(size-1);
