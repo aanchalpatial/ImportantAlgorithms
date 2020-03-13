@@ -12,10 +12,10 @@ int main() {
     int sum = 10;
     
     int result = 0;
-    priority_queue<int, vector<int>, greater<int>> pq(arr, arr+n);
-    while(sum>0){
-        sum -= pq.top();
-        pq.pop();
+    priority_queue<int, vector<int>, greater<int>> pq(arr, arr+n);      //O(n)
+    while(sum>0){                                                       //*** result times ***
+        sum -= pq.top();        
+        pq.pop();                                                       //O(logn)
         if(sum>0) ++result;
     }
     cout<<"Maximum Number of Items that can be purchased: "<<result<<endl;
