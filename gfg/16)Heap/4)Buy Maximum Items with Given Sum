@@ -1,0 +1,25 @@
+//Problem of buying the maximum items with a given sum
+//Naive approach is first sort then find maximum items that can be bought. O(nlogn) time
+
+//Efficient approach is use Heap: O(result*logn)
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    int arr[] = {1, 12, 111, 200, 5};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int sum = 10;
+    
+    int result = 0;
+    priority_queue<int, vector<int>, greater<int>> pq(arr, arr+n);
+    while(sum>0){
+        sum -= pq.top();
+        pq.pop();
+        if(sum>0) ++result;
+    }
+    cout<<"Maximum Number of Items that can be purchased: "<<result<<endl;
+    
+    
+    return 0;
+}
