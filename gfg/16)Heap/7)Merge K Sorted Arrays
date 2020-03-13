@@ -1,1 +1,108 @@
 //Problem of how to Merge K Sorted Arrays.
+
+//1)Naive approach : Copy all k sorted arrays into 1 array & then sort it, O( nk*log(nk) )
+//2)Another Naive approach: Apply merge function of mergesort k-1 times, O(n*k^2)
+
+//**** Efficient Approach : Use Min Heap, O(nklogk)
+
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int value;                  //value stored in node
+    int arrayPosition;          // position of array in 0 to k-1 nodes
+    int valuePosition;          // position of value in array
+    Node(int x, int y, int z){
+        value = x;
+        arrayPosition = y;
+        valuePosition = z;
+    }
+};
+        
+struct myComp{                                          //Custom comparator
+    bool operator()(Node n1, Node n2){
+        return n1.value > n2.value;
+    }
+};
+
+vector<int> mergeKSortedArray(vector<vector<int>> vv, int k){
+    vector<int> result;     //this vector will hold finalyy sorted array
+    priority_queue<Node, vector<Node> , myComp> pq;     //Min Heap
+    //Step 1: Initialising heap with k elements
+    for(int i=0;i<k;++i){
+        Node n(vv[i][0], i, 0);
+        pq.push(n);
+    }
+    
+    while(!pq.empty()){
+        Node temp = pq.top();
+        pq.pop();
+        result.push_back(temp.value);
+        if(temp.valuePosition+1 >= vv[temp.arrayPosition].size()) continue;
+        Node n(vv[temp.arrayPosition][temp.valuePosition+1], temp.arrayPosition, temp.valuePosition+1);
+        pq.push(n);
+    }
+    
+    return result;
+}
+
+int main() {
+    vector<vector<int>> vv;
+    vv.push_back({10, 20});
+    vv.push_back({5, 15});
+    vv.push_back({4, 9, 11});
+    
+    int k=3;
+    
+    vector<int> result;
+    result = mergeKSortedArray(vv, k);
+    
+    for(int i=0;i<result.size();++i) cout<<result[i]<<", ";
+    cout<<endl;
+    
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
