@@ -1,6 +1,13 @@
 //Design a data structure which perform below operations efficiently:
 //Search, Insert, Delete & Kth-Smallest Element
 
+/* 5 WAYS TO FIND Kth SMALLEST ELEMENT:-
+1)Sorting                   : O(nlogn)
+2)QuickSelect               : O(n^2) in worst case & O(n) in average case
+3)Augmented BST             : O(logn)
+4)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
+5)Median Order Statistics   : O(n)
+*/
 
 /*Note:- You can find kth smallest element in a given array in O(n) using QUICKSELECT 
 (https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Quick%20Sort%20and%20its%20Partition%20Function) 
