@@ -2,6 +2,14 @@
 
 //Naive is increase Sort first and print last k elements: O(nlogn) time
 
+/* 5 WAYS TO FIND Kth SMALLEST ELEMENT:-
+1)Sorting                   : O(nlogn)
+2)QuickSelect               : O(n^2) in worst case & O(n) in average case
+3)Augmented BST             : O(logn)
+4)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
+5)Median Order Statistics   : O(n)
+*/
+
 //Better is Using Max Heap: O( n+klogn )
 void kLargestElementsUsingMaxHeap(int arr[], int n, int k){     
     priority_queue<int> pq(arr, arr+n);
