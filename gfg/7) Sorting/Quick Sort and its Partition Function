@@ -97,14 +97,19 @@ int main()
 
 //**** _ APPLICATIONS of partition function of quicksort *****
 //1): Find K-th smallest element in array
-//A) Naive solution is sort first & then output kth element of sorted array which is 0(nlogn)
+/* 5 WAYS TO FIND Kth SMALLEST ELEMENT:-
+1)Sorting                   : O(nlogn)
+2)QuickSelect               : O(n^2) in worst case & O(n) in average case
+3)Augmented BST             : O(logn)
+4)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
+5)Median Order Statistics   : O(n)
+*/
+//Naive solution is sort first & then output kth element of sorted array which is 0(nlogn)
 /*
-B)QUICKSELECT: Better solution uses lomuto partition as a subroutine. This solution is 0(n^2) in worst case (which can be avoided 
+QUICKSELECT: Better solution uses lomuto partition as a subroutine. This solution is 0(n^2) in worst case (which can be avoided 
 by using a randomized pivot instead) and 0(n) in average case.
-There are 2 more solution to find k-th smallest element :
-C)one involves MEDIAN ORDER STATISTICS and is 0(n) even in worst case BUT
-but quickselect works better in practise because of some high hidden constants in median order statistic solution 
-D)and second uses heap data structure(priority_queue in c++ stl).
+Another solution to find k-th smallest element which involves MEDIAN ORDER STATISTICS and is 0(n) even in worst case BUT
+but quickselect works better in practise because of some high hidden constants in median order statistic solution.
 */
 
 int lomutoPartition(int arr[], int l, int h){
