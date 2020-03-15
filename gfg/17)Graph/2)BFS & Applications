@@ -1,1 +1,83 @@
 //level order traversal of graph
+//Time Complexity: O(V+E) in adjacency list & O(V^2) in adjacency matrix representation
+
+/*Applications:
+1)Shortest path in unweighted graph
+2)In garbage collection(Cheney's algorithm)
+3)Cycle Detection
+4)Ford Fulkerson(Maximum flow path problem)
+5)Broadcasting, crwaling over web, peer to peer networks & social networking search
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Level order traversal of graph
+void BFS(vector<int> adj[], int s, bool visited[]){      //s: source vertex
+    queue<int> q;
+    q.push(s);
+    visited[s] = true; 
+    
+    while(!q.empty()){
+        int t = q.front();
+        q.pop();
+        cout<<t<<", ";
+        //pushing all unvisited neighbours of current node
+        for(int i=0;i<adj[t].size();++i){
+            if(visited[adj[t][i]]==false) {
+                q.push(adj[t][i]);
+                visited[adj[t][i]] = true;
+            }
+        }
+    }    
+}
+
+void BFSDisconnected(vector<int> adj[], int v){       
+    bool visited[v];
+    for(int i=0;i<v;++i) visited[i] = false;
+    
+    //Also Print number of islands in a graph (or number of connected components in a graph).
+    int numberOfConnectedComponents = 0;
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            BFS(adj, i, visited);
+            ++numberOfConnectedComponents;
+        }
+    }
+    //cout<<"There are "<<numberOfConnectedComponents<<" connected components in given graph"<<endl;
+}
+
+int main() {
+	
+	//Graph Data Structure
+	int v = 7;                        //v: number of vertices in graph named 0 to v-1
+	vector<int> adjacency_list[v];    //adjacency list representation of graph: Space complexity O(V+E)
+	
+	adjacency_list[0] = {1, 2};
+	adjacency_list[1] = {0, 3};
+	adjacency_list[2] = {0, 3};
+	adjacency_list[3] = {1, 2};
+	adjacency_list[4] = {5, 6};
+	adjacency_list[5] = {4, 6};
+	adjacency_list[6] = {4, 5};
+	
+	BFSDisconnected(adjacency_list, v);
+	
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
