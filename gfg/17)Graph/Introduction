@@ -1,1 +1,8 @@
-//
+//G = (V, E)
+//adjancey list & matrix representation
+//adjacency matrix rep of undirected graph always creates a symmetric matrix
+
+//Maximum number of edges in directed graph: |V|*(|V|-1)
+//Maximum number of edges in undirected graph: ( |V|*(|V|-1) )/2
+
+
