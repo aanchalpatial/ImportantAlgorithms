@@ -1,8 +1,23 @@
 //G = (V, E)
-//adjancey list & matrix representation
-//adjacency matrix rep of undirected graph always creates a symmetric matrix
 
 //Maximum number of edges in directed graph: |V|*(|V|-1)
 //Maximum number of edges in undirected graph: ( |V|*(|V|-1) )/2
+
+/*adjancey list & matrix representation
+adjacency matrix rep of undirected graph always creates a symmetric matrix
+
+Space complexity of Adjacency matrix VS Adjacency List: 0(V*V) <-> 0(V+E)
+
+Time complexity of Operation in Adjacency matrix VS Adjacency List
+1)check if 2 vertices are adjacent:           0(1)  <->  O(V)
+2)find all vertices adjacent to a vertex v    O(V)  <->  0(degree(v))       **most common operation**
+3)add an edge                                 0(1)  <->  0(1)
+4)remove an edge                              0(1)  <->  O(V)
+5)add/remove a vertex                         O(V^2) <-> less than V^2
+
+Adjacency list is the MOSTLY preferred representation. It is well suited for SPARSE graphs.
+Adjacency matrix representation is suited for dense graphs.
+eg: BFS time complexity with adjacency list is O(V+E) & with adjacency matrix is O(V^2)
+*/
 
 
