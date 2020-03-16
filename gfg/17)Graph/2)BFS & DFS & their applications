@@ -52,7 +52,7 @@ void BFSDisconnected(vector<int> adj[], int v){
     //Also Print number of islands in a graph (or number of connected components in a graph).
     int numberOfConnectedComponents = 0;
     
-    for(int i=0;i<v;++i){	//consider every disconnected component
+    for(int i=0;i<v;++i){	//considering disconnected graph
         if(visited[i]==false){
             BFS(adj, i, visited);
             ++numberOfConnectedComponents;
