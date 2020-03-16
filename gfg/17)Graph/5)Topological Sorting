@@ -1,0 +1,56 @@
+/*Topological sorting is VALID only for a DAG
+Topological sorting for Directed Acyclic Graph (DAG) is a linear ordering of vertices such that for every directed edge uv,
+vertex u comes before v in the ordering. Topological Sorting for a graph is not possible if the graph is not a DAG.
+Topological sorting is not uniqie.
+*/
+//It can be solved usign either bfs or dfs : O(V+E)
+
+
+//1) bfs based solution: KAHN's ALGORITHM 
+//approach: we only push nodes into queue which have indegree 0 & when we pop a node we reduce indegree of every adjacent node by 1
+//Kahn's algorithm can also be used in bfs based cycle detection: https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/4)Cycle%20in%20a%20graph
+//time : O(V+E)
+// *** bfs + indegree array - visited array(not required) ***
+
+void BFS_TopologicalSort(vector<int> adj[], int v){     //O(V+E)     //v: number of vertices named 0 to v-1
+    
+    // bool visited[v];
+    // for(int i=0;i<v;++i) visited[i] = false;
+    
+    int indegree[v] = {0};
+    for(int i=0;i<v;++i){       //O(E)
+        for(int j=0;j<adj[i].size();++j){
+            ++indegree[adj[i][j]];
+        }
+    }
+    
+    queue<int> q;
+    //pushing all vertex with indegree 0 initially
+    for(int i=0;i<v;++i){
+        if(indegree[i]==0) {
+            q.push(i);
+            //visited[i] = true;
+        }
+    }
+    
+    while(!q.empty()){          //O(V+E)
+        int t = q.front();
+        q.pop();
+        cout<<t<<", ";
+        //pushing all unvisited neighbours of current node
+        for(int i=0;i<adj[t].size();++i){
+            //if(visited[adj[t][i]]==false) {
+                --indegree[adj[t][i]];
+                if(indegree[adj[t][i]]==0){
+                    q.push(adj[t][i]);
+                    //visited[adj[t][i]] = true;
+                }
+            //}
+        }
+    }    
+}
+
+
+//2) dfs based solution:
+
+
