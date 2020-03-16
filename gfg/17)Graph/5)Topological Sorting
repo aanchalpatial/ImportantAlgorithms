@@ -51,6 +51,37 @@ void BFS_TopologicalSort(vector<int> adj[], int v){     //O(V+E)     //v: number
 }
 
 
-//2) dfs based solution:
+//2) dfs based solution: *** dfs + stack ***
+//Approach : a vertex goes into stack only when all of its dependents are in stack
+void DFS(vector<int> adj[], int s, bool visited[], stack<int> &st){
+    //cout<<s<<", ";
+    visited[s] = true;
+    for(int i=0;i<adj[s].size();++i){
+        if(visited[adj[s][i]]==false){
+            DFS(adj, adj[s][i], visited, st);
+        }
+    }
+    //a vertex goes into stack only when all of its dependents are in stack
+    st.push(s);
+}
+void DFS_TopologicalSort(vector<int> adj[], int v){
+    bool visited[v];
+    for(int i=0;i<v;++i) visited[i] = false;
+    
+    stack<int> st;
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            DFS(adj, i, visited, st);
+        }
+    }
+    
+    //traverse stack while printing
+    while(!st.empty()){
+        cout<<st.top()<<", ";
+        st.pop();
+    }
+    cout<<endl;
+}
 
 
