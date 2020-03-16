@@ -46,13 +46,13 @@ void BFS(vector<int> adj[], int s, bool visited[]){      //s: source vertex
 }
 
 void BFSDisconnected(vector<int> adj[], int v){       
-    bool visited[v];
+    bool visited[v];		//used to keep track of visited nodes
     for(int i=0;i<v;++i) visited[i] = false;
     
     //Also Print number of islands in a graph (or number of connected components in a graph).
     int numberOfConnectedComponents = 0;
     
-    for(int i=0;i<v;++i){
+    for(int i=0;i<v;++i){	//consider every disconnected component
         if(visited[i]==false){
             BFS(adj, i, visited);
             ++numberOfConnectedComponents;
