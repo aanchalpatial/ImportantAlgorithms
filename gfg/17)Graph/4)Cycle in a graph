@@ -71,7 +71,7 @@ bool DetectCycleDirectedGraph(vector<int> adj[], int v){
     return false;
 }
 
-//2B) Below is bfs based solution:
+//2B) Below is bfs based solution :-
 
 
 
