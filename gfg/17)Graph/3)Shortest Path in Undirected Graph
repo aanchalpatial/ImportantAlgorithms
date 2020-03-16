@@ -1,8 +1,12 @@
-//Given an Unweighted Graph and a source point, the task is to find the shortest path between the source point
-//and every other point in the graph.
 
+/*
+The shortest path problem is about finding shortest path between the source point and every other point in the graph.
+This problem could be solved easily using (BFS) if all edge weights were (1), but in weighted graph weights can take any value. 
+*/
+
+//1)
+//Shortest Path in UNWEIGHTED graph
 //Hint :- Use BFS, it naturally finds shortest distance path
-
 //Time: Same as BFS i.e O(V+E)
 
 void shortestPath(vector<int> adj[], int s, int v){      //v: number of vertices named 0 to v-1
@@ -34,3 +38,26 @@ void shortestPath(vector<int> adj[], int s, int v){      //v: number of vertices
     for(int i=0;i<v;++i) cout<<shortestDistance[i]<<", ";
     cout<<endl;
 }
+
+
+//2)
+//Shortest Path in WEIGHTED DAG only : Topological Sort Based solution
+/*
+For a general weighted graph, we can calculate single source shortest distances in O(VE) time using Bellman–Ford Algorithm.
+For a graph with no negative weights, we can do better and calculate single source shortest distances in O(E + VLogV) time using
+Dijkstra’s algorithm. Can we do even better for Directed Acyclic Graph (DAG)? We can calculate single source shortest distances
+in O(V+E) time for DAGs. The idea is to use Topological Sorting.
+*/
+//time: O(V+E)
+/*
+1) Initialize dist[] = {INF, INF, ….} and dist[s] = 0 where s is the source vertex.
+2) Create a toplogical order of all vertices.
+3) Do following for every vertex u in topological order.
+………..Do following for every adjacent vertex v of u
+………………if (dist[v] > dist[u] + weight(u, v))
+………………………dist[v] = dist[u] + weight(u, v)
+*/          
+
+
+
+
