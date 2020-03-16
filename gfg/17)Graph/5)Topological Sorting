@@ -6,11 +6,10 @@ Topological sorting is not uniqie.
 //It can be solved usign either bfs or dfs : O(V+E)
 
 
-//1) bfs based solution: KAHN's ALGORITHM 
+//1) bfs based solution: KAHN's ALGORITHM : *** bfs + indegree array - visited array(not required) ***
 //approach: we only push nodes into queue which have indegree 0 & when we pop a node we reduce indegree of every adjacent node by 1
 //Kahn's algorithm can also be used in bfs based cycle detection: https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/4)Cycle%20in%20a%20graph
 //time : O(V+E)
-// *** bfs + indegree array - visited array(not required) ***
 
 void BFS_TopologicalSort(vector<int> adj[], int v){     //O(V+E)     //v: number of vertices named 0 to v-1
     
