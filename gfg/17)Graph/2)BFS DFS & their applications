@@ -1,13 +1,26 @@
-//level order traversal of graph
-//Time Complexity: O(V+E) in adjacency list & O(V^2) in adjacency matrix representation
+/* BFS
+level order traversal of graph
+Time Complexity: O(V+E) in adjacency list & O(V^2) in adjacency matrix representation
 
-/*Applications:
+Applications:
 1)Shortest path in unweighted graph
 2)In garbage collection(Cheney's algorithm)
 3)Cycle Detection
 4)Ford Fulkerson(Maximum flow path problem)
 5)Broadcasting, crwaling over web, peer to peer networks & social networking search
 */
+
+/* DFS
+Time Complexity: O(V+E) in adjacency list & O(V^2) in adjacency matrix representation
+
+Applications:
+1)Topological Sort
+2)Finding Path
+3)Cycle Detection
+4)Strongly connected components
+5)Solvig Maze & Puzzles
+*/
+
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -48,6 +61,26 @@ void BFSDisconnected(vector<int> adj[], int v){
     //cout<<"There are "<<numberOfConnectedComponents<<" connected components in given graph"<<endl;
 }
 
+void DFS(vector<int> adj[], int s, bool visited[]){
+    cout<<s<<", ";
+    visited[s] = true;
+    for(int i=0;i<adj[s].size();++i){
+        if(visited[adj[s][i]]==false){
+            DFS(adj, adj[s][i], visited);
+        }
+    }
+}
+void DFSDisconnected(vector<int> adj[], int v){
+    bool visited[v];
+    for(int i=0;i<v;++i) visited[i] = false;
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            DFS(adj, i, visited);
+        }
+    }
+}
+
 int main() {
 	
 	//Graph Data Structure
@@ -62,10 +95,18 @@ int main() {
 	adjacency_list[5] = {4, 6};
 	adjacency_list[6] = {4, 5};
 	
-	BFSDisconnected(adjacency_list, v);
+	//BFSDisconnected(adjacency_list, v);
+	//cout<<endl;
+	
+    	DFSDisconnected(adjacency_list, v);
 	
 	return 0;
 }
+
+
+
+
+
 
 
 
