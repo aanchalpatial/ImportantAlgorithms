@@ -1,0 +1,36 @@
+//Given an Unweighted Graph and a source point, the task is to find the shortest path between the source point
+//and every other point in the graph.
+
+//Hint :- Use BFS, it naturally finds shortest distance path
+
+//Time: Same as BFS i.e O(V+E)
+
+void shortestPath(vector<int> adj[], int s, int v){      //v: number of vertices named 0 to v-1
+    
+    bool visited[v];
+    for(int i=0;i<v;++i) visited[i] = false;
+    
+    int shortestDistance[v] = {INT_MAX};
+    
+    queue<int> q;
+    q.push(s);
+    visited[s] = true;
+    shortestDistance[s] = 0;
+    
+    while(!q.empty()){
+        int t = q.front();
+        q.pop();
+        //cout<<t<<", ";
+        //pushing all unvisited neighbours of current node
+        for(int i=0;i<adj[t].size();++i){
+            if(visited[adj[t][i]]==false) {
+                q.push(adj[t][i]);
+                visited[adj[t][i]] = true;
+                shortestDistance[adj[t][i]] = shortestDistance[t]+1;
+            }
+        }
+    } 
+    
+    for(int i=0;i<v;++i) cout<<shortestDistance[i]<<", ";
+    cout<<endl;
+}
