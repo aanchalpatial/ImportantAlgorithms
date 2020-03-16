@@ -1,0 +1,78 @@
+//1) 
+//Detection of a Cycle in an UNDIRECTED Graph
+//Can be done using either bfs or dfs : O(V+E)
+//1A) Below is dfs based solution: *** dfs + a parent variable ***
+
+bool DFS(vector<int> adj[], int s, bool visited[], int parent){
+    //cout<<s<<", ";
+    visited[s] = true;
+    for(int i=0;i<adj[s].size();++i){
+        if(visited[adj[s][i]]==false){
+            if(DFS(adj, adj[s][i], visited, s)) return true;
+        }else if(adj[s][i]!=parent){
+            return true;
+        }
+    }
+    return false;
+}
+
+bool DetectCycleUndirectedGraph(vector<int> adj[], int v){
+    bool visited[v];
+    for(int i=0;i<v;++i) visited[i] = false;
+    
+    for(int i=0;i<v;++i){   
+        if(visited[i]==false){
+            if(DFS(adj, i, visited, -1)) return true;
+        }
+    }
+    return false;
+}
+
+
+
+
+//2
+//Detection of a Cycle in an DIRECTED Graph
+//Note: undirected cycle detection will FAIL in this case
+//eg:   1->2<-3 will return true if we use undirected graph approach
+//there is cycle in directed graph if there is a back edge, so we use an array which is used to keep track of vertices in recursion stack
+//Can be done using either bfs or dfs : O(V+E)
+
+//2A) Below is dfs based solution: *** dfs + a recursion stack array ***
+bool DFS(vector<int> adj[], int s, bool visited[], bool recursionStack[]){
+    //cout<<s<<", ";
+    visited[s] = true;
+    recursionStack[s] = true;
+    for(int i=0;i<adj[s].size();++i){
+        if(visited[adj[s][i]]==false){
+            if(DFS(adj, adj[s][i], visited, recursionStack)) return true;
+        }else if(recursionStack[adj[s][i]]==true){
+            return true;
+        }
+    }
+    recursionStack[s] = false;
+    
+    return false;
+}
+bool DetectCycleDirectedGraph(vector<int> adj[], int v){
+    bool visited[v];
+    for(int i=0;i<v;++i) visited[i] = false;
+    
+    //there is cycle in directed graph if there is a back edge
+    //below array is used to keep track of vertices in recursion stack
+    bool recursionStack[v];
+    for(int i=0;i<v;++i) recursionStack[i] = false;
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            if(DFS(adj, i, visited, recursionStack)) return true;
+        }
+    }
+    return false;
+}
+
+//2B) Below is bfs based solution:
+
+
+
+
