@@ -71,8 +71,44 @@ bool DetectCycleDirectedGraph(vector<int> adj[], int v){
     return false;
 }
 
-//2B) Below is bfs based solution :-
+//2B) Below is bfs based solution :- ***Kahn's algorithm + countOfNodesProcessed variable ***
+//Kahn's Algorithm : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/5)Topological%20Sorting
+//Approach: As we know we can use Kahn's algorithm (i.e topological sorting) only for DAG, so if a directed graph in fact has cycles,
+//then we will not be able to process every vertex. So using kahn's algo if we are not able to process every vertex than graph has a cycle.
 
-
+bool BFS_CycleDetectionDirectedGraph(vector<int> adj[], int v){     //O(V+E)     //v: number of vertices named 0 to v-1
+    
+    
+    int indegree[v] = {0};
+    for(int i=0;i<v;++i){       //O(E)
+        for(int j=0;j<adj[i].size();++j){
+            ++indegree[adj[i][j]];
+        }
+    }
+    
+    queue<int> q;
+    //pushing all vertex with indegree 0 initially
+    for(int i=0;i<v;++i){
+        if(indegree[i]==0) {
+            q.push(i);
+        }
+    }
+    int nodesProcessed = 0;
+    while(!q.empty()){          //O(V+E)
+        int t = q.front();
+        q.pop();
+        //cout<<t<<", ";
+        ++nodesProcessed;
+        //pushing all unvisited neighbours of current node
+        for(int i=0;i<adj[t].size();++i){
+            --indegree[adj[t][i]];
+            if(indegree[adj[t][i]]==0){
+                q.push(adj[t][i]);
+            }
+        }
+    }
+    
+    return nodesProcessed==v?false:true;
+}
 
 
