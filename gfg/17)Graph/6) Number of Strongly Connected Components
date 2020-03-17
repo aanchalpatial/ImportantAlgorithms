@@ -78,6 +78,89 @@ int findIslands(vector<int> A[], int N, int M) {
     return result;
 }
 
+//1B)
+//ANOTHER APPLICATION: Find whether path exist
+/*
+Given a N X N matrix (M) filled with 1, 0, 2, 3. The task is to find whether there is a path possible from source to destination,
+while traversing through blank cells only. You can traverse up, down, right and left.
+A value of cell 1 means Source.
+A value of cell 2 means Destination.
+A value of cell 3 means Blank cell.
+A value of cell 0 means Blank Wall.
+Note: there is only single source and single destination.
+*/
+#include<bits/stdc++.h>
+using namespace std;
+
+bool DFS(vector<int> A[], vector<bool> visited[], int N, int r, int c){
+    
+    //cout<<"("<<r<<","<<c<<")  ";
+    if(A[r][c]==2) return true;
+    else if(A[r][c]==0) return false;
+    
+    visited[r][c] = true;
+    
+    int rowNbr[4] = {-1, 0,0, 1};
+    int colNbr[4] = { 0,-1,1, 0,};
+    
+    
+    //traversing 4 neighbours(up, down, left & right) of a cell in 2D matrix
+    for(int i=0;i<8;++i){
+        int rr = r+rowNbr[i];
+        int cc = c+colNbr[i];
+        if((rr>=0&&rr<N)&&(cc>=0&&cc<N)){
+            if((A[rr][cc]==3||A[rr][cc]==2)&&visited[rr][cc]==false){
+                if(DFS(A, visited, N, rr, cc)) return true;
+            }
+            
+        }
+    }
+    return false;
+    
+}
+bool findPath(vector<int> A[], int N) {
+
+    // Your code here
+    vector<bool> visited[N];
+    
+    for(int i=0;i<N;++i){
+        for(int j=0;j<N;++j){
+            visited[i].push_back(false);
+        }
+    }
+    
+    for(int i=0;i<N;++i){
+        for(int j=0;j<N;++j){
+            if(A[i][j]==1) {
+                return DFS(A, visited, N, i, j);
+            }
+        }
+    }
+    
+}
+
+int main()
+ {
+	int T;
+	cin>>T;
+	for(int j=0;j<T;++j){
+	    int n;
+	    cin>>n;
+	    vector<int> adj[n];
+	    for(int i=0;i<n;++i){
+	        for(int j=0;j<n;++j) {
+	            int x;
+	            cin>>x;
+	            adj[i].push_back(x);
+	        }
+	    }
+	    if(findPath(adj, n)) cout<<"1"<<endl;
+	    else cout<<"0"<<endl;
+	    
+	}
+	return 0;
+}
+
 
 
 
