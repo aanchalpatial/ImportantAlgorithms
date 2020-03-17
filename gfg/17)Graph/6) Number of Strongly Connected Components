@@ -1,2 +1,86 @@
-//Tarjan's algorithm
-//Kosaraju's algorithm
+//1) 
+Finding Strongly connected components of an UNDIRECTED graph
+/*Finding connected components for an undirected graph is an easier task. We simple need to do either BFS or DFS starting from
+every unvisited vertex, and we get all strongly connected components.
+*/
+void dfs(){}
+
+int dfsDisconnected(vector<int> adj[], int v){
+  bool visited[v] = {false};
+  
+  int connectedComponentsCount = 0;
+  
+  for(int i=0;i<v;++i){
+    if(visited[i] == false){
+      ++connectedComponentsCount;
+      //cout<<" Strongly Connected Component "<<connectedComponentsCount<<" : ";
+      DFS(adj, visited, 0, v);
+      cout<<endl;
+      }
+    }
+   return connectedComponentsCount;
+  }
+
+//1A)
+APPLICATION OF ABOVE ALGORITHM: *** NUMBER OF ISLANDS *** 
+/*This problem is also famously known as: Find the number of ISLANDS
+Given a boolean 2D matrix, find the number of islands. A group of connected 1s forms an island. For example:
+1 1 0
+0 0 1
+1 0 1
+Here, two islands will be formed
+First island will be formed by elements {A[0][0] ,  A[0][1], A[1][2], A[2][2]}
+Second island will be formed by {A[2][0]}.
+*/
+void DFS(vector<int> A[], vector<bool> visited[], int N, int M, int r, int c){
+    
+    visited[r][c] = true;
+    
+    int rowNbr[8] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+    int colNbr[8] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+    
+    
+    //traversing 8 neighbours of a cell in 2D matrix
+    for(int i=0;i<8;++i){
+        int rr = r+rowNbr[i];
+        int cc = c+colNbr[i];
+        if((rr>=0&&rr<N)&&(cc>=0&&cc<M)){
+            if(A[rr][cc]==1&&visited[rr][cc]==false){
+                DFS(A, visited, N, M, rr, cc);
+            }   
+        }
+    }
+    
+    
+}
+int findIslands(vector<int> A[], int N, int M) {
+
+    // Your code here
+    vector<bool> visited[N];
+    
+    for(int i=0;i<N;++i){
+        for(int j=0;j<M;++j){
+            visited[i].push_back(false);
+        }
+    }
+    
+    int result = 0;     //number of islands
+    
+    for(int i=0;i<N;++i){
+        for(int j=0;j<M;++j){
+            if(A[i][j]==1&&visited[i][j]==false){
+                DFS(A, visited, N, M, i, j);
+                ++result;
+            }
+        }
+    }
+    
+    return result;
+}
+
+
+
+
+//2)
+//Finding Strongly connected components of an DIRECTED graph
+//There are 2 different algorithms available: Tarjan's algorithm & Kosaraju's algorithm
