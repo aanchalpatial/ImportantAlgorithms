@@ -20,4 +20,20 @@ Adjacency matrix representation is suited for dense graphs.
 eg: BFS time complexity with adjacency list is O(V+E) & with adjacency matrix is O(V^2)
 */
 
+//graph traversals: bfs & dfs
+
+/*
+GRAPHS SUMMARY:-
+
+1) Shortest Path in Unweighted Graph: BFS
+2) Shortest Path in Weighted Graph: Bellmon Ford, DJikstra's, Floyd Warshall & Topological Sort Based Solution
+3) Cycle in Undirected Graph: dfs + a parent variable
+4) Cycle in Directed Graph: dfs + recursion stack & Kahn's algorithm(bfs) + countOfNodesProcessed variable
+5) Topological Sort: kahn algo( bfs + indegree array - visited array(not required) ) & dfs + stack
+6) Strongly connected components of an UNDIRECTED graph: BFS or DFS
+7) Strongly connected components of an DIRECTED graph: Tarjan's algorithm & Kosaraju's algorithm
+8) Minimum Spanning Tree: Prim's & Kruskal Algorithms
+
+*/
+
 
