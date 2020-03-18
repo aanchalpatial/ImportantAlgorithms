@@ -98,3 +98,6 @@ int main()
 	}
 	return 0;
 }
+
+//3) Given an array of N distinct elements A[ ]. The task is to find the minimum number of swaps required to sort the array
+
