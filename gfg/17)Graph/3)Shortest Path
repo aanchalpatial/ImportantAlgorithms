@@ -17,7 +17,7 @@ There are different algorithms for finding shortest path BASED ON USE CASES:
 
 //1)
 //Shortest Path in UNWEIGHTED graph
-//Hint :- Use BFS, it naturally finds shortest distance path
+//Hint :- Use BFS, it naturally finds shortest distance path, its the INHERENT NATURE of bfs
 //Time: Same as BFS i.e O(V+E)
 
 void shortestPath(vector<int> adj[], int s, int v){      //v: number of vertices named 0 to v-1
