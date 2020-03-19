@@ -51,8 +51,9 @@ void shortestPath(vector<int> adj[], int s, int v){      //v: number of vertices
 }
 
 
-//2)
-//Shortest Path in WEIGHTED DAG only : Topological Sort Based solution
+//2) Directed Graphs
+
+//2A) Shortest Path in WEIGHTED DAG only : Topological Sort Based solution
 /*
 For a general weighted graph, we can calculate single source shortest distances in O(VE) time using Bellman–Ford Algorithm.
 For a graph with no negative weights, we can do better and calculate single source shortest distances in O(E + VLogV) time using
@@ -154,3 +155,34 @@ int main() {
     
 	return 0;
 }
+
+
+//2B) DJisktra's Algorithm
+//Shortest Path in weighted graphs with only positive edges
+/*Algorithm:
+1) Create a set sptSet (shortest path tree set) that keeps track of vertices included in shortest path tree, i.e.,
+   whose minimum distance from source is calculated and finalized. Initially, this set is empty.
+2) Assign a distance value to all vertices in the input graph. Initialize all distance values as INFINITE. Assign distance value 
+   as 0 for the source vertex so that it is picked first.
+3) While sptSet doesn’t include all vertices
+ ….a) Pick a vertex u which is not there in sptSet and has minimum distance value.
+ ….b) Include u to sptSet.
+ ….c) Update distance value of all adjacent vertices of u. To update the distance values, iterate through all adjacent vertices. 
+      For every adjacent vertex v, if sum of distance value of u (from source) and weight of edge u-v, is less than the distance value
+      of v, then update the distance value of v.
+*/
+/*Important Points:
+->We can create a parent array, update the parent array when distance is updated and 
+    use it show the shortest path from source to different vertices.
+->The code finds shortest distances from source to all vertices. If we are interested only in shortest distance from the source
+    to a single target, we can break the for the loop when the picked minimum distance vertex is equal to target
+->Time Complexity of the implementation is O(V^2). If the input graph is represented using adjacency list, it can be reduced 
+    to O(E log V) with the help of binary heap.
+->Dijkstra’s algorithm doesn’t work for graphs with negative weight edges. For graphs with negative weight edges, Bellman–Ford 
+    algorithm can be used.
+*/
+
+
+
+
+
