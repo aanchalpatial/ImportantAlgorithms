@@ -157,7 +157,7 @@ int main() {
 }
 
 
-//2B) DJisktra's Algorithm
+//2B) DJisktra's Algorithm : OV^2) for adjacency matrix & O(ElogV) using adjacency list + min heap
 //Shortest Path in weighted graphs with only positive edges
 /*Algorithm:
 1) Create a set sptSet (shortest path tree set) that keeps track of vertices included in shortest path tree, i.e.,
@@ -181,6 +181,89 @@ int main() {
 ->Dijkstra’s algorithm doesn’t work for graphs with negative weight edges. For graphs with negative weight edges, Bellman–Ford 
     algorithm can be used.
 */
+#include <bits/stdc++.h>
+using namespace std;
+
+void addEdge(vector<pair<int, int>> adj[], int u, int v, int weight){
+    adj[u].push_back(make_pair(v, weight));
+    //since graph is undirected
+    adj[v].push_back(make_pair(u, weight)); 
+}
+
+struct myComp{
+    bool operator()(pair<int, int> p1, pair<int, int> p2){
+        return p1.first>p2.first;
+    }
+};
+
+void djikstra(vector<pair<int, int>> adj[], int source, int V){
+    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> pq;      //pair of (distance, vertext)
+    pq.push(make_pair(0, source));
+    
+    int distance[V];
+    for(int i=0;i<V;++i) distance[i] = INT_MAX;
+    distance[source] = 0;
+    
+    while(!pq.empty()){
+        pair<int, int> u = pq.top();
+        pq.pop();
+        //update all neighbours of current vertext 'p'
+        for(auto v:adj[u.second]){
+            if(distance[v.first]>distance[u.second]+v.second){
+                distance[v.first] = distance[u.second]+v.second;
+                pq.push(make_pair(distance[v.first], v.first));
+            }
+        }
+    }
+    
+    cout<<"Vertex\tDistance from source"<<endl;
+    for(int i=0;i<V;++i) {
+        cout<<i<<"\t"<<distance[i]<<endl;
+    }
+}
+
+
+int main() {
+    
+    int v = 9;
+    vector<pair<int, int>> adj[v];      //pair of (vertex, weight)
+    addEdge(adj, 0, 1, 4); 
+    addEdge(adj, 0, 7, 8); 
+    addEdge(adj, 1, 2, 8); 
+    addEdge(adj, 1, 7, 11); 
+    addEdge(adj, 2, 3, 7); 
+    addEdge(adj, 2, 8, 2); 
+    addEdge(adj, 2, 5, 4); 
+    addEdge(adj, 3, 4, 9); 
+    addEdge(adj, 3, 5, 14); 
+    addEdge(adj, 4, 5, 10); 
+    addEdge(adj, 5, 6, 2); 
+    addEdge(adj, 6, 7, 1); 
+    addEdge(adj, 6, 8, 6); 
+    addEdge(adj, 7, 8, 7); 
+    
+    djikstra(adj, 1, v);
+    
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
