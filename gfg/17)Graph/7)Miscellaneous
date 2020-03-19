@@ -100,4 +100,51 @@ int main()
 }
 
 //3) Given an array of N distinct elements A[ ]. The task is to find the minimum number of swaps required to sort the array
+/*
+This can be easily done by visualizing the problem as a graph. We will have n nodes and an edge directed from node i to node j if
+`the element at i’th index must be present at j’th index in the sorted array. The graph will now contain many non-intersecting cycles. 
+Now a cycle with 2 nodes will only require 1 swap to reach the correct ordering, similarly a cycle with 3 nodes will only require 
+2 swap to do so.
+Hence,
+ans = Σi = 1tok(cycle_size – 1), where k is the number of cycles
+IN OTHER WORDS,
+The idea is to create a vector of pair in C++ with first element as array values and second element as array indices. The next step 
+is to sort the vector of pair according to the first element of the pair. After that traverse the vector and check if the 
+index mapped with the value is correct or not, if not then keep swapping until the element is placed correctly and keep 
+counting the number of swaps.
+*/
+
+int minSwaps(int A[], int N){
+    /*Your code here */
+    vector<pair<int, int>> v;
+    for(int i=0;i<N;++i){
+        v.push_back(make_pair(A[i], i));
+    }
+    
+    sort(v.begin(), v.end());
+    
+    bool visited[N] = {false};
+    
+    
+    int result = 0;
+    
+    for(int i=0;i<N;++i){
+        
+        int j = v[i].second;
+        
+        if(visited[i]==true||i==j) continue;
+        visited[i] = true;
+        
+        int cycleSize = 0;
+        while(!visited[j]){
+            ++cycleSize;
+            visited[j] = true;
+            j = v[j].second;
+        }
+        result += cycleSize;
+	
+    }
+    return result;
+}
+
 
