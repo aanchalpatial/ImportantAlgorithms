@@ -1,0 +1,123 @@
+/*
+Given a connected and undirected graph, a spanning tree of that graph is a subgraph that is a tree and connects all the vertices
+together. A single graph can have many different spanning trees.
+
+A minimum spanning tree (MST) or minimum weight spanning tree for a weighted, connected and undirected graph is a spanning tree 
+with weight less than or equal to the weight of every other spanning tree
+A minimum spanning tree has (V – 1) edges where V is the number of vertices in the given graph.
+There are 2 algorithm to find Minimum Spanning Tree: Prims's & Kruskal's Algorithm
+
+Applications: Network design., CLuster Ananlysis & Approximation algorithms for NP-hard problems.
+
+*/
+
+//1)
+//Prim's Algorithm : 
+/*Approach: 
+A group of edges that connects two set of vertices in a graph is called cut in graph theory. So, at every step of Prim’s algorithm,
+we find a cut (of two sets, one contains the vertices already included in MST and other contains rest of the verices), pick the
+minimum weight edge from the cut and include this vertex to MST Set (the set that contains already included vertices).
+*/
+/*VERY SIMILAR TO DJIKSTRA's
+There are many different approaches to implement Prim's (which are same as Djisktra):
+
+1) O(V^2) with adjacency matrix 
+
+2) O(ElogV) with adjacency list + CUSTOM binary heap
+
+3) O(ElogV) with C++ STL priority_queue i.e APPROACH IMPLEMENTED BELOW
+https://www.geeksforgeeks.org/prims-algorithm-using-priority_queue-stl/
+However, the problem is, priority_queue doesn’t support decrease key. To resolve this problem, The prim's algorithm can be
+modified so that decrease key is never required. The idea is, not to insert all vertices in priority queue, but only those which
+are not MST and have been visited through a vertex that has included in MST. We keep track of vertices included in MST in a separate
+boolean array inMST[].
+This is where Prim's implementation DIFFERS FROM DJIKSTRA's. In Dijkstr's algorithm, we didn't need this array as distances always
+increase. We require this array here because key value of a processed vertex may decrease if not checked.
+In other words, Unlike Dijkstra’s implementation, a boolean array inMST[] is mandatory here because the key values of newly inserted
+items can be less than the key values of extracted items. So we must not consider extracted items.
+*/
+//Prims using C++ STL priority_queue : (Carefully read commments to understabd difference from DJIKSTRA's code)
+//Djikstra's code is available at: https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/3)Shortest%20Path
+#include <bits/stdc++.h>
+using namespace std;
+
+void addEdge(vector<pair<int, int>> adj[], int u, int v, int weight){
+    adj[u].push_back(make_pair(v, weight));
+    //since graph is undirected
+    adj[v].push_back(make_pair(u, weight)); 
+}
+
+struct myComp{
+    bool operator()(pair<int, int> p1, pair<int, int> p2){
+        return p1.first>p2.first;
+    }
+};
+
+void prims(vector<pair<int, int>> adj[], int source, int V){
+    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> pq;      //pair of (key, vertex)
+    pq.push(make_pair(0, source));
+    
+    int key[V];    //renamed from distance[] in DJIKSTRA's
+    for(int i=0;i<V;++i) key[i] = INT_MAX;
+    key[source] = 0;
+    
+    int inMST[V] = {false}; //not in DJIKSTRA's
+    int parent[V] = {-1};   //not in DJIKSTRA's
+    
+    while(!pq.empty()){
+        pair<int, int> u = pq.top();
+        pq.pop();
+        inMST[u.second] = true;
+        //update all neighbours of current vertext 'p'
+        for(auto v:adj[u.second]){
+            if(key[v.first]>v.second&&inMST[v.first]==false){   //condition different from Djisktra
+                key[v.first] = v.second;
+                pq.push(make_pair(key[v.first], v.first));
+                parent[v.first] = u.second;
+            }
+        }
+    }
+    
+    
+    for(int i=1;i<V;++i) {                  //V-1 Edges
+        cout<<parent[i]<<" - "<<i<<endl;
+    }
+}
+
+
+int main() {
+    
+    int v = 9;
+    vector<pair<int, int>> adj[v];      //pair of (vertex, weight)
+    addEdge(adj, 0, 1, 4); 
+    addEdge(adj, 0, 7, 8); 
+    addEdge(adj, 1, 2, 8); 
+    addEdge(adj, 1, 7, 11); 
+    addEdge(adj, 2, 3, 7); 
+    addEdge(adj, 2, 8, 2); 
+    addEdge(adj, 2, 5, 4); 
+    addEdge(adj, 3, 4, 9); 
+    addEdge(adj, 3, 5, 14); 
+    addEdge(adj, 4, 5, 10); 
+    addEdge(adj, 5, 6, 2); 
+    addEdge(adj, 6, 7, 1); 
+    addEdge(adj, 6, 8, 6); 
+    addEdge(adj, 7, 8, 7); 
+    
+    prims(adj, 0, v);
+    
+	return 0;
+}
+
+
+//2)  LEFT !!!
+//Kruskal's Algorithm
+/*Algorithm:
+1. Sort all the edges in increasing order of their weight.
+2. Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, 
+   include this edge. Else, discard it.
+3. Repeat step#2 until there are (V-1) edges in the spanning tree.
+*/
+
+
+
