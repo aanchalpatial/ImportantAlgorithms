@@ -8,6 +8,9 @@ So the problems where choosing locally optimal also leads to global solution are
 In general, the Greedy Algorithm can be applied to solve a problem if it satisfies the below property:
 At every step, we can make a choice that looks best at the moment, and we get the optimal solution of the complete problem.
 
+If a Greedy Algorithm can solve a problem, then it generally becomes the best method to solve that problem as the Greedy algorithms 
+are in general more efficient than other techniques like Dynamic Programming. But Greedy algorithms cannot always be applied.
+
 https://www.geeksforgeeks.org/greedy-algorithms/
 
 Applications: Activity Selection Problem, Fractional Knapsack, Job Sequencing, Huffman Coding, Prim's, Kruskal's & Djikstra's .
