@@ -8,6 +8,8 @@ Applications:
 3)Cycle Detection
 4)Ford Fulkerson(Maximum flow path problem)
 5)Broadcasting, crwaling over web, peer to peer networks & social networking search
+
+we also have *** MULTI SOURCE BFS ***
 */
 
 /* DFS
