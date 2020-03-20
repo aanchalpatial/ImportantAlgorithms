@@ -1,0 +1,8 @@
+//Data Structure and their equivalents in C++ STL
+	
+	//1) Hash : unordered_set, unordered_map
+	//2) Linked List : forward_list, list
+	//3) Stack : Stack
+	//4) Queue : queue
+	//5) Balanced BST : set, map
+	//6) Heap : priority_queue
