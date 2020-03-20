@@ -157,8 +157,7 @@ int main() {
 }
 
 
-//2B) DJisktra's Algorithm : OV^2) for adjacency matrix & O(ElogV) using adjacency list + min heap
-//Shortest Path in weighted graphs with only positive edges
+//2B) DJisktra's Algorithm : Find Shortest Path in weighted graphs with only positive edges
 /*Algorithm:
 1) Create a set sptSet (shortest path tree set) that keeps track of vertices included in shortest path tree, i.e.,
    whose minimum distance from source is calculated and finalized. Initially, this set is empty.
@@ -181,6 +180,29 @@ int main() {
 ->Dijkstra’s algorithm doesn’t work for graphs with negative weight edges. For graphs with negative weight edges, Bellman–Ford 
     algorithm can be used.
 */
+
+
+/*There are many different approaches to implement DJikstra's:
+1) DJikstra using adjacency matric representation: O(V^2)
+https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+
+2) DJikstra using adjacency list representation with CUSTOM made min heap : O(ElogV)
+https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/
+
+3) Djisktra using C++ STL set : O(ElogV)
+https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
+The second implementation is time complexity wise better, but is really complex as we have implemented our own priority queue. 
+STL provides priority_queue, but the provided priority queue doesn’t support decrease key and delete operations.Above operations 
+can be easily implemented by set data structure of c++ STL
+
+4) Djikstra using C++ STL priority_queue : O(ElogV) i.e APPROACH IMPLEMENTED BELOW
+https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/
+However, the problem is, priority_queue doesn’t support decrease key. To resolve this problem, do not update a key,but insert one 
+more copy of it.Whenever distance of a vertex is reduced, we add one more instance of vertex in priority_queue. Even if there are
+multiple instances, we only consider the instance with minimum distance and ignore other instances.
+*/
+
+//Djikstra using priority_queue
 #include <bits/stdc++.h>
 using namespace std;
 
