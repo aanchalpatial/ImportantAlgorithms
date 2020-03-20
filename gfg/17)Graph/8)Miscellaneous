@@ -1,8 +1,10 @@
-//Spanning Tree: Prim's & Kruskal Algorithms
-//Shortest Path: Bellmon Ford, DJikstra's & Floyd Warshall
-//Strongly connected components in DIRECTED graph
+//Algorithms not studied.
+//Spanning Tree: Kruskal Algorithm
+//Shortest Path: Bellmon Ford& Floyd Warshall
+//Strongly Connected Components: Tarjan's Algorithm
 
 
+//Miscellaneous Questions
 //1) Count the total number of ways or paths that exist between two vertices in a directed graph. These paths doesn’t contain a cycle.
 // Function to find paths between 2 nodes
 int cnt;
@@ -214,6 +216,68 @@ int main()
 	}
 	return 0;
 }
+
+
+//5) Multi Source BFS
+/*Given a binary matrix of size N x M. The task is to find the distance of nearest 1 in the matrix for each cell. The distance is 
+calculated as |i1 – i2| + |j1 – j2|, where i1, j1 are the row number and column number of the current cell and i2, j2 are the row
+number and column number of the nearest cell having value 1.
+*/
+void nearest(vector<vector<int>> arr, int row, int col) {
+
+    //multi source bfs
+    int rowNbr[] = {-1,0,1,0};
+    int colNbr[] = {0,1,0,-1};
+    
+    queue<pair<int, int>> q;
+    
+    int distance[row][col];
+    bool visited[row][col];
+    for(int i=0;i<row;++i){
+        for(int j=0;j<col;++j){
+            visited[i][j] = false;
+        }
+    }
+    
+    //pushing all cell with 1
+    for(int i=0;i<row;++i){
+        for(int j=0;j<col;++j){
+            if(arr[i][j]==1){
+                q.push(make_pair(i,j));
+                distance[i][j] = 0;
+                visited[i][j] = true;
+            }else distance[i][j] = INT_MAX;
+        }
+    }
+    
+    int dist;
+    while(!q.empty()){
+        
+            pair<int, int> cell = q.front();
+            q.pop();
+            dist = distance[cell.first][cell.second];
+            //visited[cell.first][cell.second] = true;
+            for(int i=0;i<4;++i){
+                int r = cell.first+rowNbr[i];
+                int c = cell.second+colNbr[i];
+                
+                if( r>=0&&r<row&&c>=0&&c<col&&visited[r][c]==false){
+                    distance[r][c] = min(distance[r][c], dist+1);
+                    visited[r][c] = true;
+                    q.push(make_pair(r,c));
+                }
+            } 
+    }
+
+    for(int i=0;i<row;++i){
+        for(int j=0;j<col;++j){
+            cout<<distance[i][j]<<" ";
+        }
+    }
+    cout<<endl;
+}
+
+
 
 
 
