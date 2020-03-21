@@ -13,3 +13,22 @@ at the end add the next item as much as we can.
 */
 
 //Time : O(nlogn)
+double fractionalKnapsack(int W, Item arr[], int n)
+{
+    // Your code here
+    sort(arr, arr+n, myComp);
+    
+    double value = 0;
+    
+    int i;
+    for(i=0;i<n;++i){
+        if(W-arr[i].weight >= 0){
+            W -= arr[i].weight;
+            value += arr[i].value;
+        }else break;
+    }
+    if(W>0&&i<n) value += ((double)W/(double)arr[i].weight)*arr[i].value;
+    
+    return value;
+    
+}
