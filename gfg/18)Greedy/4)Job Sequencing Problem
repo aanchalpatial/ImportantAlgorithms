@@ -14,3 +14,33 @@ Approach:
 */
 //https://www.geeksforgeeks.org/job-sequencing-problem/
 //Time: O(n^2)
+
+bool myComp(Job j1, Job j2){
+    return j1.profit>j2.profit;
+}
+
+void printJobScheduling(Job arr[], int n) 
+{ 
+    // your code here
+    sort(arr, arr+n, myComp);
+    
+    bool sequence[n] = {false};
+    int profit = 0;
+    int cnt = 0;
+    
+    for(int i=0;i<n;++i){
+        int d = arr[i].dead-1;
+        int p = arr[i].profit;
+        for(int j=min(n,d);j>=0;--j){
+            if(sequence[j]==false){ //schedule job as last as possible i.e as right as possible
+                sequence[j] = true;
+                profit += p;
+                ++cnt;
+                break;
+            }
+        }
+    }
+
+    cout<<cnt<<" "<<profit<<endl;
+    
+} 
