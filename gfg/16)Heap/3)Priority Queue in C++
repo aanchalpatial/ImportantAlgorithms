@@ -18,3 +18,16 @@ priority_queue<int> pq(arr, arr+n);
 4) Heap Sort
 5) Any other place where heap is to be used
 */
+
+
+//Custom Comparator for priority_queue is different from normal
+//custom comparator "myComp" for sort() is like this:
+bool myComp(data_type x, data_type y) {
+  return x>y;
+}
+//Where as custom comparator for priority_queue is like this :
+struct myComp{
+  bool operator()(data_type x, data_type y){
+    return x>y; //for min heap
+    }
+}
