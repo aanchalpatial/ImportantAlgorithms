@@ -31,7 +31,7 @@ void printJobScheduling(Job arr[], int n)
     for(int i=0;i<n;++i){
         int d = arr[i].dead-1;
         int p = arr[i].profit;
-        for(int j=min(n,d);j>=0;--j){
+        for(int j=min(n,d);j>=0;--j){                       // *** important ***
             if(sequence[j]==false){ //schedule job as last as possible i.e as right as possible
                 sequence[j] = true;
                 profit += p;
