@@ -1,0 +1,113 @@
+/*
+Prefix Codes, means the codes (bit sequences) are assigned in such a way that the code assigned to one character is not the prefix
+of code assigned to any other character. This is how Huffman Coding makes sure that there is no ambiguity when decoding the 
+generated bitstream.
+
+There are mainly 2 MAJOR PARTS in Huffman Coding :- 
+
+1) Build a Huffman Tree from input characters.
+Steps to build Huffman Tree
+Input is an array of unique characters along with their frequency of occurrences and output is Huffman Tree.
+
+1. Create a leaf node for each unique character and build a min heap of all leaf nodes (Min Heap is used as a priority queue. 
+   The value of frequency field is used to compare two nodes in min heap. Initially, the least frequent character is at root)
+
+2. Extract two nodes with the minimum frequency from the min heap.
+
+3. Create a new internal node with a frequency equal to the sum of the two nodes frequencies. Make the FIRST extracted node as 
+   its LEFT child and the other extracted node as its RIGHT child. Add this node to the min heap.
+
+4. Repeat steps#2 and #3 until the heap contains only one node. The remaining node is the root node and the tree is complete.
+
+2) Traverse the Huffman Tree and assign codes to characters.
+Steps to print codes from Huffman Tree:
+Traverse the tree formed starting from the root. Maintain an auxiliary array. While moving to the left child, write 0 to the array.
+While moving to the right child, write 1 to the array. Print the array when a leaf node is encountered.
+0 & 1 can also be assigned to right & left child simultanously.
+
+Time complexity: O(nlogn) where n is the number of unique characters. If there are n nodes, extractMin() is called 2*(n – 1) times.
+extractMin() takes O(logn) time as it calles minHeapify(). So, overall complexity is O(nlogn).
+
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+    char data;
+    int freq;
+    Node *left, *right;
+    Node(char d, int f){
+        data = d;
+        freq = f;
+        left = NULL;
+        right = NULL;
+    }
+};
+struct myComp{
+    bool operator()(Node *n1, Node *n2){
+        return n1->freq>n2->freq;
+    }
+};
+
+void printHuffmanCodes(Node *root, int arr[], int top){
+    if(root->left!=NULL){
+        arr[top] = 0;
+        printHuffmanCodes(root->left, arr, top+1);
+    }
+    if(root->right!=NULL){
+        arr[top] = 1;
+        printHuffmanCodes(root->right, arr, top+1);
+    }
+    
+    if(root->left==NULL&&root->right==NULL){
+        cout<<root->data<<": ";
+        for(int i=0;i<top;++i) cout<<arr[i];
+        cout<<endl;
+    }
+}
+
+void HuffmanCodes(char data[], int freq[], int n){
+    
+    priority_queue<Node *, vector<Node *>, myComp> pq;
+    
+    // Populating the priority queue 
+    for(int i=0;i<n;++i){
+        Node *nd = new Node(data[i], freq[i]);
+        pq.push(nd);
+    }
+    
+    //Generating Huffman Encoding Tree 
+    while(pq.size()>1){
+        Node *n1 = pq.top();
+        pq.pop();
+        Node *n2 = pq.top();
+        pq.pop();
+        
+        Node *newNode = new Node('$', n1->freq+n2->freq);
+        newNode->left = n1;
+        newNode->right = n2;
+        pq.push(newNode);
+    }
+    
+    Node *root = pq.top();
+    //assumption is that maximum possible height of a tree is 1000
+    int arr[1000];
+    printHuffmanCodes(root, arr, 0);
+    
+}
+
+
+
+
+int main() 
+{ 
+    char data[] = { 'a', 'b', 'c', 'd', 'e', 'f' }; 
+    int freq[] = { 5, 9, 12, 13, 16, 45 }; 
+    int size = sizeof(data) / sizeof(data[0]); 
+  
+    HuffmanCodes(data, freq, size); 
+    return 0; 
+}
+
+
+
