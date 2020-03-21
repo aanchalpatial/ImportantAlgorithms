@@ -12,3 +12,29 @@ Approach:
 */
 
 //Time : O(nlogn)
+
+bool myComp(pair<int, int> p1, pair<int, int> p2){
+    return p1.second<p2.second;
+}
+
+int activitySelection(int start[], int end[], int n){
+    // Your code here
+    int result = 1;
+    
+    vector<pair<int, int>> activity;
+    for(int i=0;i<n;++i){
+        activity.push_back(make_pair(start[i], end[i]));
+    }
+    sort(activity.begin(), activity.end(), myComp);
+    
+    pair<int, int> prev = make_pair(activity[0].first, activity[0].second);
+    
+    
+    for(int i=1;i<n;++i){
+        if(prev.second<=activity[i].first){
+            ++result;
+            prev = make_pair(activity[i].first, activity[i].second);
+        }
+    }
+    return result;
+}
