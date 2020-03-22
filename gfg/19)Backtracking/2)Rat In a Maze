@@ -28,7 +28,7 @@ bool solveMaze(vector<int> maze[], vector<int> sol[], int i, int j, int n){
         if(solveMaze(maze, sol, i+1,j,n)) return true;
         if(solveMaze(maze, sol, i,j+1,n)) return true;
         //if control reaches here neither of right or bottom moves returned true
-        sol[i][j] = 0;
+        sol[i][j] = 0;				// *** BACKTRACKING ***
     }
     return false;
 }
