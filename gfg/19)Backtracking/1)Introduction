@@ -41,6 +41,9 @@ void permutationsRecursion(string str, int l, int r){ //O(n*n!)
 
 //Efficient Solution: Don't preform those recursive calls which will lead to permutation with "AB" as substring
 //Time : Much less than O(n*n!)
+
+//isSafe() is the function used to avoid unwanted results during backtracking solutions
+//isSafe() is found in most of the back tracking solutions.
 bool isSafe(string str, int l, int r, int i){
     if(l>0&&str[l-1]=='A'&&str[i]=='B') return false;
     if(r==l+1&&str[l]=='B'&&str[i]=='A') return false;
