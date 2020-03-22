@@ -87,4 +87,7 @@ int main() {
 }
 
 
+//Optimisation in isSafe() function : Left !!
+//https://www.geeksforgeeks.org/n-queen-problem-backtracking-3/
+
 
