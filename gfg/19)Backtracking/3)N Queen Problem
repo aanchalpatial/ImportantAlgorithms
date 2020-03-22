@@ -48,7 +48,7 @@ bool NQueen(vector<int> board[], int col, int n){
         if(isSafe(board, i, col, n)){
             board[i][col] = 1;
             if(NQueen(board, col+1, n)) return true;
-            board[i][col] = 0;  //backtrack
+            board[i][col] = 0;  // **** BACKTRACK ****
         }
     }
     //control reaches here only if all row position have failed
