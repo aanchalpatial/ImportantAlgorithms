@@ -1,0 +1,63 @@
+/*
+Backtracking can be defined as a general algorithmic technique that considers searching every possible combination in 
+order to solve a computational problem.
+
+There are three types of problems in backtracking –
+1)Decision Problem – In this, we search for a feasible solution.
+2)Optimization Problem – In this, we search for the best solution.
+3)Enumeration Problem – In this, we find all feasible solutions.
+
+Generally, every constraint satisfaction problem which has clear and well-defined constraints on any objective solution, 
+that incrementally builds candidate to the solution and abandons a candidate (“backtracks”) as soon as it determines that 
+the candidate cannot possibly be completed to a valid solution, can be solved by Backtracking. However, most of the problems
+that are discussed, can be solved using other known algorithms like Dynamic Programming or Greedy Algorithms in 
+logarithmic, linear, linear-logarithmic time complexity in order of input size, and therefore, outshine the backtracking
+algorithm in every respect (since backtracking algorithms are generally exponential in both time and space). However, a few 
+problems still remain, that only have backtracking algorithms to solve them until now.
+
+*/
+
+//1) Print all permutations of a given string which don't have "AB" as sub string
+//Naive Solution: Find all permutations and don't print the one with "AB" as substring
+//Time : //O(n*n!)
+void permutationSTL(string str){ //O(n*n!)
+    do{
+        if(str.find("AB")==string::npos) cout<<str<<endl;
+    }while(next_permutation(str.begin(), str.end()));
+}
+
+void permutationsRecursion(string str, int l, int r){ //O(n*n!)
+    if(l==r){
+        if(str.find("AB")==string::npos) cout<<str<<endl;
+        return;
+    }else {
+        for(int i=l;i<=r;++i){
+            swap(str[i], str[l]);
+            permutationsRecursion(str, l+1, r);
+            swap(str[i], str[l]);
+        }
+    }
+}
+
+//Efficient Solution: Don't preform those recursive calls which will lead to permutation with "AB" as substring
+//Time : Much less than O(n*n!)
+bool isSafe(string str, int l, int r, int i){
+    if(l>0&&str[l-1]=='A'&&str[i]=='B') return false;
+    if(r==l+1&&str[l]=='B'&&str[i]=='A') return false;
+    return true;
+}
+
+void permutationsRecursion(string str, int l, int r){ //much less than O(n*n!)
+    if(l==r){
+        cout<<str<<endl;
+        return;
+    }else {
+        for(int i=l;i<=r;++i){
+            if(isSafe(str, l, r, i)){   //avoid permutations with "AB" as substring
+                swap(str[i], str[l]);
+                permutationsRecursion(str, l+1, r);
+                swap(str[i], str[l]);
+            }
+        }
+    }
+}
