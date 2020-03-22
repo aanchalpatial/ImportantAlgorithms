@@ -1,0 +1,90 @@
+//The N Queen is the problem of placing N chess queens on an N×N chessboard so that no two queens attack each other.
+//N queens problem have at ATLEAST ONE solution for every N>3
+
+//1) Very Naive Algorithm :Generate all possible configurations of queens on board and print a configuration that satisfies the
+//given constraints. Time : (N^2)C(N) possible configurations 
+
+//2) Naive Approach: As we know, int the required configurations 2 queen can never be in same row or same column because then they will
+//attack each other. So now we generate all permutation of "0 to n-1" which will represent row numbers. The idea is to place queens 
+one by one in different columns, starting from the leftmost column whose row numbers are based on the current permutation.
+
+//3) Efficient Approach : Backtracking
+/*
+We will avoid those permutations of "0 to n-1" which will never lead to solution i.e we cut down the recursion tree of 2nd approach.
+The idea is to place queens one by one in different columns, starting from the leftmost column. When we place a queen in a column,
+we check for clashes with already placed queens. In the current column, if we find a row for which there is no clash, we mark this
+row and column as part of the solution. If we do not find such a row due to clashes then we backtrack and return false.
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isSafe(vector<int> board[], int row, int col, int n){
+    //1)
+    /*queens are by default put in different columns,
+    so we don't need to check if there is any other queen 
+    in same column*/
+    
+    //2)checking if there is any other queen in same row
+    for(int i=0;i<col;++i){
+        if(board[row][i]==1) return false;
+    }
+    //3)checking if there is any other queen in primary diagonal (left to the current column)
+    for(int i=row,j=col;i>=0&&j>=0;--i,--j){
+        if(board[i][j]==1) return false;
+    }
+    //4)checking if there is any other queen in secondary diagonal (left to the current column) 
+    for(int i=row,j=col;i<n&&j>=0;++i,--j){
+        if(board[i][j]==1) return false;
+    }
+    
+    return true;
+}
+
+bool NQueen(vector<int> board[], int col, int n){
+    if(col == n) return true;
+    //for current column, trying all row positions
+    for(int i=0;i<n;++i){
+        if(isSafe(board, i, col, n)){
+            board[i][col] = 1;
+            if(NQueen(board, col+1, n)) return true;
+            board[i][col] = 0;  //backtrack
+        }
+    }
+    //control reaches here only if all row position have failed
+    return false;
+}
+
+void NQueenWrapper(int n){
+    vector<int> board[n]; // this matrxi will trace queens in solution
+    for(int i=0;i<n;++i){
+        for(int j=0;j<n;++j){
+            board[i].push_back(0);
+        }
+    }
+    if(NQueen(board, 0, n)){
+        cout<<"Yes"<<endl;
+        for(int i=0;i<n;++i){
+            for(int j=0;j<n;++j){
+                cout<<board[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+        
+    }else {
+        cout<<"No Configuration Possible !!"<<endl;
+    }
+}
+
+int main() {
+    
+    int n;
+    cin>>n;
+    
+    NQueenWrapper(n);
+    
+	return 0;
+}
+
+
+
