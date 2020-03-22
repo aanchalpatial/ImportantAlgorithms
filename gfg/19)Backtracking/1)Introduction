@@ -17,6 +17,13 @@ problems still remain, that only have backtracking algorithms to solve them unti
 
 */
 
+/*
+Some Facts of Backtracking Algorithms:
+-> The major advantage of the backtracking algorithm is that we avoid some recursion subtrees completely.
+-> Backtracking solves a problem Using DFS traversal of search tree with solutions at leaves.
+-> Backtracking algorithm is implemented by constructing a tree of choices called as State-space tree
+*/
+
 //1) Print all permutations of a given string which don't have "AB" as sub string
 //Naive Solution: Find all permutations and don't print the one with "AB" as substring
 //Time : //O(n*n!)
