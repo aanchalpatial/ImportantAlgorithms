@@ -1,0 +1,40 @@
+/*
+Given an array of integers A and a sum B, find all unique combinations in A where the sum is equal to B. The same repeated number
+may be chosen from A unlimited number of times.
+Note:
+        1. All numbers will be positive integers.
+        2. Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+        3. The combinations themselves must be sorted in ascending order.
+*/
+
+void findCombinations(vector<int> myA, vector<vector<int>> &sol, int l, int sum, vector<int> &currCombination){
+    if(sum==0) {
+        sol.push_back(currCombination);
+        return;
+    }else if(sum<0||l==myA.size()) return;
+    
+    currCombination.push_back(myA[l]);
+    findCombinations(myA, sol, l, sum-myA[l], currCombination);
+    currCombination.pop_back();
+    findCombinations(myA, sol, l+1, sum, currCombination);
+    
+}
+
+
+vector<vector<int> > combinationSum(vector<int> &A, int B) {
+    // Your code here
+    vector<vector<int>> sol;
+    sort(A.begin(), A.end());
+    vector<int> myA;
+    int i;
+    for(i=0;i<A.size()-1;++i){
+        if(A[i]==A[i+1]) continue;
+        myA.push_back(A[i]);
+    }
+    myA.push_back(A[i]);
+    
+    vector<int> currCombination;
+    findCombinations(myA, sol, 0, B, currCombination);
+    
+    return sol;
+}
