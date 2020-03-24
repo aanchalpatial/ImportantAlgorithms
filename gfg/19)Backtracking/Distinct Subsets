@@ -1,0 +1,32 @@
+//Given a set of positive integers, find all its subsets. The set can contain duplicate elements, so any repeated subset should
+//be considered only once in the output.
+
+void power_set(vector<int> A, string curr, int index, set<string> &result){
+    if(index==A.size()){
+        result.insert(curr);
+        return;
+    }
+    
+    power_set(A, curr, index+1, result);
+    power_set(A, curr+to_string(A[index]), index+1, result);
+    
+}
+
+void func(vector<int> A){
+    // Your code here
+    sort(A.begin(), A.end());
+    set<string> result;
+    string curr = "";
+    power_set(A, curr, 0, result);
+    for(string str:result) {
+        string ss = "(";
+        for(int i=0;i<str.length();++i){
+            ss += str[i];
+            ss += " ";
+        }
+        if(ss[ss.size()-1]== ' ') ss.pop_back();
+        ss += ")";
+        cout<<ss;
+    }
+    cout<<endl;
+}
