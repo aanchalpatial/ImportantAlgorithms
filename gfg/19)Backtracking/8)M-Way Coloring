@@ -1,0 +1,62 @@
+/*
+Given an undirected graph and a number m, determine if the graph can be colored with at most m colors such that no two adjacent
+vertices of the graph are colored with the same color. Here coloring of a graph means the assignment of colors to all vertices.
+*/
+/*Approach:
+Backtracking Algorithm
+The idea is to assign colors one by one to different vertices, starting from the vertex 0. Before assigning a color, we check for
+safety by considering already assigned colors to the adjacent vertices. If we find a color assignment which is safe, we mark the 
+color assignment as part of solution. If we do not a find color due to clashes then we backtrack and return false.
+
+i.e 
+we will assign a color to vertex after checking if it is safe or not then recurr for vertex + 1;
+*/
+
+
+bool isSafe(vector<int> adj[], int colored[], int vertex, int color){
+    for(int i=0;i<adj[vertex].size();++i){
+        if(colored[adj[vertex][i]]==color) return false;
+    }
+    return true;
+}
+
+
+
+bool mWayPossible(vector<int> adj[], int colored[], int V, int m, int vertex){
+    
+    if(vertex == V) return true;
+    
+    
+    for(int c=1;c<=m;++c){
+        if(isSafe(adj, colored, vertex, c)){
+            colored[vertex] = c;
+            if( mWayPossible(adj, colored, V, m, vertex+1) ) return true;
+            colored[vertex] = 0;
+        }
+    }
+    
+    return false;
+}
+
+
+
+bool graphColoring(bool graph[101][101], int m,int V)
+{
+    
+    // your code here
+    
+    vector<int> adj[V];
+    int colored[V] = {0};
+    for(int i=0;i<V;++i){
+        for(int j =0;j<V;++j){
+            int x;
+            if(graph[i][j]){
+                adj[i].push_back(j);
+            }
+            
+        }
+    }
+    
+    bool result  = mWayPossible(adj, colored, V, m, 0);
+    return result;
+}
