@@ -11,7 +11,7 @@ Time : x^N, where x is the number of free cells
 */
 
 /*
-Backtracking Algorithm
+Backtracking Algorithm : We go empty cell be empty cell
 Like all other Backtracking problems, we can solve Sudoku by one by one assigning numbers to empty cells. 
 Before assigning a number, we check whether it is safe to assign. We basically check that the same number is not present in 
 the current row, current column and current 3X3 subgrid. After checking for safety, we assign the number, and recursively check 
@@ -77,7 +77,7 @@ bool SolveSudoku(vector<int> grid[], int n){
     pair<int, int> nextZero = findNextZero(grid, n);
     int p = nextZero.first;
     int q = nextZero.second;
-    if(p==-1&&q==-1) return true;
+    if(p==-1&&q==-1) return true;   //success condition: no empty cell left
     
     //trying all possible numbers from 1 to n
     for(int i=1;i<=n;++i){
