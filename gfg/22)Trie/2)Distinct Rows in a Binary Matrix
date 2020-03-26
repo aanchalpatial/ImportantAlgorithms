@@ -1,0 +1,67 @@
+//Count number of distinct rows in a given binary matrix
+//All rows are of same length
+
+//Naive approach is : O(m^2 * n) where m is the number of rows and n is the number of columns
+//Traverse every row one by one & if current row is same as any one of the previous rows don't increment result_count;
+
+//Efficient Approach : do it in O(m*n) time & O(m*n) space , Use Trie
+//Since all rows are of same length, we don't need isEnd variable
+
+#include <bits/stdc++.h>
+using namespace std;
+#define n 5
+
+struct TrieNode {
+    TrieNode *child[2];
+    //bool isEnd; //not needed in this question
+    TrieNode(){
+        child[0] = NULL;
+        child[1] = NULL;
+    }
+};
+
+bool insert(TrieNode *root, vector<int> row){
+    //insert is unique, else return false
+    TrieNode *curr = root;
+    bool flag = false;
+    for(int i=0;i<n;++i){
+        if(curr->child[row[i]]==NULL) {
+            curr->child[row[i]] = new TrieNode();
+            flag = true;
+        }
+        curr = curr->child[row[i]];
+    }
+    return flag;
+    
+}
+
+TrieNode *root; //empty trie
+
+void countDistinctRows(int mat[n][n]){
+    int cnt = 0;
+    for(int i=0;i<n;++i){
+        vector<int> row;    //current row
+        for(int j=0;j<n;++j){
+            row.push_back(mat[i][j]);
+        }
+        if(insert(root, row)) ++cnt;
+    }
+    cout<<"Number of distinct rows : "<<cnt<<endl;
+    
+}
+
+int main() {
+	//code
+	root = new TrieNode();
+	//all rows of same length
+	int mat[n][n] = {
+	    {1, 1, 0, 1, 0},
+	    {0, 0, 1, 0, 0},
+	    {0, 0, 0, 0, 0},
+	    {1, 0, 0, 1, 0},
+	    {0, 0, 0, 0, 0},
+	};
+	
+	countDistinctRows(mat);
+	return 0;
+}
