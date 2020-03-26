@@ -2,6 +2,7 @@
 The Auto-Complete feature is widely useful in showing suggestions when the user types a certain word. 
 In a simpler version, the auto-complete feature lists all of the strings which have a MATCHING PREFIX queried by a user.
 */
+//Prefix Matching in Trie i.e 4th operation of Trie Data structure
 /*
 Detailed Algorithm:
 1) Insert all of the given strings in a Trie.
