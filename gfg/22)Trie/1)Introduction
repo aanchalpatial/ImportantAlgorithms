@@ -2,7 +2,7 @@ TRIE Data Structure is best suited for following operations on WORDS IN A DICTIO
 1) Search   : 0(word_length)
 2) Insert   : 0(word_length)
 3) Delete   : 0(word_length)
-4) Prefix Search  :0(prefix_length+output_length)
+4) Prefix Search  :0(prefix_length+output_length)	i.e Used in Auto Complete / Google Suggestions
 5) Lexicographic ordering of words  :0(output_length)
 
 
@@ -24,6 +24,19 @@ struct TrieNode {
     }
 };
 
+//1) :-	SEARCH
+bool searchTrie(TrieNode *root, string str){    //0(word_length)
+    TrieNode *curr = root;
+    for(int i=0;i<str.size();++i){
+        int index = str[i]-'a';
+        if(curr->child[index]==NULL) return false;
+        curr = curr->child[index];
+    }
+    if(curr->isEnd) return true;
+    else return false;
+}
+
+//2) :-	INSERT
 void insertTrie(TrieNode *root, string str){    //0(word_length)
     TrieNode *curr = root;
     for(int i=0;i<str.length();++i){
@@ -38,18 +51,7 @@ void insertTrie(TrieNode *root, string str){    //0(word_length)
 }
 
 
-bool searchTrie(TrieNode *root, string str){    //0(word_length)
-    TrieNode *curr = root;
-    for(int i=0;i<str.size();++i){
-        int index = str[i]-'a';
-        if(curr->child[index]==NULL) return false;
-        curr = curr->child[index];
-    }
-    if(curr->isEnd) return true;
-    else return false;
-}
-
-
+//3) :-	DELETE
 //similar approach can be solved using recursion stack
 void deleteTrie(TrieNode *root, string str){
     stack<TrieNode *> st;
@@ -74,6 +76,50 @@ void deleteTrie(TrieNode *root, string str){
         st.top()->child[str[j]-'a'] = NULL;
         cout<<"deleted "<<str[j]<<" node"<<endl;
         --j;
+    }
+}
+
+//4) :-	PREFIX MATCHING
+void printWordsInSubtree(TrieNode *curr, string key, vector<string> &result){
+    if(curr->isEnd) result.push_back(key);
+    
+    for(int i=0;i<26;++i){
+        if(curr->child[i]!=NULL){
+            char ch = 'a'+i;
+            printWordsInSubtree(curr->child[i], key+ch, result);
+        }
+    }
+}
+
+void googleSuggestions(TrieNode *root, string key){
+    TrieNode *curr = root;
+    bool flag = true;
+    for(int i=0;i<key.size();++i){
+        int index = key[i]-'a';
+        if(curr->child[index]==NULL) flag = false;
+        curr = curr->child[index];
+    }
+    
+    vector<string> result;
+    if(flag) {
+        //print all nodes under a subtree of last 
+        //matching node i.e curr
+        printWordsInSubtree(curr, key, result);
+    }
+    cout<<"Suggestions for ("<<key<<") : ";
+    for(int i=0;i<result.size();++i) cout<<result[i]<<", ";
+    cout<<endl;
+}
+
+//5) :-	LEXICOGRAPHICAL ORDERING OF ALL WORDS PRESENT IN DICTIONARY
+void display(struct TrieNode* root, string str) {
+    if(root->isEnd) cout<<str<<endl;
+    
+    for(int i=0;i<26;++i){
+        char ch = 'a'+i;
+        if(root->child[i]!=NULL){
+            display(root->child[i], str+ch);
+        }
     }
 }
 
