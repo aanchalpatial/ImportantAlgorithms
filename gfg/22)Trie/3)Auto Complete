@@ -1,0 +1,136 @@
+/*
+The Auto-Complete feature is widely useful in showing suggestions when the user types a certain word. 
+In a simpler version, the auto-complete feature lists all of the strings which have a MATCHING PREFIX queried by a user.
+*/
+/*
+Detailed Algorithm:
+1) Insert all of the given strings in a Trie.
+2) Search for the given query using standard Trie search algorithm.
+3) If query prefix itself is not present, return -1 to indicate the same.
+4) If the query is present and is the end of the word in Trie, print query. This can quickly be checked by seeing if the last matching
+   node has the isEndWord flag set. We use this flag in Trie to mark the end of word nodes for the purpose of searching.
+5) If the last matching node of the query has no children, return.
+6) Else recursively print all nodes under a subtree of last matching node.
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Empty trie contains a TrieNode whose all children are NULL and isEnd = FALSE
+//This is contrary to a tree which is empty if it is NULL i.e no node
+
+struct TrieNode {
+    TrieNode *child[26];    //this can be extended to store all 256 ascii characters
+    bool isEnd;             //represents whether current character is last character of a valid word
+    TrieNode(){
+        isEnd = false;
+        for(int i=0;i<26;++i){
+            child[i] = NULL;
+        }
+    }
+};
+
+void insertTrie(TrieNode *root, string str){    //0(word_length)
+    TrieNode *curr = root;
+    for(int i=0;i<str.length();++i){
+        int index = str[i]-'a';
+        if(curr->child[index]==NULL){
+            TrieNode *newNode = new TrieNode();
+            curr->child[index] = newNode;
+        }
+        curr = curr->child[index];
+    }
+    curr->isEnd = true;
+}
+
+
+
+bool searchTrie(TrieNode *root, string str){    //0(word_length)
+    TrieNode *curr = root;
+    for(int i=0;i<str.size();++i){
+        int index = str[i]-'a';
+        if(curr->child[index]==NULL) return false;
+        curr = curr->child[index];
+    }
+    if(curr->isEnd) return true;
+    else return false;
+}
+
+//similar approach can be solved using recursion stack
+void deleteTrie(TrieNode *root, string str){
+    stack<TrieNode *> st;
+    TrieNode *curr = root;
+    for(int i=0;i<str.size();++i){
+        st.push(curr);
+        int index = str[i]-'a';
+        curr = curr->child[index];
+    }
+    st.push(curr);
+    if(curr->isEnd) curr->isEnd = false;
+    else return;
+    int j = str.size()-1;
+    while(st.size()>1){
+        TrieNode *nd = st.top();
+        st.pop();
+        for(int i=0;i<26;++i){
+            if(nd->child[i]!=NULL) return;
+        }
+        if(nd->isEnd) return;
+        delete(nd);
+        st.top()->child[str[j]-'a'] = NULL;
+        cout<<"deleted "<<str[j]<<" node"<<endl;
+        --j;
+    }
+}
+
+void printWordsInSubtree(TrieNode *curr, string key, vector<string> &result){
+    if(curr->isEnd) result.push_back(key);
+    
+    for(int i=0;i<26;++i){
+        if(curr->child[i]!=NULL){
+            char ch = 'a'+i;
+            printWordsInSubtree(curr->child[i], key+ch, result);
+        }
+    }
+}
+
+void googleSuggestions(TrieNode *root, string key){
+    TrieNode *curr = root;
+    bool flag = true;
+    for(int i=0;i<key.size();++i){
+        int index = key[i]-'a';
+        if(curr->child[index]==NULL) flag = false;
+        curr = curr->child[index];
+    }
+    
+    vector<string> result;
+    if(flag) {
+        //print all nodes under a subtree of last 
+        //matching node i.e curr
+        printWordsInSubtree(curr, key, result);
+    }
+    cout<<"Suggestions for ("<<key<<") : ";
+    for(int i=0;i<result.size();++i) cout<<result[i]<<", ";
+    cout<<endl;
+}
+
+
+int main() {
+    
+    TrieNode *root = new TrieNode();
+	insertTrie(root, "abc");
+	insertTrie(root, "abcd");
+	insertTrie(root, "aa");
+	insertTrie(root, "abbbaba");
+	insertTrie(root, "cat");
+	insertTrie(root, "cut");
+	insertTrie(root, "zoo");
+	  
+  googleSuggestions(root, "ab");
+    
+	return 0;
+	
+}
+
+
+
