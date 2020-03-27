@@ -1,0 +1,142 @@
+/*
+Given a dictionary of words where each word follows CamelCase notation, print all words in the dictionary that match with a
+given pattern consisting of uppercase characters only.
+
+CamelCase is the practice of writing compound words or phrases such that each word or abbreviation begins with a capital letter. 
+Common examples include: “PowerPoint” and “WikiPedia”, “GeeksForGeeks”, “CodeBlocks”, etc.
+*/
+
+/*Approach:
+1. Try to add only the upper case letters to the TRIE. And store whole word at the leaf.
+2. Now, while searching the given pattern, just match with the letters, and if leaf matches then print all the words in the leaf.
+Also, print the words in child.
+
+Note: You need to modify the TrieNode such that it should store the list of words in the leaf.
+*/
+
+#include <bits/stdc++.h>
+#include <cctype>
+#include <cstring> 
+using namespace std;
+
+//Empty trie contains a TrieNode whose all children are NULL and isEnd = FALSE
+//This is contrary to a tree which is empty if it is NULL i.e no node
+
+struct TrieNode {
+    TrieNode *child[26];    //this can be extended to store all 256 ascii characters
+    bool isEnd;             //represents whether current character is last character of a valid word
+    vector<string> words;
+    TrieNode(){
+        isEnd = false;
+        for(int i=0;i<26;++i){
+            child[i] = NULL;
+        }
+    }
+};
+
+
+
+//2) :-	INSERT
+void insertTrie(TrieNode *root, string str){    //0(word_length)
+    TrieNode *curr = root;
+    for(int i=0;i<str.length();++i){
+        if(islower(str[i])) continue;
+        int index = str[i]-'A';
+        if(curr->child[index]==NULL){
+            TrieNode *newNode = new TrieNode();
+            curr->child[index] = newNode;
+        }
+        curr = curr->child[index];
+        
+        curr->isEnd = true;
+        
+    }
+    curr->words.push_back(str);
+}
+bool search(TrieNode *root, string str){    //0(word_length)
+    TrieNode *curr = root;
+    for(int i=0;i<str.size();++i){
+        int index = str[i]-'A';
+        if(curr->child[index]==NULL) return false;
+        curr = curr->child[index];
+    }
+    if(curr->isEnd) return true;
+    else return false;
+}
+
+
+
+
+//4) :-	PREFIX MATCHING
+void printWordsInSubtree(TrieNode *curr, string key, map<string, vector<string>> &result){
+    for(int i=0;i<curr->words.size();++i){
+        if(result.find(key)==result.end()){
+            vector<string> v;
+            v.push_back(curr->words[i]);
+            result.insert(make_pair(key, v));
+        }else result[key].push_back(curr->words[i]);
+    }
+    
+    for(int i=0;i<26;++i){
+        if(curr->child[i]!=NULL){
+            char ch = 'A'+i;
+            printWordsInSubtree(curr->child[i], key+ch, result);
+        }
+    }
+}
+
+void googleSuggestions(TrieNode *root, string key){
+    if(search(root, key)==false) {
+        cout<<"No match found"<<endl;
+        return;
+    }
+    TrieNode *curr = root;
+    bool flag = true;
+    for(int i=0;i<key.size();++i){
+        
+        if(islower(key[i])) continue;
+        int index = key[i]-'A';
+        if(curr->child[index]==NULL) flag = false;
+        curr = curr->child[index];
+    }
+    
+    map<string, vector<string>> result;
+    if(flag) {
+        //print all nodes under a subtree of last 
+        //matching node i.e curr
+        printWordsInSubtree(curr, key, result);
+        for(auto s:result){
+            if(s.second.size()<1) continue;
+            sort(s.second.begin(), s.second.end());
+            for(int i=0;i<s.second.size();++i){
+                cout<<s.second[i]<<" ";
+            }
+        }
+        
+        
+    }else cout<<"No match found";
+    cout<<endl;
+}
+
+
+
+int main()
+ {
+	int T;
+	cin>>T;
+	for(int j=0;j<T;++j){
+	    TrieNode *root = new TrieNode();
+	    int size;
+	    cin>>size;
+	    string arr[size];
+	    for(int i=0;i<size;++i){
+	        cin>>arr[i];
+	        insertTrie(root, arr[i]);
+	    }
+	    string key;
+	    cin>>key;
+	    googleSuggestions(root, key);
+	}
+	return 0;
+}
+
