@@ -52,12 +52,12 @@ int main()
     
     
     //4)
-    //ACCESS Kth BIT(from right) : x&(1<<k)
+    //ACCESS Kth BIT(from right) : x&(1<<k) AND (x>>k)&1
 
             //BIT REPRESENTATION OF AN INTEGER
             int h=50;
             for(int i=31;i>=0;--i){
-                if(h&(1<<i)) cout<<"1";
+                if(h&(1<<i)) cout<<"1";         //h&(1<<i) gives >0 if kth bit is set
                 else cout<<"0";
             }
 
