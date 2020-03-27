@@ -1,0 +1,191 @@
+//https://www.quora.com/q/threadsiiithyderabad/Tutorial-on-Trie-and-example-problems
+
+//PROBLEM 1): Given an array of integers, we have to find two elements whose XOR is maximum.
+
+//Naive approach is to consider all pairs, compute their XOR and return the maximum of them all.Time is O(n^2)
+
+/*Do it in LINEAR time using TRIE data Structure :-
+HINT:
+Suppose we have a data structure i.e TRIE which can satisfy two types of queries:
+
+QUERY 1. Insert binary representation of number X from MSB(Most Significant Bit) to LSB in trie
+
+QUERY 2. Given a Y, find maximum XOR of Y with all numbers that have been inserted till now.
+Now, for query of type 2:
+Let's say our number Y is b1,b2...bn, where b1,b2.. are binary bits. We start from b1. Now for the XOR to be maximum, we'll try
+to make most significant bit 1 after taking XOR. So, if b1 is 0, we'll need a 1 and vice versa. In the trie, we go to the 
+required bit side. If favorable option is not there, we'll go other side. Doing this all over for i=1 to n, we'll get the 
+maximum XOR possible.
+
+ALGORITHM: Traverse array, find maximum Xor of current element & elements inserted before this iteration (using query 2)
+           and return maximum of all these Xor's.
+
+*/
+
+#include <bits/stdc++.h>
+#define N 32        // assumption: bit length of integer is 32 bits
+using namespace std;
+
+
+struct TrieNode{
+    bool isEnd;
+    TrieNode *child[2];
+    TrieNode(){
+        isEnd = false;
+        child[0] = NULL;
+        child[1] = NULL;
+    }
+};
+
+void insert(TrieNode *root, int n){     //QUERY 1
+    TrieNode *curr = root;
+    for(int i=N-1;i>=0;--i){
+        //finding ith bit of n
+        int b = (n>>i)&1;
+        
+        //cout<<i<<": "<<b<<endl;
+        if(curr->child[b]==NULL) curr->child[b] = new TrieNode();
+        curr = curr->child[b];
+    }
+    curr->isEnd = true;
+}         
+
+int maxXor(TrieNode *root, int value){    //*** QUERY 2 ***
+        int curr_xor = 0;           //maximum xor value
+        TrieNode *curr = root;
+        
+        //find maximum XOR of value & all numbers that have been inserted till now. (using query 2 given in hint)
+        for(int j=N-1;j>=0;--j){
+            int b = (value>>j)&1;
+            if(b==0){
+                if(curr->child[1]!=NULL){
+                    curr_xor = curr_xor|(1<<j); //set ith bit to 1
+                    curr = curr->child[1];
+                }else if(curr->child[0]!=NULL){
+                    curr_xor = curr_xor&~(1<<j); //set ith bit to 0
+                    curr = curr->child[0];
+                }
+            }else{
+                if(curr->child[0]!=NULL){
+                    curr_xor = curr_xor|(1<<j); //set ith bit to 1
+                    curr = curr->child[0];
+               }else if(curr->child[1]!=NULL){
+                    curr_xor = curr_xor&~(1<<j); //set ith bit to 0
+                    curr = curr->child[1];
+                }
+            }
+        }
+        return curr_xor;
+    
+}      
+
+void maxXorPair(TrieNode *root, int arr[], int size){
+    
+    int max_xor = INT_MIN;
+    int result = -1;            //one of the elements of the pair which leads to maximum xor value
+    
+    insert(root, arr[0]);
+    for(int i=1;i<size;++i){
+        
+        int curr_xor = maxXor(root, arr[i]);
+        
+        if(curr_xor>max_xor){
+            max_xor = curr_xor;
+            result = arr[i];
+        }
+        
+        insert(root, arr[i]);
+    }
+    
+    int secondResult = result^max_xor;
+    cout<<"Pair with maximum XOR value is: "<<result<<" & "<<secondResult<<endl;
+    cout<<"Maximum XOR Value is : "<<max_xor<<endl;
+    //return max_xor;
+    
+}
+
+/*
+PROBLEM 2): Given an array of integers, find the subarray with maximum XOR.
+
+1. This can be done using TRIE. Store the numbers in their bitwise form into the TRIE.
+2. Now, think of inserting the XOR of whole subarray from i = 0, to i = k(some value).
+3. You are having XOR of subarray till any index in the TRIE.
+4. So, when you want to check if their is any subarray with max XOR value, then either that subarray may starts from i = 0, and ends till i = k or starts from any random index < k. So, if it starts from any random index.
+5. Now, think of excluding the prefix subarray from the resultant array. 
+Hint: Use the formula, F(L, R) = F(1, L) ^ F(1, R)
+
+1) Create an empty Trie.  Every node of Trie is going to 
+   contain two children, for 0 and 1 value of bit.
+2) Initialize pre_xor = 0 and insert into the Trie.
+3) Initialize result = minus infinite
+4) Traverse the given array and do following for every 
+   array element arr[i].
+       a) pre_xor  = pre_xor  ^ arr[i]
+          pre_xor now contains xor of elements from 
+          arr[0] to arr[i].
+       b) Query the maximum xor value ending with arr[i] 
+          from Trie.
+       c) Update result if the value obtained in step 
+          4.b is more than current value of result.
+How does 4.b work?
+We can observe from above algorithm that we build a Trie that contains XOR of all prefixes of given array. To find the maximum XOR subarray ending with arr[i], there may be two cases.
+i) The prefix itself has the maximum XOR value ending with arr[i]. For example if i=2 in {8, 2, 1, 12}, then the maximum subarray xor ending with arr[2] is the whole prefix.
+ii) We need to remove some prefix (ending at index from 0 to i-1). For example if i=3 in {8, 2, 1, 12}, then the maximum subarray xor ending with arr[3] starts with arr[1] and we need to remove arr[0].
+
+To find the prefix to be removed, we find the entry in Trie that has maximum XOR value with current prefix. If we do XOR of such previous prefix with current prefix, we get the maximum XOR value ending with arr[i].
+If there is no prefix to be removed (case i), then we return 0 (that’s why we inserted 0 in Trie).
+
+
+*/
+
+
+void maxXorSubarray(TrieNode *root, int arr[], int size){
+    /*
+    1) Create an empty Trie.  Every node of Trie is going to 
+   contain two children, for 0 and 1 value of bit.
+    2) Initialize pre_xor = 0 and insert into the Trie.
+    3) Initialize result = minus infinite
+    4) Traverse the given array and do following for every 
+       array element arr[i].
+       a) pre_xor  = pre_xor  ^ arr[i]
+          pre_xor now contains xor of elements from 
+          arr[0] to arr[i].
+       b) Query the maximum xor value ending with arr[i] 
+          from Trie.
+       c) Update result if the value obtained in step 
+          4.b is more than current value of result.
+    */
+    int result = 0;
+    int pre_xor = 0;
+    insert(root, pre_xor);
+    for(int i=1;i<size;++i){
+        pre_xor = pre_xor^arr[i];
+        insert(root, pre_xor);
+        result = max(result, maxXor(root, pre_xor));
+    }
+    cout<<"Maximum Xor value of subarray : "<<result<<endl;
+}
+
+
+
+
+int main() {
+	TrieNode *root = new TrieNode();
+	
+ 	
+ 	
+ 	int arr[] = {8, 1, 2, 15, 10, 5};
+ 	int size = sizeof(arr)/sizeof(arr[0]);
+ 	
+  //Problem 1):
+  maxXorPair(root, arr, size);
+  //Problem 2):
+ 	maxXorSubarray(root, arr, size);
+ 	
+ 	
+ 	
+ 	return 0;
+}
+
+
+
