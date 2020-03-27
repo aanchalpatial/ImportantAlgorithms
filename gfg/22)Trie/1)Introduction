@@ -2,7 +2,7 @@ TRIE Data Structure is best suited for following operations on WORDS IN A DICTIO
 1) Search   : 0(word_length)
 2) Insert   : 0(word_length)
 3) Delete   : 0(word_length)
-4) Prefix Search  :0(prefix_length+output_length)	i.e Used in Auto Complete / Google Suggestions
+4) Prefix Search  :0(prefix_length+output_length)	i.e Used in Auto Complete / Google Suggestions, Camel Case
 5) Lexicographic ordering of words  :0(output_length)
 
 
