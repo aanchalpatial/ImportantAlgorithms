@@ -20,6 +20,13 @@ follow it's properties (such as left chilf at 2*i+1, right child at 2*i+2 & pare
 These dummy nodes are never used or accessed.
 So if there are n elements in given array then size of segment tree array size will be 2*(2^ceil(log2n))-1 < 4n(i.e upper bounded by 4n).
 
+All levels of the constructed segment tree will be completely filled except the last level. Also, the tree will be a 
+Full Binary Tree because we always divide segments into two halves at every level. Since the constructed tree is always a
+full binary tree with n leaves, there will be n-1 internal nodes. So the total number of nodes will be 2*n – 1.
+
+Height of the segment tree will be log2N. Since the tree is represented using array and relation between parent and child indexes
+must be maintained, the size of memory allocated for segment tree will be 2*(2^ceil(log2N)) - 1.
+
 #include <bits/stdc++.h>
 using namespace std;
 
