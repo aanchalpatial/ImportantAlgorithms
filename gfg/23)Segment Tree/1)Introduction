@@ -1,0 +1,121 @@
+Say you are given a fixed sized array and following 2 types of opeartions : Range Queries & Update Queries
+
+For eg: Range query is to find sum of elements from one index to other & Update query is to update value at given index
+1) One approach would be to process range query using loop.
+In this case Range queries will take O(n) time & Update Queries will take O(1) time
+
+2) Another approach would be to preprocess array (i.e create prefix sum array in this case) and return range query result in O(1) time,
+but now update query will take O(n) time
+
+So, 1st approach is better when there more many update queries as compared to range queries & 2nd approach is better if there are many
+more range queries as compared to update queries. What if there is a mix of both type of queries ??
+Is it possible to do better ?
+3) YES, Segment Tree does both range & update queries in O(logn) time
+Segment Trees require preprocessing O(n) once & auxillary space O(n) 
+
+SEGMENT TREE is somewhat like Heap data structure in a way that whenever it is represented it is represented as tree BUT
+is always stored as ARRAY. 
+Heap is a complete binary tree where as Segment Tree is not. So in order for Segment tree to be a complete binary tree &
+follow it's properties (such as left chilf at 2*i+1, right child at 2*i+2 & parent at floor( (i-1)/2 ) ) we add some dummy nodes.
+These dummy nodes are never used or accessed.
+So if there are n elements in given array then size of segment tree array size will be 2*(2^ceil(log2n))-1 < 4n(i.e upper bounded by 4n).
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//*** CONSTRUCTION OF SEGMENT TREE ***
+//Time : O(n) because size of tree is upperbounded by 4n
+
+int constructSegmentTree(int arr[], int tree[], int l, int r, int index){
+    if(l==r) {
+        tree[index] = arr[l];
+        return tree[index];
+    }
+    
+    int mid = l+ (r-l)/2;
+    int leftChild = constructSegmentTree(arr, tree, l, mid, 2*index+1);
+    int rightChild = constructSegmentTree(arr, tree, mid+1, r, 2*index+2);
+    tree[index] = leftChild + rightChild;
+    return tree[index];
+    
+}
+
+//*** RANGE QUERY ***
+//Time : O(logn) since height of segment tree is almost logn and we never 
+//visit more than 4 nodes at any level thus time take is O(4clogn) ~ O(logn)
+/*Approach : 
+Query for Sum of given range
+Once the tree is constructed, how to get the sum using the constructed segment tree. 
+The following is the algorithm to get the sum of elements :-
+int getSum(node, l, r) 
+{
+   if the range of the node is within l and r
+        return value in the node
+   else if the range of the node is completely outside l and r
+        return 0
+   else
+    return getSum(node's left child, l, r) + 
+           getSum(node's right child, l, r)
+}
+*/
+int getSum(int tree[], int qs, int qe, int l, int r, int index){
+    //Case 1:Segment Tree range [l,r] is completely outside Query Range [qs, qe] 
+    if(qe<l||qs>r) return 0;
+    //Case 2:Segment Tree Range is completely inside Query Range
+    if(l>=qs&&r<=qe) return tree[index];
+    
+    int mid = l+(r-l)/2;
+    return getSum(tree, qs, qe, l, mid, 2*index+1) + getSum(tree, qs, qe, mid+1, r, 2*index+2);
+}
+
+//*** UPDATE QUERY *** 
+//Time : O(logn) To update a leaf value, we process one node at every level and number of levels is O(Logn).
+/*Approach:
+Update a value
+Like tree construction and query operations, the update can also be done recursively. We are given an index which needs to be updated.
+Let diff be the value to be added. We start from the root of the segment tree and add diff to all nodes which have given index in 
+their range. If a node doesn’t have a given index in its range, we don’t make any changes to that node.
+*/
+void update(int tree[], int l, int r, int index, int i, int diff){
+    //If i is not in range [l,r]
+    if(i<l||i>r) return;
+    
+    tree[index] += diff;
+    if(l<r){
+        int mid = l+(r-l)/2;
+        update(tree, l, mid, 2*index+1, i, diff);
+        update(tree, mid+1, r, 2*index+2, i, diff);
+    }
+}
+
+int main() {
+    
+    int arr[] = {10, 20, 30, 40};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    //RANGE SUM QUERY example is studied to understand segment tree
+    
+    int segment_tree_size = 4*n;    //segment tree size is upper bounded by 4n
+    int tree[segment_tree_size];
+    for(int i=0;i<segment_tree_size;++i) tree[i] = -1;
+    
+    constructSegmentTree(arr, tree, 0, n-1, 0);
+    for(int i=0;i<segment_tree_size;++i) cout<<tree[i]<<" ";
+    cout<<endl;
+    
+    //get sum of elements in range 0 to 2
+    cout<<getSum(tree, 0, 2, 0, n-1, 0)<<endl;
+    
+    //Update arr[1] to 25
+    //we don't need to update arr[], instead we need to 
+    //update tree[] because range queries are solved
+    //using tree[] not arr[]
+    int i = 1;
+    int diff = 25-arr[i];
+    update(tree, 0, n-1, 0, i, diff);
+    
+    //get sum of elements in range 0 to 2
+    cout<<getSum(tree, 0, 2, 0, n-1, 0)<<endl;
+    
+	return 0;
+}
