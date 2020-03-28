@@ -23,7 +23,7 @@ So if there are n elements in given array then size of segment tree array size w
 #include <bits/stdc++.h>
 using namespace std;
 
-//*** CONSTRUCTION OF SEGMENT TREE ***
+//*** PREPROCESSING/CONSTRUCTION OF SEGMENT TREE ***
 //Time : O(n) because size of tree is upperbounded by 4n
 
 int constructSegmentTree(int arr[], int tree[], int l, int r, int index){
@@ -99,6 +99,7 @@ int main() {
     int tree[segment_tree_size];
     for(int i=0;i<segment_tree_size;++i) tree[i] = -1;
     
+    //preprocessing
     constructSegmentTree(arr, tree, 0, n-1, 0);
     for(int i=0;i<segment_tree_size;++i) cout<<tree[i]<<" ";
     cout<<endl;
