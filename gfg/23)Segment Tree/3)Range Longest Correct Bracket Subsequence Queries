@@ -1,0 +1,99 @@
+/*
+Given a bracket sequence or in other words a string S of length N and queries Q, consisting of characters ‘(‘ and ‘)’. Find the
+length of the maximum correct bracket subsequence of sequence for a given query range.
+
+Note: A correct bracket sequence is the one that has matched bracket pairs or which contains another nested correct bracket sequence.
+*/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int pairs;
+    int open;
+    int closed;
+    Node(){
+        pairs = 0;
+        open = 0;
+        closed = 0;
+    }
+};
+
+Node merge(Node leftChild, Node rightChild)             //**** imp ****
+{ 
+    Node parentNode; 
+    int minMatched = min(leftChild.open, rightChild.closed); 
+    parentNode.pairs = leftChild.pairs + rightChild.pairs + minMatched; 
+    parentNode.open = leftChild.open + rightChild.open - minMatched; 
+    parentNode.closed = leftChild.closed + rightChild.closed - minMatched; 
+    return parentNode; 
+}
+
+Node constructTree(Node tree[], string str, int l, int r, int index){
+    if(l==r){
+        tree[index].pairs = 0;
+        tree[index].open = str[l]=='('?1:0;
+        tree[index].closed = str[l]==')'?1:0;
+        return tree[index];
+    }
+    
+    int mid = l+(r-l)/2;
+    Node leftChild = constructTree(tree, str, l, mid, 2*index+1);
+    Node rightChild = constructTree(tree, str, mid+1, r, 2*index+2);
+    
+    tree[index] = merge(leftChild, rightChild);
+    return tree[index];
+}
+
+Node rangeQuery(Node tree[], int qs, int qe, int l, int r, int index){
+    if(l>qe||r<qs) {
+        Node nullNode;
+        return nullNode;
+    }
+    if(l>=qs&&r<=qe) return tree[index];
+    
+    int mid = l+(r-l)/2;
+    Node leftChild = rangeQuery(tree, qs, qe, l, mid, 2*index+1);
+    Node rightChild = rangeQuery(tree, qs, qe, mid+1, r, 2*index+2);
+    Node res = merge(leftChild, rightChild);
+    return res;
+}
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    string str;
+	    int q;
+	    cin>>str;
+	    cin>>q;
+	    int n = str.size();
+	    Node tree[4*n];
+	    constructTree(tree, str, 0, n-1, 0);
+	    for(int i=0;i<q;++i){
+	        int qs,qe;
+	        cin>>qs>>qe;
+	        //cout<<qs<<", "<<qe<<endl;
+	        Node result = rangeQuery(tree, qs, qe, 0, n-1, 0);
+	        cout<<result.pairs*2<<endl;
+	    }
+	}
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
