@@ -1,0 +1,97 @@
+/*
+You are given an array of size N, and Q queries. Queries are of 2 types:
+1. G L R (range query) -->Need to print Min and Max of arr elements in range [L, R].
+2. U index value (point update)-->Need to update the arr[index] with value
+Your task is to Print Min and Max of the arr elements for every Query of type G.
+*/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+pair<int, int> constructTree(pair<int, int> tree[], int arr[], int l, int r, int index){
+    if(l==r){
+        tree[index].first = arr[l];
+        tree[index].second = arr[l];
+        return tree[index];
+    }
+    
+    int mid = l+(r-l)/2;
+    pair<int, int> leftChild = constructTree(tree, arr, l, mid, 2*index+1);
+    pair<int, int> rightChild = constructTree(tree, arr, mid+1, r, 2*index+2);
+    tree[index].first = min(leftChild.first, rightChild.first);
+    tree[index].second = max(leftChild.second, rightChild.second);
+    return tree[index];
+}
+
+pair<int, int> rangeQuery(pair<int, int> tree[], int qs, int qe, int l, int r, int index){
+    //
+    
+    if(l>=qs&&r<=qe) return tree[index];
+    if(l>qe||r<qs) return make_pair(INT_MAX, INT_MIN);
+    
+    int mid = l+(r-l)/2;
+    pair<int, int> leftChild = rangeQuery(tree, qs, qe, l, mid, 2*index+1);
+    pair<int, int> rightChild = rangeQuery(tree,  qs, qe, mid+1, r, 2*index+2);
+    
+    return make_pair(min(leftChild.first, rightChild.first), max(leftChild.second, rightChild.second));
+}
+
+void update(pair<int, int> tree[], int l, int r, int index, int newValue, int ith){
+    //if(ith<l||ith>r) return;
+    if(l==r) {
+        tree[index] = make_pair(newValue, newValue);
+        return;
+    }else {
+
+        int mid = l+(r-l)/2;
+        //this is different from range sum queries
+        if(ith>=l&&ith<=mid) update(tree, l, mid, 2*index+1, newValue, ith);
+        else update(tree, mid+1, r, 2*index+2, newValue, ith);
+        tree[index] = {min(tree[2*index+1].first, tree[2*index+2].first), max(tree[2*index+1].second, tree[2*index+2].second)};
+    }
+}
+
+
+int main()
+ {  
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+	int T;
+	cin>>T;
+	while(T-->0){
+	    int n, q;
+	    cin>>n>>q;
+	    int arr[n];
+	    for(int i=0;i<n;++i){
+	        cin>>arr[i];
+	    }
+
+	    pair<int, int> tree[4*n];       //first & second will store min & max values
+	   
+	    constructTree(tree, arr, 0, n-1, 0);
+	   // for(int i=0;i<4*n;++i) cout<<tree[i].first<<","<<tree[i].second<<endl;
+	    
+	    for(int i=0;i<q;++i){
+	        char ch;
+	        int a, b;
+	        cin>>ch>>a>>b;
+	        if(ch=='G'){
+	            pair<int, int> result = rangeQuery(tree, a, b, 0, n-1, 0);
+	            cout<<result.first<<" "<<result.second<<endl;
+	            
+	        }else if(ch=='U'){
+	            arr[a] = b;
+	            update(tree, 0, n-1, 0, b, a);
+	        }
+	    }
+	    
+	    
+	}
+	return 0;
+}
+
+
+
+
+
