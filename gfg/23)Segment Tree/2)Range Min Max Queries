@@ -45,7 +45,7 @@ void update(pair<int, int> tree[], int l, int r, int index, int newValue, int it
     }else {
 
         int mid = l+(r-l)/2;
-        //this is different from range sum queries
+        //**** this is different from range sum queries ****
         if(ith>=l&&ith<=mid) update(tree, l, mid, 2*index+1, newValue, ith);
         else update(tree, mid+1, r, 2*index+2, newValue, ith);
         tree[index] = {min(tree[2*index+1].first, tree[2*index+2].first), max(tree[2*index+1].second, tree[2*index+2].second)};
