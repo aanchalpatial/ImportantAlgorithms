@@ -1,0 +1,95 @@
+/*
+You are given an array of size N, and Q queries. Queries are of 2 types:
+1.0 L R(range query)-->Need to print GCD of arr elements in range [L, R].
+2.1 index value (point update)-->Need to update the arr[index] with value
+Your task is to Print GCD of the arr elements for every Query of type 0.
+*/
+
+//Important Points: Fastest way to find GCD is Eucledian Algorith with Modulos Operator.
+//                  GCD(a, b, c) = GCD(a, GCD(b, c))
+//                  GCD(0, k) = k
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int gcd(int a, int b){          //most efficient way to find gcd
+    if (b == 0) 
+        return a; 
+    return gcd(b, a % b); 
+}
+
+
+int constructTree(int tree[], int arr[], int l, int r, int index){
+    if(l==r){
+        tree[index] = arr[l];
+        return tree[index];
+    }
+    
+    int mid = l+(r-l)/2;
+    int lgcd = constructTree(tree, arr, l, mid, 2*index+1);
+    int rgcd = constructTree(tree, arr, mid+1, r, 2*index+2);
+    tree[index] = gcd(lgcd, rgcd);
+    return tree[index];
+}
+
+
+int getQuery(int tree[], int qs, int qe, int l, int r, int index){
+    if(l>qe||r<qs) return 0;        //gcd(0,k) = k
+    if(l>=qs&&r<=qe) return tree[index];
+    
+    int mid = l+(r-l)/2;
+    int lgcd = getQuery(tree, qs, qe, l, mid, 2*index+1);
+    int rgcd = getQuery(tree, qs, qe, mid+1, r, 2*index+2);
+    return gcd(lgcd, rgcd);
+}
+
+void update(int tree[], int l, int r, int index,int ith, int newValue){
+    //if(ith<l||ith>r) return;
+    if(l==r) {
+        tree[index] = newValue;
+        return;
+    }
+        int mid = l+(r-l)/2;
+        if(ith<=mid) update(tree, l, mid, 2*index+1, ith, newValue);
+        else update(tree, mid+1, r, 2*index+2, ith, newValue);
+        tree[index] = gcd(tree[2*index+1], tree[2*index+2]);
+        return;
+}
+
+
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    
+	int arr[10001];
+	int T;
+	cin>>T;
+	while(T--){
+	    int n,q;
+	    cin>>n>>q;
+	    for(int i=0;i<n;++i){
+	        cin>>arr[i];
+	    }
+	    
+	    int tree[4*n];
+	    constructTree(tree, arr, 0, n-1, 0);
+	    
+	    for(int i=0;i<q;++i){
+	        int type, a, b;
+	        cin>>type>>a>>b;
+	        if(type==0){
+	            int result = getQuery(tree, a, b, 0, n-1, 0);
+	            cout<<result<<"\n";
+	        }else if(type==1){
+	            arr[a] = b;
+	            update(tree, 0, n-1, 0, a, b);
+	        }
+	    }
+	}
+	return 0;
+}
