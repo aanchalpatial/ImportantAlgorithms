@@ -7,3 +7,84 @@ Your task is to Print LCM of the arr elements for every Query of type G.
 
 //Important Points : LCM(1, k) = k
 //                   lcm(𝑎,𝑏,𝑐)=lcm(𝑎,lcm(𝑏,𝑐))
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int lcm(int a, int b){
+    return (a*b)/__gcd(a,b);
+}
+
+void constructTree(int tree[], int arr[], int l, int r, int index){
+    if(l==r){
+        tree[index] = arr[l];
+    }else {
+        int mid = l+(r-l)/2;
+        constructTree(tree, arr, l, mid, 2*index+1);
+        constructTree(tree, arr, mid+1, r, 2*index+2);
+        tree[index] = lcm(tree[2*index+1], tree[2*index+2]);
+    }
+}
+
+int getQuery(int tree[], int qs, int qe, int l, int r, int index){
+    if(l>qe||r<qs) return 1;        //lcm(1,k) = k;
+    if(l>=qs&&r<=qe) return tree[index];
+    
+    int mid = l+(r-l)/2;
+    int x = getQuery(tree, qs, qe, l, mid, 2*index+1);
+    int y = getQuery(tree, qs, qe, mid+1, r, 2*index+2);
+    return lcm(x, y);
+}
+
+void update(int tree[], int l, int r, int index, int newValue, int ith){
+    if(ith<l||ith>r) return;
+    if(l==r) {
+        tree[index] = newValue;
+        return;
+    }
+    
+    int mid = l+(r-l)/2;
+    update(tree, l, mid, 2*index+1, newValue, ith);
+    update(tree, mid+1, r, 2*index+2, newValue, ith);
+    tree[index] = lcm(tree[2*index+1], tree[2*index+2]);
+    
+    
+}
+
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int n,q;
+	    cin>>n>>q;
+	    int arr[n];
+	    for(int i=0;i<n;++i) cin>>arr[i];
+	    int tree[4*n] = {0};
+	    constructTree(tree, arr, 0, n-1, 0);
+	    
+	   
+	    
+	    for(int j=0;j<q;++j){
+	        char ch;
+	        int a, b;
+	        cin>>ch>>a>>b;
+	       // cout<<a<<":"<<b<<endl;
+	        if(ch=='G'){
+	            int result = getQuery(tree, a, b, 0, n-1, 0);
+	            cout<<result<<endl;
+	        }else if(ch=='U'){
+	            update(tree, 0, n-1, 0, b, a);
+	        }
+	    }
+	}
+	return 0;
+}
+
+
