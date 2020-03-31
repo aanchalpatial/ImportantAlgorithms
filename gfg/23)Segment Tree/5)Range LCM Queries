@@ -1,0 +1,9 @@
+/*
+You are given an array of size N, and Q queries. 
+Queries are of 2 types: 1. G L R   (range query)     -->  Need to print LCM of arr elements in range [L, R].
+                                      2. U index value (point update)  -->  Need to update the arr[index] with value
+Your task is to Print LCM of the arr elements for every Query of type G.
+*/
+
+//Important Points : LCM(1, k) = k
+//                   lcm(𝑎,𝑏,𝑐)=lcm(𝑎,lcm(𝑏,𝑐))
