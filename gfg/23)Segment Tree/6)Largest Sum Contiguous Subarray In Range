@@ -1,0 +1,14 @@
+/*
+Given a number N, and Q queries of two types 1 and 2. Task is to write a code for the given query where,
+in type-1, given l and r, and task is to print the Largest sum Contiguous Subarray and for type 2, given type, 
+index, and value, update value to A[index].
+*/
+
+//A NAIVE approach is to use Kadane’s algorithm for every type-1 query. The complexity of every type-1 query is O(n). 
+//The type-2 query is done in O(1).
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Array/Kadane's%20Algorithm/Largest%20Sum%20Contiguous%20Subarray
+
+
+/*Efficient Approach: Use Segment Trees : ***LEFT***
+https://www.geeksforgeeks.org/range-query-largest-sum-contiguous-subarray/
+*/
