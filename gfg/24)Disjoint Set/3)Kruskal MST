@@ -119,7 +119,7 @@ void kruskalMST(vector<Edge> arr, int E, int V){
     DisjointSet ds = DisjointSet(V);
     vector<Edge> MST;
     
-    while(j<V&&i<E){ //number of edges in MST is V-1    //O(E)
+    while(j<V-1&&i<E){ //number of edges in MST is V-1    //O(E)
         Edge curr = arr[i];
         if(ds.find(arr[i].src) != ds.find(arr[i].dest)) {
             ds.Union(arr[i].src, arr[i].dest);
