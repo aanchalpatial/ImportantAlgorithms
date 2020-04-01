@@ -6,7 +6,7 @@ A minimum spanning tree (MST) or minimum weight spanning tree for a weighted, co
 with weight less than or equal to the weight of every other spanning tree
 A minimum spanning tree has (V – 1) edges where V is the number of vertices in the given graph.
 There are 2 algorithm to find Minimum Spanning Tree: Prims's & Kruskal's Algorithm
-Prim's Algorithm Studied here : 
+Prim's Algorithm Studied here : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/7)Minimum%20Spanning%20Tree
 
 Applications: Network design., CLuster Ananlysis & Approximation algorithms for NP-hard problems.
 
@@ -18,4 +18,141 @@ Applications: Network design., CLuster Ananlysis & Approximation algorithms for 
 2. Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, 
    include this edge. Else, discard it.
 3. Repeat step#2 until there are (V-1) edges in the spanning tree.
+Time: O(ElogE) 
+Space: O(V)
 */
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class DisjointSet{
+    int *arr, *parent;
+    int *rank;  //If i is a representative of a set, rank[i] is the height of the tree representing the set.
+    int n;
+    public:
+    DisjointSet(int size){
+        n=size;
+        arr = new int[n];
+        parent = new int[n];
+        rank = new int[n];
+        
+        for(int i=0;i<n;++i) {
+            parent[i] = i;
+            rank[i] = 0;
+        } 
+    }
+    
+    /*OPTIMISATION IN FIND() FUNCTION : PATH COMPRESSION
+    It speeds up the data structure by compressing the height of the trees. 
+    It can be achieved by inserting a small caching mechanism into the find() operation.
+    
+    If we call find(x) for some vertex x, we actually find the representative x_rep for all vertices that we visit on the path 
+    between x and the actual representative x_rep. The trick is to make the paths for all those nodes shorter, 
+    by setting the parent of each visited vertex directly to x_rep.
+    */
+    int find(int x){    //returns representative of x in O(1) amortized time
+        if(parent[x]==x) return x;
+	parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    
+    /*OPTIMISATION IN UNION() FUNCTION : UNION RANK
+    Now recall that, in the Union operation of SIMPLE implementation, it doesn’t matter which of the 
+    two trees is moved under the other (see last two image examples above). Now what we want to do 
+    is minimize the height of the resulting tree. If we are uniting two trees (or sets), let’s call 
+    them left and right variable, then it all depends on the rank of left and the rank of right.
+    */
+    void Union(int x, int y){ //merge 2 subsets in O(1) amortized time
+        int x_rep = find(x);
+        int y_rep = find(y);
+        /*
+        If the rank of left is less than the rank of right, then it’s best to move left under right,
+        because that won’t change the rank of right (while moving right under left would increase the height). 
+        
+        In the same way, if the rank of right is less than the rank of left, then we should move right under left.
+        
+        If the ranks are equal, it doesn’t matter which tree goes under the other, but the rank of the result will 
+        always be one greater than the rank of the trees.
+        */
+        if(x_rep==y_rep) return;
+        else if(rank[x_rep]<rank[y_rep]) parent[x_rep] = y_rep;
+        else if(rank[x_rep]>rank[y_rep]) parent[y_rep] = x_rep;
+        else {
+            //when ranks are same, it doesn't matter which one we choose to be child of other
+            //say when ranks are same left variable is chosen to be representative of right variable
+            parent[y_rep] = x_rep; 
+            //rank of subset will increment by 1
+            rank[x_rep]++;
+        }
+    }
+    
+};
+
+
+
+
+
+struct Edge{
+    int src, dest, wght;
+    Edge(int s, int d, int w){
+        src = s;
+        dest = d;
+        wght = w;
+    }
+};
+
+bool myComp(Edge e1, Edge e2){
+    return e1.wght<e2.wght;
+}
+
+//Time Complexity : O(ElogE)
+void kruskalMST(vector<Edge> arr, int E, int V){
+    //Step 1: Sort all the edges in increasing order of their weight.
+    sort(arr.begin(), arr.end(), myComp);   //O(ElogE)
+    
+    //Step 2: Pick the smallest edge. Check if it forms a cycle with the spanning tree 
+    //formed so far. If cycle is not formed, include this edge. Else, discard it.
+    //Repeat step#2 until there are (V-1) edges in the spanning tree
+    int i = 0;  //used to traverse arr[]
+    int j = 0;   //used to keep count of number of edges in MST
+    int sum = 0;    //stores the weight of MST
+    DisjointSet ds = DisjointSet(V);
+    vector<Edge> MST;
+    
+    while(j<V&&i<E){ //number of edges in MST is V-1    //O(E)
+        Edge curr = arr[i];
+        if(ds.find(arr[i].src) != ds.find(arr[i].dest)) {
+            ds.Union(arr[i].src, arr[i].dest);
+            MST.push_back(arr[i]);
+            sum += arr[i].wght;
+            ++j;
+        }
+        ++i;
+    }
+    
+    cout<<"Weight of MST : "<<sum<<endl;
+    cout<<"Edges in MST : ";
+    for(auto i:MST) cout<<i.src<<"-"<<i.dest<<" , ";
+    cout<<endl;
+}
+
+int main() {
+    
+    int V = 4;  //vertices in graph
+    int E = 5;  //edges in graph
+    //Graph is neither represented as adjacency list or matrix. We represent the graph as a COLLECTION OF EDGES
+    vector<Edge> arr;
+    
+    arr.push_back(Edge(0, 1, 10));
+    arr.push_back(Edge(0, 2, 6));
+    arr.push_back(Edge(0, 3, 5));
+    arr.push_back(Edge(1, 3, 15));
+    arr.push_back(Edge(2, 3, 4));
+    
+    
+    kruskalMST(arr, E, V);
+    
+	return 0;
+}
+
+
