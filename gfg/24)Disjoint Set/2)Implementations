@@ -1,0 +1,164 @@
+/*
+TIME COMPLEXITY :-
+Above problem can be solved using graphs( bfs to be more specific), find() & union() both are O(n)
+In simple Union implementation, find() & union() both are O(n)
+Union By Rank Implementation, find() & union() both are O(logn)
+Union By Rank & Path Compression Implementation, find() & union() both are AMORTIZED O(1), proof is in T.H Cormen P:573
+*/
+
+//1) 
+//SIMPLE IMPLEMENTATION
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class DisjointSet{
+    int *arr, *parent;
+    int n;
+    public:
+    DisjointSet(int size){
+        n=size;
+        arr = new int[n];
+        parent = new int[n];
+        
+        for(int i=0;i<n;++i) {
+            parent[i] = i;
+        } 
+    }
+    //implemented by recursively traversing the parent array until we hit a node who is parent of itself.
+    int find(int x){    //returns representative of x
+        if(parent[x]==x) return x;
+        else return find(parent[x]);
+    }
+    
+    /*It takes, as input, two elements. And finds the representatives of their sets using the find operation, and 
+    finally puts either one of the trees (representing the set) under the root node of the other tree,
+    effectively merging the trees and the sets.
+    */
+    void unionDS(int x, int y){ //merges to subsets
+        int x_rep = find(x);
+        int y_rep = find(y);
+        //say right now, left variable is chosen to be 
+        //representative of right variable
+        if(x_rep==y_rep) return;
+	else parent[y_rep] = x_rep; 
+    }
+    
+};
+
+
+int main() {
+    
+    //Simple Disjoint Set Implementation
+    DisjointSet ds = DisjointSet(5);
+    //store data in ds.arr[] in any way you like
+    
+    ds.unionDS(2, 3);
+    ds.unionDS(0, 2);
+    ds.unionDS(0, 4);
+    cout<<ds.find(0)<<", "<<ds.find(1)<<", "<<ds.find(2)<<", "<<ds.find(3)<<", "<<ds.find(4)<<endl;
+    
+    
+	return 0;
+}
+
+
+
+/*
+IMPROVEMENTS (Union by Rank and Path Compression)
+The efficiency depends heavily on the height of the tree. We need to MINIMIZE HEIGHT OF TREE in order improve the efficiency. 
+We can use Path Compression and Union by rank methods to do so.
+*/
+
+//2) 
+//UNION BY RANK & PATH COMPRESSION IMPLEMENTATION
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class DisjointSet{
+    int *arr, *parent;
+    int *rank;  //If i is a representative of a set, rank[i] is the height of the tree representing the set.
+    int n;
+    public:
+    DisjointSet(int size){
+        n=size;
+        arr = new int[n];
+        parent = new int[n];
+        rank = new int[n];
+        
+        for(int i=0;i<n;++i) {
+            parent[i] = i;
+            rank[i] = 0;
+        } 
+    }
+    
+    /*OPTIMISATION IN FIND() FUNCTION : PATH COMPRESSION
+    It speeds up the data structure by compressing the height of the trees. 
+    It can be achieved by inserting a small caching mechanism into the find() operation.
+    
+    If we call find(x) for some vertex x, we actually find the representative x_rep for all vertices that we visit on the path 
+    between x and the actual representative x_rep. The trick is to make the paths for all those nodes shorter, 
+    by setting the parent of each visited vertex directly to x_rep.
+    */
+    int find(int x){    //returns representative of x in O(1) amortized time
+        if(parent[x]==x) return x;
+	parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    
+    /*OPTIMISATION IN UNION() FUNCTION : UNION RANK
+    Now recall that, in the Union operation of SIMPLE implementation, it doesn’t matter which of the 
+    two trees is moved under the other (see last two image examples above). Now what we want to do 
+    is minimize the height of the resulting tree. If we are uniting two trees (or sets), let’s call 
+    them left and right variable, then it all depends on the rank of left and the rank of right.
+    */
+    void unionDS(int x, int y){ //merge 2 subsets in O(1) amortized time
+        int x_rep = find(x);
+        int y_rep = find(y);
+        /*
+        If the rank of left is less than the rank of right, then it’s best to move left under right,
+        because that won’t change the rank of right (while moving right under left would increase the height). 
+        
+        In the same way, if the rank of right is less than the rank of left, then we should move right under left.
+        
+        If the ranks are equal, it doesn’t matter which tree goes under the other, but the rank of the result will 
+        always be one greater than the rank of the trees.
+        */
+        if(x_rep==y_rep) return;
+        else if(rank[x_rep]<rank[y_rep]) parent[x_rep] = y_rep;
+        else if(rank[x_rep]>rank[y_rep]) parent[y_rep] = x_rep;
+        else {
+            //when ranks are same, it doesn't matter which one we choose to be child of other
+            //say when ranks are same left variable is chosen to be representative of right variable
+            parent[y_rep] = x_rep; 
+            //rank of subset will increment by 1
+            rank[x_rep]++;
+        }
+    }
+    
+};
+
+
+int main() {
+    
+    //Union By Rank Implementation
+    DisjointSet ds = DisjointSet(5);
+    //store data in ds.arr[] in any way you like
+    
+    ds.unionDS(3, 4);
+    ds.unionDS(2, 3);
+    ds.unionDS(1, 2);
+    ds.unionDS(0, 1);
+    //Above sequence of operartion will result to worst case of O(n) in Simple Implementation as 
+    //tree formed will be skewed i.e height of tree will be n
+    //But in Union By Rank Implementation, same sequence will lead to maximum height of 1 of the tree formed
+    
+    cout<<ds.find(0)<<", "<<ds.find(1)<<", "<<ds.find(2)<<", "<<ds.find(3)<<", "<<ds.find(4)<<endl;
+    
+    
+	return 0;
+}
+
+
+
