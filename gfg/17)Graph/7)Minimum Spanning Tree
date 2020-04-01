@@ -110,7 +110,7 @@ int main() {
 }
 
 
-//2)  LEFT !!!
+//2)  
 //Kruskal's Algorithm
 /*Algorithm:
 1. Sort all the edges in increasing order of their weight.
@@ -118,6 +118,7 @@ int main() {
    include this edge. Else, discard it.
 3. Repeat step#2 until there are (V-1) edges in the spanning tree.
 */
+//Studied in Disjoint Set Data Structure Section : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/24)Disjoint%20Set/3)Kruskal%20MST
 
 
 
