@@ -10,6 +10,9 @@ Assume that you have a set of N elements that are into further subsets and you h
 in a specific subset or connectivity of subsets with each other. You can use the union-find algorithm (disjoint set union) to
 achieve this.
 
+https://www.topcoder.com/community/competitive-programming/tutorials/disjoint-set-data-structures/
+https://www.geeksforgeeks.org/disjoint-set-data-structures/
+
 PROBLEM :
 Let’s consider the following problem: In a room are N persons, and we will define two persons are friends if they are 
 directly or indirectly friends. If A is a friend with B, and B is a friend with C, then A is a friend of C too. A group of friends
@@ -20,7 +23,7 @@ For example N = 5 and the list of friends is: 1-2, 5-4, and 5-1. Here is the fig
 SOLUTION : 
 In the end there are 2 groups of friends: one group is {1, 2, 4, 5}, the other is {3}.
 Above problem can be solved using BFS, but Disjoint Set Data Structure will be more efficient for these type of problem.
-https://www.topcoder.com/community/competitive-programming/tutorials/disjoint-set-data-structures/
+
 
 DATA STRUCTURES USED : 
 1) Array : An array of integers, called parent[]. If we are dealing with n items, i’th element of the array represents the i’th item.
