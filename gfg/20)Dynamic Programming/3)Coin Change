@@ -1,0 +1,59 @@
+//Given an infinite supply of certain coins. Find number of different combinations of coins which leads to given sum. 
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Naive recursion
+int getCount(int coins[], int sum, int n){      //Time : exponential
+    //Base cases
+    if(sum==0) return 1;
+    if(n==0) return 0;
+    
+    //Case 1 : when current coin i.e coins[n-1] is not included
+    int result = getCount(coins, sum, n-1);
+    //Case 2 : Current coin is included
+    //only if value of current coin is less than or equal to current sum i.e i
+    if(coins[n-1]<=sum) result += getCount(coins, sum-coins[n-1], n);
+    return result;
+}
+
+//DP solution with tabulation
+int getCount_tabulation(int coins[], int sum, int n){   //O(sum*n)
+    int tab[sum+1][n+1];    //used for tabulation
+    
+    //Base Case
+    for(int i=0;i<=sum;++i) tab[0][i] = 1;  //when sum is 0
+    for(int i=1;i<=sum;++i) tab[i][0] = 0;  //when number of coins is 0
+    
+    for(int i=1;i<=sum;++i){
+        for(int j=1;j<=n;++j){
+            //Case 1 : when current coin i.e coins[j-1] is not included
+            tab[i][j] = tab[i][j-1];
+            //Case 2 : Current coin is included
+            //only if value of current coin is less than or equal to current sum i.e i
+            if(coins[j-1]<=i) tab[i][j] += tab[i-coins[j-1]][j];
+        }
+    }
+    
+    // for(int i=0;i<=sum;++i){
+    //     for(int j=0;j<=n;++j){
+    //         cout<<tab[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+    
+    return tab[sum][n];
+}
+
+
+int main() {
+    
+    int coins[] = {1, 2, 3};
+    int n = sizeof(coins)/sizeof(coins[0]);
+    int sum = 4;
+    cout<<get Count_tabulation(coins, sum, n)<<endl;
+	return 0;
+}
+
+
+
