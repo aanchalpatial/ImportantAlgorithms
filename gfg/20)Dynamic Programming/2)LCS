@@ -41,10 +41,10 @@ int LCS_Tabulation(string str1, string str2){
     int tab[m+1][n+1];  //used for tabulation
     
     for(int i=0;i<=m;++i) {
-        tab[i][0] = 0;  //filling 1st column with zeros
+        tab[i][0] = 0;  //filling 1st column with zeros to consider cases when 1st string is empty
     }
     for(int j=0;j<=n;++j){
-        tab[0][j] = 0;  //filling 1st row with zeros
+        tab[0][j] = 0;  //filling 1st row with zeros to consider cases when 2nd string is empty
     }
     
     for(int i=1;i<=m;++i){
