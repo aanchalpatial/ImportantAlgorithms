@@ -18,9 +18,9 @@ int lcs(string str1, string str2, int m, int n){
     if(mem[m][n]==-1){
         //Base Case
         if(m==0||n==0) return 0;
-        //Case 1 :
+        //Case 1 : When characters match
         else if(str1[m-1]==str2[n-1]) mem[m][n] = 1 + lcs(str1, str2, m-1, n-1);
-        //Case 2 :
+        //Case 2 : When characters don't match
         else mem[m][n] = max(lcs(str1, str2, m-1, n), lcs(str1, str2, m, n-1));
         
     }
@@ -40,6 +40,7 @@ int LCS_Tabulation(string str1, string str2){
     int n = str2.size();
     int tab[m+1][n+1];  //used for tabulation
     
+    //Base Cases are filled in next 2 loops
     for(int i=0;i<=m;++i) {
         tab[i][0] = 0;  //filling 1st column with zeros to consider cases when 1st string is empty
     }
@@ -49,7 +50,9 @@ int LCS_Tabulation(string str1, string str2){
     
     for(int i=1;i<=m;++i){
         for(int j=1;j<=n;++j){
+	    //Case 1 : When characters match
             if(str1[i-1]==str2[j-1]) tab[i][j] = 1 + tab[i-1][j-1];
+	    //Case 2 : When characters don't match
             else tab[i][j] = max(tab[i-1][j], tab[i][j-1]);
         }
     }
