@@ -13,7 +13,7 @@
 using namespace std;
 
 int mem[10001][1001];  //used for memoization
-
+//Note :- traversing strings from left will also lead to result but traversing from right(i.e end) implementation is cleaner
 int lcs(string str1, string str2, int m, int n){
     if(mem[m][n]==-1){
         //Base Case
