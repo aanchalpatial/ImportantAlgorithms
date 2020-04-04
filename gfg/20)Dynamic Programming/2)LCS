@@ -1,0 +1,87 @@
+//Longest Common Subsequence
+
+//there are possible 2^n subsequences in a string of length n
+//A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+
+//Time taken by simple recursion approach : O(n*2^n) since it takes O(n) time to check if 
+//subsequnces are common and there are 2^n possible subsequences
+
+//Using memoization with recursion reduces time complexity to O(mn)
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int mem[10001][1001];  //used for memoization
+
+int lcs(string str1, string str2, int m, int n){
+    if(mem[m][n]==-1){
+        //Base Case
+        if(m==0||n==0) return 0;
+        //Case 1 :
+        else if(str1[m-1]==str2[n-1]) mem[m][n] = 1 + lcs(str1, str2, m-1, n-1);
+        //Case 2 :
+        else mem[m][n] = max(lcs(str1, str2, m-1, n), lcs(str1, str2, m, n-1));
+        
+    }
+    return mem[m][n];
+}
+
+int LCS_Memoization(string str1, string str2){
+    int m = str1.size();
+    int n = str2.size();
+    for(int i=0;i<=m;++i) for(int j=0;j<=n;++j) mem[i][j] = -1;
+    
+    return lcs(str1, str2, m, n);
+}
+
+int LCS_Tabulation(string str1, string str2){
+    int m = str1.size();
+    int n = str2.size();
+    int tab[m+1][n+1];  //used for tabulation
+    
+    for(int i=0;i<=m;++i) {
+        tab[i][0] = 0;  //filling 1st column with zeros
+    }
+    for(int j=0;j<=n;++j){
+        tab[0][j] = 0;  //filling 1st row with zeros
+    }
+    
+    for(int i=1;i<=m;++i){
+        for(int j=1;j<=n;++j){
+            if(str1[i-1]==str2[j-1]) tab[i][j] = 1 + tab[i-1][j-1];
+            else tab[i][j] = max(tab[i-1][j], tab[i][j-1]);
+        }
+    }
+    
+    //Printing LCS
+    int i=1,j=1;
+    while(i<m+1&&j<n+1){
+        if(str1[i-1]==str2[j-1]) {
+            cout<<str1[i-1];
+            ++i;
+            ++j;
+        }
+        else{
+            if(tab[i+1][j]>tab[i][j+1]) ++i;
+            else ++j;
+        }
+    }
+    
+    return tab[m][n];
+}
+
+int main() {
+    
+    
+    string str1 = "AGGTAB";
+    string str2 = "GXTXAYB";
+    
+    cout<<LCS_Memoization(str1, str2)<<endl;
+    cout<<LCS_Tabulation(str1, str2)<<endl;
+	return 0;
+}
+
+
+
+
