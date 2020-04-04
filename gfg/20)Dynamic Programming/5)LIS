@@ -1,0 +1,64 @@
+/*Longest Increasing Subsequence
+The Longest Increasing Subsequence (LIS) problem is to find the length of the longest subsequence of a given sequence 
+such that all elements of the subsequence are sorted in increasing order
+*/
+
+//there are possible 2^n subsequences in a string of length n
+//A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous
+
+
+//Naive solution is exponential
+//DP solution is O(n^2)
+//Binary Search Based Solution O(nlogn)
+
+
+//DP solution with tabulation
+#include <bits/stdc++.h>
+using namespace std;
+
+/*Approach :
+Let arr[0..n-1] be the input array and L(i) be the length of the LIS ending at index i such that arr[i] is the last element of the LIS.
+Then, L(i) can be recursively written as:
+L(i) = 1 + max( L(j) ) where 0 < j < i and arr[j] < arr[i]; or
+L(i) = 1, if no such j exists.
+To find the LIS for a given array, we need to return max(L(i)) where 0 < i < n.
+*/
+
+int lis(int arr[], int n){
+    int tab[n]; //used for tabulation
+    //Note :- tab[i] represents length of LIS for subsequences ending arr[i]
+    
+    //Base Case : 
+    tab[0] = 1; //LIS for a single number is number itself
+    
+    for(int i=1;i<n;++i){
+        tab[i] = 1;
+        for(int j=0;j<i;++j){
+            if(arr[j]<=arr[i]){
+                tab[i] = max(tab[i], tab[j]+1);
+            }
+        }
+    }
+    
+    //for(int i=0;i<n;++i) cout<<tab[i]<<" ";
+    //cout<<endl;
+    
+    int result = tab[0];
+    for(int i=1;i<n;++i) result = max(result, tab[i]);
+    return result;
+}
+
+int main() {
+    //int arr[] = {10, 5, 18, 7, 2, 9};
+    int arr[] = {3, 4, 2, 8, 10, 5, 1};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    cout<<lis(arr, n)<<endl;
+	return 0;
+}
+
+
+
+
+
+
+
