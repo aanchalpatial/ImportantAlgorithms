@@ -18,8 +18,8 @@ there is no point storing the solutions if they are not needed again
 //time of recursion+memoization : O(n)
 
 
-//Note : There is an even better solution than DP for fibonacci, but we are using fibonacci
-//only to show difference between memoization & tabulation
+//Note : There is an even better solution than DP for fibonacci, but we are using fibonacci only to show difference
+//between memoization & tabulation : https://www.geeksforgeeks.org/program-for-nth-fibonacci-number/
 
 //1) fibonnaci with memoization
 int mem[10001]; //used for memoization
