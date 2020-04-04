@@ -1,0 +1,79 @@
+/*
+Given two strings str1 and str2 and following operations that can performed on str1 : Insert, Remove & Replace
+Find MINIMUM number of edits (operations) in str1 required to convert ‘str1’ into ‘str2’.
+All of the above operations are of equal cost.
+*/
+
+//Application : Suggesting correct spelling words, bio informatics. 
+
+#include <bits/stdc++.h>
+using namespace std;
+
+//Naive recursion
+//Note :- Like LCS, traversing strings from left will also lead to result but traversing from right(i.e end) implementation is cleaner
+int editDistance(string str1, string str2, int m, int n){
+    
+    //Base case : 
+    //If str1 string is empty it will take length(other string) insert operations in str1
+    if(m==0) return n;
+    //If str2 string is empty it will take length(other string) delete operations in str2
+    if(n==0) return m;
+    
+    
+    //Case 1 : when characters match, no operation is needed
+    if(str1[m-1]==str2[n-1]) return editDistance(str1, str2, m-1,n-1);
+    //Case 2: when characters dont match we need minimum of edit distances when insert or delete or replace is done
+    return 1 + min(editDistance(str1, str2, m, n-1),    //insert str2[n-1] at end in str1
+               min(editDistance(str1, str2, m-1, n),    //delete str1[m-1]
+               editDistance(str1, str2, m-1, n-1)));   //replace str1[m-1] with str2[n-1]
+    
+}
+
+
+//DP solution with tabulation
+int getDistance_tabulation(string str1, string str2){   //O(m*n)
+    int m = str1.size();
+    int n = str2.size();
+    int tab[m+1][n+1]; //Note :- tab[i][j] represets edit distance for strings str1[0toi-1] & str2[0toj-1]
+    
+    //Base Cases : 
+    for(int i=0;i<=m;++i) tab[i][0] = i;
+    for(int i=0;i<=n;++i) tab[0][i] = i;
+    
+    for(int i=1;i<=m;++i){
+        for(int j=1;j<=n;++j){
+            //Case 1 : 
+            if(str1[i-1]==str2[j-1]) tab[i][j] = tab[i-1][j-1];
+            //Case 2 :
+            else tab[i][j] = 1+min(tab[i-1][j], min(tab[i][j-1], tab[i-1][j-1]));
+        }
+    }
+    
+    // for(int i=0;i<=m;++i){
+    //     for(int j=0;j<=n;++j) cout<<tab[i][j]<<" ";
+    //     cout<<endl;
+    // }
+    
+    return tab[m][n];
+}
+
+
+int main() {
+    string str1 = "SATURDAY";
+    string str2 = "SUNDAY";
+    int m = str1.size();
+    int n = str2.size();
+    
+    //cout<<editDistance(str1, str2, m, n)<<endl;
+    
+    cout<<getDistance_tabulation(str1, str2)<<endl;
+	return 0;
+}
+
+
+
+
+
+
+
+
