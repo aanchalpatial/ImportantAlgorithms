@@ -17,7 +17,11 @@ there is no point storing the solutions if they are not needed again
 //time of naive recursion solution of fibonacci : O(2^n)
 //time of recursion+memoization : O(n)
 
-//fibonnaci with memoization
+
+//Note : There is an even better solution than DP for fibonacci, but we are using fibonacci
+//only to show difference between memoization & tabulation
+
+//1) fibonnaci with memoization
 int mem[10001]; //used for memoization
 int fib(int n){ 
     
@@ -27,7 +31,7 @@ int fib(int n){
     
 }
 
-//fibonnaci with tabulation
+//2) fibonnaci with tabulation
 int fib_t(int n){
     int table[n+1]; //used for tabulation
     table[0] = 0, table[1] = 1;
