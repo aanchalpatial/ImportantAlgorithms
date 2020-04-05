@@ -6,16 +6,16 @@ such that all elements of the subsequence are sorted in increasing order
 //there are possible 2^n subsequences in a string of length n
 //A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous
 
+//Note :- DP solution is not the most efficient solution for LIS
 
-//Naive solution is exponential
-//DP solution is O(n^2)
-//Binary Search Based Solution O(nlogn)
+//1) Naive solution is exponential
 
 
-//DP solution with tabulation
 #include <bits/stdc++.h>
 using namespace std;
 
+//2) DP solution is O(n^2) : Online solution
+//Any algorithm that can guarantee output of i-elements after processing i-th element, is said to be online algorithm.
 /*Approach :
 Let arr[0..n-1] be the input array and L(i) be the length of the LIS ending at index i such that arr[i] is the last element of the LIS.
 Then, L(i) can be recursively written as:
@@ -24,7 +24,7 @@ L(i) = 1, if no such j exists.
 To find the LIS for a given array, we need to return max(L(i)) where 0 < i < n.
 */
 
-int lis(int arr[], int n){
+int lis(int arr[], int n){		//O(n^2)
     int tab[n]; //used for tabulation
     //Note :- tab[i] represents length of LIS for subsequences ending arr[i]
     
@@ -48,13 +48,51 @@ int lis(int arr[], int n){
     return result;
 }
 
+//3) Binary Search Based Solution O(nlogn) : Offline solution
+//Any algorithm that can't guarantee output of i-elements after processing i-th element, is said to be offline algorithm.
+//An offline algorithm requires all information BEFORE the algorithm starts.
+/*Approach : 
+Let tail[i] be defined as the smallest integer that ends an increasing sequence of length i+1.
+Now iterate through every integer X of the input set and do the following:
+
+If X > last element in tail[], then append X to the end of tail[]. This essentialy means we have found a new largest LIS.
+
+Otherwise find the smallest element in tail[], which is >= than X, and change it to X. 
+Because tail[] is sorted at any time, the element can be found using binary search in log(N).
+
+Total runtime - N integers and a binary search for each of them - N * log(N) = O(N log N)
+*/
+int lis_binary_search(int arr[], int n){    //O(nlogn)
+    vector<int> tail;   //tail[i] stores the minimum possible tail value for LIS of length i+1.
+    tail.push_back(arr[0]);
+    for(int i=1;i<n;++i){
+        if(arr[i]>tail[tail.size()-1]) tail.push_back(arr[i]);
+        else {
+            //lower_bound() is used to ceil of arr[i] in tail[]
+            int index = lower_bound(tail.begin(), tail.end(), arr[i]) - tail.begin();   
+            tail[index] = arr[i];
+        }
+        for(auto x : tail) cout<<x<<" ";
+        cout<<endl;
+    }
+    
+    return tail.size();
+}
+
+
+
 int main() {
     //int arr[] = {10, 5, 18, 7, 2, 9};
     int arr[] = {3, 4, 2, 8, 10, 5, 1};
     int n = sizeof(arr)/sizeof(arr[0]);
-    cout<<lis(arr, n)<<endl;
+    cout<<lis(arr, n)<<endl;				//DP solution
+    cout<<lis_binary_search(arr, n)<<endl;		//Binary Search solution
 	return 0;
 }
+
+
+
+
 
 
 
