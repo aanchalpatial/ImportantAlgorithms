@@ -52,6 +52,7 @@ int lis(int arr[], int n){		//O(n^2)
 //Any algorithm that can't guarantee output of i-elements after processing i-th element, is said to be offline algorithm.
 //An offline algorithm requires all information BEFORE the algorithm starts.
 /*Approach : 
+http://stackoverflow.com/questions/2631726/how-to-determine-the-longest-increasing-subsequence-using-dynamic-programming
 Let tail[i] be defined as the smallest integer that ends an increasing sequence of length i+1.
 Now iterate through every integer X of the input set and do the following:
 
