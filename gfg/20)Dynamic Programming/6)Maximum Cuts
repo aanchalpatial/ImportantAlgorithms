@@ -1,4 +1,5 @@
 //Given a positive integer N, find the maximum number of segments of lengths a, b and c that can be formed from N.
+//Return -1 if it is not possible to make cut
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -19,7 +20,7 @@ int maximumCuts(int n, int a, int b, int c){    //O(3^n)
 //DP solution
 int maximumCuts_tabulation(int n, int a, int b, int c){     //O(n)
     int tab[n+1];
-    tab[0] = 0;
+    tab[0] = 0;		//when length of rod is 0, there can be no cuts hence 0 cuts
     for(int i=1;i<=n;++i){
         tab[i] = -1;
         if(i-a>=0) tab[i] = max(tab[i], tab[i-a]);
