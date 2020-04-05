@@ -14,10 +14,10 @@ Return Value: ele < return_value
 
 lower_bound() : first element that is greater-or-equal. 
 lower_bound(first_itr, last_itr, ele)   
-Return Value: return_value <= ele           
+Return Value: ele <= return_value           
               Returns an iterator pointing to the lower bound of the element ele. 
               If ele exists in the container, it returns an iterator pointing to ele 
-              otherwise it returns an iterator pointing to lower bound ele.
+              otherwise it returns same iterator as upper bound.
               * if ele is smaller than the smallest array element(leftmost element), smallest element index is returned
               
 Note :- Unlike lower_bound , the value pointed by the iterator returned by this function 
