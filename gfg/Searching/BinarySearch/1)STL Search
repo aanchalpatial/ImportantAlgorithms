@@ -19,7 +19,14 @@ Return Value: ele <= return_value
               If ele exists in the container, it returns an iterator pointing to ele 
               otherwise it returns same iterator as upper bound.
               * if ele is smaller than the smallest array element(leftmost element), smallest element index is returned
-              
+
+Note :- binary_search(), upper_bound() & lower_bound() works only with sorted sequences
+             
 Note :- Unlike lower_bound , the value pointed by the iterator returned by this function 
         cannot be equivalent to val , only greater.
-        binary_search(), upper_bound() & lower_bound() works only with sorted sequences
+        
+Note :- ceil() & floor() generally used for single number but can also be used in an array
+        ceil returns element greater than or equal to current element, ceil of an element in array represents lower_bound()
+        floor returns element smaller than or equal to current element, 
+        no correspondence of floor to any of binary_search(), lower_bound() or upper_bound()
+
