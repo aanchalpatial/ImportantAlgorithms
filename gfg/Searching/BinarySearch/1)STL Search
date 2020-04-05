@@ -22,4 +22,4 @@ Return Value: ele <= return_value
               
 Note :- Unlike lower_bound , the value pointed by the iterator returned by this function 
         cannot be equivalent to val , only greater.
-        upper_bound() & lower_bound() works only with sorted sequences
+        binary_search(), upper_bound() & lower_bound() works only with sorted sequences
