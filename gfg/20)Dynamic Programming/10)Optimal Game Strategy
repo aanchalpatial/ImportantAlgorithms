@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*
+https://www.geeksforgeeks.org/optimal-strategy-for-a-game-dp-31/
+Problem statement: Consider a row of n coins of values v1 . . . vn, where n is even. 
+We play a game against an opponent by alternating turns. In each turn, a player selects either the first or last coin
+from the row, removes it from the row permanently, and receives the value of the coin. 
+Determine the maximum possible amount of money we can definitely win if we move FIRST.
+NOTE :- The opponent is as clever as the user.
+NOTE :- Greedy approach won't work. Does choosing the highest valued at each move give an optimal solution?
+        NO, Greedy Approach fails for this example : {8, 15, 3, 7}
+*/
+
+
+//Naive recursion : Exponential time
+//sol(i, j) represents the maximum value the user can collect from i'th coin to j'th coin.
+//https://www.geeksforgeeks.org/optimal-strategy-for-a-game-dp-31/
+int sol(int arr[], int i, int j){
+    
+    if(j-i==1) return max(arr[i], arr[j]);
+    
+    return max( 
+                arr[i]+min( sol(arr, i+2, j), sol(arr, i+1, j-1)),
+                arr[j]+min( sol(arr, i+1, j-1), sol(arr, i, j-2))
+              );
+}
+
+
+//DP solution : O(n^2)
+int sol_tabulation(int arr[], int n){ 
+    //tab[i][j] represents the maximum value the user can collect from i'th coin to j'th coin.
+    int tab[n][n];
+    //Base case
+    for(int i=0;i<n-1;++i) tab[i][i+1] = max(arr[i], arr[i+1]);
+    
+    
+    // Fill table using above recursive formula. Note  
+    // that the table is filled in diagonal fashion (similar 
+    // to http://goo.gl/PQqoS), from diagonal elements to 
+    // table[0][n-1] which is the result.
+    for(int d=3;d<n;d+=2){
+        for(int i=0;i<n-d;++i){
+            int j = i+d;
+            tab[i][j] = max(arr[i]+min(tab[i+2][j], tab[i+1][j-1]), 
+                            arr[j]+min(tab[i+1][j-1], tab[i][j-2])    );
+        }
+    }
+    
+    //tab[0][n-1] represents the maximum value the user can collect from 
+    //0'th coin to n-1'th coin which is being asked in problem statement
+    return tab[0][n-1];     
+    
+}
+
+
+
+
+int main() {
+	
+	int arr[] = {8, 15, 3, 7};
+	int n = sizeof(arr)/sizeof(arr[0]);
+	
+	cout<<sol(arr, 0, n-1)<<endl;
+	cout<<sol_tabulation(arr, n)<<endl;
+	
+	return 0;
+}
+
+
+
+/*Another Related But Different Problem :
+Your thoughts on the strategy when the user wishes to only win instead of winning with the maximum value.
+Like above problem, number of coins is even. Can Greedy approach work quite well and give an optimal solution? : YES
+Please see : geeksforgeeks.org/coin-game-of-two-corners-greedy-approach/
+Note that this problem is different from Optimal Strategy for a Game(above question). There the target is to get 
+maximum value. Here the target is to not loose. We have a Greedy Strategy here. The idea is to count sum of values
+of all even coins and odd coins, compare the two values. The player that makes the first move can always make sure that
+the other player is never able to choose an even coin if sum of even coins is higher. 
+Similarly, he/she can make sure that the other player is never able to choose an odd coin if sum of odd coins is higher.
+*/
+
+
+
