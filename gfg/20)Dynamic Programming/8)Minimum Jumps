@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*
+Given an array of integers where each element represents the max number of steps that can be made forward from that element.
+Write a function to return the minimum number of jumps to reach the end of the array (starting from the first element). 
+If an element is 0, then cannot move through that element.
+*/
+
+//Naive recursion from left to right
+//Returns INT_MAX if it is not possible to reach end of array.
+int minimumJumps(int arr[], int i, int n){
+    
+    if(i==n-1) return 0;
+    
+    int result = INT_MAX;
+    
+    for(int k=1;k<=arr[i];++k){
+        if(i+k<n){
+            int curr = minimumJumps(arr, i+k, n);
+            if(curr!=INT_MAX) result = min(result, 1+curr);
+        }
+    }
+    return result;
+}
+
+//Naive recursion from right end to left
+int minimumJumps2(int arr[], int n){
+    if(n==1) return 0;
+    
+    int result = INT_MAX;
+    for(int i=0;i<n-1;++i){
+        if(i+arr[i]>=n-1){
+            int curr = minimumJumps2(arr, i+1);
+            if(curr!=INT_MAX) result = min(result, 1+curr);
+        }
+    }
+    return result;
+}
+
+
+//DP solution
+int minimumJumps_tabulation(int arr[], int n){  //O(n^2)
+    int tab[n];
+    tab[0] = 0;
+    for(int i=1;i<=n;++i) tab[i] = INT_MAX;
+    
+    for(int i=1;i<=n;++i){
+        for(int j=0;j<i;++j){
+            if(j+arr[j]>=i){
+                tab[i] = min(tab[i], tab[j]+1);
+            }
+        }
+    }
+    return tab[n-1];
+}
+
+int main() {
+    
+    int arr[] = {4, 1, 5, 3, 1, 3, 2, 1, 8};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    
+    cout<<minimumJumps(arr, 0, n)<<endl;
+    cout<<minimumJumps2(arr, n)<<endl;
+    cout<<minimumJumps_tabulation(arr, n)<<endl;
+    
+    
+	return 0;
+}
+
+
+
