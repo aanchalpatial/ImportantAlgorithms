@@ -1,0 +1,74 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*
+Given weights and values of n items, put these items in a knapsack of capacity W to get the maximum total value in the
+knapsack. In other words, given two integer arrays val[0..n-1] and wt[0..n-1] which represent values and 
+weights associated with n items respectively. Also given an integer W which represents knapsack capacity, 
+find out the maximum value subset of val[] such that sum of the weights of this subset is smaller than or equal to W. 
+You cannot break an item, either pick the complete item, or don’t pick it (0-1 property).
+*/
+
+//Note :- Greedy approach of picking highest valued item used in fractional knapsack will fail here.
+
+//Naive recursion
+int knapSack(int wt[], int val[], int W, int n){    //O(2^n) time
+    if(W==0||n==0) return 0;
+    
+    int result = knapSack(wt, val, W, n-1);
+    if(W-wt[n-1]>=0) result = max(result, val[n-1]+knapSack(wt, val, W-wt[n-1], n-1));
+    return result;
+    
+}
+
+//We can reduce time to O(W*n) using DP
+/*Note :- 
+1) It is possible for W to be very very big such that W*n becomes greater than 2^n, 
+hence dp based solution is efficient only if W is small.
+
+2) Time complexity is not polynomial BUT PSUEDO-polynomial : An algorithm whose worst case time complexity depends
+on numeric value of input (not number of inputs) is called Pseudo-polynomial algorithm.
+
+3) Some NP-Complete problems have PSUEDO Polynomial time solutions. 
+For example, Dynamic Programming Solutions of 0-1 Knapsack, Subset-Sum and Partition problems are Pseudo-Polynomial.
+NP complete problems that can be solved using a pseudo-polynomial time algorithms are called weakly NP-complete.
+*/
+
+int knapSack_tabulation(int wt[], int val[], int W, int n){
+    //tab[i][j] represents maximum value that can be generated with a knapsack of capacity i & items from 0 to j-1
+    int tab[W+1][n+1];   //we can also have tab[n+1][W+1]
+    
+    //Base cases
+    for(int i=0;i<=W;++i) tab[i][0] = 0;
+    for(int i=0;i<=n;++i) tab[0][i] = 0;
+    
+    for(int i=1;i<=W;++i){
+        for(int j=1;j<=n;++j){
+            //Case 1 : jth item of (1 indexed items) not included
+            tab[i][j] = tab[i][j-1];
+            //Case 2 : jth item of (1 indexed items) included
+            if(i-wt[j-1]>=0) tab[i][j] = max(tab[i][j], val[j-1]+tab[i-wt[j-1]][j-1]);
+        }
+    }
+    
+    return tab[W][n];
+}
+
+
+
+int main() {
+    
+    int val[] = {40, 10, 30, 50}; 
+    int wt[] = {4, 5, 6, 3}; 
+    int  W = 10; 
+    int n = sizeof(val)/sizeof(val[0]); 
+    cout<<knapSack_tabulation(wt, val, W, n)<<endl;
+    return 0; 
+}
+
+
+
+
+
+
+
