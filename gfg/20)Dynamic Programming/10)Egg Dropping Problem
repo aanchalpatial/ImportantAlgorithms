@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//RR
-//https://www.geeksforgeeks.org/egg-dropping-puzzle-dp-11/
+//RR : https://www.geeksforgeeks.org/egg-dropping-puzzle-dp-11/
 
 /*Problem Statement :
 Find Minimum number of trials needed to find the critical floor in worst case when there are e eggs & f floors
