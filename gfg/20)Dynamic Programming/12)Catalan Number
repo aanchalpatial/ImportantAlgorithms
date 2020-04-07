@@ -59,8 +59,12 @@ int countBST(int n){    //O(n^2)
 Count different UNLABELED & LABELED possible Binary Trees with given n keys.
 */
 /*Approach : 
-Distinct Unlabeled Binary Trees with n keys = Distinct BST with n keys = countBST(n)
-Distinct Labeled Binary Trees with n keys = countBST(n) * n!
+1) A Binary Tree is unlabeled if nodes are not assigned any label.
+   Distinct Unlabeled Binary Trees with n keys = Distinct BST with n keys = countBST(n)
+   
+2) To count labeled trees, we can use above count for unlabeled trees. The idea is simple, every unlabeled tree with n nodes
+   can create n! different labeled trees by assigning different permutations of labels to all nodes.
+   Distinct Labeled Binary Trees with n keys = countBST(n) * n!
 */
 int factorial(int n)    //O(n)
 { 
@@ -78,8 +82,6 @@ int main() {
     cout<<"Distinct Possible Labeled Binary Trees with "<<n<<" keys : "<<countBT(n);
 	return 0;
 }
-
-
 
 
 
