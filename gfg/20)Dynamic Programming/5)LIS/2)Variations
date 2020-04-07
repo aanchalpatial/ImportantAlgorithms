@@ -1,0 +1,22 @@
+See Video from P100 GFG .
+
+
+1) Minimum deletions to make given array sorted : arr.size()-lis()
+
+2) Maximum Sum Increasing Subsequence : dp code similar to lis() with minor changes such as replacind 1 with arr[i] beacause now we don't
+                                        need longest increasing subsequence, instead we need maximum sum increasing subsequence
+                                     
+3) Maximum Length Bitonic Subsequence : 
+A Biotonic subsequence is a subsequence which is first increasing than decreasing.
+
+create lis[] & lds[](lis[] from starting from right end). result is maximum of (lis[i]+lds[i]-1) for all i from 0 to n-1 
+
+4) Building Bridges : https://www.geeksforgeeks.org/dynamic-programming-building-bridges/
+Sort pair of cities according to first index(city) and if first index are same then second index(city).
+Find LIS of 2nd indexes to find the maximum number of non-crossing bridges that can be built.
+
+5) Longest Chain of Pairs : Given many pairs of 2 elements such that first element is smaller than second element. Find longest
+chain of pairs such that is if (a, b) , (c, d) form chain than b<c.
+Sort the pair of elements according to first value.
+Then find lis() in sorted array with minor change of replacing arr[j]<=arr[i] with arr[j].second <= arr[i].first.
+Note :- This is INFACT the ACTIVITY SELECTION PROBLEM and can be solved with greedy approach as well.
