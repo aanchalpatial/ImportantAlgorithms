@@ -1,0 +1,44 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//Given an array find the maximum sum that we can have by adding no 2 consecutive elements.
+
+//Naive recursion
+int maxSum(int arr[], int n){   //O(2^n)
+    if(n==1) return arr[0];
+    if(n==2) return max(arr[0], arr[1]);
+    
+    return max(arr[n-1]+maxSum(arr, n-2), maxSum(arr, n-1));
+}
+
+//DP solution
+int maxSum_tabulation(int arr[], int n){    //O(n) time
+
+    if(n==1) return arr[0];
+    
+    //dp[i] represents maximum sum that we can have by adding no 2 consecutive elements from 0 to i index
+    int dp[n];
+    dp[0] = arr[0];
+    dp[1] = max(dp[0], arr[1]);
+    
+    for(int i=2;i<n;++i){
+        dp[i] = max(arr[i]+dp[i-2], dp[i-1]);
+    }
+    
+    return dp[n-1];
+    
+}
+
+
+
+int main() {
+    int arr[] = {10, 5, 15, 20, 2, 30};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+    cout<<maxSum_tabulation(arr, n)<<endl;
+    
+	return 0;
+}
+
+
+
