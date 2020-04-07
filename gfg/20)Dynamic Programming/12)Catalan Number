@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*CATALAN NUMBERS :
+https://www.geeksforgeeks.org/program-nth-catalan-number/
+https://www.geeksforgeeks.org/applications-of-catalan-numbers/
+
+The first few Catalan numbers for n = 0, 1, 2, 3, … are 1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, …
+
+There are 2 formulas to find nth catalan numbers :
+1) Catalan(n) = 1/(n+1) * 2nCn
+Above formula reduces to : Catalan(n) = (k=2)to(n)PI((n+k)/k) for all n>=0
+Time complexity of 1st implementation is O(n).
+
+2) Catalana(n) = (i=0)to(n)SIGMA(Catalan(i)*Catalan(n-i)) ; Base case : Catalan(0) = 1
+Time complexity of 2nd implementation is O(n2)
+
+Catalan numbers are a sequence of natural numbers that occurs in many interesting counting problems like following :-
+1) Count the number of possible Binary Search Trees with n keys 
+2) Number of different Unlabeled Binary Trees can be there with n nodes.
+3) Count the number of expressions containing n pairs of parentheses which are correctly matched. 
+   For n = 3, possible expressions are ((())), ()(()), ()()(), (())(), (()()).
+4) Count the number of full binary trees (A rooted binary tree is full if every vertex has 
+   either two children or no children) with n+1 leaves
+
+*/
+
+/*Problem Statement 1 : 
+Count different number of possible BST's with given n keys.
+*/
+
+/*Approach : Using 2nd formula of Catalan Numbers
+countBST(n) = (i=0)to(n-1)SIGMA(countBST(i)*countBST(n-i-1))
+countBST(0) = 1;
+*/
+//Note :- To solve countBST in O(n) time use 1st formula of Catalan numbers
+
+int countBST(int n){    //O(n^2)
+    //dp[i] represemts different possible distinct BST's with i keys
+    int dp[n+1] = {0};  //used for tabulation
+    //Base Case :
+    dp[0] = 1;
+    
+    for(int i=1;i<=n;++i){
+        for(int j=0;j<i;++j){   //0 to i-1
+            dp[i] += dp[j]*dp[i-j-1];
+        }
+    }
+    
+    // for(int i=0;i<=n;++i) cout<<dp[i]<<", ";
+    // cout<<endl;
+    
+    return dp[n];
+    
+}
+
+
+/*Problem Statement 2 :
+Count different possible Binary Trees with given n keys.
+*/
+//Approach : countBT(n) = countBST(n)*n!
+int factorial(int n)    //O(n)
+{ 
+    // single line to find factorial 
+    return (n == 1 || n == 0) ? 1 : n * factorial(n - 1); 
+}
+int countBT(int n){ //O(n^2)
+    return countBST(n)*factorial(n);
+}
+
+int main() {
+    
+    int n = 3;
+    cout<<"Distinct Possible Binary Search Trees with "<<n<<" keys : "<<countBST(n)<<endl;
+    cout<<"Distinct Possible Binary Trees with "<<n<<" keys : "<<countBT(n);
+	return 0;
+}
+
+
+
+
+
+
+
