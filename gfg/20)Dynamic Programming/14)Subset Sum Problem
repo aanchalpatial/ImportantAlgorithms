@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+//Given a set of non-negative integers as array, and a value sum, determine number of
+//subsets (out of 2^n possible subsets) of the given set such that their sum equal to given sum.
+
+
+//Naive recursion
+int subsetSum(int arr[], int n, int sum){    //O(2^n)
+    if(n==0) {
+        if(sum==0) return 1;
+        else return 0;
+    }
+    
+    return subsetSum(arr, n-1, sum-arr[n-1]) + subsetSum(arr, n-1, sum);
+}
+
+
+//DP solution
+int subsetSum_tabulation(int arr[], int n, int sum){   //O(n*sum) i.e pseudo polynomial time
+    //dp[i][j] represents the count of subsets with sum j from set of elements from index 0 to i-1 .
+    int dp[n+1][sum+1];
+    
+    //*** Base cases : ***
+    for(int i=0;i<=n;++i) dp[i][0] = 1;
+    for(int i=1;i<=sum;++i) dp[0][i] = 0;
+    
+    for(int i=1;i<=n;++i){
+        for(int j=0;j<=sum;++j){
+            dp[i][j] = dp[i-1][j];
+            if(j>=arr[i-1]) dp[i][j] += dp[i-1][j-arr[i-1]];
+        }
+    }
+    
+    return dp[n][sum];
+    
+}
+
+int main() {
+    
+    int arr[] = {10 ,5, 3, 2, 15};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    int sum = 10;
+    
+    cout<<subsetSum_tabulation(arr, n, sum)<<endl;
+    
+	return 0;
+}
+
+
+
+
+
+
