@@ -5,6 +5,9 @@ Following is a simple solution where we use an array to store individual digits 
 //https://www.geeksforgeeks.org/find-sum-digits-factorial-number/
 //https://www.geeksforgeeks.org/first-digit-factorial-number/
 
+//**NEW** : https://www.geeksforgeeks.org/factorial-large-number-using-boost-multiprecision-library/
+            https://www.geeksforgeeks.org/advanced-c-boost-library/
+
 
 //In Python
 def factorial(n):
