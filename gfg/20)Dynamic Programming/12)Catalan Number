@@ -31,7 +31,32 @@ Catalan numbers are a sequence of natural numbers that occurs in many interestin
 */
 
 /*Catalan Number using implementation 1 : O(n)
-cpp_int binomial(int n, int k){
+
+int binomial2(int n, int r){	//dp way to find binomial
+    //recursive formula used : 
+    //C(n, r)%p = [ C(n-1, r-1)%p + C(n-1, r)%p ] % p
+    //C(n, 0) = C(n, n) = 1
+    
+    int dp[n+1][r+1];
+    for(int i=0;i<=n;++i){
+        for(int j=0;j<=r;++j){
+            dp[i][j] = 0;
+        }
+    }
+    //Base case : 
+    for(int i=0;i<=n;++i){
+        dp[i][0] = 1;
+    }
+    
+    for(int i=1;i<=n;++i){
+        for(int j=1;j<=r;++j){
+            dp[i][j] = (dp[i-1][j-1]%p + dp[i-1][j]%p)%p;
+        }
+    }
+    return dp[n][r];
+}
+
+cpp_int binomial(int n, int k){	//iterative way to find binomial
     if(k>n-k) k = n-k;
     
     cpp_int result = 1;
