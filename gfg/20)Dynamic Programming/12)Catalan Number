@@ -1,4 +1,9 @@
 #include <bits/stdc++.h>
+//Boost libraries are intended to be widely useful, and usable across a broad spectrum of applications. For example, 
+//they are helpful for handling large numbers having range beyond the long long, long double data type (264) in C++.
+#include<boost/multiprecision/cpp_int.hpp>	
+using boost::multiprecision::cpp_int;
+
 using namespace std;
 
 /*CATALAN NUMBERS :
@@ -25,6 +30,26 @@ Catalan numbers are a sequence of natural numbers that occurs in many interestin
 
 */
 
+/*Catalan Number using implementation 1 : O(n)
+cpp_int binomial(int n, int k){
+    if(k>n-k) k = n-k;
+    
+    cpp_int result = 1;
+    for(int i=0;i<k;++i){
+        result *= n-i;
+        result /= i+1;
+    }
+    return result;
+}
+
+void catalan(int n){    //O(n)
+        cpp_int result = binomial(2*n, n);
+        result /= (n+1);
+        cout<<result<<endl;
+}
+*/
+
+
 /*Problem Statement 1 : 
 Count different number of possible BST's with given n keys.
 */
@@ -35,9 +60,9 @@ countBST(0) = 1;
 */
 //Note :- To solve countBST in O(n) time use 1st formula of Catalan numbers
 
-int countBST(int n){    //O(n^2)
+cpp_int countBST(int n){    //O(n^2)
     //dp[i] represemts different possible distinct BST's with i keys
-    int dp[n+1] = {0};  //used for tabulation
+    cpp_int dp[n+1] = {0};  //used for tabulation
     //Base Case :
     dp[0] = 1;
     
@@ -66,12 +91,12 @@ Count different UNLABELED & LABELED possible Binary Trees with given n keys.
    can create n! different labeled trees by assigning different permutations of labels to all nodes.
    Distinct Labeled Binary Trees with n keys = countBST(n) * n!
 */
-int factorial(int n)    //O(n)
+cpp_int factorial(int n)    //O(n)
 { 
     // single line to find factorial 
     return (n == 1 || n == 0) ? 1 : n * factorial(n - 1); 
 }
-int countBT(int n){ //O(n^2)		//for distinct possible Binary Trees
+cpp_int countBT(int n){ //O(n^2)		//for distinct possible Binary Trees
     return countBST(n)*factorial(n);
 }
 
