@@ -63,7 +63,7 @@ int main() {
 
 //APPLICATIONS :- 
 //Problem 1 is not of coin change but used to show difference between 2 problems when order DOES & DOESN'T matter.
-//Note **differences** between Problem 1 & Problem 2
+//Note **differences** between Problem 1 & Problem 2 i.e Coin Change Method is used only when order doesn't matter.
 
 /*1)
 There are N stairs, a person standing at the bottom wants to reach the top. The person can climb either 1 stair or 2 stairs
