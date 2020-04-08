@@ -27,7 +27,7 @@ int getCount_tabulation(int coins[], int sum, int n){   //O(sum*n)
     //Note :- int tab[n+1][sum+1]; will not lead to correct result
     
     //Base Case
-    for(int i=0;i<=sum;++i) tab[0][i] = 1;  //when sum is 0
+    for(int i=0;i<=n;++i) tab[0][i] = 1;  //when sum is 0
     for(int i=1;i<=sum;++i) tab[i][0] = 0;  //when number of coins is 0
     
     for(int i=1;i<=sum;++i){
