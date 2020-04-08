@@ -62,7 +62,30 @@ int main() {
 
 
 //APPLICATIONS :- 
+//Problem 1 is not of coin change but used to show difference between 2 problems when order DOES & DOESN'T matter.
+//Note **differences** between Problem 1 & Problem 2
+
 /*1)
+There are N stairs, a person standing at the bottom wants to reach the top. The person can climb either 1 stair or 2 stairs
+at a time. Count the number of ways, the person can reach the top (order does matter).
+*/
+long long countWays(int m){
+    
+    long long dp[m+1];
+    dp[0] = 1;
+    
+    
+    for(int i=1;i<=m;++i){
+        dp[i] = dp[i-1];
+        if(i-2>=0) dp[i] += dp[i-2];
+        dp[i] %= mod;
+    }
+    
+    return dp[m];
+    
+}
+
+/*2)
 There are N stairs, and a person standing at the bottom wants to reach the top. The person can climb either 
 1 stair or 2 stairs at a time. Count the number of ways, the person can reach the top (order does not matter).
 Note: Order does not matter means for n=4 {1 2 1},{2 1 1},{1 1 2} are considered same.
@@ -85,7 +108,7 @@ long long countWays(int m){
     return dp[m][2];
 }
 
-/*2) 
+/*3) 
 Given a positive integer N, the task is to find the number of different ways in which N can be written as a 
 sum of two or more positive integers.
 */
