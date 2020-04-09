@@ -4,17 +4,19 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int maxSubarraySum(int arr[], int n){
+int maxSubarraySum(int arr[], int n){   //** DP Solution : O(n) **
     
     //kadane Algorithm : Largest Sum Contigous Subarray
-    int max_so_far = arr[0];
-    int max_ending_here = arr[0];
+    int dp[n];
+    int dp[0] = arr[0];
     
     for(int i=1;i<n;++i){
-        max_ending_here = max(arr[i], max_ending_here+arr[i]);
-        max_so_far = max( max_ending_here, max_so_far);
+        dp[i] = max(arr[i], dp[i-1]+arr[i]);
     }
-    return max_so_far;
+    //Largest sum contigous subarray is the maximum value in dp[] array
+    int result = INT_MIN;
+    for(int i=0;i<n;++i) result = max(result, dp[i]);
+    return result;
 }
 
 int main()
