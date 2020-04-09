@@ -1,4 +1,90 @@
 //You are given array A of size n. You need to find the maximum-sum sub-array with the condition 
 //that you are allowed to skip at most one element.
 
-//ANOTHER APPLICATION OF KADANE
+//Note :- APPLICATION OF KADANE
+
+
+/*Approach 1: O(n^2)
+Try removing each element one by one and then finding kadane and return the maximum of them all.
+*/
+
+int kadane(vector<int> arr, int n){ //O(n)
+    
+    int dp[n];
+    dp[0] = arr[0];
+    
+    for(int i=1;i<n;++i){
+        dp[i] = max(arr[i], arr[i]+dp[i-1]);
+    }
+    
+    int result INT_MIN;
+    for(int i=0;i<n;++i) result = max(result, dp[i]);
+    return result;
+}
+
+
+int maxSumSubarray(int A[], int n)  //O(n^2)
+{
+    //Your code here
+    vector<int> whole;
+    for(int i=0;i<n;++i) whole.push_back(A[i]);
+    int result = kadane(whole, n);    //considering case when no elemnet needs to be removed to find maximum sum subarray
+    for(int i=0;i<n;++i){   
+        vector<int> arr;
+        for(int j=0;j<n;++j){
+            if(i!=j) arr.push_back(A[j]);
+        }
+        result = max(result, kadane(arr, n-1));
+    }
+    return result;
+}
+
+/*Approach 2: O(n)
+If element removal condition is not applied, we can solve this problem using Kadane’s algorithm but here one element can be
+removed also for increasing maximum sum. This condition can be handled using two arrays, forward and backward array, 
+these arrays store the current maximum subarray sum from starting to ith index, and from ith index to ending respectively.
+In below code, two loops are written, first one stores maximum current sum in forward direction in fw[] and other loop 
+stores the same in backward direction in bw[]. Getting current maximum and updation is same as Kadane’s algorithm.
+Now when both arrays are created, we can use them for one element removal conditions as follows, at each index i, 
+maximum subarray sum after ignoring i’th element will be fw[i-1] + bw[i+1] so we loop for all possible i values and
+we choose maximum among them.
+Total time complexity and space complexity of solution is O(N)
+*/
+
+void kadane(int arr[], int n, int dp[]){ //O(n)
+    dp[0] = arr[0];
+    for(int i=1;i<n;++i){
+        dp[i] = max(arr[i], arr[i]+dp[i-1]);
+    }
+}
+
+void kadaneR(int arr[], int n, int dp[]){
+    dp[n-1] = arr[n-1];
+    for(int i=n-2;i>=0;--i){
+        dp[i] = max(arr[i], arr[i]+dp[i+1]);
+    }
+}
+
+
+int maxSumSubarray(int A[], int n)  //O(n^2)
+{
+    
+    //forward array :
+    int dp[n];  //dp[i] stores maximum sum subarray from 0 to i
+    kadane(A, n, dp);
+    
+    //backward array :
+    int dpR[n]; //dp[i] stores maximum sum subarray from i to last index
+    kadaneR(A, n, dpR);
+
+    int result = INT_MIN;   
+    //to consider case when no element is removed
+    for(int i=0;i<n;++i) result = max(result, dp[i]);
+    
+    for(int i=1;i<n-1;++i){
+        int curr = dp[i-1] + dpR[i+1];
+        result = max(result, curr);
+    }
+    
+    return result;
+}
