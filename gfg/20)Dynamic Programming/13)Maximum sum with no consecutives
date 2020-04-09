@@ -5,27 +5,41 @@ using namespace std;
 
 //Naive recursion
 int maxSum(int arr[], int n){   //O(2^n)
-    if(n==1) return arr[0];
-    if(n==2) return max(arr[0], arr[1]);
+    if(n==1) return max(0, arr[0]);
+    if(n==2) return max(0, max(arr[0], arr[1]));
     
     return max(arr[n-1]+maxSum(arr, n-2), maxSum(arr, n-1));
 }
 
 //DP solution
 int maxSum_tabulation(int arr[], int n){    //O(n) time
-
+    
+    //Handling corner case 1 :  when there is only 1 element in array		//**imp**
     if(n==1) return arr[0];
     
+    //Handling corner case 2 : when all elements are negative			//**imp**
+    bool flag = true;
+    int res = arr[0];
+    for(int i=1;i<n;++i){
+        if(arr[i]>-1){
+            flag = false;
+            break;
+        }
+        res = max(res, arr[i]);
+    }
+    if(flag) return (long long)res;
+  
     //dp[i] represents maximum sum that we can have by adding no 2 consecutive elements from 0 to i index
     int dp[n];
-    dp[0] = arr[0];
-    dp[1] = max(dp[0], arr[1]);
-    
+  
+    //base cases
+    dp[0] = max(0, arr[0]);			//to avoid negative elements
+    dp[1] = max(0, max(arr[0], arr[1]));
+  
     for(int i=2;i<n;++i){
         dp[i] = max(arr[i]+dp[i-2], dp[i-1]);
     }
-    
-    return dp[n-1];
+    return (long long)dp[n-1];
     
 }
 
