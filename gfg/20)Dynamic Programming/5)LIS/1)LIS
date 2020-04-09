@@ -14,7 +14,7 @@ such that all elements of the subsequence are sorted in increasing order
 #include <bits/stdc++.h>
 using namespace std;
 
-//2) DP solution is O(n^2) : Online solution
+//2) DP solution is O(n^2) : Online solution				**** RR ****
 //Any algorithm that can guarantee output of i-elements after processing i-th element, is said to be online algorithm.
 /*Approach :
 Let arr[0..n-1] be the input array and L(i) be the length of the LIS ending at index i such that arr[i] is the last element of the LIS.
