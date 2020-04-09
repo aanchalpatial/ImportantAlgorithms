@@ -1,0 +1,4 @@
+//You are given array A of size n. You need to find the maximum-sum sub-array with the condition 
+//that you are allowed to skip at most one element.
+
+//ANOTHER APPLICATION OF KADANE
