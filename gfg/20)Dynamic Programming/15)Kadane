@@ -26,3 +26,10 @@ int main()
   cout << maxSubarraySum(a, n) << endl;
   return 0;
     }
+    
+    
+//KADANE 2.0 :  ***imp***
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/13)Maximum%20sum%20with%20no%20consecutives
+
+
+
