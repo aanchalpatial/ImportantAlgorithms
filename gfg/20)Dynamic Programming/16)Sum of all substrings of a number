@@ -20,7 +20,7 @@ sumofdigit[3] = 4 + 34 + 234 + 1234
            = 4*4 + 10*(3 + 23 +123)
            = 4*4 + 10*(sumofdigit[2])
 In general, 
-sumofdigit[i]  =  (i+1)*num[i] + 10*sumofdigit[i-1]
+sumofdigit[i]  =  (i+1)*num[i] + 10*sumofdigit[i-1]                          //***** RRR *****
 Using above relation we can solve the problem in linear time. 
 */
 
