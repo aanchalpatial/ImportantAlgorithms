@@ -1,8 +1,10 @@
+//Also known as *** Kadane 2.0 ***
+
+
 #include <bits/stdc++.h>
 using namespace std;
 
 //Given an array find the maximum sum that we can have by adding no 2 consecutive elements.
-//Also known as Kadane 2.0
 
 //Naive recursion
 int maxSum(int arr[], int n){   //O(2^n)
