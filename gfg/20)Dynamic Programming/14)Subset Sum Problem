@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//1)
 //Given a set of non-negative integers as array, and a value sum, determine number of
 //subsets (out of 2^n possible subsets) of the given set such that their sum equal to given sum.
 
@@ -46,6 +47,70 @@ int main() {
     
 	return 0;
 }
+
+
+//2)
+//Given a set of numbers, check whether it can be partitioned into two subsets such that the sum of elements
+//in both subsets is same or not.
+
+/*Approach :
+Say sum of all elements in array is x. Then if it is possible to partition set into 2 subsets with equal sums then the sum of 
+each partition is definitely x/2 .
+So problem reduces to find if it is possible for a subset of given array element to have sum = x/2 which is almost same as ABOVE problem.
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool partition(int arr[], int n, int sum){
+    
+    //Naive recursion
+    // if(n==0) return (sum==0)?true:false;
+    // return (partition(arr, n-1, sum-arr[n-1])|| partition(arr, n-1, sum));
+    
+    //DP solution
+    bool dp[n+1][sum+1];
+    dp[0][0] = true;
+    dp[0][1] = false;
+    
+    for(int i=1;i<=n;++i){
+        for(int j=1;j<=sum;++j){
+            dp[i][j] = dp[i-1][j];
+            if(j-arr[i-1]>=0) dp[i][j] = dp[i][j] || dp[i-1][j-arr[i-1]];
+        }
+    }
+    return dp[n][sum];
+    
+}
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int size;
+	    cin>>size;
+	    int arr[size];
+	    int sum = 0;
+	    for(int i=0;i<size;++i){
+	        cin>>arr[i];
+	        sum += arr[i];
+	    }
+	    if(sum%2==1) cout<<"NO";
+	    else {
+	        if(partition(arr, size, sum/2)) cout<<"YES";
+	        else cout<<"NO";
+	    }
+	    
+	    cout<<endl;
+	}
+	return 0;
+}
+
 
 
 
