@@ -53,7 +53,7 @@ int eggDrop_tabulation(int e, int f){
         for(int j=2;j<=f;++j){
             dp[i][j] = INT_MAX;
             for(int x=1;x<=j;++x){
-                int curr = 1+max(dp[i-1][x-1], dp[i][j-x]);
+                int curr = 1+max(dp[i-1][x-1], dp[i][j-x]);		//max() due to consideration of worst case
                 dp[i][j] = min(dp[i][j], curr);
             }
         }
