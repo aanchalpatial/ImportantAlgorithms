@@ -2,9 +2,66 @@
 //Given a sequence of matrices, find the most efficient way to multiply these matrices together.
 //The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplication.
 
-/*APPROACH :
+/*IDEAS :
 Because matrix multiplication is associative, no matter how we parenthesize the product, the result will be the same.
 However, the order in which we parenthesize the product affects the number of simple arithmetic operations needed to
 compute the product, or the EFFICIENCY overall.
-
 */
+
+
+//1)
+//DP solution with memoization
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int mem[105][105];  //since maximum size of array is atmost 100
+
+int matrixMul(int arr[], int l, int r){
+    
+    if(mem[l][r]!=-1) return mem[l][r];
+    if(l==r) return 0;
+    //for a matrix chain of length n, there are n-1 ways
+    //in which we can place first set of parenthesis
+    int result = INT_MAX;
+    for(int i=l;i<r;++i){
+        int curr = matrixMul(arr, l, i) + matrixMul(arr, i+1, r) + (arr[l-1]*arr[i]*arr[r]);
+        result = min(result, curr);
+    }
+    mem[l][r] = result;
+    return mem[l][r];
+
+}
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    for(int i=0;i<105;++i){
+	        for(int j=0;j<105;++j){
+	            mem[i][j] = -1;
+	        }
+	    }
+	    int size;
+	    cin>>size;
+	    int arr[size];
+	    for(int i=0;i<size;++i){
+	        cin>>arr[i];
+	    }
+	    cout<<matrixMul(arr, 1, size-1)<<endl;
+	    //cout<<matrixMul_tabulation(arr, size)<<endl;
+	}
+	return 0;
+}
+
+
+
+//2)
+//DP solution with tabulation is bit tricky to implement. 
+//It's implementation is somewhat like optimal strategy to win question : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/10)Optimal%20Game%20Strategy
+//Tabulation solution can be found at : https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/
