@@ -70,6 +70,8 @@ int main() {
 
 
 /*Another Related But Different Problem :
+In the above problem we have to find optimal stratergy to win BUT if we only have to find stratergy to win the complexity of
+problem reduces.
 Your thoughts on the strategy when the user wishes to only win instead of winning with the maximum value.
 Like above problem, number of coins is even. Can Greedy approach work quite well and give an optimal solution? : YES
 Please see : geeksforgeeks.org/coin-game-of-two-corners-greedy-approach/
