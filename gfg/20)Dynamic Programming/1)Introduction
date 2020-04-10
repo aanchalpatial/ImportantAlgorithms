@@ -11,8 +11,22 @@ there is no point storing the solutions if they are not needed again
 //*** How to solve a Dynamic Programming Problem ? : https://www.geeksforgeeks.org/solve-dynamic-programming-problem/ ***
 
 
-//1) memoization/Top Down : easy to implement, table entries are filled only on demand 
-//2)tabulation/ Bottom Up : faster due to no recursive overheads, all table entries are filled one by one 
+//1) memoization/Top Down : easy to implement, table entries are filled only on demand , faster than tabulation when state space is sparse
+//2)tabulation/ Bottom Up : faster due to no recursive overheads, all table entries are filled one by one , faster than memoization when
+    state space is dense 
+
+/*How would you CHOOSE BETWEEN Memoization and Tabulation in Dynamic Programming?
+Recursion with memoization is better whenever the state space is sparse -- in other words, if you don't actually need to 
+solve all smaller subproblems but only some of them. In such cases the recursive implementation can be much faster. 
+Recursion with memoization is also better whenever the state space is irregular, i.e., whenever it is 
+hard to specify an order of evaluation iteratively.
+
+Iterative solutions are better whenever the state space is dense and regular. If you need to compute the solutions
+to all the subproblems anyway, you may as well do it without all the function calling overhead. An additional 
+advantage of the iterative approach is that you are often able to save memory by forgetting the solutions to subproblems 
+you won't need in the future. E.g., if you only need row k of the table to compute row k+1, 
+there is no need to remember row k-1 anymore.
+*/
 
 //time of naive recursion solution of fibonacci : O(2^n)
 //time of recursion+memoization : O(n)
