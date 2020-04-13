@@ -1,0 +1,8 @@
+1) Add these lines before class definition of every solution to improve efficiency
+
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
