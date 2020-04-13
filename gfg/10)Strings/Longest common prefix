@@ -1,0 +1,102 @@
+//Write a function to find the longest common prefix string amongst an array of strings.
+
+//Fast I/O
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+
+class TrieNode{
+    public:
+    TrieNode *child[26];
+    bool isEnd;
+    TrieNode(){
+        isEnd = false;
+        for(int i=0;i<26;++i) child[i] = NULL;
+    }
+};
+
+void insertTrie(TrieNode *root, string str){
+    TrieNode *curr = root;
+    for(int i=0;i<str.size();++i){
+        if(curr->child[str[i]-'a']==NULL) curr->child[str[i]-'a'] = new TrieNode();
+        if(i==str.size()-1) curr->isEnd = true;
+        curr = curr->child[str[i]-'a'];
+    }
+    //curr->isEnd = true;
+}
+
+
+string intersectionOf(string str1, string str2){
+    int size = min(str1.size(), str2.size());
+    string result = "";
+    for(int i=0;i<size;++i){
+        if(str1[i]==str2[i]) result += str1[i];
+        else break;
+    }
+    return result;
+}
+
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        
+        if(strs.size()==0) return "";
+        
+        //Method 1) : Using Trie
+        //Time is O(mn), 
+        //where N = Number of strings
+        //M = Length of the largest string
+        TrieNode *root = new TrieNode();
+        for(int i=0;i<strs.size();++i){
+            if(strs[i]=="") return "";
+            insertTrie(root, strs[i]);
+        }
+        TrieNode *curr = root;
+        string result = "";
+        while(true){
+            int cnt=0;
+            int childIndex;
+            for(int i=0;i<26;++i) {
+                if(curr->child[i]!=NULL) {
+                    ++cnt;
+                    childIndex = i;
+                }
+            }
+            if(cnt==0) break;
+            else if(cnt==1){
+                result += 'a'+childIndex;
+            }else if(cnt>1) break;
+            if(curr->isEnd) break;
+            curr = curr->child[childIndex];
+        }
+        return result;
+        
+        
+        //Method 2) : word by word matching
+        //Time is O(mn)
+        // string result = strs[0];
+        // for(int i=1;i<strs.size();++i){
+        //     result = intersectionOf(result, strs[i]);
+        // }
+        // return result;
+        
+        //Methos 3) : character by character matching
+        //Time is O(mn)
+        /*Better than method 2 because :-
+        Suppose you have the input strings as- “geeksforgeeks”, “geeks”, “geek”, “geezer”, “x”.
+        Now there is no common prefix string of the above strings. By the “Word by Word Matching” algorithm discussed in Set 1, we come to 
+        the conclusion that there is no common prefix string by traversing all the strings. But if we use this algorithm, then in the 
+        first iteration itself we will come to know that there is no common prefix string, as we don’t go further to look for the second 
+        character of each strings.
+        This algorithm has a huge advantage when there are too many strings.
+        */
+        
+        //Method 4) : Divide & conquer  : O(mn)
+        //Method 5) : Binary Search : O(mnlogn) time
+        
+    }
+};
