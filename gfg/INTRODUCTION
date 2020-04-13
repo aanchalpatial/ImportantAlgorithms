@@ -18,3 +18,26 @@ recursive function without any auxiliary data structures.
 Is it in-place? Yes.
 Is it constant space? No, because of recursion stack.
 
+//3) Fast I/O in c++
+-> added the two lines below in main()
+ios_base::sync_with_stdio(false); 
+cin.tie(NULL); 
+-> use "\n" instead of endl
+
+//4) Boost Library
+Boost libraries are intended to be widely useful, and usable across a broad spectrum of applications. 
+For example, they are helpful for handling large numbers having range beyond the long long, long double data type (2^64) in C++.
+-> We can use any precision with the help of cpp_int data type if we are not sure about how much precision is needed in future.
+It automatically converts the desired precision at the Run-time.
+#include <boost/multiprecision/cpp_int.hpp> 
+using namespace boost::multiprecision; 
+cpp_int boost_factorial(int num) 
+{ 
+    cpp_int fact = 1; 
+    for (int i=num; i>1; --i)     
+        fact *= i; 
+    return fact; 
+}
+
+
+
