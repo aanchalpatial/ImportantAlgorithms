@@ -18,3 +18,7 @@ int main(){
   cout<<"NO";
   return 0;
   }
+  
+  
+  //It is possible to solve above problem in O(n) using hashing irrespective of the fact that whether array is sorted or not.
+  //There is another O(n) solution if array is sorted, then we can use 2 pointer approach as well.
