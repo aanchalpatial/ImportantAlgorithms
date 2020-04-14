@@ -1,5 +1,6 @@
 //find the sum of contiguous subarray within a one-dimensional array of numbers which has the largest sum.
 //kadane Algorithm : 0(n)
+//Simple idea of the Kadane’s algorithm is to look for all positive contiguous segments of the array
 
 #include<bits/stdc++.h>
 using namespace std;
