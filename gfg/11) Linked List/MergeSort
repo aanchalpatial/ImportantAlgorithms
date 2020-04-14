@@ -5,7 +5,7 @@ Therefore merge operation of merge sort can be implemented WITHOUT EXTRA SPACE f
 Merge sort accesses data sequentially and the need of random access is low.
 */
 
-//Merge Function for linked list: O(m+n) time & O(1) space
+//Merge Function for linked list: O(max(m,n)) time & O(m+n) space
 //We maintain 2 pointers head & tail
 Node *mergeSorted(Node *head1, Node *head2){
     if(head1==NULL) return head2;
@@ -41,6 +41,24 @@ Node *mergeSorted(Node *head1, Node *head2){
     
     return result;
 }
+
+// O(max(m+n)) time & O(1) space    : *** IN-PLACE ***
+ListNode* mergeSorted(ListNode* l1, ListNode* l2) {   
+        
+        if(l1==NULL) return l2;
+        else if(l2==NULL) return l1;
+        
+        if(l1->val<=l2->val) {
+            l1->next = mergeSorted(l1->next, l2);
+            return l1;
+        }else{
+            l2->next = mergeSorted(l1, l2->next);
+            return l2;
+        }
+        
+    }
+
+
 void mergeSortLinkedList(Node **headRef){
     Node* head = *headRef; 
     
