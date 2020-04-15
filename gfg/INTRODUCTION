@@ -40,4 +40,33 @@ cpp_int boost_factorial(int num)
 }
 
 
+//5) EPSILON
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    /*Epsilon is machine dependent constant such that epsilon is the smallest possible value for 1+epsilon != 1
+    OR
+    Machine Epsilon is a machine-dependent floating point value that provides an upper bound on 
+    relative error due to rounding in floating point arithmetic. 
+    Mathematically, for each floating point type, it is equivalent to the difference between 1.0 and 
+    the smallest representable value that is greater than 1.0.*/
+    
+    //finding machine epsilon
+    
+    float e = 0.1;
+    float prev_epsilon;
+    while(1+e!=1){
+        prev_epsilon = e;
+        e/=2;
+    }
+    cout<<"Epsilon for this machine is : "<<prev_epsilon<<endl;
+    
+	return 0;
+}
+
+
+
+
 
