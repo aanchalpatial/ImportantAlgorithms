@@ -1,4 +1,4 @@
-//1) O(n) time
+//1) O(square_root(n)) time 
 //We can check till √n because a larger factor of n must be a multiple of smaller factor that has been already checked.
 bool isPrime(int N)
 {
@@ -14,7 +14,7 @@ bool isPrime(int N)
 
 
 //2) O(square_root(n)) time 
-//** more efficient **
+//even though time is same as method 1 but this method is still more efficient.
 //All integers can be expressed as (6k + i) for some integer k and for i = -1, 0, 1, 2, 3, or 4.
 //i = 0, 2, 3, 4 are not primes. 2 divides (6k + 0), (6k + 2), (6k + 4); and 3 divides (6k + 3).
 //i = -1 & 1 are primes. All primes are of the form 6k ± 1
@@ -36,3 +36,6 @@ bool isPrime(int N)
     return true;
 }
 
+
+//Note :- There are another algorithms with better complexity than square root of n such as AKS Primality Test & many
+          probablistic algorithms as well such as Miller–Rabin primality test.
