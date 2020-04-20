@@ -1,4 +1,72 @@
-//Construct BST from its given level order traversal
+/*note : in construction of binary tree, we need inorder & one of preorder or postorder to create required binary tree
+And with BST even though we can apply above generalized approach but we have other linear time approaches specially for 
+BST construction.
+We will study all of them below.
+*/
+
+//VARIATIONS :-
+
+//1) Given random set a keys or inorder traversal, make a balanced BST
+/*Approach : 
+Step 1 : when random set of key is given sort them first. if instead inorder traversal is given it is already sorted for a BST
+Step 2 : find median , make it root & recurr for left subarray & right subarray.
+*/
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//2) Given either preorder or postorder, make BST 
+/*
+
+-> Approach 1 : we can use the same approach used in CHECK IF BST problem to create a BST ( https://github.com/ap0996/ImportantAlgori
+thms/blob/master/gfg/15)%20Binary%20Search%20Tree/6)Check%20If%20BST ) 
+O(n) time complexity
+
+-> Approach 2 : iterative solution using stacks : LEFT !!!
+O(n) time
+*/
+
+//2A) Approach 1 
+int index2;
+TreeNode *createBinarySearchTree2(vector<int> preorder, int min, int max){
+
+	if(index2==preorder.size()) return NULL;
+
+	if(preorder[index2]>min&&preorder[index2]<max){
+		TreeNode *root = new TreeNode(preorder[index2++]);
+
+		root->left = createBinarySearchTree2(preorder, min, root->val);
+		root->right = createBinarySearchTree2(preorder, root->val, max);
+
+		return root;
+	}
+	return NULL;
+}
+TreeNode* bstFromPreorder(vector<int>& preorder) {
+
+	int n = preorder.size();
+
+	//method : using range min-max approach(same approach used in check if BST)
+	//O(n) time 
+	index2 = 0;
+	return createBinarySearchTree2(preorder, INT_MIN, INT_MAX);   
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//3) Given either level order traversal, make BST 
+/*
+-> Approach 1 : recursion
+O(n) time
+
+-> Approach 2 : queue + range approach & invloves modification of node
+O(n) time 
+*/
 /*
 Input : {7, 4, 12, 3, 6, 8, 1, 5, 10}
 Output : BST: 
@@ -12,9 +80,7 @@ Output : BST:
 
 */
 
-//2 Different Approaches:  Recursive & Range Approach
-
-//1) Recursive Approach
+//3A) Recursive Approach
 /*Approach:
 1) First pick the first element of the array and make it root.
 2) Pick the second element, if it’s value is smaller than root node value make it left child,
@@ -46,7 +112,7 @@ Node* constructBst(int arr[], int n)
 }
 
 
-//2) Recursive Approach
+//3B) Range Approach
 /*Approach :
 The idea is to make a struct element NodeDetails which contains a pointer to the node , minimum data and maximum data of the ancestor.
 Push the root node to the queue of type NodeDetails.
@@ -85,7 +151,7 @@ Node *levelOrder(Node *root, int arr[], int n){
             
             temp->left = newNode;
         }
-        //NOT else if
+        //NOT else, BUT use if
         if(index<n&&temp->data<arr[index]&&arr[index]<tempMax){
             Node *newNode = new Node(arr[index]);
             ++index;
