@@ -43,3 +43,13 @@ int main() {
 	cout<<endl;
 	return 0;
 }
+
+
+
+
+//Note :- There is one more approach to segregate 3 types of element in O(n) time & O(1) space and in 2 TRAVERSALS of array
+/*Counting Sort :- First, iterate the array counting number of 0's, 1's, and 2's, 
+then overwrite array with total number of 0's, then 1's and followed by 2's.
+*/
+
+
