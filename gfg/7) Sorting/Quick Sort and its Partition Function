@@ -15,6 +15,10 @@ using namespace std;
 
 //1): Naive solution : 0(n) time & 0(n) space (takes 3 traversals of given array). Stable.
 void naivePartition(int arr[], int l, int h){
+
+    //put all elements smaller or equal than pivot in an temp array
+    //then put all elements greater than pivot in temp array
+    //copy data from temp array back to original array
     
 }
 
