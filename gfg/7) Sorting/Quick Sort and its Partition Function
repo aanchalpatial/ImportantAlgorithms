@@ -51,10 +51,10 @@ int hoarePartition(int arr[], int l, int h){
     while(true){
         do{
             ++i;
-        }while(arr[i]<piv);
+        }while(arr[i]<piv);         //*** it has to be <, it can't be <= ***
         do{
             --j;
-        }while(arr[j]>piv);
+        }while(arr[j]>piv);         //*** it has to be >, it can't be >= *****
         
         if(i>=j) return j;
         swap(arr[i], arr[j]);
