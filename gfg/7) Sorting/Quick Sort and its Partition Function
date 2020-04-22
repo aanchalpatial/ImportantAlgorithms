@@ -103,7 +103,7 @@ int main()
 //1): Find K-th smallest element in array
 /* 5 WAYS TO FIND Kth SMALLEST ELEMENT:-
 1)Sorting                   : O(nlogn)
-2)QuickSelect               : O(n^2) in worst case & O(n) in average case
+2)QuickSelect               : O(n^2) in worst case & O(n) in average case. Note : O(n) time is ensured if we use randomized pivot
 3)Augmented BST             : O(logn)
 4)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
 5)Median Order Statistics   : O(n)
