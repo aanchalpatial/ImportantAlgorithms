@@ -1,3 +1,5 @@
+//1) IMPLEMENT pow() : 2 Approaches of O(n) & O(logn) time
+
 class Solution {
 public:
     
@@ -30,5 +32,36 @@ public:
         double result = power(x, m);
         return (n>0)?result:(1/result);
         
+    }
+};
+
+
+
+//2) IMPLEMENT sqrt() : 2 Approaches of O(square_root(n)) & O(logn) time
+
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        
+        if(x==0||x==1) return x;
+        
+        //METHOD 1 : linear search : O(square_root(n)) time
+        // for(long i=1;i<=x/2;++i){
+        //     if((i+1)*(i+1)>x&&i*i<=x) return i;
+        // }
+        // return -1;
+        
+        //METHOD 2 : binary search  : O(logn) time
+        long long l = 1, h = x/2;
+        while(l<=h){
+            long mid = l+(h-l)/2;
+            long num = mid*mid;
+            long next_num = num + 2*mid + 1;
+            if(next_num>x&&num<=x) return mid;
+            else if(num<x) l=mid+1;
+            else h = mid-1;
+        }
+        return -1;
     }
 };
