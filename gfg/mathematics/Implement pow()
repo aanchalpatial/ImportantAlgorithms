@@ -1,0 +1,34 @@
+class Solution {
+public:
+    
+    double power(double x, int m){
+        if(m==0) return 1;
+        else {
+            double temp = power(x, m/2);
+            if(m%2==0) return temp*temp;
+            else return x*temp*temp;
+        } 
+    }
+    
+    
+    double myPow(double x, int n) {
+        
+        if(x==0.0) return 0.0;
+        
+        //METHOD 1 : O(n) time          
+//         int m = abs(n);          //to handle negative powers later        
+//         double result = 1.0;
+//         while(m>0){
+//             result *= x;
+//             --m;
+//         }
+//         return (n>0)?result:1/result;
+        
+        //METHOD 2 : O(logn) time
+        //recursive solution
+        int m = abs(n);
+        double result = power(x, m);
+        return (n>0)?result:(1/result);
+        
+    }
+};
