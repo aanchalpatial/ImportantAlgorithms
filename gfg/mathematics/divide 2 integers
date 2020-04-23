@@ -1,0 +1,62 @@
+/*
+Given two integers dividend and divisor, divide two integers without using multiplication, division and mod operator.
+
+Return the quotient after dividing dividend by divisor.
+
+The integer division should truncate toward zero, which means losing its fractional part. 
+For example, truncate(8.345) = 8 and truncate(-2.7335) = -2.
+*/
+
+class Solution {
+public:
+    int divide(int dividend, int divisor) {
+        
+        
+        //division without {/, *, %} operators
+        
+        //corner cases & handling overflow
+        if(dividend==divisor) return 1;
+        if(abs(dividend)==abs(divisor)) return -1;
+        if(divisor==1) return dividend;
+        if(divisor==-1){
+            if(dividend==INT_MIN) return INT_MAX;
+            else if(dividend<0) return -1*dividend;
+            else return dividend;
+        }
+        
+        
+        
+        //method 1 : O(dividend) time & O(1) space
+        //hint :- use multiplication        
+        // int a = abs(dividend);
+        // int b = abs(divisor);
+        // int q = 0;
+        // while(a-b>=0){
+        //     a-=b;
+        //     if(q==INT_MAX) return INT_MAX;
+        //     ++q;
+        // }
+        // return ((dividend>0&&divisor>0)||(dividend<0&&divisor<0))?q:-1*q;
+        
+        
+        //method 2 : bit manipulation
+        //O(log(dividend)) time & O(1) space
+        //https://www.youtube.com/watch?v=htX69j1jf5U
+        //RRRR !!!!
+        long a = abs(dividend);
+        long b = abs(divisor);
+        int q = 0;
+        while(a-b>=0){
+            int x = 0;
+            while(a-(b<<x)>=0){     
+                ++x;
+            }
+            --x;
+            cout<<x<<", ";
+            q += 1<<x;
+            a -= b<<x;
+        }
+       return ((dividend>0&&divisor>0)||(dividend<0&&divisor<0))?q:-1*q;
+        
+    }
+};
