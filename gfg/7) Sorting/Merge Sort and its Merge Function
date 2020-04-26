@@ -99,7 +99,8 @@ void merge(int arr[], int l, int m, int r)
 }
 
 
-
+//*** Interesting fact *** : we have a heap based solution for merge k different sorted array which works better than 
+//both of the above solution. : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/16)Heap/7)Merge%20K%20Sorted%20Arrays
 
 
 
