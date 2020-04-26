@@ -1,4 +1,6 @@
+//1) naive approach
 //Merge function used in merge sort
+//O(m+n) time & O(m+n) space
 void merge(int arr[], int l, int h, int m){
     int size1 = m-l+1;
     int size2 = h-m;
@@ -33,6 +35,73 @@ void merge(int arr[], int l, int h, int m){
     }
     
 }
+
+
+//2) space efficient approach
+//O(m+n) time & O(1) space
+//https://www.geeksforgeeks.org/merge-sort-with-o1-extra-space-merge-and-on-lg-n-time/?ref=rp
+void merge(int arr[], int l, int m, int r)
+{
+//naive : O(m+n) time & O(m+n) space
+     
+     //method 2 : merge 2 sorted arrays in constant time
+     //O(m+n) time & O(1) space
+     /*
+     we will use a mathematics trick to store 2 values at one index
+     say we have to store x & y at index i of arr
+     then first we have to find an element greater than x & y say z
+     then arr[i] = x + y*z, then arr[i]%z will give x &
+     arr[i]/z will give y
+     */
+     //first we have to find an element which is greter than any array element
+     int max_num = arr[l];
+     for(int i=l;i<=r;++i){
+         max_num = max(max_num, arr[i]);
+     }
+     ++max_num;
+     
+     int i = l, j = m+1;
+     int k = l;     //sorted element index
+     while(i<=m&&j<=r){
+         //say in our mathematics trick x be original element
+         // & y be sorted element & z will be max_num
+         int left_original_ele = arr[i]%max_num;
+         int right_original_ele = arr[j]%max_num;
+         if(left_original_ele<=right_original_ele){
+             arr[k] = arr[k] + left_original_ele*max_num;
+             ++i;
+         }else {
+             arr[k] = arr[k] + right_original_ele*max_num;
+             ++j;
+         }
+         ++k;
+     }
+     
+     while(i<=m){
+         int original_ele = arr[i]%max_num;
+         arr[k] = arr[k] + original_ele*max_num;
+         ++i;
+         ++k;
+     }
+     
+     
+     while(j<=r){
+         int original_ele = arr[j]%max_num;
+         arr[k] = arr[k] + original_ele*max_num;
+         ++j;
+         ++k;
+     }
+     
+     for(int i=l;i<=r;++i){
+         arr[i] = arr[i]/max_num;
+     }
+     
+}
+
+
+
+
+
 
 //**** 2 APPLICATIONS of merge function of mergesort *****
 //1) INTERSECTION & UNION OF 2 SORTED ARRAY 
