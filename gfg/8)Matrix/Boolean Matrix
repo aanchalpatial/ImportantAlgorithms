@@ -1,40 +1,86 @@
 //Given a boolean matrix mat[r][c] of size r X c, modify it such that if a matrix 
-//cell mat[i][j] is 1 (or true) then make all the cells of ith row and jth column as 1.
+//cell mat[i][j] is 0 (or true) then make all the cells of ith row and jth column as 0.
 
-/*1) Create two temporary arrays row[M] and col[N]. Initialize all values of row[] and col[] as 0.
+
+
+
+class Solution {
+public:
+    void setZeroes(vector<vector<int>>& matrix) {
+        
+        //method 1 : O(mn) time & O(mn) space   -> 80 %
+//         vector<vector<int>> result;
+//         result = matrix;
+        
+//         for(int i=0;i<matrix.size();++i){
+//             for(int j=0;j<matrix[i].size();++j){
+//                 if(matrix[i][j]==0){
+//                     //set ith row to 0
+//                     for(int p=0;p<result[0].size();++p) result[i][p] = 0;
+                    
+//                     //set jth row to 0
+//                     for(int p=0;p<result.size();++p) result[p][j] = 0;
+//                 }
+//             }
+//         }
+//         for(int i=0;i<matrix.size();++i){
+//             for(int j=0;j<matrix[i].size();++j){
+//                 matrix[i][j] = result[i][j];
+//             }
+//         }
+        
+        //method 2 : O(mn) time & O(m+n) space  -> 89 %
+        /*1) Create two temporary arrays row[M] and col[N]. Initialize all values of row[] and col[] as 0.
 2) Traverse the input matrix mat[M][N]. If you see an entry mat[i][j] as true, then mark row[i] and col[j] as true.
 3) Traverse the input matrix mat[M][N] again. For each entry mat[i][j], check the values of row[i] and col[j]. 
-   If any of the two values (row[i] or col[j]) is true, then mark mat[i][j] as true.*/
-
-void booleanMatrix(int r, int c, int a[SIZE][SIZE])
-{
-    
-    int row[r], col[c];
-    memset(row, 0, sizeof(row));
-    memset(col, 0, sizeof(col));
-    
-    for(int i=0;i<r;++i){
-        for(int j=0;j<c;++j){
-            if(a[i][j] == 1) {
-                row[i] = 1;
-                col[j] = 1;
+   If any of the two values (row[i] or col[j]) is true, then mark mat[i][j] as true.
+*/
+        // unordered_set<int> zeroRows;
+        // unordered_set<int> zeroColumns;
+        // for(int i=0;i<matrix.size();++i){
+        //     for(int j=0;j<matrix[i].size();++j){
+        //         if(matrix[i][j] == 0) {zeroRows.insert(i);zeroColumns.insert(j);}
+        //     }
+        // }
+        // for(int i:zeroRows){
+        //     for(int j=0;j<matrix[0].size();++j) matrix[i][j] = 0;
+        // }
+        // for(int j:zeroColumns){
+        //     for(int i=0;i<matrix.size();++i) matrix[i][j] = 0;
+        // }
+        
+        
+        //method 3 : O(mn) time & O(1) space    -> 98 %
+        bool zeroRow = false;
+        bool zeroColumn = false;
+        for(int i=0;i<matrix.size();++i) if(matrix[i][0]==0) {zeroColumn = true;break;}
+        for(int j=0;j<matrix[0].size();++j) if(matrix[0][j]==0) {zeroRow = true;break;}
+        
+        
+        for(int i=1;i<matrix.size();++i){
+            for(int j=1;j<matrix[i].size();++j){
+                if(matrix[i][j]==0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
             }
         }
-    }
-    
-    for(int i=0;i<r;++i){
-        for(int j=0;j<c;++j){
-            if( row[i] == 1 || col[j] == 1) {
-                a[i][j] = 1;
+        
+        for(int i=1;i<matrix.size();++i){
+            if(matrix[i][0]==0){
+                for(int j=1;j<matrix[i].size();++j) matrix[i][j] = 0;
             }
         }
-    }
-    
-    for(int i=0;i<r;++i){
-        for(int j=0;j<c;++j){
-            cout<<a[i][j]<<" ";
+        for(int j=1;j<matrix[0].size();++j){
+            if(matrix[0][j]==0){
+                for(int i=1;i<matrix.size();++i) matrix[i][j] = 0;
+            }
         }
-        cout<<endl;
+        
+        if(zeroColumn) for(int i=0;i<matrix.size();++i) matrix[i][0] = 0;
+        if(zeroRow) for(int j=0;j<matrix[0].size();++j) matrix[0][j] = 0;
+        
+        
+        
     }
-    
-}
+};
