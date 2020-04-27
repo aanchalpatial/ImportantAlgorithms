@@ -94,3 +94,8 @@ int main() {
       
     return 0;
 }
+
+
+//*** Interesting note *** : we can use the above method 2 with slight modification in checking conditions
+//to find LCA of BST in O(h) time
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/15)%20Binary%20Search%20Tree/10)%20LCA%20of%20BST
