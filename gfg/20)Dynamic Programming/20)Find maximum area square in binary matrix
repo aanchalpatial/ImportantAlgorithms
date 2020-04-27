@@ -3,4 +3,71 @@
 
 
 //Find Maximum area SQUARE in binary matrix have a dp based solution
+//https://www.geeksforgeeks.org/maximum-size-sub-matrix-with-all-1s-in-a-binary-matrix/
+/*
+1) Construct a sum matrix S[R][C] for the given M[R][C].
+     a)    Copy first row and first columns as it is from M[][] to S[][]
+     b)    For other entries, use following expressions to construct S[][]
+         If M[i][j] is 1 then
+            S[i][j] = min(S[i][j-1], S[i-1][j], S[i-1][j-1]) + 1
+         Else /*If M[i][j] is 0*/
+            S[i][j] = 0
+2) Find the maximum entry in S[R][C]
+3) Using the value and coordinates of maximum entry in S[i], print 
+   sub-matrix of M[][]
+*/
+
+int maxAreaSquare(vector<vector<char>> matrix){
+        int m = matrix.size();
+        int n = matrix[0].size();
+        
+        //consider every element to be the left-top most element of the square it can form
+        int dp[m][n];
+        //dp[i][j] represents the length of side of square it can form as being the left-top
+        //most element
+        
+        //base cases : 
+        for(int i=0;i<m;++i) dp[i][n-1] = 0;
+        for(int j=0;j<n;++j) dp[m-1][j] = 0;
+        
+        
+        //recursive idea is this :
+        for(int i=m-1;i>=0;--i){
+            for(int j=n-1;j>=0;--j){
+                //if a cell is 0 then it can't form a square as being the left-top most element
+                if(matrix[i][j]=='0') dp[i][j] = 0;
+                else{
+                    //when cell is 1
+                    
+                    //stores minimum out of 3 cell(i.e bottom , bottom-right & bottom cell)
+                    int min_side = INT_MAX; 
+                    for(int k=0;k<3;++k){
+                        int r = i+row[k], c = j+col[k];
+                        if(r<m&&c<n) min_side = min(min_side, dp[r][c]);
+                        else {
+                            //if either one of out of 3 fails square formation is not possible
+                            min_side = INT_MAX;
+                            break;
+                        }
+                    }
+                    if(min_side==INT_MAX) min_side = 0;
+                    dp[i][j] = 1+ min_side;
+                }
+            }
+        }
+        
+        //now find the maximum out of all dp[][] values
+        int result = 0;
+        
+        for(int i=0;i<m;++i){
+            for(int j=0;j<n;++j){
+                cout<<dp[i][j]<<" ";
+                result = max(result, dp[i][j]);
+            }
+            cout<<"\n";
+        }
+        
+        return (result*result);
+        
+    }
 
