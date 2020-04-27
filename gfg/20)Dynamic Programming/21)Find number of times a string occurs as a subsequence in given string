@@ -1,0 +1,59 @@
+//Given two strings S and T, find count of distinct occurrences of T in S as a sub-sequence.
+
+/*
+m: Length of str1 (first string)
+n: Length of str2 (second string)
+
+If last characters of two strings are same, 
+   1. We consider last characters and get count for remaining 
+      strings. So we recur for lengths m-1 and n-1. 
+   2. We can ignore last character of first string and 
+      recurse for lengths m-1 and n.
+else 
+If last characters are not same, 
+   We ignore last character of first string and 
+   recurse for lengths m-1 and n.
+*/
+
+//naive recursion
+void ssCount(string S, string T, int i, int j){
+    //cout<<"("<<i<<","<<j<<")\n";
+    if(i<0&&j>=0) return;
+    if(i==-1&&j==-1) {++result;return;}
+    
+    if(S[i]==T[j]) ssCount(S,T,i-1,j-1);
+    ssCount(S,T,i-1,j);
+}
+
+//dp with tabulation
+int ssCount_tabulation(string S, string T){
+    int m = S.size(), n = T.size();
+    int dp[m+1][n+1] = {{0}}; 
+    //dp[i][j] will represent the count of unique occurences of T of size j 
+    // in S of size i as a sunsequence
+    
+    //base cases :
+    for(int j=0;j<=n;++j) dp[0][j] = 0;
+    for(int i=0;i<=m;++i) dp[i][0] = 1; //*** this loop should come after above loop ***
+    
+    //tabulation
+    for(int i=1;i<=m;++i){
+        for(int j=1;j<=n;++j){
+            if(S[i-1]==T[j-1]) dp[i][j] = (dp[i-1][j-1] + dp[i-1][j])%1000000007;
+            else dp[i][j] = dp[i-1][j]%1000000007;
+        }
+    }
+    return dp[m][n]%1000000007;
+    
+}
+
+
+int subsequenceCount(string S, string T)
+{   
+    // int m = S.size(), n = T.size();
+    // result = 0;
+    // ssCount(S, T, m-1, n-1);
+    // return result;
+    
+    return ssCount_tabulation(S, T);
+}
