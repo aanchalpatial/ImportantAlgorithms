@@ -1,0 +1,6 @@
+//*** Interesting Note *** : Find maximum area RECTANGLE in binary matrix is solved using largest area under histogram approach.
+//Read here : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/12)Stack/Largest%20Rectangular%20Area%20in%20Histogram
+
+
+//Find Maximum area SQUARE in binary matrix have a dp based solution
+
