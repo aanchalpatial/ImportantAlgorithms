@@ -129,6 +129,6 @@ Do the previous two steps for all rows and print the maximum area of all the row
 
 //NOTE:- Given a binary matrix, find the maximum size SQUARE binary-sub-matrix with all 1’s
 //For this question we have a DP based solution
-//
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/20)Find%20maximum%20area%20square%20in%20binary%20matrix
 
 
