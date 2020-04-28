@@ -45,6 +45,42 @@ for(int i=0;i<size1;++i){
 string givenSumSubarrayExists = result1?"YES":"NO";
 cout<<givenSumSubarrayExists;
 
+/*
+*** Interesting Fact *** : 
+Subarray with zero or given sum problems can be solved in linear time using prefix sum + hashing.
+BUT
+Beyond a certain limit for the range of keys, unordered map has to map multiple values to same location( like chaining, etc).
+In such a case, search in the map may not be O(1). In this question, the keys can be very large (order of 10^10), 
+hence hash table will not be very handy.
+So instead we can use SLIDING WINDOW Approach to solve above questions instead.
+But LIMITATION of this approach is that it can't HANDLE NEGATIVE numbers.
+//method 3 : sliding window
+    //O(n) time & O(1) space
+    long sum = 0;
+    int l=0, r=0;
+    while(l<=r&&r<n){
+        //add element from right side of window till sum<s
+        while(sum<s&&r<n){
+            sum += arr[r];
+            ++r;
+        }
+      
+        //delete elements from left side of window till sum>s
+        while(sum>s&&l<=r) {
+            sum -= arr[l];
+            ++l;
+        }
+        
+        if(sum==s){
+            cout<<l+1<<" "<<r;
+            return;
+        }
+    }
+    cout<<"-1";
+*/
+
+
+
 
 
 //3) LONGEST SUBARRAY WITH GIVEN SUM: Naive is 0(n^2), do it in 0(n)
