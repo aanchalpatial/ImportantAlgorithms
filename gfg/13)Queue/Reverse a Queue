@@ -1,0 +1,50 @@
+void reverseQueue(queue<long long int> &q){
+    
+    if(q.size()==0) return;
+    int ele = q.front();
+    q.pop();
+    reverseQueue(q);
+    q.push(ele);
+}
+
+
+queue<long long int> rev(queue<long long int> q)
+{
+    //method 1 : using stacks
+    //O(n) time & O(n) space
+    // stack<ll> s;
+    // while(!q.empty()){
+    //     s.push(q.front());
+    //     q.pop();
+    // }
+    // while(!s.empty()){
+    //     q.push(s.top());
+    //     s.pop();
+    // }
+    // return q;
+    
+    //method 2 : using another queue
+    //O(n^2) time & O(n) space
+    // queue<ll> q2;
+    // while(!q.empty()){
+    //     int size = q.size();
+        
+    //     //pop and push size-1 elements from original queue
+    //     for(int i=0;i<size-1;++i){
+    //         ll ele = q.front();
+    //         q.pop();
+    //         q.push(ele);
+    //     }
+        
+    //     //last element has reached front
+    //     //remove this element from original queue and add it to another queue
+    //     q2.push(q.front());
+    //     q.pop();
+    // }
+    // return q2;
+    
+    //method 3 : using recursion
+    //O(n) time & O(1) space
+    reverseQueue(q);
+    return q;
+}
