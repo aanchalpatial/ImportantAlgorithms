@@ -101,12 +101,13 @@ int main()
 
 //**** _ APPLICATIONS of partition function of quicksort *****
 //1): Find K-th smallest element in array
-/* 5 WAYS TO FIND Kth SMALLEST ELEMENT:-
+/* 6 WAYS TO FIND Kth SMALLEST ELEMENT:-
 1)Sorting                   : O(nlogn)
-2)QuickSelect               : O(n^2) in worst case & O(n) in average case. Note : O(n) time is ensured if we use randomized pivot
-3)Augmented BST             : O(logn)
-4)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
-5)Median Order Statistics   : O(n)
+2)QuickSelect               : O(n^2) in worst case & O(n) in average case
+3)Inorder traversal of BST  : O(logn+k) 
+4)Augmented BST             : O(logn)
+5)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
+6)Median Order Statistics   : O(n)
 */
 //Naive solution is sort first & then output kth element of sorted array which is 0(nlogn)
 /*
