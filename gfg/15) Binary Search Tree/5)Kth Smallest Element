@@ -1,12 +1,13 @@
 //Design a data structure which perform below operations efficiently:
 //Search, Insert, Delete & Kth-Smallest Element
 
-/* 5 WAYS TO FIND Kth SMALLEST ELEMENT:-
+/* 6 WAYS TO FIND Kth SMALLEST ELEMENT:-
 1)Sorting                   : O(nlogn)
 2)QuickSelect               : O(n^2) in worst case & O(n) in average case
-3)Augmented BST             : O(logn)
-4)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
-5)Median Order Statistics   : O(n)
+3)Inorder traversal of BST  : O(logn+k) 
+4)Augmented BST             : O(logn)
+5)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
+6)Median Order Statistics   : O(n)
 */
 
 /*Note:- You can find kth smallest element in a given array in O(n) using QUICKSELECT 
@@ -19,7 +20,7 @@ Balanced BST all 4 operations are O(logn)
 */
 
 
-//Naive approach is do inorder traversal of BST & return kth element from traversal
+//*** Naive approach *** is do inorder traversal of BST & return kth element from traversal
 //Note: Inorder traversal of BST produces a sorted array
 //Time is O(h+k) : we recurr to the left most node and then print kth node
 int cnt = 0;
