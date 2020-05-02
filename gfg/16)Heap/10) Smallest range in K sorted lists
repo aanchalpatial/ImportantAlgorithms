@@ -1,0 +1,74 @@
+//Given K sorted lists of integers of size N each, find the smallest range that includes at least one element 
+//from each of the K lists. If more than one such range's are found, print the first such range found.
+
+//https://www.geeksforgeeks.org/find-smallest-range-containing-elements-from-k-lists/
+/*
+Algorithm:
+1)create an Min heap to store k elements, one from each array and a variable minrange initilized to a maximum value 
+and also keep a variable max to store the maximum integer.
+2)Initially put the first element of each element from each list and store the maximum value in max.
+3)Repeat the following steps until atleast one list exhausts :
+  ->To find the minimum value or min, use the top or root of the Min heap which is the minimum element.
+  ->Now update the minrange if current (max-min) is less than minrange.
+  ->remove the top or root element from priority queue and insert the next element from the list which contains
+  the min element and upadate the max with the new element inserted.
+*/
+
+
+struct minHeapNode{
+    int data;
+    int row;
+    int col;
+    minHeapNode(int d, int r, int c){
+        data = d;
+        row = r;
+        col = c;
+    }
+};
+
+struct myComp{
+    bool operator()(minHeapNode *n1, minHeapNode *n2){
+        return n1->data>n2->data;
+    }
+};
+
+void findSmallestRange(int arr[][N], int n, int k)
+{
+      //hint : min heap
+      //idea : find a range where there is at least one element from every list. 
+      // If the range has to be minimised then either the minimum value has
+      //to be increased or maximum value has to be decreased.
+      priority_queue<minHeapNode *, vector<minHeapNode *>, myComp> minh;
+      
+      int start, end;       //will store range start and range end
+      int max_ele = INT_MIN;
+      int min_ele = INT_MAX;
+      for(int i=0;i<k;++i){
+          minHeapNode *newNode = new minHeapNode(arr[i][0], i, 0);
+          minh.push(newNode);
+          max_ele = max(max_ele, arr[i][0]);
+      }
+      min_ele = minh.top()->data;
+      start = min_ele;
+      end = max_ele;
+      
+      while(1){
+         minHeapNode *node = minh.top();
+         if(node->col<n-1){
+             minHeapNode *nextNode = new minHeapNode(arr[node->row][node->col+1], node->row, node->col+1);
+             minh.pop();
+             minh.push(nextNode);
+             //update current min & max elements
+             min_ele = minh.top()->data;
+             max_ele = max(max_ele, nextNode->data);
+             if(end-start>max_ele-min_ele){
+                 //if new range is smaller update
+                 start = min_ele;
+                 end = max_ele;
+             }
+         }else break;
+      }
+        
+    cout<<start<<" "<<end<<"\n";   
+      
+}
