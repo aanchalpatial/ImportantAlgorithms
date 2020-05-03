@@ -1,0 +1,89 @@
+//Given a BST,  and a reference to a Node x the task is to find the Inorder Successor of the node . 
+
+void inorder(Node *root, vector<Node *> &v){
+    if(root==NULL) return;
+    inorder(root->left, v);
+    v.push_back(root);
+    inorder(root->right, v);
+}
+
+bool flag;
+Node *result;
+void helper(Node *root, Node *x){
+    if(root==NULL) return;
+    
+    helper(root->left, x);
+    if(flag) {
+        result = root;
+        flag = false;
+        return;
+    }
+    if(root==x) flag = true;
+    helper(root->right, x);
+}
+
+
+Node * inOrderSuccessor(Node *root, Node *x)
+{
+    //method 1 : inorder traversal + binary search
+    //O(n) time & O(n) space
+    // vector<Node *> v;
+    // inorder(root, v);
+    // int l =0, r= v.size()-1;
+    // int ind = -1;
+    // while(l<=r){
+    //     int mid = l+(r-l)/2;
+    //     if(v[mid]==x) {
+    //         ind = mid;
+    //         break;
+    //     }else if(v[mid]->data<x->data){
+    //         l = mid+1;
+    //     }else r = mid-1;
+    // }
+    // if(ind!=-1&&ind!=v.size()-1) return v[ind+1];
+    // else return NULL;
+    
+    
+    //method 2 : 
+    //O(n) time & O(1) space
+    // flag = false;
+    // result = NULL;
+    // helper(root, x);
+    // return result;
+    
+    //method 3 : 
+    //O(h) time & O(1) space
+    //https://www.geeksforgeeks.org/inorder-successor-in-binary-search-tree/
+    //Inorder Successor of an input node can also
+    //be defined as the node with the smallest
+    //key greater than the key of input node
+    
+    //case 1 : right child of x is not null then
+    //return the smallest value node in x's right
+    //subtree
+    //case 2 : right child of x is null then use
+    //modified bst search to find inorder succ.
+    
+    //case 1 : 
+    if(x->right!=NULL){
+        //return smallest in right sub-tree
+        Node *curr = x->right;
+        while(curr->left!=NULL){
+            curr = curr->left;
+        }
+        return curr;
+    }else {
+        //case 2 :
+        Node *succ = NULL;
+        while(root){
+            if(x->data<root->data){
+                succ = root;
+                root = root->left;
+            }else if(x->data>root->data){
+                root = root->right;
+            }else break;
+        }
+        return succ;
+    }
+    
+}
