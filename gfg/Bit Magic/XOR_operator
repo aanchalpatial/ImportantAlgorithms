@@ -75,6 +75,18 @@ int main()
         If rem = 1, then xor will be 1.
         If rem = 2, then xor will be N+1.
         If rem = 3 ,then xor will be 0.*/
+        
+        
+      //8)Find Complement of a given number 
+      int num = 5;
+      //method 2 : using mask + xor
+        //corner case
+        if(num==0) return 1;
+        int number_of_bits = 32-__builtin_clz(num);
+        //(1<<number_of_bits)-1 is giving overflow !!!
+        int mask = pow(2, number_of_bits)-1;
+        return mask^num;
+      
      
     
     return 0;
