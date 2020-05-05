@@ -5,6 +5,8 @@
 //INORDER TRAVERSAL WITHOUT RECURSION & WITHOUT STACK
 
 
+//*** answer to most of the tree & bst problems which allows no extra space often leads to Morris Traversal ***
+
 /*
 The Inorder traversal of a Binary tree can either be done using recursion or with the use of an auxiliary stack.
 Threaded Binary Trees are used to make the inorder traversal faster and do it without stack and without recursion.
