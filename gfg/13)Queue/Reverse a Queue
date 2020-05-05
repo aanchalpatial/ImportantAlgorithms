@@ -48,3 +48,43 @@ queue<long long int> rev(queue<long long int> q)
     reverseQueue(q);
     return q;
 }
+
+
+
+
+
+
+//Problem 2 : Reverse k elements of queue
+void kReverse(queue<ll> &q, int k){
+    if(!q.empty()&&k>0){
+        ll temp = q.front();
+        q.pop();
+        kReverse(q, k-1);
+        
+        q.push(temp);
+    }
+}
+
+
+queue<ll> modifyQueue(queue<ll> q, int k)
+{
+    //naive method : use a stack
+    
+    
+    //method 2 : using recursion
+    kReverse(q, k);
+    int m = q.size()-k;
+    while(m>0){
+        ll ele = q.front();
+        q.pop();
+        q.push(ele);
+        --m;
+    }
+    return q;
+    
+}
+
+
+
+
+
