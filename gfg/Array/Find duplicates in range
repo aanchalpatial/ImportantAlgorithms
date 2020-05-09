@@ -1,0 +1,34 @@
+//FINDING DUPLICATES IN ARRAY WHICH CONTAINS ELEMENTS IN *** RANGE 0 TO N-1 *** IN O(N) TIME & O(1) SPACE
+/*
+
+Traverse the array. Do following for every index i of A[].
+{
+check for sign of A[abs(A[i])] ;
+if positive then
+   make it negative by   A[abs(A[i])]=-A[abs(A[i])];
+else  // i.e., A[abs(A[i])] is negative
+   this   element (ith element of list) is a repetition
+}
+
+*/
+
+//APPLICATION 1 : UNIQUE 4 of :- https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Bit%20Magic/XOR%20in%20array
+
+//APPLICATION 2 : Find Duplicates in array where elements are in range 0 to n-1
+
+//APPLICATION 3 : Find smallest missing positive number missing from an unsorted array of integers
+/*
+1. Segregrate Positve and Negative Numbers in the array.
+
+2. Traverse all the Positive Numbers, 
+     i) if, the number is larger then the input array size, do nothing
+     ii) else, the number is within input array size limit, consider number as array index, and mark the element at that index Negative.
+
+3. After doing the above operation, Traverse the array with initial Positve values again, and store the first occurunce of index,
+  whose value is Non-Negative. (Because this means that index value was not present in the array)
+
+4. This stored element is the Result 
+*/
+
+
+
