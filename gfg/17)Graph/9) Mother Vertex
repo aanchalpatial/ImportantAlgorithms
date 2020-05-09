@@ -1,5 +1,13 @@
-//Problem : Find the smallest Mother vertex in a directed graph. A mother vertex in a graph G = (V,E) is a vertex v such
+//Problem : Find the *smallest* Mother vertex in a directed graph. A mother vertex in a graph G = (V,E) is a vertex v such
 //that all other vertices in G can be reached by a path from v.
+
+/*Different Cases :
+Undirected Connected Graph - Every Node is Mother Vertex
+Undirected/Directed Disconnected Graph - No Mother Vertex
+Directed Connected Graph - Solved below
+*/
+
+
 /*
 A Naive approach : O(V(E+V)) time
 A trivial approach will be to perform a DFS/BFS on all the vertices and find whether we can reach all the vertices 
@@ -16,6 +24,89 @@ Algorithm :-
 1) Do DFS traversal of the given graph. While doing traversal keep track of last finished vertex ‘v’. This step takes O(V+E) time.
 2) If there exist mother vertex (or vetices), then v must be one (or one of them). Check if v is a mother vertex
 by doing DFS/BFS from v. This step also takes O(V+E) time.
+
+Note : Let the last finished vertex be v. Basically, we need to prove that there cannot be an edge from another
+vertex u to v if u is not another mother vertex
 */
+
+void bfs(vector<int> adj[], bool vis[], int s, int V){
+    queue<int> q;
+    q.push(s);
+    vis[s] = true;
+    while(!q.empty()){
+        int size = q.size();
+        for(int i=0;i<size;++i){
+            int v = q.front();
+            q.pop();
+            
+            for(int j=0;j<adj[v].size();++i){
+                if(vis[adj[v][j]]==false) {
+                    vis[adj[v][j]] = true;
+                    q.push(vis[adj[v][j]]);
+                }
+            }
+        }
+    }
+}
+
+
+void dfs(vector<int> adj[], bool vis[], int s, int V){
+    
+    vis[s] = true;
+    for(int i=0;i<adj[s].size();++i){
+        if(vis[adj[s][i]]==false) dfs(adj, vis, adj[s][i], V);
+    }
+}
+
+
+
+int findMother(int V, vector<int> adj[]) 
+{ 
+    //method 1 bfs on all vertices to check whether 
+    //it is mother vertex
+    //O(V*(V+E)) time
+    // for(int i=0;i<V;++i){
+    //     bool vis[V] = {false};   //keep track of visited nodes
+    //     bfs(adj, vis, i, V);
+    //     bool allFlag = true;
+    //     for(int j=0;j<V;++j) {
+    //         if(vis[j]!=true){
+    //             allFlag=false;
+    //             break;
+    //         }
+    //     }
+    //     if(allFlag) return i;
+    // }
+    // return -1;
+    
+    
+    //method 2 :
+    //O(V+E) time
+    //hint : if there exists a mother vertex (or vertices), then
+    //one of the mother vertex is the last 
+    //finished vertex in dfs
+    //https://github.com/ap0996/ImportantAlgorithms/edit/master/gfg/17)Graph/9)%20Mother%20Vertex
+    
+    //Step 1 : look for last finished vertex i.e a candidate of mother vertex
+    //O(V+E) time 
+    bool vis[V] = {false};
+    int m;  //used to keep track of last finished node
+    for(int i=0;i<V;++i){
+        if(vis[i]==false) {
+            dfs(adj, vis, i, V);
+            m = i;
+        }
+    }
+    //Step 2 : verify that last finished vertex is
+    //         infact a mother vertex
+    //O(V+E) time 
+    fill(vis, vis+V, false);
+    dfs(adj, vis, m, V);
+    for(int i=0;i<V;++i){
+        if(vis[i]==false) return -1;
+    }
+    return m;
+    
+}
 
 
