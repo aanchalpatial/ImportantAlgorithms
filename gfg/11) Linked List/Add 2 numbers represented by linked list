@@ -1,0 +1,49 @@
+//Given two numbers represented by two lists, write a function that returns the sum list.
+
+//There are *** 2 variation *** to this question based on the fact that whether number is represented from start to end ot end to start.
+//1) List1: 5->6->3  // represents number 365
+//2) List: 5->6->3  // represents number 563
+
+//Variation 1 : O(m+n) time & O(1) space
+//https://www.geeksforgeeks.org/add-two-numbers-represented-by-linked-lists/
+/*
+Approach: Traverse both lists and One by one pick nodes of both lists and add the values. If the
+sum is more than 10 then make carry as 1 and reduce sum. If one list has more elements than the other
+then consider remaining values of this list as 0.
+*/
+
+//Varation 2 : 
+
+//Method 1 : Using Recursion
+//https://www.geeksforgeeks.org/sum-of-two-linked-lists/
+//O(m+n) time & O(n) space
+/*
+Following are the steps.
+1) Calculate sizes of given two linked lists.
+2) If sizes are same, then calculate sum using recursion. Hold all nodes in recursion call stack till the rightmost node, 
+  calculate the sum of rightmost nodes and forward carry to the left side.
+3) If size is not same, then follow below steps:
+….a) Calculate difference of sizes of two linked lists. Let the difference be diff
+….b) Move diff nodes ahead in the bigger linked list. Now use step 2 to calculate the sum of the smaller list
+    and right sub-list (of the same size) of a larger list. Also, store the carry of this sum.
+….c) Calculate the sum of the carry (calculated in the previous step) with the remaining left sub-list of a larger list.
+    Nodes of this sum are added at the beginning of the sum list obtained the previous step.
+*/
+
+//Method 2 : Reversing lists
+//https://www.geeksforgeeks.org/add-two-numbers-represented-by-linked-lists-set-3/?ref=rp
+//O(m+n) time & O(1) space
+/*
+Following are the steps:
+
+Reverse List L1.
+Reverse List L2.
+Add the nodes of both the lists iteratively.
+Reverse the resultant list and return its head.
+*/
+
+
+
+
+
+
