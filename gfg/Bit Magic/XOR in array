@@ -63,6 +63,7 @@ int main() {
 	all integers from 1 to n, then the result is X xor Y. 
 	now apply UNIQUE 2.
 	*/
+	//Another Index based method discussed here : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Array/Find%20duplicates%20in%20range
 	
 	//5) You are given a list of n-1 integers and these integers are in the range of 1 to n
     //Find the Missing Number
