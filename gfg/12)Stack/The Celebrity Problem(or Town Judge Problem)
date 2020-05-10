@@ -25,7 +25,7 @@ Ensure the remained person is celebrity.
 /*
 Use stack to verity celebrity.
 
-Push all the celebrities into a stack.
+Push all the persons into a stack.
 Pop off top two persons from the stack, discard one person based on return status of Mat(A, B).
 Push the remained person onto stack.
 Repeat step 2 and 3 until only one person remains in the stack.
