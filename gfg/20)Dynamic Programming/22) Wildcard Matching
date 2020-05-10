@@ -1,0 +1,99 @@
+/*
+Given a text 'str' and a wildcard pattern 'pattern', your task is to complete the function wildcard that 
+returns '1' if the wildcard pattern is matched with text else returns '0'.The function takes two string
+s as arguments 'str' and 'pattern'.
+The wildcard pattern can include the characters ‘?’ and ‘*’
+‘?’ – matches any single character
+‘*’ – Matches any sequence of characters (including the empty sequence)
+*/
+
+/*Hints :
+https://www.geeksforgeeks.org/wildcard-pattern-matching/
+Each occurrence of ‘?’ character in wildcard pattern can be replaced with any other character and each occurrence
+of ‘*’ with a sequence of characters such that the wildcard pattern becomes identical to the input string after replacement.
+
+Let’s consider any character in the pattern.
+Case 1:- The character is ‘*’
+Here two cases arise
+
+We can ignore ‘*’ character and move to next character in the Pattern.
+‘*’ character matches with one or more characters in Text. Here we will move to next character in the string.
+Case 2:- The character is ‘?’
+We can ignore current character in Text and move to next character in the Pattern and Text.
+
+Case 3:- The character is not a wildcard character
+If current character in Text matches with current character in Pattern, we move to next character in the Pattern and Text.
+If they do not match, wildcard pattern and Text do not match.
+
+*/
+
+/*Corner(or base) cases to be considered
+-> if both pattern & text reaches end we return true
+-> if only pattern reaches end we return false
+-> if only text reaches end then we return true only if all remaining characters in pattern are '*', otherwise return false
+*/
+
+
+
+//naive recursion
+//TLE !!!
+bool areMatching(string patt, string txt, int p, int t){
+    if(t==txt.size()&&p==patt.size()) return true;
+    if(p==patt.size()) return false;
+    if(t==txt.size()){
+        //return true only if all remaining characters are '*'
+        for(int i=p;i<patt.size();++i){
+            if(patt[i]!='*') return false;
+        }
+        return true;
+    }
+    
+    
+    if(patt[p]=='?'||patt[p]==txt[t]) return areMatching(patt, txt, p+1, t+1);
+    else if(patt[p]=='*'){
+        //case 1 : * is considered to be empty
+        //case 2 : * is considered to be matching current character in txt
+        bool a = areMatching(patt, txt, p+1, t);
+        bool b = areMatching(patt, txt, p, t+1);
+        return (a||b);
+    }
+    return false;
+}
+
+//dp solution with tabulation
+
+bool areMatching_tabulation(string patt, string txt){
+    //a state at any moment consists of index of pattern & index of text
+    int m = patt.size(), n = txt.size();
+    bool dp[n+1][m+1];
+    memset(dp,false, sizeof(dp));
+    //dp[i][j] represents whether text of size i matches pattern of size j
+    //base cases :
+    dp[0][0] = true;
+    // Only '*' can match with empty string
+    for(int i=1;i<=m;++i) {
+        if(patt[i-1]=='*') dp[0][i] = dp[0][i-1];
+    }
+    
+    for(int i=1;i<=n;++i){
+        for(int j=1;j<=m;++j){
+            if(txt[i-1]==patt[j-1]||patt[j-1]=='?') dp[i][j] = dp[i-1][j-1];
+            else if(patt[j-1]=='*') dp[i][j] = (dp[i-1][j]||dp[i][j-1]);
+            else dp[i][j] = false;
+        }
+    }
+    return dp[n][m];
+    
+}
+
+
+/*You are required to complete this method*/
+int wildCard(string pattern,string str){
+    
+    //exponential time & O(1) space
+    //return areMatching(pattern, str, 0, 0);
+    
+    //O(mn) time & O(mn) space
+    return areMatching_tabulation(pattern, str);
+    
+}
