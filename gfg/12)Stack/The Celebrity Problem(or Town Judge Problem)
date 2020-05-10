@@ -6,6 +6,12 @@ You will be given a square matrix M[][] where if an element of row i and column 
 You need to complete the function getId() which finds the id of the celebrity if present else return -1.
 */
 
+//naive approach : O(N) time & O(N) space
+//maintain 2 separate array, one of persons who know someone & other of persons who are known by someone
+//and result is the index i where ( know[i]==0 && known[i] = N-1 )
+
+
+//method 2 : O(N) time & O(1) space : using stacks
 //Expected time complexity is O(N) with constant extra space.
 
 /*Hints:
