@@ -6,13 +6,18 @@ You will be given a square matrix M[][] where if an element of row i and column 
 You need to complete the function getId() which finds the id of the celebrity if present else return -1.
 */
 
-//naive approach : O(N) time & O(N) space
+//https://www.geeksforgeeks.org/the-celebrity-problem/
+
+//naive approach is : O(n^2) time 
+
+//method 1 : O(N) time & O(N) space
 //maintain 2 separate array, one of persons who know someone & other of persons who are known by someone
 //and result is the index i where ( know[i]==0 && known[i] = N-1 )
 
 
-//method 2 : O(N) time & O(1) space : using stacks
-//Expected time complexity is O(N) with constant extra space.
+//efficient method
+//method 2 : O(N) time & O(N) space : using stacks
+//even less number of operation
 
 /*Hints:
 Use the following observation based on elimination technique 
@@ -72,3 +77,28 @@ int getId(int M[MAX][MAX], int n)
     else return -1;
     
 }
+
+
+
+//Method 3 : O(N) time & O(1) approach
+
+/*
+Method 4: This method uses Two Pointers technique to solve the above problem.
+
+Approach: The idea is to use two pointers, one from start and one from the end. Assume the start person is A, 
+and the end person is B. If A knows B, then A must not be the celebrity. Else, B must not be the celebrity.
+At the end of the loop, only one index will be left as a celebrity. Go through each person again and check
+whether this is the celebrity.
+The Two Pointer approach can be used where two pointers can be assigned, one at the start and other at the end 
+and the elements can be compared and the search space can be reduced.
+
+Algorithm :
+1) Create two indices a and b, where a = 0 and b = n-1
+2) Run a loop until a is less than b.
+3) Check if a knows b, then a can be celebrity. so incement a, i.e. a++
+4) Else b cannot be celebrity, so decrement b, i.e. b–
+5) Assign a as the celebrity
+6) Run a loop from 0 to n-1 and find the count of persons who knows the celebrity and the number of people
+whom the celebrity knows. if the count of persons who knows the celebrity is n-1 and the count of people whom the
+celebrity knows is 0 then return the id of celebrity else return -1.
+*/
