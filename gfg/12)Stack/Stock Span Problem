@@ -109,8 +109,11 @@ int main() {
 	return 0;
 }
 
-//Application 3): Largest Rectangular Area in Histogram
+//Application 3): As done in application 1 & 2, we can also use stockspan to find previous smaller & next smaller element for
+//every element of array in O(n) time
+
+//Application 4): Largest Rectangular Area in Histogram
 //Studied separately:- https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/12)Stack/Largest%20Rectangular%20Area%20in%20Histogram
 
-//Application 4): Find Maximum of Minimum of every window size in an array
+//Application 5): Find Maximum of Minimum of every window size in an array
 //Studied separately:- https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/12)Stack/Maximum%20of%20Minimum%20for%20every%20window%20%20size
