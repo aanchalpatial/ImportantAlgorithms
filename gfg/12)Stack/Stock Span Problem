@@ -65,8 +65,8 @@ using namespace std;
 void nextGreaterElement(int arr[], int size){		//Not Important, can be left
     stack <int> st;
     
-    st.push(arr[0]);
-    for(int i=1;i<size;++i){
+    st.push(arr[size-1]);
+    for(int i=size-2;i>=0;--i){
         while(!st.empty()&&st.top()<arr[i]){
             cout<<st.top()<<"->"<<arr[i]<<endl;
             st.pop();
