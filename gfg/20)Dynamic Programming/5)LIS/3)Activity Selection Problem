@@ -5,6 +5,18 @@ be performed by a single person, assuming that a person can only work on a singl
 
 
 //As we know we have a greedy solution for activity selection problem, which is O(nlogn)
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/18)Greedy/2)Activity%20Selection%20Problem
+
+//But we can also solve activity selection problem with dynamic programming, it is basically a variation of LIS
+
+
+
+
+/* This is also Activity Selection Problem.
+You are given n pairs of numbers. In every pair, the first number is always smaller than the second number. 
+A pair (c, d) can follow another pair (a, b) if b < c. Chain of pairs can be formed in this fashion. 
+Find the longest chain which can be formed from a given set of pairs.
+*/
 
 //method 2 : greedy approach
     //O(nlogn) time & O(n) space
@@ -20,9 +32,7 @@ be performed by a single person, assuming that a person can only work on a singl
         }
         
     }
-
-//But we can also solve activity selection problem with dynamic programming, it is basically a variation of LIS
-
+    
 //method 1 : dp solution
     //a variation of lis problem
     //O(n^2) time & O(n) space
@@ -39,10 +49,3 @@ be performed by a single person, assuming that a person can only work on a singl
         }
     }
     return dp[n-1];
-
-
-/* This is also Activity Selection Problem.
-You are given n pairs of numbers. In every pair, the first number is always smaller than the second number. 
-A pair (c, d) can follow another pair (a, b) if b < c. Chain of pairs can be formed in this fashion. 
-Find the longest chain which can be formed from a given set of pairs.
-*/
