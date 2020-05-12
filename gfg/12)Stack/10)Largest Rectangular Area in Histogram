@@ -117,18 +117,6 @@ int bestMaxRectangularAreaOfHistogram(int arr[], int n){
 
 //APPLICATION OF LARGEST AREA UNDER HISTOGRAM
 //Given a binary matrix, find the maximum size rectangle binary-sub-matrix with all 1’s
-//https://www.geeksforgeeks.org/maximum-size-rectangle-binary-sub-matrix-1s/
-/*
-Run a loop to traverse through the rows.
-Now If the current row is not the first row then update the row as follows, if matrix[i][j] is not zero 
-then matrix[i][j] = matrix[i-1][j] + matrix[i][j].
-Find the maximum rectangular area under the histogram, consider the ith row as heights of bars of a histogram.
-This can be calculated as given in this article Largest Rectangular Area in a Histogram
-Do the previous two steps for all rows and print the maximum area of all the row
-*/
-
-//NOTE:- Given a binary matrix, find the maximum size SQUARE binary-sub-matrix with all 1’s
-//For this question we have a DP based solution
-//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/20)Find%20maximum%20area%20square%20in%20binary%20matrix
+https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/12)Stack/11)%20Maximum%20Area%20Rectangle%20in%20Binary%20Matrix
 
 
