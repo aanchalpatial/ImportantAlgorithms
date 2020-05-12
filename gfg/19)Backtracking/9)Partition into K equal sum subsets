@@ -1,0 +1,67 @@
+/*
+Given an integer array A[] of N elements, the task is to complete the function which returns true if the array A[] could
+be divided into K non-empty subsets such that the sum of elements in every subset is same.
+*/
+
+//https://leetcode.com/problems/partition-to-k-equal-sum-subsets/solution/
+
+//method 1 : 
+/*Approach : exhaustive search + sorting + backtracking
+For each number in nums, we could add it into one of k group-sums, as long as
+the group's sum would not exceed the target. For each of these choices, we 
+recursively search with one less number to consider in nums. If we placed every
+number successfully, then our search was successful. 
+*/
+//O(N^K)
+bool makePartition(int A[], int N, int K, int partition[], int sum, int index){
+    if(index==N) return true;
+    
+    for(int j=0;j<K;++j){
+        //try putting element A[index] in partition[j]
+        if(partition[j]+A[index]<=sum){
+            partition[j] += A[index];
+            if(makePartition(A, N, K, partition, sum, index+1)) return true;
+            partition[j] -= A[index];       //backtracking
+        }
+        //*** SPEED UP 2 ***
+        //One important speedup is that we can ensure all the 0 values of each group 
+        //occur at the end of the array groups, by enforcing
+        //if (groups[i] == 0) break;. This greatly reduces repeated work - for example, 
+        //in the first run of search, we will make only 1 recursive call, instead of k.
+        if(partition[j]==0) break;
+    }
+    return false;
+}
+
+
+
+bool isKPartitionPossible(int A[], int N, int K)
+{
+    if(K==1) return true;
+    if(N<K) return false;
+    
+    int sum = 0;
+    for(int i=0;i<N;++i) sum += A[i];
+    
+    if(sum%K!=0) return false;
+    
+    int subsetSum = sum/K;
+    
+    int partition[K] = {0}; //stores sum of ith partition
+    
+    
+    //*** SPEED UP 1 ***
+    //we decreasingly sort array so that largest element are placed in partitions first
+    //When the answer is true and involves subsets with a low size, this method of placing 
+    //elements will consider these lower size subsets sooner
+    sort(A, A+N, greater<int>());           //TLE without this step
+    
+    return makePartition(A, N, K, partition, subsetSum, 0);
+    
+    
+    
+    //method 2 : dp based solution
+    //even better 
+    //LEFT !!!
+
+}
