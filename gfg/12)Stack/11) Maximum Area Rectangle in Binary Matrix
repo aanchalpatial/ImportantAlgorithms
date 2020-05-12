@@ -1,0 +1,87 @@
+//Given a binary matrix, Your task is to complete the function maxArea which the maximum size rectangle area in a 
+//binary-sub-matrix with all 1’s.
+
+//https://www.geeksforgeeks.org/maximum-size-rectangle-binary-sub-matrix-1s/
+/*
+Run a loop to traverse through the rows.
+Now If the current row is not the first row then update the row as follows, if matrix[i][j] is not zero 
+then matrix[i][j] = matrix[i-1][j] + matrix[i][j].
+Find the maximum rectangular area under the histogram, consider the ith row as heights of bars of a histogram.
+This can be calculated as given in this article Largest Rectangular Area in a Histogram
+Do the previous two steps for all rows and print the maximum area of all the row
+*/
+
+int getMaxArea(int arr[], int n){           //max rectangular area in a histogram
+    
+    //step 1 : find INDEX of previous smaller element
+    int prev[n];
+    stack<int> s;
+    s.push(0);
+    prev[0] = -1;
+    
+    for(int i=1;i<n;++i){
+        while(!s.empty()&&arr[s.top()]>=arr[i]){
+            s.pop();
+        }
+        if(s.empty()) prev[i] = -1;                 // *** important *** i.e all elements to left
+        else prev[i] = s.top();
+        
+        s.push(i);
+    }
+    
+    //step 2 : find INDEX of next smaller element
+    int next[n];
+    
+    stack<int> s2;
+    s2.push(n-1);
+    next[n-1] = n;
+    
+    for(int i=n-2;i>=0;--i){
+        while(!s2.empty()&&arr[s2.top()]>=arr[i]){
+            s2.pop();
+        }
+        if(s2.empty()) next[i] = n;                     // *** important ***    i.e all elements to right
+        else next[i] = s2.top();
+        
+        s2.push(i);
+    }
+    
+    //step 3 : find the max rectangular area that can be made considering arr[i] as height and return maximum of them
+    int result = 0;
+    for(int i=0;i<n;++i){
+        int currArea = arr[i];
+        currArea += (arr[i]*(i-prev[i]-1));
+        currArea += (arr[i]*(next[i]-i-1));
+        result = max(result, currArea);
+    }
+    return result;
+    
+}
+
+
+
+int maxArea(int M[MAX][MAX], int n, int m) {
+    
+    //hint : solved using largest area under histogram
+    //O(n*(m^2)) time & O(m) space
+    int row[m];
+    for(int i=0;i<m;++i) row[i] = M[0][i];
+    int result = getMaxArea(M[0], m);
+    
+    for(int i=1;i<n;++i){
+        for(int j=0;j<m;++j){
+            if(M[i][j]!=0) M[i][j] += M[i-1][j];
+            row[j] = M[i][j];
+        }
+        int currArea = getMaxArea(row, m);
+        result = max(result, currArea);
+    }
+    return result;
+    
+}
+
+
+//NOTE:- Given a binary matrix, find the maximum size SQUARE binary-sub-matrix with all 1’s
+//For this question we have a DP based solution
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/20)Find%20maximum%20area%20square%20in%20binary%20matrix
+
