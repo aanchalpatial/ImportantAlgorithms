@@ -36,7 +36,7 @@ void stockSpan(int arr[], int n){
     cout<<endl;
 }
 
-//Application 1): Given an array of distinct integers, find the closest (positive wise) greater on left of every element.
+//Application 1): Given an array of distinct integers, find the closest (position wise) greater on left of every element.
 //If there is no greater element on l;eft, then print -1
 //Note: In stock span problem we were storing index in stack, where as in this and next problem we will store the element itself.
 int previousGreaterElement(int arr[], int n){
