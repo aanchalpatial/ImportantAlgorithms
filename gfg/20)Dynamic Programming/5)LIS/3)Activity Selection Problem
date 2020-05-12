@@ -1,3 +1,9 @@
+/*Problem Statement :-
+You are given n activities with their start and finish times. Select the maximum number of activities that can 
+be performed by a single person, assuming that a person can only work on a single activity at a time.
+*/
+
+
 //As we know we have a greedy solution for activity selection problem, which is O(nlogn)
 
 //method 2 : greedy approach
@@ -34,3 +40,9 @@
     }
     return dp[n-1];
 
+
+/* This is also Activity Selection Problem.
+You are given n pairs of numbers. In every pair, the first number is always smaller than the second number. 
+A pair (c, d) can follow another pair (a, b) if b < c. Chain of pairs can be formed in this fashion. 
+Find the longest chain which can be formed from a given set of pairs.
+*/
