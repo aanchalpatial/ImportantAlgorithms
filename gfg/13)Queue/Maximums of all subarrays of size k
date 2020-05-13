@@ -1,7 +1,33 @@
 //We are given an array and a number k, we need to find maximums of all subarrays of size k.
-//Naive is O(n^2)
-//do it in O(n): we are doing 2n operation below solution
-/*We create a Deque, Qi of capacity k, that stores only useful elements of current window of k elements.
+
+//***** Note ******
+//There are MANY ways to solve this problem. Naive is O(n^2).This problem can be solved using:
+//2) Sliding window technique + Set : O(nlogn), https://www.geeksforgeeks.org/maximum-of-all-subarrays-of-size-k-using-set-in-cpp-stl/
+//3) Dequeue : O(n), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
+//4) Self balancing BST ( LEFT!!! ): O(nlogk), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
+//5) Stack ( LEFT!!! ): O(n), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k-using-stack-in-on-time/
+
+
+//method 1 : Naive approach is O(n^2) & O(1) space
+
+//method 2 : sliding window + set
+//O(nlogn) time & O(k) size
+//https://www.geeksforgeeks.org/maximum-of-all-subarrays-of-size-k-using-set-in-cpp-stl/
+// set<pair<int, int>> s;
+// for(int i=0;i<k;++i) s.insert(make_pair(arr[i], i));
+// cout<<(*s.rbegin()).first<<" ";
+
+// for(int i=0;i<n-k;++i){
+
+//     s.erase(make_pair(arr[i], i));  //O(logk)
+//     s.insert(make_pair(arr[i+k], i+k)); //O(logk)
+//     cout<<(*s.rbegin()).first<<" ";
+// }
+
+
+//method 3 : using deque 
+//O(n) time & O(k) space : we are doing 2n operation below solution
+/*We create a Deque, Qi of capacity k, that stores only USEFUL ELEMENTS of current window of k elements.
 An element is useful if it is in current window and is greater than all other elements on left side of it in current window*/
 //https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
 
@@ -41,9 +67,3 @@ int main() {
 
 
 
-//***** Note ******
-//There are MANY ways to solve this problem. Naive is O(n^2).This problem can be solved using:
-//1) Dequeue (discussed above): O(n), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
-//2) Self balancing BST(left): O(nlogk), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/
-//2) Stack(left): O(n), https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k-using-stack-in-on-time/
-//3) Sliding window technique + Set(left) : O(nlogn), https://www.geeksforgeeks.org/maximum-of-all-subarrays-of-size-k-using-set-in-cpp-stl/
