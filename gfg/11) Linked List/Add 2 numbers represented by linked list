@@ -1,4 +1,4 @@
-//Given two numbers represented by two lists, write a function that returns the sum list.
+//Problem 1 : Given two numbers represented by two lists, write a function that returns the sum list.
 
 //There are *** 2 variation *** to this question based on the fact that whether number is represented from start to end ot end to start.
 //1) List1: 5->6->3  // represents number 365
@@ -12,7 +12,7 @@ sum is more than 10 then make carry as 1 and reduce sum. If one list has more el
 then consider remaining values of this list as 0.
 */
 
-//Varation 2 : 
+//Varation 2 : 2 ways to solve this variation
 
 //Method 1 : Using Recursion
 //https://www.geeksforgeeks.org/sum-of-two-linked-lists/
@@ -44,6 +44,96 @@ Reverse the resultant list and return its head.
 
 
 
+//Problem 2 : Given two numbers represented by two lists, write a function that returns the difference list.
+
+//There are *** 2 variation *** to this question based on the fact that whether number is represented from start to end ot end to start.
+//1) List1: 5->6->3  // represents number 365
+//2) List: 5->6->3  // represents number 563
+
+//Variation 2 :
+//method 1 : using recursion
+
+//method 2 : reverse lists then substract
+Node *reverseList(Node *head){      //O(n) time & O(1) space
+    if(head==NULL||head->next==NULL) return head;
+    
+    Node *prev = NULL, *curr = head, *ahead = head->next;
+    
+    while(ahead!=NULL){
+        Node *temp = ahead->next;
+        curr->next = prev;
+        prev = curr;
+        curr = ahead;
+        ahead = temp;
+        
+    }
+    curr->next = prev;
+    return curr;
+    
+}
+
+int findLinkedListSize(Node *node){
+    int result = 0;
+    while(node!=NULL){
+        ++result;
+        node = node->next;
+    }
+    return result;
+}
+
+/*You are required to complete this method*/
+Node* subLinkedList(Node* l1, Node* l2)
+{   
+    //method 2 : reverse linked lists & then substract
+    
+    //O(m+n) time & O(1) space
+    int m = findLinkedListSize(l1);
+    int n = findLinkedListSize(l2);
+    Node *r1, *r2;
+    if(m>=n){
+        r1 = reverseList(l1);
+        r2 = reverseList(l2);
+    }else {
+        r1 = reverseList(l2);
+        r2 = reverseList(l1);
+    }
+    
+    
+    Node *curr1 = r1, *curr2 = r2;
+    Node *result = new Node(-1);
+    Node *resultHead = result;
+    int carry = 0;
+    while(curr1!=NULL&&curr2!=NULL){
+        int a = curr1->data, b = curr2->data;
+        if(carry==1) --a;
+        if(a<b) {
+            a+=10;
+            carry = 1;
+        }else carry = 0;
+        result->next = new Node(a-b);
+        result = result->next;
+        curr1 = curr1->next;
+        curr2 = curr2->next;
+    }
+    
+    while(curr1!=NULL) {
+        int a = curr1->data, b = 0;
+        if(carry==1) --a;
+        if(a<b) {
+            a+=10;
+            carry = 1;
+        }else carry = 0;
+        result->next = new Node(a-b);
+        result = result->next;
+        curr1 = curr1->next;
+    }
+    //return resultHead->next;
+    Node *node = reverseList(resultHead->next);
+    while(node->data==0&&node->next!=NULL){
+        node = node->next;
+    }
+    return node;
+}
 
 
 
