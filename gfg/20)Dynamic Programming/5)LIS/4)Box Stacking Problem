@@ -1,0 +1,78 @@
+//Another variation of LIS
+
+/*
+You are given a set of N types of rectangular 3-D boxes, where the ith box has height h, width w and length l. 
+You task is to create a stack of boxes which is as tall as possible, but you can only stack a box on top of 
+another box if the dimensions of the 2-D base of the lower box are each "strictly larger" than those of the 2-D base
+of the higher box. Of course, you can rotate a box so that any side functions as its base.It is also allowable to 
+use multiple instances of the same type of box. You task is to complete the function maxHeight which returns 
+the height of the highest possible stack so formed.
+*/
+
+//https://www.youtube.com/watch?v=9mod_xRB-O0&list=PLRnr8POJCz6DzI8cmLzVEFezwhayupubO&index=3&t=0s
+
+//https://www.geeksforgeeks.org/box-stacking-problem-dp-22/
+
+struct Box{
+    int l, b, h;
+};
+
+bool myComp(Box b1, Box b2){
+    return (b1.l*b1.b)>(b2.l*b2.b);
+}
+
+
+int stackBoxes(int height[],int width[],int length[],int n){
+    Box box[3*n];
+    //3! = 6, there should be 6 permutations of each box BUT
+    //assumption : length is always greater than breadth
+    //this assumption reduces number of permutations to 6/2 i.e 3 for each box
+    int index = 0;
+    for(int i=0;i<n;++i){
+        int l = length[i], b = width[i], h = height[i];
+        //premutation 1 :
+        box[index].h = l;
+        box[index].l = max(b, h);
+        box[index].b = min(b, h);
+        ++index;
+         
+        //premutation 2 :
+        box[index].h = b;
+        box[index].l = max(l, h);
+        box[index].b = min(l, h);
+        ++index;
+        
+        //premutation 3 :
+        box[index].h = h;
+        box[index].l = max(b, l);
+        box[index].b = min(b, l);
+        ++index;
+    }
+    
+    int size = 3*n;
+    
+    //sort in decreasing order of length*breadth i.e base area
+    sort(box, box+size, myComp);  
+    
+    
+    //for(int i=0;i<size;++i) cout<<box[i].l<<", "<<box[i].b<<", "<<box[i].h<<"\n";
+    
+    //dp tabulation solution of lis on Box b[]
+    int dp[size];
+    //Base case :
+    for(int i=0;i<size;++i) dp[i] = box[i].h;
+    
+    for(int i=1;i<size;++i){
+        for(int j=0;j<i;++j){
+            if(box[i].l<box[j].l&&box[i].b<box[j].b){
+                dp[i] = max(dp[i], box[i].h+dp[j]);
+            }
+        }
+    }
+    
+    int result = 0;
+    for(int i=0;i<size;++i) result = max(result, dp[i]);
+    return result;
+    
+    
+}
