@@ -9,49 +9,8 @@
 //Stack stl :- satck <data_type> stack_name;
 //functions :- empty(), size(), top(), push(g) & pop(). All these functins work in O(1) time.
 
-//Problem 1): Design a stack that supports normal stack operatiosn in O(1) and also supprots getMin() in O(1)
-#include <bits/stdc++.h>
-using namespace std;
 
-class myStack{
-    stack <int> st;
-    stack <int> aux;    //auxillary stack which will store min in main stack at any moment
-    
-    public:
-    void pushInStack(int x){
-        if(st.empty()){
-            st.push(x);
-            aux.push(x);
-        }else {
-            st.push(x);
-            if(st.top()<=aux.top()) aux.push(x);            // <= because duplicate minimum are also to added in aux
-        }
-        
-    }
-    void popFromStack(){
-        if(st.top()==aux.top()) aux.pop();
-        st.pop();
-    }
-    
-    void getMin(){
-        cout<<"Minimum element in stack: "<<aux.top()<<endl;
-    }
-    
-};
-
-int main() {
-	myStack s = myStack();
-	s.pushInStack(99);
-	s.pushInStack(3);
-	s.pushInStack(5);
-	s.pushInStack(1);
-	s.popFromStack();
-	s.getMin();
-	return 0;
-}
-
-
-//Problem 2): Delete mid element of stack without using any additional data structure
+//Problem 1): Delete mid element of stack without using any additional data structure
 //Hint: use recursion
 stack<int> deleteMid(stack<int>s,int sizeOfStack,int current)
 {
