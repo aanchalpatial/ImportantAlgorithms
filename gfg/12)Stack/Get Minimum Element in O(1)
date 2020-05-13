@@ -1,6 +1,6 @@
 //Problem : Design a stack that supports normal stack operatiosn in O(1) and also supprots getMin() in O(1)
 
-//method 1 : using auxillary stack data structure
+//METHOD 1 : using auxillary stack data structure
 //O(1) time & O(n) space
 //https://www.geeksforgeeks.org/design-and-implement-special-stack-data-structure/
 
@@ -47,6 +47,9 @@ int main() {
 
 
 
-//method 2 : using extra variable
+//METHOD 2 : using extra variable
 //O(1) time & O(1) space
 //https://www.geeksforgeeks.org/design-a-stack-that-supports-getmin-in-o1-time-and-o1-extra-space/
+
+
+
