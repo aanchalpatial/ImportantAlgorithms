@@ -1,7 +1,10 @@
 //Finding whether a pair of nodes exists such that their sum is equal to given sum in given Binary Search Tree
 
+//Method 1) : Naive method is O(n^2) time & O(n) space
 
-//Method 1): do inorder traversal and store it in an array. resulting array will be sorted. then use 2 pointer approach to find if
+//Method 2): inorder traversal + 2 pointer appraoch
+//O(n) time & O(n) space
+//do inorder traversal and store it in an array. resulting array will be sorted. then use 2 pointer approach to find if
 //pair with given sum exists
 
 void inorder(Node *root, vector<int> &v){
@@ -28,7 +31,8 @@ bool pairWithGivenSum(Node *root, int sum){     //O(n) time & O(n) space
     return false;
 }
 
-//Method 2) 
+//Method 3) : traversal + hashing
+//O(n) time & O(n) space 
 //while doing inorder traversal, check if sum-current node value exists in hash table, if yes return true & 
 //if no add current node value in hash
 //Slightly better than method 1 because it return as soon as it find a valid pair even before complete traversal of BST
@@ -46,4 +50,11 @@ bool pairWithGivenSum2(Node *root, unordered_set<int> &s, int sum){   //O(n) tim
     
     return p||q||r;
 }
+
+
+//Method 4) : traverse BST in ITERATIVE Normal Inorder and ITERATIVE Reverse Inorder simultaneously and apply 2 pointer appraoch
+//O(n) time & O(logn) space
+//https://www.geeksforgeeks.org/find-a-pair-with-given-sum-in-bst/
+
+
 
