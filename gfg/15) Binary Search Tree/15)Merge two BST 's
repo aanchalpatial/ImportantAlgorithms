@@ -36,6 +36,7 @@
 
 //method 3 : iterative inorder traversal
 //O(m+n) time & O(h1+h2) space  i.e even more SPACE EFFICIENT
+//https://www.geeksforgeeks.org/merge-two-bsts-with-limited-extra-space/
 /*Approach :
 The idea is to use iterative inorder traversal. We use two auxiliary stacks for two BSTs. Since we need to print the elements
 in sorted form, whenever we get a smaller element from any of the trees, we print it. If the element is greater, then we push
