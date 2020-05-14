@@ -1,5 +1,16 @@
-//Naive solution is 0(n^2), do it in 0(n).
+//*** INTERESTING FACT ***
+//It is possible to solve below problem in O(n) using hashing irrespective of the fact that whether array is sorted or not.
+//There is another O(n) solution if array is sorted, then we can use 2 pointer approach as well.
+//Two Pointer Technique questions CAN ALSO BE DONE via and in hashing there is no compulsion of array to be sorted but hashing
+//requires EXTRA SPACE : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Two%20Pointers%20Technique
 
+
+//1) Find PAIRS with given sum
+//METHOD 1 : naive approach is O(n^2) time & O(1) space
+
+//METHOD 2 : O(nlogn) time if array is not sorted & O(1) space
+
+///METHOD 3 : via hashing in O(n) time & O(n) space
 #include<bits/stdc++.h>
 using namespace std;
 int main(){
@@ -20,5 +31,27 @@ int main(){
   }
   
   
-  //It is possible to solve above problem in O(n) using hashing irrespective of the fact that whether array is sorted or not.
-  //There is another O(n) solution if array is sorted, then we can use 2 pointer approach as well.
+//2) Find TRIPLETS with zero sum
+//Given an array A[] of N elements. The task is to complete the function which returns true if triplets exists in array A whose sum is zero else returns false.
+//METHOD 1 : Naive implementation is 0(n^3)
+
+//METHOD 2 : 0(n^2) time & O(1) space using 2 pointer approach
+  
+//METHOD 3 : hashing in O(n) time & O(n^2) space
+//LEFT !!!
+  
+  
+  
+ //3) Find QUADRUPLES with given sum
+/Given an array A[] of N elements. The task is to complete the function which returns true if "UNIQUE" quadruples exists in
+//array A whose sum is equal to given else returns false.
+//METHOD 1 : Naive implementation is 0(n^4)
+
+//METHOD 2 : do it in 0(n^3) time & O(1) space using 2 pointer approach
+
+//METHOD 3 : using hashing in O(n^2) time & O(n^2) space 
+//https://www.geeksforgeeks.org/find-four-elements-sum-given-value-set-3-hashmap/?ref=rp
+//LEFT !!!!
+
+
+
