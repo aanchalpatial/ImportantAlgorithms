@@ -19,7 +19,7 @@ hash table then insert, delete & search are O(1) but kth smallest element is O(n
 Balanced BST all 4 operations are O(logn)
 */
 
-
+//METHOD 1 :
 //*** Naive approach *** is do inorder traversal of BST & return kth element from traversal
 //Note: Inorder traversal of BST produces a sorted array
 //Time is O(h+k) : we recurr to the left most node and then print kth node
@@ -35,6 +35,7 @@ void inorder(Node *root, int k){
   inorder(root->right,k);
 }
 
+//METHOD 2 :
 //Efficient Approach: O(h)
 //Hint: Use AUGMENTED BST, add lCount variable is node struct which counts the number of nodes in left subtree
 struct Node {
@@ -56,6 +57,9 @@ our search (recursion) for the Kth smallest element in the left subtree of root.
 the right subtree for the (K – N – 1)-th smallest element. Note that we need the count of elements in left subtree only.
 https://www.geeksforgeeks.org/find-k-th-smallest-element-in-bst-order-statistics-in-bst/
 */
+
+//METHOD 3 : Morris traversal
+//O(n) time & O(1) space
 
 
 
