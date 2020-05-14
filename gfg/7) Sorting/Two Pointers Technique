@@ -2,17 +2,21 @@
 //In Naive implementation same approach takes 0(n^2) time.
 //https://www.geeksforgeeks.org/two-pointers-technique/
 
-//Two Pointer Technique questions can be also be done via and in hashing there is no compulsion of array to be sorted but hashing
-//requires O(n) extra space : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Pair%20With%20Given%20Sum
-
+//*** INTERESTING FACT ***
+//Two Pointer Technique questions CAN ALSO BE DONE via and in hashing there is no compulsion of array to be sorted but hashing
+//requires EXTRA SPACE : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Pair%20With%20Given%20Sum
 
 //3 APPLICATIONS:-
 //1) Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements (A[i], A[j])
 //such that their sum is equal to X
+
+//METHOD 1 : naive approach is O(n^2) time & O(1) space
+
+//METHOD 2 : O(nlogn) time if array is not sorted & O(1) space
 #include <iostream>
 using namespace std;
 
-//Linear time
+//Linear time since array is already sorted
 bool pairWithGivenSumExists(int arr[], int n, int sum){
     int l=0;
 	int r=n-1;
@@ -34,10 +38,15 @@ int main() {
 	return 0;
 }
 
+//METHOD 3 : via hashing in O(n) time & O(n) space
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Pair%20With%20Given%20Sum
+
 
 //2) Find triplets with zero sum
 //Given an array A[] of N elements. The task is to complete the function which returns true if triplets exists in array A whose sum is zero else returns false.
-//Naive implementation is 0(n^3), we will do it in 0(n^2) using 2 pointer approach
+//METHOD 1 : Naive implementation is 0(n^3)
+
+//METHOD 2 : 0(n^2) time & O(1) space using 2 pointer approach
 bool findTriplets(int arr[], int n)
 { 
     //Your code here
@@ -53,9 +62,55 @@ bool findTriplets(int arr[], int n)
     return false;
 }
 
+//METHOD 3 : hashing in O(n) time & O(n^2) space
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Pair%20With%20Given%20Sum
 
 
-//3) Count the number of possible triangles: Given an unsorted array of positive integers.
+
+//3) Find Quadruples with given sum
+/Given an array A[] of N elements. The task is to complete the function which returns true if "UNIQUE" quadruples exists in
+//array A whose sum is equal to given else returns false.
+//METHOD 1 : Naive implementation is 0(n^4)
+
+//METHOD 2 : do it in 0(n^3) time & O(1) space using 2 pointer approach
+vector<vector<int> > fourSum(vector<int> &a, int k) {
+    int n = a.size();
+    vector<vector<int>> result;
+    if(n<4) return result;
+    
+    sort(a.begin(), a.end());
+    
+    for(int i=0;i<n-3;++i){
+         if(i>0&&a[i]==a[i-1]) continue;    //*** to avoid duplicate quadruples ***
+        for(int j=i+1;j<n-2;++j){
+            if(j>i+1&&a[j]==a[j-1]) continue;   //*** to avoid duplicate quadruples ***
+            //2 pointer technique on j+1 to n
+            int l = j+1, r= n-1;
+            while(l<r){
+                int sum = a[l]+a[r]+a[i]+a[j];
+                if(sum==k){
+                    result.push_back({a[i], a[j], a[l], a[r]});
+                     while(l<r&&a[l]==a[l+1]) ++l; //*** to avoid duplicate quadruples ***
+                     while(l<r&&a[r]==a[r-1]) --r; //*** to avoid duplicate quadruples ***
+                     ++l;
+                     --r;
+                }else if(sum<k){
+                    ++l;
+                }else --r;
+            }
+        }
+    }
+    return result;
+}
+
+
+//METHOD 3 : using hashing in O(n^2) time & O(n^2) space
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Pair%20With%20Given%20Sum
+
+
+
+
+//4) Count the number of possible triangles: Given an unsorted array of positive integers.
 //Find the number of triangles that can be formed with three different array elements as three sides of triangles. 
 //https://www.geeksforgeeks.org/find-number-of-triangles-possible/
 //Naive implementation is 0(n^3), we will do it in 0(n^2) using 2 pointer approach
