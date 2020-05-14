@@ -1,5 +1,42 @@
 //Given two BST, you need to print the elements of both BSTs in sorted form.
-/*Approach:
+
+//naive method : sorting
+//O((m+n)*log(m+n)) time & O(m+n) space
+//   vector<int> v1;
+//   inorder(root1, v1);  //O(m)
+//   vector<int> v2;
+//   inorder(root2, v2);  //O(n)
+   
+//   for(int i=0;i<v2.size();++i) v1.push_back(v2[i]);
+//   sort(v1.begin(), v1.end());  //O((m+n)*log(m+n))
+//   return v1;
+   
+   
+//method 2 : merge() of mergesort
+//O(m+n) time & O(m+n) space
+//   vector<int> v1;
+//   inorder(root1, v1);  //O(m)
+//   vector<int> v2;
+//   inorder(root2, v2);  //O(n)
+//   vector<int> result;
+//   int i=0,j=0,m=v1.size(), n=v2.size();
+//   while(i<m&&j<n){
+//       if(v1[i]<=v2[j]){
+//           result.push_back(v1[i++]);
+//       }else result.push_back(v2[j++]);
+//   }
+//   while(i<m){
+//       result.push_back(v1[i++]);
+//   }
+//   while(j<n){
+//       result.push_back(v2[j++]);
+//   }
+//   return result;
+
+
+//method 3 : iterative inorder traversal
+//O(m+n) time & O(h1+h2) space  i.e even more SPACE EFFICIENT
+/*Approach :
 The idea is to use iterative inorder traversal. We use two auxiliary stacks for two BSTs. Since we need to print the elements
 in sorted form, whenever we get a smaller element from any of the trees, we print it. If the element is greater, then we push
 it back to stack for the next iteration.*/
