@@ -13,6 +13,7 @@ void permutation_stl(vector<char> str){
 
 }
 //=> METHOD 2: Using Recursion + Backtracking
+//https://media.geeksforgeeks.org/wp-content/cdn-uploads/NewPermutation.gif
 void permutation_recursion(string str, int l, int r){
     if (l == r) 
         cout << str << "\t"; 
