@@ -1,0 +1,53 @@
+//Given an integer, the task is to convert it into corresponding english words.
+
+//hint : Divide the number into individual digits based on place value chart and handle them starting from most significant digit.
+
+unordered_map<int, string> h;
+string mp[20];
+   
+string nts(int n){ //number to string
+    if(n<20) return (n!=0)?mp[n]:"";
+    else {
+        int tens = n/10;
+        n %= 10;
+        int unit = n;
+        string str = h[tens*10];
+        if(unit>0) str += " "+mp[unit];
+        return str;
+    }
+}
+
+string convertToWords(long n) 
+{
+    h.insert(make_pair(20, "twenty"));
+    h.insert(make_pair(30, "thirty"));
+    h.insert(make_pair(40, "forty"));
+    h.insert(make_pair(50, "fifty"));
+    h.insert(make_pair(60, "sixty"));
+    h.insert(make_pair(70, "seventy"));
+    h.insert(make_pair(80, "eighty"));
+    h.insert(make_pair(90, "ninety"));
+    
+    mp[0] = "zero",mp[1] = "one",mp[2] = "two",mp[3] = "three",mp[4] = "four",mp[5] = "five",mp[6] = "six",mp[7] = "seven",mp[8] = "eight",mp[9] = "nine";
+    mp[10] = "ten", mp[11] = "eleven",mp[12] = "twelve",mp[13] = "thirteen",mp[14] = "fourteen",mp[15] = "fifteen",mp[16] = "sixteen",mp[17] = "seventeen",mp[18] = "eighteen",mp[19] = "nineteen";
+    
+    int crores = n/10000000;
+    n %= 10000000;
+    int lakhs = n/100000;
+    n %= 100000;
+    int thousands = n/1000;
+    n %= 1000;
+    int hundreds = n/100;
+    n %= 100;
+    int tens = n;
+    
+    string result = "";
+    if(crores!=0) result += nts(crores) + " crore ";
+    if(lakhs!=0) result += nts(lakhs) + " lakh ";
+    if(thousands!=0) result += nts(thousands) + " thousand ";
+    if(hundreds!=0) result += nts(hundreds) + " hundred ";
+    if(tens!=0) result += "and " + nts(tens);
+    
+    return result;
+    
+}
