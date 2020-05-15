@@ -30,9 +30,6 @@ int circularSubarraySum(int arr[], int num){                      //************
     for(int i=0;i<num;++i) sum += arr[i];
     int max_kadane = kadane(arr, num);
     
-    //used to handle CORNER CASE when all elements in array are negative 
-    if(max_kadane<0) return max_kadane;
-    //when all elements in array are negative ,maximum sum of circular subarray is always  ZERO.
     
     //to find maximum sum in circular subarray , find minimum sum subarray and SUBSTRACT it from the overall sum
     //but INSTEAD of modifying kadnae's to find minimum sum subarray, we invert all elements and then ADD it's maximum sum
