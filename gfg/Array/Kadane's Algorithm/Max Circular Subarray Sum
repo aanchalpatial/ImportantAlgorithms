@@ -5,6 +5,11 @@ Your task is to find the maximum contigious subarray sum.*/
 
 
 //method 2 : Using kadane's algorithm
+/*
+Return maximum of :
+->sum of normal subarray &
+->sum of circular subarray
+*/
 //O(n) time & O(1) space
 int kadane(int arr[], int n){
     
@@ -25,6 +30,11 @@ int circularSubarraySum(int arr[], int num){                      //************
     for(int i=0;i<num;++i) sum += arr[i];
     int max_kadane = kadane(arr, num);
     
+    //to find maximum sum in circular subarray , find minimum sum subarray and substract it from the overall sum
+    //but instead of modifying kadnae's to find minimum sum subarray, we invert all elements and then add it's maximum sum with overall
+    //sum which gives us the intended result
+    
+    //all elements are inverted
     for(int i=0;i<num;++i) arr[i] *= -1;
     int max_wrap = sum + kadane(arr, num);
     
