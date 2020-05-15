@@ -1,0 +1,112 @@
+/*
+Given a binary tree, Your task is to complete the function largestBst that returns the size of the largest subtree
+which is also a Binary Search Tree (BST). If the whole Binary Tree is BST, then return the size of the whole tree.
+*/
+
+//method 1 : naive method 
+//O(n^2) time & O(1) space
+//traverse binary tree and for every node check whether tree rooted with current node is BST or not.
+int getSize(Node *root){
+    if(root==NULL) return 0;
+    return 1+getSize(root->left)+getSize(root->right);
+}
+bool checkBst(Node *root, int l, int r){
+    if(root==NULL) return true;
+    bool m = checkBst(root->left, l, root->data);
+    bool n = checkBst(root->right, root->data, r);
+    if(m&&n&&root->data>l&&root->data<r) return true;
+    else return false;
+}
+int result;
+void inorder(Node *root){
+    if(root==NULL) return;
+    inorder(root->left);
+    if(checkBst(root, INT_MIN, INT_MAX)){
+        result = max(result, getSize(root));
+    }
+    inorder(root->right);
+}
+int largestBst(Node *root)
+{
+	//naive approach
+	//O(n^2) time & O(1) space
+ 	result = -1;
+ 	inorder(root);
+ 	return result;
+}
+
+
+//method 2 : 
+//O(n) time & O(1) space
+/*
+A Tree is BST if following is true for every node x.
+
+The largest value in left subtree (of x) is smaller than value of x.
+The smallest value in right subtree (of x) is greater than value of x.
+We traverse tree in bottom up manner. For every traversed node, we return maximum and minimum values in subtree rooted with it.
+ A subtree need to tell the parent whether it is BST or not and also need to pass minimum & maximum value in it.
+*/
+struct info{
+    bool isBst;
+    int max_value;
+    int min_value;
+    int size;
+    int result; //size of largest BST which is a subtree of current node 
+};
+
+info *helper(Node *root){
+    if(root==NULL){
+        info *i = new info();
+        i->max_value = INT_MIN;
+        i->min_value = INT_MAX;
+        i->isBst = true;
+        i->size = 0;
+        i->result = 0;
+        return i;
+    }
+    if (root->left == NULL && root->right == NULL) {
+         info *i = new info();
+        i->max_value = root->data;
+        i->min_value = root->data;
+        i->isBst = true;
+        i->size = 1;
+        i->result = 1;
+        return i;
+    } 
+    
+    info *li = helper(root->left);
+    info *ri = helper(root->right);
+    
+    info *currInfo = new info();
+    
+    //=>> work here <<=
+    currInfo->size = 1+li->size+ri->size;
+    currInfo->max_value = max(root->data, max(li->max_value, ri->max_value));
+    currInfo->min_value = min(root->data, min(li->min_value, ri->min_value));
+    
+    if(li->isBst&&ri->isBst&&root->data>li->max_value&&root->data<ri->min_value){
+        
+        currInfo->isBst = true;
+        currInfo->result = currInfo->size;
+    }else{
+        currInfo->isBst = false;
+        currInfo->result = max(li->result, ri->result);
+    } 
+    return currInfo;
+    
+}
+int largestBst(Node *root)
+{
+	//naive approach
+	//O(n^2) time & O(1) space
+// 	result = -1;
+// 	inorder(root);
+// 	return result;
+	
+	//method 2 : 
+	//O(n) time & O(1) space
+	info *i = helper(root);
+	return i->result;
+	
+
+}
