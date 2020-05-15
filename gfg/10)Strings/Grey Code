@@ -1,0 +1,37 @@
+//Generates all n-bit grey code sequences, a grey code sequence is a sequence such that successive patterns in it differ by one bit.
+
+/*
+First create a array(say arr) of "0" and "1".
+
+Then make the array as {"0", "1", "1", "0"} i.e. insert all the elements of arr in reverse order.
+For 1st half of the array append "0" at first position of every string and for 2nd half append "1".
+The arr becomes {"00", "01", "11", "10"}.
+Repeat the process for 2^n times.
+*/
+
+void generateCode(int N)
+{
+     
+     vector<string> result;
+     result.push_back("0");
+     result.push_back("1");
+     
+     int n = 1;
+     while(n<N){
+         ++n;
+         //reverse vector
+         vector<string> temp = result;
+         reverse(temp.begin(), temp.end());
+         
+         //append "0" at beginning of every element of result
+         for(int i=0;i<result.size();++i) result[i] = "0"+result[i];
+         //append "1" at beginning of  every element of temp 
+         for(int i=0;i<temp.size();++i) temp[i] = "1"+temp[i];
+         
+         //append temp to result
+         for(int i=0;i<temp.size();++i) result.push_back(temp[i]);
+     }
+     for(int i=0;i<result.size();++i) cout<<result[i]<<" ";
+     
+     
+}
