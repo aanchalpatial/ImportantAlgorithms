@@ -12,7 +12,7 @@ void permutation_stl(vector<char> str){
     }while(next_permutation(str.begin(), str.end()));
 
 }
-//=> METHOD 2: Using Recursion
+//=> METHOD 2: Using Recursion + Backtracking
 void permutation_recursion(string str, int l, int r){
     if (l == r) 
         cout << str << "\t"; 
@@ -22,7 +22,7 @@ void permutation_recursion(string str, int l, int r){
         { 
             swap(str[l], str[i]); 
             permutation_recursion(str, l+1, r); 
-            swap(str[l], str[i]); 
+            swap(str[l], str[i]);   //backtrack
         } 
     } 
 }
