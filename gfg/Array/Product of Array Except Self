@@ -1,0 +1,52 @@
+//Given an array nums of n integers where n > 1,  return an array output such that output[i] is equal
+//to the product of all the elements of nums except nums[i].
+
+//Constraint: It's guaranteed that the product of the elements of any prefix or suffix
+//of the array (including the whole array) fits in a 32 bit integer.
+
+#define EPS 1e-9
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        
+        int n = nums.size();
+        
+        //method 1 : use 2 extra array -> 75%
+        //O(n) time & O(n) space
+//         vector<int> preProduct(n, 1);
+//         vector<int> postProduct(n, 1);
+        
+//         //arrays is traversed 3n times
+//         for(int i=1;i<n;++i) preProduct[i] = preProduct[i-1]*nums[i-1]; 
+//         for(int i=n-2;i>=0;--i) postProduct[i] = postProduct[i+1]*nums[i+1];
+    
+//         vector<int> result;
+//         for(int i=0;i<n;++i){
+//             result.push_back(preProduct[i]*postProduct[i]);
+//         }
+//         return result;
+        
+        //method 2 : 2 extra arrays are combined into result array  -> 96%
+        vector<int> result(n, 1);
+        for(int i=1;i<n;++i) result[i] *= (result[i-1]*nums[i-1]);
+        int temp = 1;
+        for(int i=n-2;i>=0;--i) {
+            result[i] *= (temp*nums[i+1]);
+            temp *= nums[i+1];
+        }
+        return result;
+        
+        //method 3 : using logarithms
+        //NOTE :- won't work for cases where elements maybe 0 since log 0 is undefined
+        // long double log_sum = 0;    //stores sum of all log(x) where x is every element in array
+        // for(int i=0;i<n;++i) log_sum += (long double)log10(nums[i]);
+        // vector<int> result;
+        // for(int i=0;i<n;++i){
+        //     long double log_sum_except_current = log_sum - (long double)log10(nums[i]);
+        //     result.push_back((int)(EPS+pow((long double)10.00, log_sum_except_current)));
+        // }
+        // return result;
+        
+    }
+};
