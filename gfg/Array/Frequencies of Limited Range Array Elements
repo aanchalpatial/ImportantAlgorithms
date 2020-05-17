@@ -1,0 +1,54 @@
+//Given an array A[] of N positive integers which can contain integers from 1 to N where elements can be
+//repeated or can be absent from the array. Your task is to count frequency of all elements from 1 to N.
+
+// *** Note: Expected time complexity is O(n) with O(1) extra space. *** 
+
+void printfrequency(int arr[], int n)
+{ 
+
+	// naive is : O(n) time & O(n) space
+	
+	//method 2 : 2 values at 1 index appraoch
+	//O(n) time & O(1) space
+  /*
+   
+     we will use a mathematics trick to store 2 values at one index
+     say we have to store x & y at index i of arr
+     then first we have to find an element greater than x & y say z
+     then arr[i] = x + y*z, then arr[i]%z will give x &
+     arr[i]/z will give y
+     
+  */
+  //Also used here : Line 50 of :- https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
+	int M = n+5;
+	
+	for(int i=0;i<n;++i) arr[i] *= M;
+	
+	for(int i=0;i<n;++i){
+	    int ele = arr[i]/M;
+	    int index = ele-1;
+	    ++arr[index];
+	    
+	}
+	for(int i=0;i<n;++i) cout<<arr[i]%M<<" ";
+  
+  //method 3 :
+  //O(n) time & O(1) space
+  /*
+  1)  Subtract 1 from every element so that the elements
+    become in range from 0 to n-1
+    for (int j =0; j < n; j++)
+        arr[j] = arr[j]-1;
+
+2)  Use every element arr[i] as index and add 'n' to
+    element present at arr[i]%n to keep track of count of
+    occurrences of arr[i]
+    for (int i=0; i < n; i++)
+        arr[arr[i]%n] = arr[arr[i]%n] + n;
+
+3)  To print counts, simply print the number of times n
+    was added at index corresponding to every element
+    for (int i =0; i < n; i++)
+        print "(i + 1) -> arr[i] " 
+  */
+}
