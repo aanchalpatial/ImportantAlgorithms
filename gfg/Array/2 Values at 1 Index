@@ -1,3 +1,17 @@
+//This approach was also used to make mergesort inplace :
+//Check here : Line 50 of :- https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
+
+/*
+     we will use a mathematics trick to store 2 values at one index
+     say we have to store x & y at index i of arr
+     then first we have to find an element greater than x & y say z
+     then arr[i] = x + y*z, then arr[i]%z will give x &
+     arr[i]/z will give y
+     
+*/
+
+
+//Problem 1 : 
 //Given an array A[] of N positive integers which can contain integers from 1 to N where elements can be
 //repeated or can be absent from the array. Your task is to count frequency of all elements from 1 to N.
 
@@ -10,17 +24,8 @@ void printfrequency(int arr[], int n)
 	
 	//method 2 : 2 values at 1 index appraoch
 	//O(n) time & O(1) space
-  /*
-   
-     we will use a mathematics trick to store 2 values at one index
-     say we have to store x & y at index i of arr
-     then first we have to find an element greater than x & y say z
-     then arr[i] = x + y*z, then arr[i]%z will give x &
-     arr[i]/z will give y
-     
-  */
-  //Also used here : Line 50 of :- https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
-	int M = n+5;
+ 
+  	int M = n+5;	//any value which is guaranteed to greater than every element of array
 	
 	for(int i=0;i<n;++i) arr[i] *= M;
 	
@@ -52,3 +57,23 @@ void printfrequency(int arr[], int n)
         print "(i + 1) -> arr[i] " 
   */
 }
+
+
+
+//Problem 2 : Given an array arr[] of size N where every element is in range from 0 to n-1. Rearrange the given array so that
+//arr[i] becomes arr[arr[i]]. This should be done with O(1) extra space.
+
+void arrange(long long arr[], int n) {
+    int M = n+5;	//any value which is guaranteed to greater than every element of array
+    
+    for(int i=0;i<n;++i) arr[i] *= M;
+    
+    for(int i=0;i<n;++i){
+        int ele = arr[i]/M;
+        arr[i] = arr[i] + arr[ele]/M;
+    }
+    for(int i=0;i<n;++i) arr[i] = arr[i]%M;
+}
+
+
+
