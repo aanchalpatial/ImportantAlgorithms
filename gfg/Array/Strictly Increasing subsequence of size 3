@@ -1,0 +1,53 @@
+//Given an array A of N integers, Your task is to complete the function find3Numbers which finds any 3 elements
+//in it such that A[i] < A[j] < A[k] and i < j < k. You need to return them as a vector, if no such element
+//is present then return the empty vector of size 0.
+//In other words, we have to find whether LIS of given array is greater than equal to 3 or not
+//More on LIS : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/5)LIS/1)LIS
+
+
+vector<int> find3Numbers(vector<int> arr, int N) {
+    
+    //vector<int> result;
+    //METHOD 1 : LIS construction using dp : O(n^2)
+    // result = lis(arr);
+    
+    // vector<int> v;
+    // if(result.size()<3){
+    //     return v;
+    // }else{
+    //     for(int i=0;i<3;++i) v.push_back(result[i]);
+    //     return v;
+    // }
+    
+    
+    
+    // METHOD 2 : LIS construction using binary search : O(nlogn)
+    
+    
+    
+    //METHOD 3 : create 2 auxillary array
+    //*** BEST METHOD ***
+    //O(n) time & O(n) space
+    //Use Auxiliary Space. Find "SMALLER" element in the range [0, i-1] and
+    //"GREATER" element in the range [i+1, n-1] for each valid i(index).
+    int lSmaller[N];
+    lSmaller[0] = INT_MAX;
+    for(int i=1;i<N;++i){
+        lSmaller[i] = min(lSmaller[i-1], arr[i-1]);
+    }
+    
+    int rGreater[N];
+    rGreater[N-1] = INT_MIN;
+    for(int i=N-2;i>=0;--i){
+        rGreater[i] = max(rGreater[i+1], arr[i+1]);
+    }
+    
+    for(int i=0;i<N;++i){
+        if(lSmaller[i]<arr[i]&&arr[i]<rGreater[i]){
+            return {lSmaller[i], arr[i], rGreater[i]};
+        }
+    }
+    
+    return {};
+    
+}
