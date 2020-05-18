@@ -1,0 +1,184 @@
+//What is a mountain form ???
+//All values of the subarray are said to be in the form of a mountain if either all values are 
+//increasing or decreasing or first increasing and then decreasing.
+
+
+//PROBLEM 1 : We are given an array of integers and a range, we need to find whether the subarray which
+//falls in this range has values in form of a mountain or not.
+vector<bool> processQueries(int arr[], int n, vector<pair<int, int>> &queries,
+                            int q) {
+    
+    vector<bool> result;
+    
+    //method 1 : O(qn) time & O(1) space
+    // for(int i=0;i<q;++i){
+    //     int l = queries[i].first;
+    //     int r = queries[i].second;
+        
+    //     while(l<r&&a[l]<=arr[l+1]) ++l;
+    //     while(l<r&&a[l]>=arr[l+1]) ++l;
+    //     if(l==r) result.push_back(true);
+    //     else result.push_back(false);
+    // }
+    // return result;
+    
+    
+    //method 2 : preprocessing
+    //O(q+n) time & O(n) space
+    
+    //stores the last index on left(including itself) which is
+    //increasing i.e which is greater than its previous element
+    int left[n];    
+    left[0] = 0;
+    int lastIncreasingIndex = 0;
+    for(int i=1;i<n;++i){
+        if(arr[i]>arr[i-1]) lastIncreasingIndex = i;
+        left[i] = lastIncreasingIndex;
+    }
+    // for(int i=0;i<n;++i) cout<<left[i]<<", ";
+    // cout<<"\n";
+    
+    //stores the first index on right(including itself) which is greater
+    //than it's next element
+    int right[n];
+    right[n-1] = n-1;
+    int firstDecreasingIndex = n-1;
+    for(int i=n-2;i>=0;--i){
+        if(arr[i]>arr[i+1]) firstDecreasingIndex = i;
+        right[i] = firstDecreasingIndex;
+    }
+    // for(int i=0;i<n;++i) cout<<right[i]<<", ";
+    // cout<<"\n";
+    
+    
+    //now suppose the range is [l, r] then only if right[l]>=left[r] 
+    //is true, the range forms a mountain like pattern because
+    //first decreasing index should come after the last 
+    //increasing index for every element
+    for(int i=0;i<q;++i){
+        int l = queries[i].first;
+        int r = queries[i].second;
+        
+        bool mountain = (right[l]>=left[r])?true:false;
+        result.push_back(mountain);
+    }
+    return result;
+       
+}
+
+
+//PROBLEM 2 : Longest Mountain Subarray
+//Given an array arr[] with N elements, the task is to find out the longest sub-array which has the shape of a mountain
+//*** NOTE *** :- For this question we consider a subaray to be mountain only when it is first increasing and then decreasing
+//& NOT for cases where subarray is either ONLY increasing or ONLY decreasing.
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+bool isMountain(vector<int> d, int l, int r) {
+	while (l < r && d[l] <= d[l + 1]) ++l;
+	while (l < r && d[l] >= d[l + 1]) ++l;
+	return (l == r);
+}
+
+
+//find out the length longest sub-array which has the shape of a mountain.
+int LongestMountain(vector<int> v) {
+
+	int n = v.size();
+	if (n < 3) return 0;
+	int result = 0;
+
+	//naive method : O(n^3) time & O(1) space
+	//consider all subarrays & then check whether they form a mountain or not
+	//and then return the longest of them
+
+	// for (int i = 0; i < n; ++i) {
+	// 	for (int j = n - 1; j > i; --j) {
+	// 		if (isMountain(v, i, j)) {
+	// 			result = max(result, j - i + 1);
+	// 			break;
+	// 		}
+	// 	}
+	// }
+	// return result;
+
+
+	//method 2 : preprocessing
+	//O(n^2) time & O(n) space
+	//stores the index of last increasing element on left(including itself)
+	// int left[n];
+	// left[0] = 0;
+	// int lastIncreasingIndex = 0;
+	// for (int i = 1; i < n; ++i) {
+	// 	if (v[i] > v[i - 1]) lastIncreasingIndex = i;
+	// 	left[i] = lastIncreasingIndex;
+	// }
+	// //stores the index of first decreasing element on right(inlcuding itself)
+	// int right[n];
+	// right[n - 1] = n - 1;
+	// int firstDecreasingIndex = n - 1;
+	// for (int i = n - 2; i >= 0; --i) {
+	// 	if (v[i] > v[i + 1]) firstDecreasingIndex = i;
+	// 	right[i] = firstDecreasingIndex;
+	// }
+
+	// for (int i = 0; i < n; ++i) {
+	// 	for (int j = n - 1; j > i; --j) {
+	// 		if (right[i] >= left[j]) {
+	// 			result = max(result, j - i + 1);
+	// 			break;
+	// 		}
+	// 	}
+	// }
+	// return result;
+
+
+	//method 3 :	2 pointer approach
+	//O(n) time & O(1) space
+	/*
+	For a starting index base, let's calculate the length of the longest
+	mountain A[base], A[base+1], ..., A[end].
+	If such a mountain existed, the next possible mountain will start at base = end; if it
+	 didn't, then either we reached the end, or we have A[base] > A[base+1] and we can start at base + 1.
+	*/
+	int i = 1;
+	while (i < n) {
+		int increasing = 0, decreasing = 0;
+
+		while (i < n && v[i - 1] < v[i]) { ++i; ++increasing; }
+		while (i < n && v[i - 1] > v[i]) { ++i; ++decreasing; }
+
+		if (increasing > 0 && decreasing > 0) result = max(result, increasing + decreasing + 1);
+
+		while (i < n - 1 && v[i] == v[i + 1]) ++i;
+	}
+	return result;
+
+
+}
+
+
+int main() {
+
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int n;
+	cin >> n;
+
+	vector<int> d;    //{1, 3, 1, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5}
+	for (int i = 0; i < n; ++i) {
+		int ele;
+		cin >> ele;
+		d.push_back(ele);
+	}
+
+	cout << LongestMountain(d) << endl;
+
+	return 0;
+}
+
+
