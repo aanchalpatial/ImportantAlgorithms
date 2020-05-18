@@ -67,8 +67,13 @@ class myStack2 {        //top is the right end of q1
         cout<<endl;
     }
 };
-//3) Implement stack using 1 queue (using recursion call stack)
-/*Approach:
+//3) Implement stack using 1 queue 
+/*Approach :
+When we push an element into a queue, it will be stored at back of the queue due to queue's properties. But we need to
+implement a stack, where last inserted element should be in the front of the queue, not at the back. To achieve this we
+can invert the order of queue elements when pushing a new element.
+*/
+/*Algorithm:
 // x is the element to be pushed and s is stack
 push(s, x) 
   1) Let size of q be s. 
