@@ -1,0 +1,31 @@
+//Given an unsorted array of integers, sort the array into a wave like array. 
+//An array ‘arr[0..n-1]’ is sorted in wave form if arr[0] >= arr[1] <= arr[2] >= arr[3] <= arr[4] >= …
+
+void convertToWave(int *arr, int n){
+    
+    //method 1 : sort then swap adjacent elements will make wave array
+    //O(nlogn) time & O(1) space 
+    sort(arr, arr+n)  
+    // for(int i=0;i<n-1;i+=2){
+    //     swap(arr[i], arr[i+1]);
+    // }
+    
+    
+    //method 2 : try to make even index element greater than  both it's odd index neighbours
+    //O(n) time & O(1) space
+    /*
+    The idea is based on the fact that if we make sure that all even positioned (at index 0, 2, 4, ..) elements are
+    greater than their adjacent odd elements, we don’t need to worry about odd positioned element. Following are simple steps.
+          1) Traverse all even positioned elements of input array, and do following.
+              ….a) If current element is smaller than previous odd element, swap previous and current.
+              ….b) If current element is smaller than next odd element, swap next and current.
+    */
+    
+    for(int i=0;i<n;i+=2){  //considering even indexes
+        if(i>0&&arr[i]<arr[i-1]) swap(arr[i], arr[i-1]);
+        if(i<n-1&&arr[i]<arr[i+1]) swap(arr[i], arr[i+1]);
+    }
+    
+    
+    
+}
