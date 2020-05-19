@@ -5,4 +5,36 @@ The path does not need to start or end at the root or a leaf, but it must go
 downwards (traveling only from parent nodes to child nodes).
 */
 
-//APPLICATION of Subarray with given sum : 
+//APPLICATION of Subarray with given sum :- 
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Subarray%20With%20Given%20Sum
+
+class Solution {
+public:
+    int path;
+    
+    void helper(TreeNode *root, int sum, int prefix_sum,  unordered_map<int, int> &h){
+        
+        if(h.find(prefix_sum-sum)!=h.end())  path+= h[prefix_sum-sum];
+        if(prefix_sum==sum) ++path;   //corner case of prefix sum approach
+        ++h[prefix_sum];
+        
+        if(root->left!=NULL) helper(root->left, sum ,prefix_sum+root->left->val, h);
+        if(root->right!=NULL) helper(root->right, sum ,prefix_sum+root->right->val, h);
+        
+        --h[prefix_sum];
+        if(h[prefix_sum]==0) h.erase(prefix_sum);
+
+    }
+    
+    int pathSum(TreeNode* root, int sum) {
+        
+        if(root==NULL) return 0;
+        
+        //prefix sum of some kind down every path   i.e subarray with given sum
+        path = 0;
+        unordered_map<int, int> h;
+        helper(root, sum, root->val, h);
+        
+        return path;
+    }
+};
