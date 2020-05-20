@@ -22,10 +22,8 @@ Advantages  ->traversal in both direction
             ->You can't implement deque with singly linked list
 Disadvantages->extra space for previous pointer, complex
 
-A MEMORY EFFICIENT Doubly Linked List: In the XOR linked list, instead of storing actual memory addresses, every node stores
-the XOR of addresses of previous and next nodes.
- While traversing the list we need to remember the address of the previously accessed node in order to calculate the next node’s address.
- For example when we are at node C, we must have address of B. XOR of add(B) and npx of C gives us the add(D). 
+3) A MEMORY EFFICIENT Doubly Linked List: XOR Linked List
+https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/XOR%20Doubly%20Linked%20List
 */
 
 
