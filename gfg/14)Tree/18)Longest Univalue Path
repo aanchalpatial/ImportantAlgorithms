@@ -1,0 +1,30 @@
+/*LEETCODE : 687
+Given a binary tree, find the length of the longest path where each node in the path has the same value. 
+This path may or may not pass through the root.
+The length of path between two nodes is represented by the number of edges between them.
+*/
+
+class Solution {
+public:
+    int length;
+    
+    int postorder(TreeNode *root, int parent_val){
+        
+        if(root==NULL) return 0;
+        
+        int l = postorder(root->left, root->val);
+        int r = postorder(root->right, root->val);
+        
+        length = max(length, l+r);
+        
+        return (root->val==parent_val)?1+max(l, r):0;
+    }
+    
+    int longestUnivaluePath(TreeNode* root) {
+        
+        //postorder : O(n) time & O(h) space
+        length = 0;
+        postorder(root, -1);        //assumption : root node never has value -1
+        return length;
+    }
+};
