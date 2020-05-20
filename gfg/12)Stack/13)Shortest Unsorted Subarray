@@ -1,0 +1,169 @@
+/*LEETCODE : 581
+Given an integer array, you need to find one continuous subarray that if you only sort this subarray in ascending order, 
+then the whole array will be sorted in ascending order, too.
+You need to find the shortest such subarray and output its length.
+*/
+
+class Solution {
+public:
+    int findUnsortedSubarray(vector<int>& nums) {
+        
+        int n = nums.size();
+        
+        
+        //brute force : O(n^3)
+        
+        
+        //method 2 : using idea of selection sort
+        //O(n^2) time & O(1) space
+        
+        
+        //method 3 : sorting
+        //O(nlogn) time & O(n) space
+//         vector<int> arr = nums;
+//         sort(arr.begin(), arr.end());
+        
+//         int l, r;
+        
+//         for(int i=0;i<n;++i){
+//             if(arr[i]!=nums[i]) {
+//                 l = i;
+//                 break;
+//             }
+//         }
+        
+//         for(int i=n-1;i>=0;--i){
+//             if(arr[i]!=nums[i]){
+//                 r = i;
+//                 break;
+//             }
+//         }
+        
+//         if(r-l>0) return r-l+1;
+//         else return 0;
+        
+        
+        
+        
+        //method 4 : using stack
+        //O(n) time & O(n) space
+        //step 1 : finding the left boundary of result
+        //as long as we find elements in increasing order we keep pushing their index in stack. this is done because
+        //such elements are in sorted order(as it seems till now);
+        //the moment we find a element is smaller than its previous element we definitely know that 
+        //unsorted subarray has started. then we keep popping elements from stack untill we find
+        //correct elemet (i.e we find an element smaller than unsorted element), consider (this index on top of stack + 1) as k,
+        //so this k is a possible candidate for left boundary & 
+        //to find the left boundary of our result we have to take the minimum of all such k's
+//         stack<int> s;
+//         s.push(0);
+//         int left = n;
+        
+//         for(int i=1;i<n;++i){
+//             if(nums[i-1]<=nums[i]) s.push(i);
+//             else {
+//                 //we found an unsorted element 
+//                 while(!s.empty()&&nums[s.top()]>nums[i]){
+//                     s.pop();
+//                 }
+//                 int k;
+//                 if(s.empty()) k = 0;
+//                 else k = s.top()+1;
+                
+//                 left = min(left, k);
+//                 s.push(i);
+//             }
+//         }
+        
+//         cout<<"left boundary : "<<left<<"\t";
+        
+//        if(left==n) return 0;   //all elements are sorted
+        
+        
+//         //step 2 : similarly find right boundary
+//         stack<int> s2;
+//         s2.push(n-1);
+//         int right = 0;
+        
+//         for(int i=n-2;i>=0;--i){
+//             if(nums[i]<=nums[i+1]) s2.push(i);
+//             else {
+//                 //we found an unsorted element 
+//                 while(!s2.empty()&&nums[s2.top()]<nums[i]){
+//                     s2.pop();
+//                 }
+//                 int k;
+//                 if(s2.empty()) k = n-1;
+//                 else k = s2.top()-1;
+                
+//                 right = max(right, k);
+//                 s2.push(i);
+//             }
+//         }
+        
+//         cout<<"right boundary : "<<right;
+        
+//         if(right==-1) return 0;   //all elements are sorted
+        
+//         return (right-left+1);
+        
+        
+        
+        //method 5 :
+        //O(n) time & O(1) space
+        //Leetcode solution :- https://leetcode.com/problems/shortest-unsorted-continuous-subarray/solution/
+        /*
+        The idea behind this method is that the correct position of the minimum element in the unsorted subarray
+        helps to determine the required left boundary. Similarly, the correct position of the maximum element 
+        in the unsorted subarray helps to determine the required right boundary.
+        
+        Thus, firstly we need to determine when the correctly sorted array goes wrong. Whenever the slope falls,
+        we know that the unsorted array has surely started. Thus, now we determine the minimum element found till
+        the end of the array numsnums, given by min.
+        Similarly we can found right boundary.
+        
+        
+        Then, we traverse over numsnums and determine the correct position of minmin and maxmax by comparing
+        these elements with the other array elements. e.g. To determine the correct position of minmin, 
+        we know the initial portion of numsnums is already sorted. Thus, we need to find the first element 
+        which is just larger than minmin. Similarly, for maxmax's position, we need to find the first element
+        which is just smaller than maxmax searching in numsnums backwards.
+        */
+        int k=1;
+        while(k<n&&nums[k-1]<=nums[k]) ++k;
+        
+        if(k==n) return 0;
+        int min_ele = nums[k];
+        for(int i=k+1;i<n;++i) min_ele = min(min_ele, nums[i]);
+        
+        int left = n;
+        for(int i=0;i<n;++i){
+            if(nums[i]>min_ele) {
+                left = i;
+                break;
+            }
+        }
+        
+        int m=n-2;
+        while(m>=0&&nums[m]<=nums[m+1]) --m;
+        
+        if(m==-1) return 0;
+        int max_ele = nums[m];
+        for(int i=m;i>=0;--i) max_ele = max(max_ele, nums[i]);
+        
+        int right = -1;
+        for(int i=n-1;i>=0;--i){
+            if(nums[i]<max_ele){
+                right = i;
+                break;
+            }
+        }
+        
+        cout<<left<<", "<<right;
+        return right-left+1;
+        
+    }
+};
+
+
+
