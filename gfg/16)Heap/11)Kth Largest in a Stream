@@ -1,0 +1,54 @@
+/*LEETCODE : 703
+Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, 
+not the kth distinct element.
+
+Your KthLargest class will have a constructor which accepts an integer k and an integer array nums, 
+which contains initial elements from the stream. For each call to the method KthLargest.add, return the 
+element representing the kth largest element in the stream.
+*/
+
+/*Approach : 
+We can build a MinHeap that contains only k largest elements.
+On add:
+
+compare a new element x with min to decide if we should pop min and insert x
+take into account a case when heap_size is less than k
+Construction is simply calling the add function N times.
+
+Time complexity:
+
+Construction: O(N * logK)
+Adding: O(logK)
+*/
+
+class KthLargest {
+public:
+    priority_queue<int, vector<int>, greater<int>> minh;
+    int K;
+    
+    KthLargest(int k, vector<int>& nums) {      //O(n) 
+        int n = nums.size();
+        K = k;
+        
+        for(int i=0;i<min(k,n);++i) minh.push(nums[i]);
+        
+        for(int i=k;i<n;++i){
+            if(nums[i]>minh.top()){
+                minh.pop();
+                minh.push(nums[i]);
+            }
+        }
+    }
+    
+    int add(int val) {      //O(logn)
+        
+        
+        if(minh.size()<K) minh.push(val);
+        else if(val>minh.top()){
+            minh.pop();
+            minh.push(val);
+        }
+        return minh.top();
+        
+    }
+};
