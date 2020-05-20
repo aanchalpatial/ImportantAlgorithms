@@ -4,6 +4,14 @@ This path may or may not pass through the root.
 The length of path between two nodes is represented by the number of edges between them.
 */
 
+/*
+Let arrow_length(node) be the length of the longest arrow that extends from the node. That will be 1 + arrow_length(node.left) if
+node.left exists and has the same value as node. Similarly for the node.right case.
+
+While we are computing arrow lengths, each candidate answer will be the sum of the arrows in both directions from that node. 
+We record these candidate answers and return the best(i.e longest) one.
+*/
+
 class Solution {
 public:
     int length;
@@ -28,3 +36,4 @@ public:
         return length;
     }
 };
+
