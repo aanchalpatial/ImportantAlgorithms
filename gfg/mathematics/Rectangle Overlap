@@ -1,0 +1,35 @@
+/*LEETCODE 836
+A rectangle is represented as a list [x1, y1, x2, y2], where (x1, y1) are the coordinates of its bottom-left corner, and (x2, y2) are
+the coordinates of its top-right corner.
+
+Two rectangles overlap if the area of their intersection is positive.  To be clear, two rectangles that only touch at the corner
+or edges do not overlap.
+
+Given two (axis-aligned) rectangles, return whether they overlap.
+*/
+
+//NOTE : If any 2 diagonal points of rectangle are given we can find other 2 points from them as well or in 
+//other word, any 2 diagonal points are enough to represent a rectangle in 2d-graph
+
+//SOLUTION : https://leetcode.com/problems/rectangle-overlap/solution/
+
+class Solution {
+public:
+    bool isRectangleOverlap(vector<int>& rect1, vector<int>& rect2) {
+        
+        //method 1 : check position
+        //O(1) time & O(1) space
+        //we will consider cases when rectangles don't overlap & if all of these cases are false then only we return true
+        //4 cases : rectangles do not overlap, then rec1 must either be higher, lower, to the left, or to the right of rec2.
+        //return !(rect1[2]<=rect2[0]||rect2[2]<=rect1[0]||rect1[3]<=rect2[1]||rect2[3]<=rect1[1]);
+        
+        
+        //method 2 : check if intersection area is positive
+        //if intersection area if positive it implies rectangles overlap, say width*height be the area of
+        //intersection, then we want both these quantities to be positive
+        //width is positive if min(both x co-ordinates of top-right position) > max(both x co-ordinates of bottom-left position)
+        //height is positive if min(both y co-ordinates of bottom-left position) > max(both y co-ordinates of top-right position)
+        return ( (min(rect1[2], rect2[2])>max(rect1[0], rect2[0]))&&min(rect1[3], rect2[3])>max(rect1[1], rect2[1]) );
+        
+    }
+};
