@@ -17,33 +17,54 @@ public:
     
     int twoCitySchedCost(vector<vector<int>>& costs) {
         
-        int n = costs.size();
-        int total_cost = 0;
-        
-        //naive method :
+        //naive METHOD :
         //O(2^n) time & O(1) space
         
-       
-       //method 2 : customised sorting
+        
+        int n = costs.size();
+
+        
+        //METHOD 2 : customised sorting
         //O(nlogn) time & O(1) space
         //https://leetcode.com/problems/two-city-scheduling/discuss/278716/C++-O(n-log-n)-sort-by-savings
         //hint : in order to minimize total cost, the person with maximum SAVING should go to A & with minimum saving should 
         //go to B. 
         //Here "SAVING" means how much money we can save if we send the person to city A instead of city B i.e
         //the cost of going to city b - cost of going to city A
+
+//         int total_cost = 0;        
+//         sort(costs.begin(), costs.end(), myComp);   //sorted in increasing order of saving
         
-        sort(costs.begin(), costs.end(), myComp);   //sorted in increasing order of saving
+//         //now first half of person should go to city B & other half should go to A
+//         for(int i=0;i<n/2;++i){
+            
+//             total_cost += costs[i][1] + costs[n/2+i][0];
+            
+//         }
+//         return total_cost;
         
-        //now first half of person should go to city B & other half should go to A
-        for(int i=0;i<n/2;++i){
-            
-            total_cost += costs[i][1] + costs[n/2+i][0];
-            
+        
+        //METHOD 3 : dp tabulation solution
+        //O(n^2) time & O(n^2) space
+        //https://leetcode.com/problems/two-city-scheduling/discuss/278731/Java-DP-Easy-to-Understand
+        int m = n/2;
+        int dp[m+1][m+1];
+        //dp[i][j] represents the MINIMUM cost of placing first (i+j) persons where i persons are placed in A and
+        //j are placed in B
+        dp[0][0] = 0;
+        for(int i=1;i<=m;++i) dp[i][0] = dp[i-1][0] + costs[i-1][0];
+        for(int i=1;i<=m;++i) dp[0][i] = dp[0][i-1] + costs[i-1][1];
+        
+        for(int i=1;i<=m;++i){
+            for(int j=1;j<=m;++j){
+                //minimum of cost when either added to A or to B
+                dp[i][j] = min(dp[i-1][j]+ costs[i+j-1][0], dp[i][j-1]+costs[i+j-1][1]);
+            }
         }
+        return dp[m][m];
         
-        return total_cost;
+        
     }
 };
-
 
 
