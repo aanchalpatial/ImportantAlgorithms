@@ -1,0 +1,159 @@
+/*LEETCODE : 707
+Design your implementation of the linked list. You can choose to use the singly linked list or the doubly linked list. 
+A node in a singly linked list should have two attributes: val and next. val is the value of the current node, and next 
+is a pointer/reference to the next node. If you want to use the doubly linked list, you will need one more attribute prev
+to indicate the previous node in the linked list. Assume all nodes in the linked list are 0-indexed.
+
+Implement these functions in your linked list class:
+
+get(index) : Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+addAtHead(val) : Add a node of value val before the first element of the linked list. After the insertion, the new node 
+  will be the first node of the linked list.
+addAtTail(val) : Append a node of value val to the last element of the linked list.
+addAtIndex(index, val) : Add a node of value val before the index-th node in the linked list. If index equals to the length
+  of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted.
+*/
+
+//METHOD 1 : SINGLY LINKED LIST IMPLEMENTATION         :   67 %
+
+struct Node {
+    int val;
+    Node *next;
+    Node(int x){
+        val = x;
+        next = NULL;
+    }
+};
+class MyLinkedList {
+public:
+    /** Initialize your data structure here. */
+    Node *head;
+    int size;           //**** important ****
+    MyLinkedList() {
+        head = NULL;
+        size = 0;
+    }
+    
+    void printList(){
+//         Node *curr = head;
+        
+//         while(curr!=NULL){
+//             cout<<curr->val<<", ";
+//             curr = curr->next;
+//         }
+//         cout<<"size : "<<size<<"\n";
+        
+    }
+    
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    int get(int index) {        //O(n)
+        
+        Node *curr = head;
+        
+        while(curr!=NULL&&index>0){
+            --index;
+            curr = curr->next;
+        }
+        
+        if(curr!=NULL) return curr->val;
+        else return -1;
+        
+        
+    }
+    
+    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+    void addAtHead(int val) {   //O(1)
+        
+        if(head==NULL){
+            head = new Node(val);
+        }else{
+            Node *nd = new Node(val);
+            nd->next = head;
+            head = nd;
+        }
+        ++size;
+        printList();
+        
+        
+    }
+    
+    /** Append a node of value val to the last element of the linked list. */
+    void addAtTail(int val) {   //O(n)          note : is we implement doubly linked list addAtTail() can be made O(1)
+        
+        Node *nd = new Node(val);
+        
+        if(head==NULL){
+            head = nd;
+        }else{
+        	Node *curr = head;
+        	while(curr->next!=NULL) curr = curr->next;
+        	curr->next = nd;
+        }
+        ++size;
+        printList();
+        
+    }
+    
+    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+    void addAtIndex(int index, int val) {   //O(n)
+        
+    	if(index>size) return;				//INVALID INDEX
+
+    	if(index==0) addAtHead(val);			//add at beginning
+    	else if(index==size) addAtTail(val);	//add at end
+    	else{									//add in between
+    		
+    		Node *curr = head, *prevNode = NULL;
+            
+            while(index>0){
+                --index;
+                prevNode = curr;
+                curr = curr->next;
+            }
+            
+            Node *nd = new Node(val);
+
+            prevNode->next = nd;
+            nd->next = curr;
+            ++size;
+    	}
+
+        
+        printList();
+        
+    }
+    
+    /** Delete the index-th node in the linked list, if the index is valid. */
+    void deleteAtIndex(int index) {     //O(n)
+
+
+    	if(index>=size) return;
+    	else if(index==0){
+    		head = head->next;
+    	}else{
+    		Node *curr = head, *prevNode = NULL;
+            
+            while(index>0){
+                --index;
+                prevNode = curr;
+                curr = curr->next;
+            }
+            
+            prevNode->next = curr->next;
+    	}
+    	--size;
+        
+        
+        
+        printList();
+        
+    }
+};
+
+
+//METHOD 2 :  DOUBLY LINKED LIST IMPLEMENTATION :
+//LEFT !!!
+
+
+
+
