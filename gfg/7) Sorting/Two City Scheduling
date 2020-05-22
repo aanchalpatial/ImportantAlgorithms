@@ -1,0 +1,49 @@
+/*LEETCODE 1029
+There are 2N people a company is planning to interview. The cost of flying the i-th person to city A is costs[i][0], 
+and the cost of flying the i-th person to city B is costs[i][1].
+
+Return the minimum cost to fly every person to a city such that exactly N people arrive in each city
+*/
+
+
+class Solution {
+public:
+    
+    //1,30 1,30, 1,30, 2,1
+    
+    static bool myComp(vector<int> c1, vector<int> c2){
+        return (c1[1]-c1[0])<(c2[1]-c2[0]);
+    }
+    
+    int twoCitySchedCost(vector<vector<int>>& costs) {
+        
+        int n = costs.size();
+        int total_cost = 0;
+        
+        //naive method :
+        //O(2^n) time & O(1) space
+        
+       
+       //method 2 : customised sorting
+        //O(nlogn) time & O(1) space
+        //https://leetcode.com/problems/two-city-scheduling/discuss/278716/C++-O(n-log-n)-sort-by-savings
+        //hint : in order to minimize total cost, the person with maximum SAVING should go to A & with minimum saving should 
+        //go to B. 
+        //Here "SAVING" means how much money we can save if we send the person to city A instead of city B i.e
+        //the cost of going to city b - cost of going to city A
+        
+        sort(costs.begin(), costs.end(), myComp);   //sorted in increasing order of saving
+        
+        //now first half of person should go to city B & other half should go to A
+        for(int i=0;i<n/2;++i){
+            
+            total_cost += costs[i][1] + costs[n/2+i][0];
+            
+        }
+        
+        return total_cost;
+    }
+};
+
+
+
