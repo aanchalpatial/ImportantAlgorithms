@@ -1,23 +1,18 @@
 //Another sorting algo to sort in linear time when elements are not in range proportional to n.
-// if the elements are in range from 1 to n2, We can’t use counting sort because counting sort will take O(n2)
-//Radix Sort is to do digit by digit sort starting from least significant digit to most significant digit.
-//Uses a stable algo(such as counting sort) as a subroutine.
-//Time Complexity: 0(d*(n+b)) where d: maximum number of digits possible in an element, b: base
+// if the elements are in range from 1 to n^2, We can’t use counting sort because counting sort will take O(n^2)
+
+//Radix Sort is to do DIGIT BY DIGIT SORT starting from LEAST SIGNIFICANT DIGIT to MOST SIGNIFICANT DIGIT.
+//Uses a ***STABLE*** algo(such as counting sort) as a subroutine.
+//Time Complexity: 0(d*(n+b)) where d: maximum number of digits possible in an element = log10(k), b: base
 //Space : 0(n+b)
+
 /*Is Radix Sort PREFERABLE to Comparison based sorting algorithms like Quick-Sort?
 If we have log2n bits for every digit, the running time of Radix appears to be better than Quick Sort for a wide range
 of input numbers. The constant factors hidden in asymptotic notation are higher for Radix Sort and Quick-Sort uses hardware 
-caches more effectively. Also, Radix sort uses counting sort as a subroutine and counting sort takes extra space to sort numbers.*/
+caches more effectively. Also, Radix sort uses counting sort as a subroutine and counting sort takes extra space to sort numbers.
+*/
 
-//NOT a comparison based sorting algorithm
-//Count sort is a linear time sorting algorithm WHEN input elements are in SMALL RANGE. Used a subroutine in RADIX SORT.
-//0(n+k) time & 0(n+k) space is taken to sort n elements in range from 0 to k-1.
-//counting sort is useful only when k is linear in terms with n. If k is nlogn or n^2 then this algo becomes inefficient.
-// C++ program to implement cycle sort 
-#include <bits/stdc++.h> 
-using namespace std; 
 
-// C++ program to implement cycle sort 
 #include <bits/stdc++.h> 
 using namespace std; 
 
@@ -47,8 +42,9 @@ void radixSort(int arr[], int n, int k){
     for(int i=1;i<n;++i){
         if(arr[i]>maxElement) maxElement = arr[i];
     }
-    int maxDigitCount = log10(maxElement)+1;
+    int maxDigitCount = log10(maxElement)+1;		//finding digits in the maximum number in array
     //cout<<"maxDigitCount : "<<maxDigitCount<<endl;
+    
     for(int i=0;i<maxDigitCount;++i){
         countSort(arr, n, k, pow(10,i));
     }
