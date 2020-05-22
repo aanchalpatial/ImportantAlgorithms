@@ -4,4 +4,67 @@ the XOR of addresses of previous and next nodes.
  While traversing the list we need to remember the address of the previously accessed node in order to calculate the next node’s address.
  For example when we are at node C, we must have address of B. XOR of add(B) and npx of C gives us the add(D). 
 */
-s
+
+/*
+Structure of linked list is as
+struct Node
+{
+	int data;
+	struct Node* npx; 
+	
+	Node(int x){
+	    data = x;
+	    npx = NULL;
+	}
+};
+
+Utility function to get XOR of two Struct Node pointer
+use this function to get XOR of two pointers 
+struct Node* XOR (struct Node *a, struct Node *b)
+{
+	return (struct Node*) ((uintptr_t) (a) ^ (uintptr_t) (b));
+}
+*/
+
+
+// function should insert the data to the front of the list
+void insert(struct Node **head_ref, int data)
+{
+	Node *nd = new Node(data);
+	
+	if((*head_ref)==NULL) (*head_ref) = nd;
+	else {
+	    nd->npx = *head_ref;
+	    (*head_ref)->npx = XOR((*head_ref)->npx, nd);
+	    (*head_ref) = nd;
+	}
+}
+
+// function should prints the contents of doubly linked list
+// first in forward direction and then in backward direction
+// you should print a next line after printing in forward direction
+void printList (struct Node *head)
+{
+	Node *prevNode = NULL;
+	Node *curr = head;
+	
+	while(curr!=NULL){  //forward direction
+	    cout<<curr->data<<" ";
+	    Node *temp = curr;
+	    curr = XOR(curr->npx, prevNode);
+	    prevNode = temp;
+	}
+	cout<<"\n";
+	Node *curr2 = prevNode;
+	Node *prevNode2 = NULL;
+	while(curr2!=NULL){     //backward direction
+	    cout<<curr2->data<<" ";
+	    Node *temp = curr2;
+	    curr2 = XOR(curr2->npx, prevNode2);
+	    prevNode2 = temp;
+	}
+}
+
+
+
+
