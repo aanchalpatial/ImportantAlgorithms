@@ -1,12 +1,11 @@
-//Problem of how to Merge K Sorted Arrays.
+//Problem of how to Merge K Sorted Arrays or Linked Lists
+//Note : Below methods are implemented for arrays BUT can be easily modified to implement linked lists instead.
 
 //1)Naive approach : Copy all k sorted arrays into 1 array & then sort it, O( nk*log(nk) )
 
 /*2)Another Naive approach: Apply merge function of mergesort k-1 times, O(n*(k^2)).
 Note :- in 2nd method there are 2 approaches : one O(m+n) space(ITERATIVE ONE) & other is O(1) space(RECURSIVE ONE).
 https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
-
--> this solution is usually used to solve : merge k sorted linked lists
 */
 
 //3) **** Efficient Approach : Use Min Heap, O(nklogk)
