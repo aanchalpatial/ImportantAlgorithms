@@ -64,13 +64,13 @@ public:
             int x = A[i][0], y = A[i][1];
             int x2 = B[j][0], y2 = B[j][1];
             
-            //METHOD 1 : 
+            //METHOD 1 : check if intersection area if positive
             // if(min(y, y2)>=max(x, x2)){
             //     //then we have intersection
             //     result.push_back({max(x, x2), min(y, y2)});
             // }
             
-            //METHOD 2 : 
+            //METHOD 2 : check position
             if(!(y2<x||y<x2)){
                 //then we have intersection
                 result.push_back({max(x, x2), min(y, y2)});
