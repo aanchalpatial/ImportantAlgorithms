@@ -84,10 +84,15 @@ void mergeSortLinkedList(Node **headRef){
      
      //Merging 2 sorted linked lists
      *headRef = merge(head, midNext);
-    
+   
 }
+
+/*Let head be the first node of the linked list to be sorted and headRef be the pointer to head. Note that we need
+a reference to head in MergeSort() as the below implementation changes next links to sort the linked lists (not data at the nodes),
+so head node has to be changed if the data at the original head is not the smallest value in the linked list.*/
+
 Node* mergeSort(Node* head) {
     // your code here
-    mergeSortLinkedList(&head);
+    mergeSortLinkedList(&head);             //*** Not head BUT pointer to head ***
     return head;
 }
