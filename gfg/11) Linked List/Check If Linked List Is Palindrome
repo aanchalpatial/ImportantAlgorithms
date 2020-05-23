@@ -1,0 +1,95 @@
+/*
+Given a singly linked list of size N of integers. The task is to check if the given linked list is palindrome or not.
+Expected Time Complexity: O(N)
+Expected Auxialliary Space Usage: O(1)  (ie, you should not use the recursive stack space as well)
+*/
+
+bool isPalindrome(Node *head)
+{
+    //Your code here
+    if(head==NULL||head->next==NULL) return true;
+    
+    
+    //method 1 : push all nodes of linked list in stack
+    // & then compare stack & list
+    //O(n) time & O(n) space
+    
+    //method 2 : find mid of linked list, then push half of 
+    //nodes in stack & start comparing stack & other half of list
+    //O(n) time & O(n) space
+    
+    //method 3 : creater a duplicate reversed linked list of 
+    //given linked list & then compare both lists
+    //O(n) time & O(n) space
+    //create a duplicate linked list
+    // Node *temp = head->next;
+    // Node *head2 = new Node(head->data);
+    // Node *duplicateHead = head2;
+    // while(temp!=NULL){
+    //     Node *newNode = new Node(temp->data);
+    //     head2->next = newNode;
+    //     head2 = head2->next;
+    //     temp = temp->next;
+    // }
+    
+    // //reverse it
+    // Node *prev = NULL;
+    // Node *curr = duplicateHead;
+    // while(curr!=NULL){
+    //     Node *curr_next = curr->next;
+        
+    //     curr->next = prev;
+    //     prev = curr;
+    //     curr = curr_next;
+    // }
+    // duplicateHead = prev;
+    
+    // //than compare original and reversed linked list
+    // Node *original = head;
+    // Node *reverse = duplicateHead;
+    // while(original!=NULL){
+    //     if(original->data!=reverse->data) return false;
+    //     original = original->next;
+    //     reverse = reverse->next;
+    // }
+    // return true;
+    
+    //method 4 : divide the linked list in half, then 
+    //*** BEST SOLUTION ***
+    //reverse second half and then compare with first half
+    //O(n) time & O(1) space
+    Node *slow = head, *fast = head->next;
+    while(fast!=NULL&&fast->next!=NULL){
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    
+    Node *mid = slow;
+    
+    if(fast==NULL){     //list is even sized
+        
+    }else{              //list is odd sized
+        mid = mid->next;
+    }
+    
+    //reverse 2nd half of list
+    Node *prev = NULL;
+    Node *curr = mid;
+    while(curr!=NULL){
+        Node *curr_next = curr->next;
+        
+        curr->next = prev;
+        prev = curr;
+        curr = curr_next;
+    }
+    mid = prev;
+    
+    
+    while(mid!=NULL){
+        if(mid->data!=head->data) return false;
+        mid = mid->next;
+        head = head->next;
+    }
+    
+    return true;
+}
