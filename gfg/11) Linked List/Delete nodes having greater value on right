@@ -1,0 +1,24 @@
+/*
+Given a singly linked list, remove all the nodes which have a greater value on its next adjacent element.
+*/
+
+Node *helper(Node *head){
+    // 12 15 10 11 5 6 2 3
+    if(head->next==NULL) return head;   //reached last node
+    
+    Node *rightNode = helper(head->next);
+    if(head->data>=rightNode->data){    //if property is followed, link current node & return it
+        head->next = rightNode;
+        return head;
+    }else{
+        return rightNode;     //else return right node
+    }
+}
+
+
+Node *compute(Node *head)
+{   //method : traverse from right to left & link nodes only if they follow stated property
+    return helper(head);
+    
+    //method 2 : reverse list, traverse from left to right, remove nodes which don't follow property  & then reverse back the list
+}
