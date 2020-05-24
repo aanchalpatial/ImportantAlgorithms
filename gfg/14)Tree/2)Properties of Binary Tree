@@ -1,5 +1,5 @@
 /*
-Properties of BINARY TREES such as size, maximum value, height, nodes at distance k, children sum property, balanced,
+Properties of BINARY TREES such as size, maximum value, height, height of spiral tree, nodes at distance k, children sum property, balanced,
 maximum width, path of a node, mirror of a binary tree, are 2 trees identical & vertical width are studied here in LINEAR TIME & LINEAR SPACE.
 */
 
@@ -27,12 +27,33 @@ int getMax(Node *root){
 
 
 
-//3) Find HEIGHT of binary tree : O(n) time & O(h) space
+//3A) Find HEIGHT of binary tree : O(n) time & O(h) space
 int getHeight(Node *root){
     if(root==NULL) return 0;
     else {
         return max(1+getHeight(root->left), 1+getHeight(root->right));
     }
+}
+
+//3B) Height of Spiral Binary Tree
+/*
+Given a special binary tree of size N, whose leaf nodes are connected to form a circular doubly linked list, 
+your task is to complete the function findTreeHeight(), that should return the height of the tree.
+https://www.geeksforgeeks.org/find-height-of-a-special-binary-tree-whose-leaf-nodes-are-connected/
+*/
+int findTreeHeight(Node* node)
+{
+    //we have to write simple height function but with one extra
+    //base condition
+	if(node==NULL) return 0;
+    
+    //when a leaf node is reached
+    if(node->left!=NULL&&node->right!=NULL&&node->left->right==node&&node->right->left==node) return 1;
+    
+    int lh = findTreeHeight(node->left);
+    int rh = findTreeHeight(node->right);
+    
+    return max(lh,rh)+1;
 }
 
 
