@@ -1,0 +1,60 @@
+/*
+Given a singly linked list: A0→A1→…→An-1→An, reorder it to: A0→An→A1→An-1→A2→An-2→…
+For example: Given 1->2->3->4->5 its reorder is 1->5->2->4->3.
+
+REQUIREMENTS : 
+1) Do it in place
+2) Altering node's value is not allowed, only modification in pointers is allowed
+*/
+
+/*Approach : 
+1) Split the list into 2 halves.
+2) Next reverse the second half.
+3) Now, merge the 2 halves while picking elements alternatively from each half.
+*/
+
+Node *reverse(Node *head){
+    Node *prev = NULL, *curr = head;
+    while(curr!=NULL){
+        Node *temp = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = temp;
+    }
+    return prev;
+}
+
+void reorderList(Node* head) {
+    
+    if(head==NULL||head->next==NULL||head->next->next==NULL) return;
+    
+    // requirements : in place & no wapping of values i.e only
+    //modification of pointers is allowed
+    
+    //step 1 : split list in 2 halves
+    Node *prev_slow = NULL;
+    Node *slow = head, *fast = head;
+    while(fast!=NULL&&fast->next!=NULL){
+        prev_slow = slow;
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    prev_slow->next = NULL;
+    
+    //step 2 : reverse 2nd half
+    Node *head2 = reverse(slow);
+    
+    //step 3 : start merging both lists taking one node 
+    //from each list simultanously
+    while(head!=NULL&&head2!=NULL){
+        Node *temp = head->next;
+        Node *temp2 = head2->next;
+        
+        head->next = head2;
+        if(temp!=NULL) head2->next = temp;
+        else head2->next = temp2;   //accounts for one extra node in 2nd list of original list had odd number of elements
+        
+        head = temp;
+        head2 = temp2;
+    }
+}
