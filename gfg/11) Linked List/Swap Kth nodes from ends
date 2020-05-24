@@ -1,0 +1,79 @@
+/*
+Given a singly linked list of size N, and an integer K. You need to swap the Kth node from beginning and Kth node 
+from the end in the linked list.
+
+Note:- You need to swap the nodes through the links and not changing the content of the nodes.
+*/
+
+void print(Node *h){
+    while(h!=NULL){
+        cout<<h->data<<", ";
+        h = h->next;
+    }
+    cout<<"\n";
+}
+
+Node *swapkthnode(Node* head, int num, int K)
+{
+    if(head==NULL||head->next==NULL) return head;
+    
+    if(K>num||K<0) return head;   //invalid value of K
+    else if(K==1||K==num){      //first & last nodes need to be swapped
+        //1 2 3 4
+        Node *secondLast = NULL;
+        Node *last = head;
+        while(last->next!=NULL){
+            secondLast = last;
+            last = last->next;
+        }
+        secondLast->next = head;
+        last->next = head->next;
+        head->next = NULL;
+        head = last;
+        
+        //print(head);
+    }else {             //in-between nodes need to be swapped
+    
+      //find kth node from starting & from end and as well as their previous & next nodes as well.
+        Node *p1 = NULL;    //previous node of kth node from starting
+        Node *curr = head;
+        int cnt = K;
+        while(curr!=NULL&&cnt>1){
+            --cnt;
+            p1 = curr;
+            curr = curr->next;
+        }
+        Node *kth = curr;       //kth node from starting
+        Node *n1 = curr->next;  //next node of kth node from starting 
+        
+        Node *p2 = NULL;    //previous node of kth node from end
+        Node *curr2 = head;
+        while(curr->next!=NULL){
+            p2 = curr2;
+            curr2 = curr2->next;
+            curr = curr->next;
+        }
+        
+        Node *kthEnd = curr2;   //kth node from end
+        Node *n2 = curr2->next;   //next node of kth node from end
+        
+        //3 cases
+        if(kth==kthEnd){    //kth node from starting & kth node from end are same
+            //do nothing
+        }else if(kth->next==kthEnd){    //kth node from starting & kth node from end are adjacent
+            p1->next = kthEnd;
+            kthEnd->next = kth;
+            kth->next = n2;
+        }else {        
+            p1->next = kthEnd;
+            kthEnd->next = n1;
+            p2->next = kth;
+            kth->next = n2;
+        }
+        //print(head);
+    }
+    
+    return head;
+}
+
+
