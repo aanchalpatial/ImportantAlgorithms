@@ -8,7 +8,8 @@
 
 /*2)Another Naive approach: Apply merge function of mergesort k-1 times, O((nk)*k).
 Note :- in 2nd method there are 2 approaches : one O(m+n) space(ITERATIVE ONE) & other is O(1) space(RECURSIVE ONE).
-https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
+Array version : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
+Linked List version : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/MergeSort
 */
 
 //3) **** Efficient Approach : Use Min Heap, O((nk)logk)
