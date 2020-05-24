@@ -102,3 +102,5 @@ Node* mergeSort(Node* head) {
 //1) fast node in mergeSortLinkedList() has to be head->next
 //2) a reference to head has to be passed to mergeSortLinkedList()
 
+
+//MERGE SORT FOR ARRAYS : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Merge%20Sort%20and%20its%20Merge%20Function
