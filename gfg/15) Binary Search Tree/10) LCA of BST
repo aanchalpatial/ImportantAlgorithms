@@ -18,17 +18,38 @@ We can do it in O(h) time which will be in case of balanced BST equal to O(logn)
  Otherwise root is LCA (assuming that both n1 and n2 are present in BST).
 */
 
-Node* LCA(Node *root, int n1, int n2)
-{
-   //Your code here
-   if(root==NULL) return NULL;
-   int l = min(n1, n2);
-   int r = max(n1, n2);
-   Node *temp = root;
-   while(temp!=NULL){
-       if(temp->data>=l&&temp->data<=r) return temp;        //<= && >= important
-       else if(temp->data<l&&temp->data<r) temp = temp->right;
-       else temp = temp->left;
-   }
-   return root;
-}
+class Solution {
+public:
+    TreeNode *LCA;
+    void helper(TreeNode* root, TreeNode* p, TreeNode* q){
+        if(root==NULL) return;
+        if(p->val<root->val&&q->val<root->val){
+            helper(root->left, p, q);
+        }else if(p->val>root->val&&q->val>root->val){
+            helper(root->right, p, q);
+        }else {
+            LCA = root;
+            return;
+        }
+        
+    }
+    
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        
+        
+        //method 1 : trace paths for both nodes & then compare paths
+        //takes 3 traversals
+        //O(n) time & O(n) space
+        
+        //method 2 : apply LCA of Binary Tree approach for BST
+        //O(n) time & O(1) space
+        
+        //method 3 : 
+        //O(h) time & O(1) space
+        //takes 1 traversl
+        LCA = root;
+        helper(root, p, q);
+        return LCA;
+    }
+};
+//application : find distance between 2 nodes = (distance between first node & LCA) + (distance between second node & LCA) 
