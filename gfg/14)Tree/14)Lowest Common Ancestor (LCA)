@@ -96,6 +96,9 @@ int main() {
 }
 
 
-//*** Interesting note *** : we can use the above method 2 with slight modification in checking conditions
-//to find LCA of BST in O(h) time
+//*** Interesting note *** : LCA of BT vs LCA of BST
+//we can use the above method 2 with slight modification in checking conditions to find LCA of BST in O(h) time
 //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/15)%20Binary%20Search%20Tree/10)%20LCA%20of%20BST
+
+
+//application : find distance between 2 nodes = (distance between first node & LCA) + (distance between second node & LCA) 
