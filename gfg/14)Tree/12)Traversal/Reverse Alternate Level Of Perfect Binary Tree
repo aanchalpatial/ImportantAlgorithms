@@ -1,0 +1,74 @@
+/*
+For example : 
+      1             1
+    2   3     =>  3   2
+  4  5 6  7     4  5 6  7
+*/
+
+void inorder(Node *root, vector<int> &v, int level){
+    if(root==NULL) return;
+    
+    inorder(root->left, v, level+1);
+    if(level%2==1) v.push_back(root->data);
+    
+    inorder(root->right, v, level+1);
+}
+
+void inorder2(Node *root, vector<int> &v, int level, int &index){
+    if(root==NULL) return;
+    
+    inorder2(root->left, v, level+1, index);
+    if(level%2==1){
+        root->data = v[index];
+        ++index;
+    }
+    inorder2(root->right, v, level+1, index);
+}
+
+void reverseAlternate(Node *root)
+{
+    //METHOD 1 : bfs
+    //O(n) time & O(width) space
+    // queue<Node *> q;
+    // q.push(root);
+    // int level = 0;
+    
+    // while(!q.empty()){
+    //     int n = q.size();
+    //     stack<int> st;
+    //     if(level%2==1){     //odd level
+    //         int cnt = n;
+    //         while(cnt>0){
+    //             --cnt;
+    //             st.push(q.front()->data);
+    //             q.push(q.front());
+    //             q.pop();
+    //         }
+    //     }
+    //     for(int i=0;i<n;++i){
+    //         Node *nd = q.front();
+    //         q.pop();
+    //         if(level%2==1){
+    //             nd->data = st.top();
+    //             st.pop();
+    //         }
+    //         if(nd->left!=NULL) q.push(nd->left);
+    //         if(nd->right!=NULL) q.push(nd->right);
+    //     }
+    //     ++level;
+    // }
+    
+    
+    //METHOD 2 : inorder
+    //O(n) time & O(odd_level_nodes) space
+    //step 1 : do inorder traversal of BT & push node value's in vector only if current level if odd
+    vector<int> v;
+    inorder(root, v, 0);
+    //step 2 : reverse it 
+    reverse(v.begin(), v.end());
+    //step 3 : do inorder traversal of BT & if current level is odd change its value to the current index of 
+    //vector starting from beginning
+    int index = 0;
+    inorder2(root, v, 0, index);
+    
+}
