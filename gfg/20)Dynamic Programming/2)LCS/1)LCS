@@ -87,4 +87,59 @@ int main() {
 
 
 
+//APPLICATION 1 : 
+/*LeetCode 1035 : https://leetcode.com/problems/uncrossed-lines/description/
+We write the integers of A and B (in the order they are given) on two separate horizontal lines.
 
+Now, we may draw connecting lines: a straight line connecting two numbers A[i] and B[j] such that:
+
+A[i] == B[j];
+The line we draw does not intersect any other connecting (non-horizontal) line.
+Note that a connecting lines cannot intersect even at the endpoints: each number can only belong to one connecting line.
+
+Return the maximum number of connecting lines we can draw in this way.
+*/
+
+class Solution {
+public:
+    int helper(vector<int>& A, vector<int>& B, int m, int n){
+        if(m<0||n<0) return 0;
+        
+        if(A[m]==B[n]){
+            return 1+ helper(A, B, m-1, n-1);
+        }else{
+            return max(helper(A, B, m-1, n), helper(A, B, m, n-1));
+        }
+    }
+    
+    int helper_dp(vector<int>& A, vector<int>& B, int m, int n){
+        int dp[m+1][n+1];
+        for(int i=0;i<=m;++i) dp[i][0] = 0;
+        for(int i=0;i<=n;++i) dp[0][i] = 0;
+        
+        for(int i=1;i<=m;++i){
+            for(int j=1;j<=n;++j){
+                if(A[i-1]==B[j-1]){
+                    dp[i][j] = 1+ dp[i-1][j-1];
+                }else{
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                }
+            }
+        }
+        return dp[m][n];
+    }
+    
+    int maxUncrossedLines(vector<int>& A, vector<int>& B) {
+        
+        int m = A.size(), n = B.size();
+        
+        //method 1 : naive recursion
+        //TLE !!!
+        // return helper(A, B, m-1, n-1);
+        
+        //method 2 : dp solution with tabulation
+        //O(mn) time & O(mn) space
+        return helper_dp(A, B, m, n);
+        
+    }
+};
