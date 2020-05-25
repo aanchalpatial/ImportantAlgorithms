@@ -1,5 +1,5 @@
 /*
-Properties of BINARY TREES such as size, maximum value, height, height of spiral tree, nodes at distance k, children sum property, balanced,
+Properties of BINARY TREES such as size, maximum value, height, minimum height of tree, height of spiral tree, nodes at distance k, children sum property, balanced,
 maximum width, path of a node, mirror of a binary tree, are 2 trees identical & vertical width are studied here in LINEAR TIME & LINEAR SPACE.
 */
 
@@ -35,7 +35,54 @@ int getHeight(Node *root){
     }
 }
 
-//3B) Height of Spiral Binary Tree
+//3B) Find minimum depth(height) of Binary Tree
+int result;     //stores minimum depth
+void helper(Node *root, int h){
+    if(root==NULL) return;
+    if(root->left==NULL&&root->right==NULL){
+        //cout<<h<<", ";
+        result = min(result, h);
+    }
+    
+    helper(root->left, 1+h);
+    helper(root->right, 1+h);
+}
+
+
+/*You are required to complete this method*/
+int minDepth(Node *node) {
+    
+    if(node==NULL) return 0;
+    
+    //method 1 : traverse tree and when you encounter leaf node check for depth &
+    //return the minimum of all such nodes
+    //O(n) time & O(1) space
+    // result = INT_MAX;
+    // helper(node, 1);
+    // return result;
+    
+    //method 2 : bfs : return height of first encountered leaf
+    //O(n) time & O(width)
+    //method 1 results in complete traversal of tree even if the topmost leaf
+    //is close to root
+    queue<Node *> q;
+    q.push(node);
+    int level = 1;
+    while(!q.empty()){
+        int n = q.size();
+        for(int i=0;i<n;++i){
+            Node *nd = q.front();
+            q.pop();
+            if(nd->left==NULL&&nd->right==NULL) return level;
+            if(nd->left!=NULL) q.push(nd->left);
+            if(nd->right!=NULL) q.push(nd->right);
+        }
+        ++level;
+    }
+    
+}
+
+//3C) Height of Spiral Binary Tree
 /*
 Given a special binary tree of size N, whose leaf nodes are connected to form a circular doubly linked list, 
 your task is to complete the function findTreeHeight(), that should return the height of the tree.
@@ -204,6 +251,4 @@ int verticalWidth(Node* root)
     findVerticalWidth(root, 0, h);
     return h.size();
 }
-
-
 
