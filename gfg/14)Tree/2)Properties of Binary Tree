@@ -1,6 +1,7 @@
 /*
 Properties of BINARY TREES such as size, maximum value, height, minimum height of tree, height of spiral tree, nodes at distance k, children sum property, balanced,
-maximum width, path of a node, mirror of a binary tree, are 2 trees identical & vertical width are studied here in LINEAR TIME & LINEAR SPACE.
+maximum width, path of a node, ancestors of node, mirror of a binary tree, are 2 trees identical & vertical width are 
+studied here in LINEAR TIME & LINEAR SPACE.
 */
 
 
@@ -204,7 +205,55 @@ bool findPath(Node *root, vector<Node *> &path, int x){             //vector pat
     return false;
 }
 
-//9) Convert a Binary Tree into its Mirror Tree
+//9) Print Ancestors of a given node : 2 methods
+
+bool foundFlag; //this is used to stop traversal if target is found
+void dfs(Node *root, stack<int> s, int target){
+    if(root==NULL||foundFlag) return;
+    if(root->data==target){
+        while(!s.empty()){
+            cout<<s.top()<<" ";
+            s.pop();
+        }
+        foundFlag = true;
+        return;
+    }
+    
+    s.push(root->data);
+    dfs(root->left, s, target);
+    dfs(root->right, s, target);
+    s.pop();
+}
+
+bool DFS(Node *root, int target){
+    if(root==NULL) return false;
+    else if(root->data==target) return true;
+    
+    if(DFS(root->left, target)||DFS(root->right, target)) {
+        //if target exists in either left or right subtree
+        cout<<root->data<<" ";
+        return true;
+    }
+    return false;
+}
+
+// This function should print all the ancestor of the target node
+bool printAncestors(struct Node *root, int target)
+{
+     // method : dfs
+     //O(n) time & O(n) space
+    //  foundFlag = false;
+    //  stack<int> s;
+    //  dfs(root, s, target);
+    //  return false;
+     
+     //method 2 : dfs
+     //O(n) time & O(1) space
+     //ELEGANT SOLUTION
+     DFS(root, target);
+}
+
+//10) Convert a Binary Tree into its Mirror Tree
 //Hint: The idea is to recursively call for left and right subtrees of a given node. On each recursive call
 //SWAP the pointers of the children nodes.
 
@@ -221,7 +270,7 @@ void mirrorTree(Node *root){
     
 }
 
-//10) Determine if Two Trees are Identical
+//11) Determine if Two Trees are Identical
 bool isIdentical(Node *r1, Node *r2)
 {
     //Your Code here
@@ -233,7 +282,7 @@ bool isIdentical(Node *r1, Node *r2)
     
 }
 
-//11) Given a Binary Tree of N nodes. The task is to find the vertical width of the tree.
+//12) Given a Binary Tree of N nodes. The task is to find the vertical width of the tree.
 //The width of a binary tree is the number of vertical paths in that tree.
 void findVerticalWidth(Node *root, int level, set<int> &h){
     if(root==NULL) return;
