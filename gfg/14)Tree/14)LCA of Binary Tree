@@ -1,4 +1,4 @@
-//Famoulsy know as LCA Problem
+//Lowest Common Ancestor
 //Ancestors of a node are ITSELF, its parent, parent of its parent, parent of parent of its parent and so on... till we reach root.
 //We have to first find common ancestors of 2 given keys and then return the lowest(NOT MINIMUM) node of them.
 
