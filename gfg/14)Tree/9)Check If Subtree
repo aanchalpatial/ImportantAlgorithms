@@ -22,10 +22,11 @@ bool checkIdentical(Node *r1, Node *r2){
 bool isSubTree(Node* T, Node* S) {
     // Your code here
     // return 1 if S is subtree of T else 0
+    v.clear();
     preorder(T,S);
     //cout<<foundNode->data<<endl;
     for(int i=0;i<v.size();++i){
-        if (checkIdentical(v[i], S)) return true;
+        if (checkIdentical(v[i], S)) return true;  //compare with every node in original tree which has same value root of given subtree
     }
     
     return false;
