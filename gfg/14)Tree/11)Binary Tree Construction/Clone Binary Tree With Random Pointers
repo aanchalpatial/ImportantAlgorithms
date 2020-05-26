@@ -1,6 +1,18 @@
 /*
 Given a Binary Tree having random pointers clone the Binary Tree. The task is to complete the function cloneTree which
 take one argument the root of the tree to be copied and should return the root of the cloned tree.
+Problem Link : https://practice.geeksforgeeks.org/problems/clone-a-binary-tree/1
+*/
+
+/* A binary tree node has data, pointer to left child
+   and a pointer to right child 
+struct Node
+{
+    int data;
+    Node* left;
+    Node* right;
+    Node *random;
+};
 */
 
 
@@ -15,5 +27,3 @@ Node* cloneTree(Node* root)
     nd->random = root->random;
     return nd;
 }
-
-
