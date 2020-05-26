@@ -1,4 +1,4 @@
-/*
+/*Problem 1 :
 Convert a binary tree to doubly linked list IN PLACE(without use new space for nodes)
 left pointer will be used as prev pointer & right pointer will be used as next pointer
 The order of nodes in DLL must be same as Inorder of the given Binary Tree.
@@ -39,3 +39,48 @@ void bToDLL(Node *root, Node **head_ref)
     previousNode = NULL;
     inorder(root, head_ref);
 }
+
+
+
+
+/*Problem 2 : 
+Given a Binary Tree, the task is to extract all leaves of it in a Doubly Linked List (DLL). Note that the DLL need to be 
+created in-place. Assume that the node structure of DLL and Binary Tree is same, only the meaning of left and right pointers
+are different. In DLL, left means previous pointer and right means next pointer. Head of DLL should point to the left most leaf
+and then in inorder traversal and so on.
+*/
+
+//Note : Similar to Problem 1 but with only leaf nodes AND ALSO we have to remove all leaves from Binary Tree.
+//*** REMEMBER *** : preorder() traversal will automatically lead to desired result
+//If question would have been just convert all leaf nodes to DLL then problem 1's method of inorder() traversal would have worked 
+//just fine, but since in this problem we also have to remove leaves from the existing binary tree we need to use preorder() traversal.
+
+Node *previousLeaf;     //keeps track of previous leaf node
+
+Node *preorder(Node *root, Node **head_ref){
+    if(root==NULL) return NULL;
+        
+    if(root->left==NULL&&root->right==NULL){    //ONLY IF IT IS A LEAF
+        if(previousLeaf==NULL){
+            (*head_ref) = root;
+            root->left = previousLeaf;
+        }else {
+            previousLeaf->right = root;
+            root->left = previousLeaf;
+        }
+        previousLeaf = root;
+        return NULL;        //LEAF WILL BE REMOVED FROM BINARY TREE
+    }
+    
+    root->left = preorder(root->left, head_ref);
+    root->right = preorder(root->right, head_ref);
+    return root;
+}
+
+
+Node *convertToDLL(Node *root, Node **head_ref) {
+    previousLeaf = NULL;
+    root = preorder(root, head_ref);
+    
+}
+
