@@ -78,7 +78,8 @@ Node *preorder(Node *root, Node **head_ref){
 }
 
 
-Node *convertToDLL(Node *root, Node **head_ref) {
+void convertToDLL(Node *root, Node **head_ref) {
+   
     previousLeaf = NULL;
     root = preorder(root, head_ref);
     
