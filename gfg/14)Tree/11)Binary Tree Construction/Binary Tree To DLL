@@ -10,6 +10,8 @@ previousNode->next = currentNode & currentNode->prev = previousnode
 O(n) time & O(h) space
 */
 
+//*** REMEMBER *** : inorder() traversal will automatically lead to desired result
+
 Node *previousNode;
 Node *inorder(Node *root, Node **head_ref){
     if(root==NULL) return NULL;
