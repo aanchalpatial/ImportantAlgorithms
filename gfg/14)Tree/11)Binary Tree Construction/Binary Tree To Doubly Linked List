@@ -10,20 +10,30 @@ previousNode->next = currentNode & currentNode->prev = previousnode
 O(n) time & O(h) space
 */
 
-Node *previous = NULL;
-Node *inorder(Node *root){                          //RR
-    if(root==NULL) return root;
-    else {
-        Node *head = inorder(root->left);
-        if(previous==NULL) head = root;         //used once to identify first node in inorder traversal as head
-        else {
-            root->left = previous;
-            previous->right = root;
-        }
-        previous = root;
-        inorder(root->right);
-        return head;            //if previous is not NULL then you simply return whatever left recursive call returned
+Node *previousNode;
+Node *inorder(Node *root, Node **head_ref){
+    if(root==NULL) return NULL;
+    
+    inorder(root->left, head_ref);
+    
+    if(previousNode==NULL){             //used once to identify first node in inorder traversal as head
+        root->left = previousNode;
+        (*head_ref) = root;
+    }else{
+        root->left = previousNode;
+        previousNode->right = root;
     }
+    previousNode = root;
+    
+    
+    inorder(root->right, head_ref);
 }
 
+// This function should convert a given Binary tree to Doubly
+// Linked List
 
+void bToDLL(Node *root, Node **head_ref)
+{
+    previousNode = NULL;
+    inorder(root, head_ref);
+}
