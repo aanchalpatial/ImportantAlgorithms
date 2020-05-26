@@ -181,12 +181,10 @@ Left boundary is defined as the path from the root to the left-most node.
 Right boundary is defined as the path from the root to the right-most node.
 
 *****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
-
-Note this definition only applies to the input binary tree, and not applies to any subtrees.
+Note this definition only applies to the input binary tree, and not applies to any subtrees. SEE INPUT 2.
 
 The left-most node is defined as a leaf node you could reach when you always firstly travel to the left subtree if exists. 
 If not, travel to the right subtree. Repeat until you reach a leaf node.
-
 The right-most node is also defined by the same way with left and right exchanged.
 
 Return an array of integers denoting the boundary values of tree in anti-clockwise order.
@@ -218,6 +216,11 @@ Output 2:
      [1, 2, 4, 5] 
      *****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
 */
+
+//SOLUTION is simple : root->data + leftView + leaves(not bottomView) + rightView(in reverse)
+//BUT the trick here is to print leftView of left subtree of root, leaves of left subtree of root, leaves of right subtree of root &
+//then right view(in reverse) of right subtree of root.
+
 
 //ITERATIVE SOLUTION
 set<Node *> hsh;			//to avoid printing duplicate nodes
@@ -380,8 +383,6 @@ void printBoundary(Node* root)
     // Print the right boundary in bottom-up manner 
     printBoundaryRight(root->right); 					//RR
 } 
-
-
 
 
 
