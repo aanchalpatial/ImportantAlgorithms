@@ -1,0 +1,29 @@
+/*
+Convert a binary tree to doubly linked list IN PLACE(without use new space for nodes)
+left pointer will be used as prev pointer & right pointer will be used as next pointer
+The order of nodes in DLL must be same as Inorder of the given Binary Tree.
+*/
+
+/*Approach : https://www.geeksforgeeks.org/convert-a-given-binary-tree-to-doubly-linked-list-set-4/?ref=rp
+Do inorder traversal of given binary tree & keep track of previously visited node. For every current node make 
+previousNode->next = currentNode & currentNode->prev = previousnode
+O(n) time & O(h) space
+*/
+
+Node *previous = NULL;
+Node *inorder(Node *root){                          //RR
+    if(root==NULL) return root;
+    else {
+        Node *head = inorder(root->left);
+        if(previous==NULL) head = root;         //used once to identify first node in inorder traversal as head
+        else {
+            root->left = previous;
+            previous->right = root;
+        }
+        previous = root;
+        inorder(root->right);
+        return head;            //if previous is not NULL then you simply return whatever left recursive call returned
+    }
+}
+
+
