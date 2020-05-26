@@ -4,6 +4,8 @@
 the binary tree and stores 
 it in the vector A*/
 
+//*** METHOD 1 : USING PREORDER ***
+
 void preorder(Node *root, vector<int> &A){
     if(root==NULL) {
         A.push_back(-1);    //**** most important step *****
@@ -47,4 +49,56 @@ Node * deSerialize(vector<int> &A)
    ind = 0;
    Node *root = preorderDeserialize(A);
    return root;
+}
+
+
+//*** METHOD 2 : USING POSTORDER ***
+
+void postorder(Node *root, vector<int> &A){
+    if(root==NULL) { A.push_back(INT_MAX); return; }
+    
+    postorder(root->left, A);
+    postorder(root->right, A);
+    A.push_back(root->data);
+}
+
+/*this  function serializes 
+the binary tree and stores 
+it in the vector A*/
+void serialize(Node *root,vector<int> &A)
+{
+    
+    //METHOD 2 : using postorder
+    postorder(root, A);
+    // for(int i=0;i<A.size();++i) cout<<A[i]<<", ";
+    // cout<<"\n";
+}
+int ind;
+
+Node *postorderDeserialize(vector<int> &A){
+    if(ind<0||A[ind]==INT_MAX){
+        --ind;
+        return NULL;
+    }
+    
+    //Root Right Left i.e reverse of postorder
+    
+    Node *nd = new Node(A[ind--]);
+    nd->right = postorderDeserialize(A);
+    nd->left = postorderDeserialize(A);
+    
+    return nd;
+    
+}
+
+/*this function deserializes
+ the serialized vector A*/
+Node * deSerialize(vector<int> &A)
+{
+    int n = A.size();
+
+    //METHOD 2 : using postorder
+    ind = n-1;
+    Node *root = postorderDeserialize(A);
+    return root;
 }
