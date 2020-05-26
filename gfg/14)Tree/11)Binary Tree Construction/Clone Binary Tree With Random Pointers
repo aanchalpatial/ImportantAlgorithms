@@ -1,0 +1,19 @@
+/*
+Given a Binary Tree having random pointers clone the Binary Tree. The task is to complete the function cloneTree which
+take one argument the root of the tree to be copied and should return the root of the cloned tree.
+*/
+
+
+Node* cloneTree(Node* root)
+{
+   //we have similar type of question for singly linked list
+   if(root==NULL) return NULL;
+    
+    Node *nd = new Node(root->data);
+    nd->left = cloneTree(root->left);
+    nd->right = cloneTree(root->right);
+    nd->random = root->random;
+    return nd;
+}
+
+
