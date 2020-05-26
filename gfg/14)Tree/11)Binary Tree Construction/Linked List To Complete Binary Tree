@@ -1,0 +1,69 @@
+/*
+Given a Linked List Representation of Complete Binary Tree. The task is to construct the Binary tree.
+Note : The complete binary tree is represented as a linked list in a way where if root node is stored at
+position i, its left, and right children are stored at position 2*i+1, 2*i+2 respectively.
+*/
+
+TreeNode *helper(vector<int> &v, int index){
+    if(index>=v.size()) return NULL;
+    
+    TreeNode *nd = new TreeNode(v[index]);
+    nd->left = helper(v, 2*index+1);
+    nd->right = helper(v, 2*index+2);
+    return nd;
+}
+
+/*You are required to complete this method*/
+void convert(Node *head, TreeNode *&root) {
+    
+    //note : heap is also a complete binary
+    //complete binary tree : a binary tree is complete if all level are completely filled except 
+    //possibly the last level & all the nodes in the last level are as left as possible
+    
+    //since given linked list represents a complete binary tree, same method for position of left child, 
+    //right child & parent can be used as done in heap
+    
+    //METHOD 1 : recursion
+    //O(n) time & O(n) space
+    //step 1 : stored linked list data in an array
+    // vector<int> v;
+    // while(head!=NULL){
+    //     v.push_back(head->data);
+    //     head = head->next;
+    // }
+    // //step 2 : 
+    // root = helper(v, 0);
+    
+    
+    //METHOD 2 : using queue
+    //O(n) time & O(width)
+    Node *curr = head;
+    root = new TreeNode(curr->data);    //make head as root
+    curr = curr->next;
+    queue<TreeNode *> q;
+    q.push(root);
+    
+    while(!q.empty()){
+        int n = q.size();
+        for(int i=0;i<n;++i){
+            TreeNode *nd = q.front();
+            q.pop();
+            if(curr!=NULL) {
+                TreeNode *leftChild = new TreeNode(curr->data);
+                nd->left = leftChild;
+                q.push(leftChild);
+                curr = curr->next;
+            }else nd->left = NULL;
+            
+            if(curr!=NULL) {
+                TreeNode *rightChild = new TreeNode(curr->data);
+                nd->right = rightChild;
+                curr = curr->next;
+                q.push(rightChild);
+            }else nd->right = NULL;
+            
+        }
+    }
+}
+
+
