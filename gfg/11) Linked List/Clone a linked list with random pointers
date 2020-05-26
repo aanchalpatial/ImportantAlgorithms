@@ -4,7 +4,7 @@
 //Method 1) O(n) time & O(n) space:             
 //https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
 /*
-This method stores the next and arbitrary mappings (of original list) in an array first, then modifies the original 
+This method stores the next and random mappings (of original list) in an array first, then modifies the original 
 Linked List (to create copy), creates a copy. And finally restores the original list.
 */
 
