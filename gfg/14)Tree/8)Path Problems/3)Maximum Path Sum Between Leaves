@@ -1,0 +1,32 @@
+//Given a binary tree in which each node element contains a number. Find the maximum possible sum from one leaf node to another.
+
+/*
+For every visited node X, find the maximum root to leaf sum in left and right subtrees of X.
+Add the two values with X->data, and compare the sum with maximum path sum found so far.
+*/
+
+ int result;
+
+int helper(Node *root){
+    if(root==NULL) return INT_MIN;
+    if(root->left==NULL&&root->right==NULL) return root->data;
+    
+    int ls = helper(root->left);
+    int rs = helper(root->right);
+    
+    if(root->left!=NULL&&root->right!=NULL){    
+        //we will only update result for current node if both left & right subtree are not NULL
+        //because if either of them is NULL we we won't have 2 leaves to make path between them 
+        result = max(result, ls+rs+root->data);
+    }
+    return root->data + max(ls, rs);
+}
+
+int maxPathSum(Node *root) {
+    
+    //method : for every current node find the maximum root to leaf
+    //sum in left & right subtree
+    result = INT_MIN;
+    helper(root);
+    return result;
+}
