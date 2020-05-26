@@ -35,6 +35,7 @@ bool isSubTree(Node* T, Node* S) {
 //2) EFFICIENT Solution: O(n) time & O(n) space
 //The idea is based on the fact that inorder and preorder/postorder uniquely identify a binary tree. Tree S is a subtree of T 
 //if both inorder and preorder traversals of S arew substrings of inorder and preorder traversals of T respectively.
+//https://www.geeksforgeeks.org/if-you-are-given-two-traversal-sequences-can-you-construct-the-binary-tree/
 
 void inorder(Node *root, string &str){
     if(root==NULL){
