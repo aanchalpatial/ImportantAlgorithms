@@ -1,6 +1,8 @@
 //find the sum of contiguous subarray within a one-dimensional array of numbers which has the largest sum.
 //kadane Algorithm : 0(n)
 
+//note :- largest subarray with given sum is solved using prefix sum + hashing, BUT subarray with largest sum is solved using kadane
+
 #include<bits/stdc++.h>
 using namespace std;
 
