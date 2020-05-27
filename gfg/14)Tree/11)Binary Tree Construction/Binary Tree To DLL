@@ -1,4 +1,4 @@
-/*Problem 1 :
+/*Problem 1 : BINARY TREE TO DOUBLY LINKED LIST
 Convert a binary tree to doubly linked list IN PLACE(without use new space for nodes)
 left pointer will be used as prev pointer & right pointer will be used as next pointer
 The order of nodes in DLL must be same as Inorder of the given Binary Tree.
@@ -40,10 +40,31 @@ void bToDLL(Node *root, Node **head_ref)
     inorder(root, head_ref);
 }
 
+/*Problem 2 : BINARY TREE TO CIRCULAR DOUBLY LINKED LIST
+Given a Binary Tree of N edges. The task is to convert this to a Circular Doubly Linked List(CDLL) in-place. 
+The left and right pointers in nodes are to be used as previous and next pointers respectively in converted CDLL.
+The order of nodes in CDLL must be same as Inorder of the given Binary Tree. The first node of Inorder
+traversal (left most node in BT) must be head node of the CDLL.
+*/
+//Soultion : First we will create a Doubly linked list as done in problem 1 then we will link the last node of doubly linked list to 
+//head
+void bTreeToCList(Node *root, Node **head_ref)
+{
+    //step 1 : 
+    previousNode = NULL;
+    inorder(root, head_ref);        //defined in Problem 1
+    
+    //step 2 :
+    //when inorder traversal is over, previousNode has the last
+    //node of inorder traversal, so we link it back to head
+    //to make our doubly linked list circular
+    previousNode->right = (*head_ref);
+    (*head_ref)->left = previousNode;
+}
 
 
 
-/*Problem 2 : 
+/*Problem 3 : BINARY TREE LEAVES TO DOUBLY LINKED LIST + EXTRACT LEAVES FROM ORIGINAL BINARY TREE
 Given a Binary Tree, the task is to extract all leaves of it in a Doubly Linked List (DLL). Note that the DLL need to be 
 created in-place. Assume that the node structure of DLL and Binary Tree is same, only the meaning of left and right pointers
 are different. In DLL, left means previous pointer and right means next pointer. Head of DLL should point to the left most leaf
