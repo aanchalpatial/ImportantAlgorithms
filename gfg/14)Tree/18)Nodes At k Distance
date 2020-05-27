@@ -1,0 +1,115 @@
+/*
+Given a binary tree, a target node in the binary tree, and an integer value k, find all the nodes that are at distance k 
+from the given target node.
+
+Output: All the space separated nodes that are at distance k from the given target node in sorted order.
+
+Problem Link : https://www.geeksforgeeks.org/print-nodes-distance-k-given-node-binary-tree/
+*/
+
+/*Approach :
+Example Binary Tree : https://media.geeksforgeeks.org/wp-content/cdn-uploads/BinaryTree4.png
+
+There are two types of nodes to be considered.
+1) Nodes in the subtree rooted with target node. For example if the target node is 8 and k is 2, then such nodes are 10 and 14.
+2) Other nodes, may be an ancestor of target, or a node in some other subtree. For target node 8 and k is 2, 
+  the node 22 comes in this category.
+
+Finding the first type of nodes is easy to implement. Just traverse subtrees rooted with the target node and
+decrement k in recursive call. When the k becomes 0, print the node currently being traversed.
+Here we call the function as printkdistanceNodeDown().
+
+How to find nodes of second type? For the output nodes not lying in the subtree with the target node as the root,
+we must go through all ancestors. For every ancestor, we find its distance from target node,
+let the distance be d, now we go to other subtree (if target was found in left subtree, then we go to right subtree and vice versa) 
+of the ancestor and find all nodes at k-d distance from the ancestor.
+*/
+
+class solver
+{
+private:
+
+public:
+    vector<int> result;
+    
+    Node *findNode(Node *root, int target){
+        if(root==NULL) return NULL;
+        
+        if(root->data==target) return root;
+        Node *l = findNode(root->left, target);
+        Node *r = findNode(root->right, target);
+        
+        if(l!=NULL) return l;
+        else return r;
+    }
+    
+    void printkdistanceNodeDown(Node *root, int k){
+        if(root==NULL) return;
+        
+        if(k==0) result.push_back(root->data);
+        printkdistanceNodeDown(root->left, k-1);
+        printkdistanceNodeDown(root->right, k-1);
+        
+    }
+    
+    int helper(Node *root, int target, int k){
+        if(root==NULL) return 0;        //zero signifies target not found
+        
+        if(root->data==target) return 1;    //any positive value signifies target found & at that much distance far
+        
+        int l = helper(root->left, target, k);
+        int r = helper(root->right, target, k);
+        
+        if(l>0){
+            //target lies in left subtree
+            //cout<<root->data<<" is "<<l<<" distance from target "<<target<<"\n";
+            if(k-l<0){
+                //do nothing
+            }else if(k-l==0) result.push_back(root->data);
+            else if(k-l==1&&root->right!=NULL) result.push_back(root->right->data);
+            else printkdistanceNodeDown(root->right, k-(l+1));
+            
+            return 1+l;
+        }else if(r>0){
+            //target lies in right subtree
+            //cout<<root->data<<" is "<<r<<" distance from target "<<target<<"\n";
+            if(k-r<0){
+                //do nothing
+            }else if(k-r==0) result.push_back(root->data);
+            else if(k-r==1&&root->left!=NULL) result.push_back(root->left->data);
+            else printkdistanceNodeDown(root->left, k-(r+1));
+            
+            return 1+r;
+        }else return 0;
+        
+    }
+
+    vector <int> KDistanceNodes(Node* root, int target , int k)
+    {
+        result.clear();
+        
+        //STEP 1 : find target node
+        Node *tar = findNode(root, target);
+        
+        //STEP 2 : 
+        //There are two types of nodes to be considered which are distance k.
+        //case 1 : Nodes in the subtree rooted with target node. 
+        printkdistanceNodeDown(tar, k);
+        
+        
+        //STEP 3 :
+        //case 2 : Other nodes, may be an ancestor of target, or a node in some other subtree.
+        /*
+        For the output nodes not lying in the subtree with the target node as the root, 
+        we must go through all ancestors. For every ancestor, we find its distance from target node,
+        let the distance be d, now we go to other subtree (if target was found in left subtree, 
+        then we go to right subtree and vice versa) of the ancestor and find all nodes at k-d distance
+        from the ancestor.
+        */
+        helper(root, target, k);
+        
+        sort(result.begin(), result.end());
+        return result;
+        
+    }
+};
