@@ -52,13 +52,13 @@ public:
         
     }
     
-    int helper(Node *root, int target, int k){
+    int printkdistanceNodeUP(Node *root, int target, int k){
         if(root==NULL) return 0;        //zero signifies target not found
         
         if(root->data==target) return 1;    //any positive value signifies target found & at that much distance far
         
-        int l = helper(root->left, target, k);
-        int r = helper(root->right, target, k);
+        int l = printkdistanceNodeUP(root->left, target, k);
+        int r = printkdistanceNodeUP(root->right, target, k);
         
         if(l>0){
             //target lies in left subtree
@@ -106,7 +106,7 @@ public:
         then we go to right subtree and vice versa) of the ancestor and find all nodes at k-d distance
         from the ancestor.
         */
-        helper(root, target, k);
+        printkdistanceNodeUP(root, target, k);
         
         sort(result.begin(), result.end());
         return result;
