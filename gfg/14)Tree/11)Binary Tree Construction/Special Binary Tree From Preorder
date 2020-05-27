@@ -1,0 +1,36 @@
+//A special binary tree is one where every node has either 0 or 2 children​
+/*
+Given an array pre[] that represents Preorder traversal of a SPECIAL BINARY TREE. One more array preLN[] is given which has only
+two possible values ‘L’ and ‘N’. The value ‘L’ in preLN[] indicates that the corresponding node in Binary Tree is a leaf node 
+and value ‘N’ indicates that the corresponding node is non-leaf node.
+Construct it.
+
+Problem Link : https://www.geeksforgeeks.org/construct-a-special-tree-from-given-preorder-traversal/
+*/
+
+int ind;
+
+Node *preorder(int n, int pre[], char preLN[]){
+    
+    if(ind>=n) return NULL;
+    
+    Node *nd = new Node(pre[ind]);
+    if(preLN[ind]=='N'){
+        ++ind;
+        nd->left = preorder(n, pre, preLN);
+        nd->right = preorder(n, pre, preLN);
+    }else if(preLN[ind]=='L'){
+        ++ind;
+        nd->left = NULL;
+        nd->right = NULL;
+    }
+    return nd;
+}
+
+// function should return the root of the new binary tree formed
+struct Node *constructTree(int n, int pre[], char preLN[])
+{
+    // construct special tree : every node has either 0 or 2 children
+    ind = 0;
+    return preorder(n, pre, preLN);
+}
