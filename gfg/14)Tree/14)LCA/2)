@@ -1,0 +1,54 @@
+
+//APPLICATION of LCA : find distance between 2 nodes = (distance between first node & LCA) + (distance between second node & LCA) 
+//Given a binary tree and two node values your task is to find the minimum distance between them.
+
+Node *findLcaBt(Node *root, int a, int b){
+    
+    if(root==NULL) return NULL;
+    if(root->data==a||root->data==b) return root;
+    
+    Node *leftRoot = findLcaBt(root->left, a, b);
+    Node *rightRoot = findLcaBt(root->right, a, b);
+    
+    //4 casese :
+    
+    
+    if(leftRoot!=NULL&&rightRoot!=NULL) return root;    //case 1 : when a & b are in different subtrees
+    else if(leftRoot!=NULL) return leftRoot;    //case 2 : left subtree contains LCA
+    else if(rightRoot!=NULL) return rightRoot;  //case 3 : right subtree contains LCA
+    else return NULL;                           //case 4 : neither of left or right subtree conains LCA
+}
+
+
+int distance(Node *root, int x, int d){
+    //used to find distance between 2 nodes in downward path 
+    if(root==NULL) return -1;
+    
+    if(root->data==x) return d;
+    
+    int l = distance(root->left, x, 1+d);
+    int r = distance(root->right, x, 1+d);
+    
+    if(l!=-1) return l;
+    else if(r!=-1) return r;
+    else return -1;
+}
+
+/* Should return minimum distance between a and b
+   in a tree with given root*/
+int findDist(Node* root, int a, int b) {
+    
+    // an application of LCA of BST
+    //O(n) time & O(1) space
+    
+    //step 1 : find lca
+    Node *lca = findLcaBt(root, a, b);
+    if(lca==NULL) return -1;    //a or b or both don't exists
+    
+    //step 2 : min distance = (distance b/w lca & a) + (distance b/w lca & b)
+    int d1 = distance(lca, a, 0);
+    int d2 = distance(lca, b, 0);
+    //cout<<d1<<", "<<d2<<"\n";
+    return d1+d2;
+    
+}
