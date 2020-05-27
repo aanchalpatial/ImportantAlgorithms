@@ -1,0 +1,40 @@
+//Given a string, find the length of the longest substring without repeating characters.
+
+int lengthOfLongestSubstring(string s) {
+        
+        //1) O(n) time approach with 2n steps
+        // int result = 0;
+        // int i=0,j=0;
+        // unordered_set<char> h;
+        // while(i<s.size()&&j<s.size()){ 
+        //     //cout<<s[j]<<", ";
+        //     if(h.find(s[j])==h.end()){
+        //         h.insert(s[j]);
+        //         result = max(result, j-i+1);
+        //         ++j;
+        //     }else{
+        //         h.erase(s[i]);
+        //         ++i; //increasing i one by one
+        //     }     
+        //     //cout<<result<<endl;
+        // }
+        // return result;
+        
+
+        
+        //method 2 : sliding window
+        //[i,j] contains unique characters only, try to maximise it
+        //Use extra space to store the last indexes of already visited characters
+        
+        int result = 0;
+        unordered_map<char, int> mp;
+        for(int i=0,j=0;j<s.size();++j){
+            if(mp.find(s[j])!=mp.end()){
+                i = max(i, mp[s[j]]+1);
+                mp[s[j]] = j;
+            }
+            result = max(result, j-i+1);
+            mp.insert(make_pair(s[j], j));
+        }
+        return result;
+    }
