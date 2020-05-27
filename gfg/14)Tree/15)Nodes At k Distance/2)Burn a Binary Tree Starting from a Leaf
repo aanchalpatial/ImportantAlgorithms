@@ -1,24 +1,50 @@
 //We are given a binary tree and a leaf node, we need to find time to burn the completeBinary Tree if we burn the given leaf at 0-th second. 
 //At each second all the adjacent nodes of current NODES are burnt
 
-// HINT: For given leaf node we need to find the FARTHEST NODE from it in binary tree and //And Farthest node must be reachable
+// *** HINT ***: For given leaf node we need to find the FARTHEST NODE from it in binary tree and //And Farthest node must be reachable
 //through one of the ancestors of given leaf
+
+/*APPROACH 1 : APPLICATION of Nodes at K Distance Approach : 
+https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/14)Tree/15)Nodes%20At%20k%20Distance/1)Nodes%20At%20k%20Distance
+
+Since we have to find the farthest node, we will begin with k=1 & apply nodeAtDistanceK() & keep on incrementing k till 
+we are adding new nodes to our overall result vector. Iteration in which we did not add any node to result vector that value of k
+is the (farthest distance + 1 from GIVEN leaf). So our result will be k-1.
+*/
+
+int minTime(Node* root, int target) 
+{
+    //METHOD 1 : using nodes at distance k from given node method
+    result.clear();					//result vector defined in nodes at k distance solution
+    int old_size = result.size();
+    int k = 1;
+    while(true){
+        printkdistanceNodeUP(root, target, k);		//printkdistanceNodeUP() defined in nodes at k distance solution
+        
+        int new_size = result.size();
+        if(old_size==new_size) break;
+        old_size = new_size;    //if no new node was added, it means all nodes have burnt
+        ++k;
+    }
+    return k-1;
+}
+
 /*
-APPROACH:
+APPROACH 2:
 So, for the minimum time required to burn any subtree will be:
 The time required for fire to reach the root node from initial burnt leaf + depth of the opposite side
 
 Therefore, to find time required to burn the complete tree, we need to calculate the above value for every node,
 and take maximum of that value.
 ans = max(ans, (time required for fire to reach current node + depth of other subtree))
-*/
-/*
+
 SOLUTION:
 So the solution is to apply recursion and for every node calculate the below-required values:
 1)Left Depth.
 2)Right Depth.
 3)The time required for fire to reach the current node.
-4)Is the current subtree conatins initial burnt leaf node.*/
+4)Is the current subtree conatins initial burnt leaf node.
+*/
 
 //Naive Solution
 int getHeight(Node *root){
