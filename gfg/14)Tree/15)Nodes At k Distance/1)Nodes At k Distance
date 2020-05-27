@@ -113,3 +113,8 @@ public:
         
     }
 };
+
+
+
+//APPLICATION : Time to burn complete binary tree starting from a given leaf node
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/14)Tree/15)Nodes%20At%20k%20Distance/2)Burn%20a%20Binary%20Tree%20Starting%20from%20a%20Leaf
