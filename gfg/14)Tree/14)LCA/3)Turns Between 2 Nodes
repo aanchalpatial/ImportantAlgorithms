@@ -1,0 +1,75 @@
+/*APPLICAION OF LCA
+Given a binary tree and data value of two of its nodes. Find the number of turns needed to reach from one node to another
+in the given binary tree. If the two nodes are in a straight line, ie- the path does not involve any turns, return -1.
+*/
+
+/*Approach :
+-> Find the LCA of given two node.
+-> If none of the 2 nodes is equal to LCA this means that one lies on the left side of LCA and the other on right side.
+   Count the number of turns needed to reach LCA from both sides and then sum their count. 
+-> If one of the nodes is equal to LCA then we only need to count the turns needed for the other node to reach the LCA. 
+*/
+
+Node *findLCA(Node *root, int x, int y){
+    if(root==NULL) return NULL;
+    
+    if(root->data==x||root->data==y) return root;
+    
+    Node *leftChild = findLCA(root->left, x, y);
+    Node *rightChild = findLCA(root->right, x, y);
+    
+    if(leftChild!=NULL&&rightChild!=NULL) return root;
+    else if(leftChild!=NULL) return leftChild;
+    else if(rightChild!=NULL) return rightChild;
+    else return NULL;
+}
+
+bool findTurnsInDownwardPath(Node *root, int x, vector<string> &v){
+    
+    //this function is used to find number of turns between 2 nodes which lies on a downward path
+    
+    if(root==NULL) return false;
+    
+    if(root->data==x) return true;
+    else if(findTurnsInDownwardPath(root->left, x, v)){
+        v.push_back("left");
+        return true;
+    }else if(findTurnsInDownwardPath(root->right, x, v)){
+        v.push_back("right");
+        return true;
+    }else return false;
+    
+}
+
+// function should return the number of turns required to go from first node to second node 
+int NumberOFTurns(struct Node* root, int first, int second)
+{
+    //STEP 1 : find lca
+    Node *lca = findLCA(root, first, second);
+    
+    //STEP 2 : 
+    //turns to go from first node to second node = 
+    //1 + number of turns from lca to first + number of turns from lca to second
+    vector<string> path1;
+    findTurnsInDownwardPath(lca, first, path1);
+    vector<string> path2;
+    findTurnsInDownwardPath(lca, second, path2);
+    
+    int turns;
+    if(lca->data!=first&&lca->data!=second) turns = 1;
+    else turns = 0;
+    
+    if(path1.size()>1){
+        for(int i=0;i<(path1.size()-1);++i){
+            if(path1[i]!=path1[i+1]) ++turns;
+        }
+    }
+    
+    if(path2.size()>1){
+        for(int i=0;i<path2.size()-1;++i){
+            if(path2[i]!=path2[i+1]) ++turns;
+        }
+    }
+    
+    return (turns!=0)?turns:-1;
+}
