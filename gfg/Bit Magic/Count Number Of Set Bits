@@ -1,0 +1,112 @@
+//PROBLEM 1 : Write an efficient program to count number of 1s in binary representation of an integer.
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int countSetBits(int n){
+    
+    int setBits = 0;
+    while(n>0){
+        if(n&1!=0) ++setBits;
+        n = n>>1;
+    }
+    return setBits;
+}
+
+int countSetBits2(int n){
+    
+    int setBits = 0;
+    while(n>0){
+        n = n&(n-1);
+        ++setBits;
+    }
+    return setBits;
+}
+
+
+int countSetBits3(int n){
+    
+    //assumption : int is 32 bits long
+    
+    /*
+     It’s hard to count all 32 bits in one go using lookup table (” because it’s infeasible to create 
+     lookup table of size 232-1 “). So we break 32 bits into 8 bits of chunks( ow lookup table
+     of size (28-1 ) index : 0-255 ).
+    */
+    
+    //step 1 : preprocessing 
+    int look[256];
+    look[0] = 0;
+    for(int i=1;i<256;++i){
+        look[i] = (i&1) + look[i/2];
+    }
+    
+    //step 2 : divide our 32 bit number in 4 blocks of 8 bits each & look up their value from look up table
+    
+    int setBits = look[n&0xFF] + look[n>>8&0xFF] + look[n>>16&0xFF] + look[n>>24&0xFF];
+    return setBits;
+    
+    
+}
+
+int main() {
+	
+	
+	int num = 254;
+	
+	//https://www.geeksforgeeks.org/count-set-bits-in-an-integer/
+	
+	//METHOD 1 : using builtin functions
+	cout<<__builtin_popcount(num)<<"\n";
+	
+	//METHOD 2 : Loop through all bits in an integer
+	//0(logn) i.e theta of logn
+	cout<<countSetBits(num)<<"\n";
+	
+	//METHOD 3 : Brian Kernighan’s Algorithm
+	//O(logn) i.e big O of logn
+	// substracting 1 from n flips every bit after & including the rightmost set bit
+	// n&(n-1) results in unsetting the rightmost set bit, so run a loop until n becomes 0
+	// the beauty of this solution is that it loop the number of set bits times
+	cout<<countSetBits2(num)<<"\n";
+	
+	
+	//METHOD 4 : using look up table 
+	//O(1) time + preprocessing
+	//https://www.geeksforgeeks.org/count-set-bits-integer-using-lookup-table/
+	cout<<countSetBits3(num)<<"\n";
+	
+	return 0;
+}
+
+
+
+//PROBLEM 2 : Given a positive integer n, count the total number of set bits in binary representation of all numbers from 1 to n.
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	
+	//METHOD 1 : naive approach
+	//O(nlogn) time 
+	
+	
+	//METHOD 2 : using look up table
+	//O(n) time & O(n) space
+	//base case : 0 will have 0 number of set bits
+	//for every num if it is even it will have number of set bits = number of set bits in num/2
+	//           & if num is even it will have number of set bits = number of set bits in mun/2 + 1 
+	int h[num+1];
+	h[0] = 0;
+	
+	for(int i=1;i<=num;++i){
+	    h[i] = (i&1) + h[i/2];
+	}
+	
+	for(int i=0;i<=num;++i){
+	    cout<<i<<" has "<<h[i]<<" set bits.\n";
+	}
+	
+	return 0;
+}
