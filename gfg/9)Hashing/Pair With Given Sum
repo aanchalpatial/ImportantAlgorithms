@@ -31,27 +31,113 @@ int main(){
   }
   
   
-//2) Find TRIPLETS with zero sum
-//Given an array A[] of N elements. The task is to complete the function which returns true if triplets exists in array A whose sum is zero else returns false.
+//2) Find TRIPLETS with zero sum : LEETCODE 15
+//https://leetcode.com/problems/3sum/description/
+//Given an array A[] of N elements. Find all unique triplets in the array which gives the sum of zero.
+//The solution set must not contain duplicate triplets.
 //METHOD 1 : Naive implementation is 0(n^3)
 
 //METHOD 2 : 0(n^2) time & O(1) space using 2 pointer approach
   
-//METHOD 3 : hashing in O(n) time & O(n^2) space
-//LEFT !!!
+//METHOD 3 : hashing in O(n^2) time & O(n^2) space
+//step 1 : store sum of all pairs in hashmap
+//step 2 : traverse through all elmenets in array again & search for (target-nums[i]) in hashmap
+           //if found also ensure that all 3 indexes are unique 
+        
+        int n = nums.size();
+        vector<vector<int>> result;
+        
+        unordered_map<int, vector<pair<int, int>>> mp;  //stores sum of pair of indexes which results to current sum
+        unordered_set<string> h;    //used to avoid duplicate triplets
+        
+        for(int i=0;i<n-1;++i){
+            for(int j=i+1;j<n;++j){
+                mp[nums[i]+nums[j]].push_back({i,j});
+            }
+        }
+        
+        for(int i=0;i<n;++i){
+            if(mp.find(-1*nums[i])!=mp.end()){
+                for(int k=0;k<mp[-1*nums[i]].size();++k){
+                    if(i!=mp[-1*nums[i]][k].first&&i!=mp[-1*nums[i]][k].second){
+                        vector<int> v = {nums[i], nums[mp[-1*nums[i]][k].first], nums[mp[-1*nums[i]][k].second]};
+                        sort(v.begin(), v.end());
+                        string str = to_string(v[0]) + to_string(v[1]) + to_string(v[2]); 
+                        if(h.find(str)==h.end()){
+                            result.push_back(v);
+                            h.insert(str);
+                        }
+                        
+                    }
+                }
+                
+                
+            }
+            
+        }
+            
+        
+        return result;
   
   
   
- //3) Find QUADRUPLES with given sum
-/Given an array A[] of N elements. The task is to complete the function which returns true if "UNIQUE" quadruples exists in
-//array A whose sum is equal to given else returns false.
+ //3) Find QUADRUPLES with given sum : LEETCODE 18
+//Given an array nums of n integers and an integer target, are there elements a, b, c, and d in nums such that a + b + c + d = target?
+//Find all unique quadruplets in the array which gives the sum of target.
+//The solution set must not contain duplicate quadruplets.
 //METHOD 1 : Naive implementation is 0(n^4)
 
 //METHOD 2 : do it in 0(n^3) time & O(1) space using 2 pointer approach
 
 //METHOD 3 : using hashing in O(n^2) time & O(n^2) space 
 //https://www.geeksforgeeks.org/find-four-elements-sum-given-value-set-3-hashmap/?ref=rp
-//LEFT !!!!
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        
+        int n = nums.size();
+        vector<vector<int>> result;
+        
+        //method 3 : hashing
+        //O(n^2) time & O(n^2) space
+        //step 1 : store sum of all pairs in hashmap
+        //step 2 : traverse through all pairs and check if (target-nums[i]-nums[j]) exists in hashmap
+                    //if found ensure that all indexes are different
+        unordered_map<int, vector<pair<int, int>>> mp;
+        unordered_set<string> h;    //to avoid duplicate characters
+        for(int i=0;i<n-1;++i){
+            for(int j=i+1;j<n;++j){
+                mp[nums[i]+nums[j]].push_back({i,j});
+            }
+        }
+        
+        for(int i=0;i<n-1;++i){
+            for(int j=i+1;j<n;++j){
+                int curr = target-nums[i]-nums[j];
+                if(mp.find(curr)!=mp.end()){
+                    for(int k=0;k<mp[curr].size();++k){
+                        
+                        //ensuring all indexes are different
+                        if(i!=mp[curr][k].first&&j!=mp[curr][k].first&&i!=mp[curr][k].second&&j!=mp[curr][k].second){
+                            
+                            vector<int> v = {nums[i], nums[j], nums[mp[curr][k].first], nums[mp[curr][k].second]};
+                            sort(v.begin(), v.end());
+                            string str = to_string(v[0]) + to_string(v[1]) + to_string(v[2]) + to_string(v[3]);
+                            if(h.find(str)==h.end()){
+                                h.insert(str);
+                                result.push_back(v);
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+};
 
 
 
