@@ -49,7 +49,7 @@ int main() {
 
 
 	//PROBLEM 3 : find maximum difference between 2 elements such that larger element appears after smaller element
-	//*** STOCK BUY & SELL VERSION 2.0 ***
+	//this is *** STOCK BUY & SELL VERSION 2.0 ***
 
 	//method 1 : naive approach
 	//O(n^2) time & O(1) space
