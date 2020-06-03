@@ -1,3 +1,4 @@
+//THIS IS NOT A DP PROBLEM !!!
 /*
 Given a string s, the task is to count the number of subsequences of the form aibjck, where i >= 1, j >=1 and k >= 1.
 
