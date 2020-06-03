@@ -1,0 +1,97 @@
+
+#include<bits/stdc++.h>
+#include<unordered_map>
+using namespace std;
+
+
+
+
+int main() {
+
+
+	//PROBLEM 1 : find minimum difference between 2 elements in an array
+	int arr[] = {4, 2, 6, 11, 14};
+	int n = sizeof(arr) / sizeof(arr[0]);
+
+	//method 1 : naive approach
+	//O(n^2) time & O(1) space
+
+	//method 2 : sorting
+	//O(nlogn) time & O(1) space
+
+	//in a sorted array, 2 elements which give the minimum difference has to be adjacent
+	// sort(arr, arr + n);
+	// int min_diff = INT_MAX;
+	// for (int i = 0; i < n - 1; ++i) {
+	// 	if (arr[i + 1] - arr[i] < min_diff) {
+	// 		min_diff = arr[i + 1] - arr[i];
+	// 	}
+	// }
+	// cout << min_diff << "\n";
+
+
+	//PROBLEM 2 : find maximum difference between 2 elements in an array
+
+	//method 1 : naive approach
+	//O(n^2) time & O(1) space
+
+
+	//method 2 : maximum difference is always between the smallest & largest element
+	//O(n) time & O(1) space
+	// int min_ele = min(arr[0], arr[1]);
+	// int max_ele = max(arr[0], arr[1]);
+
+	// for (int i = 1; i < n; ++i) {
+	// 	if (arr[i] < min_ele) min_ele = arr[i];
+	// 	else if (arr[i] > max_ele) max_ele = arr[i];
+	// }
+	// cout << max_ele - min_ele << "\n";
+
+
+	//PROBLEM 3 : find maximum difference between 2 elements such that larger element appears after smaller element
+
+	//method 1 : naive approach
+	//O(n^2) time & O(1) space
+
+	//method 2 : instead of taking difference of current element with every element, we only
+	//take difference of current element with the minimum element found so far
+	//O(n) time & O(1) space
+	// int min_ele = arr[0];
+	// int max_diff = 0;
+
+	// for (int i = 1; i < n; ++i) {
+	// 	if (arr[i] - min_ele > max_diff) {
+	// 		max_diff = arr[i] - min_ele;
+	// 	}
+	// 	min_ele = min(min_ele, arr[i]);
+	// }
+	// cout << max_diff << "\n";
+
+
+	//method 3 : using kadane
+	//O(n) time & O(n) space
+	//step 1 : find difference between adjacent elements & keep storing difference in new array
+	//step 2 : now find maximum sum subarray in difference array which is the maximum difference
+	int difference[n - 1];
+	for (int i = 0; i < n - 1; ++i) {
+		difference[i] = arr[i + 1] - arr[i];
+	}
+	
+	//kadane on differenc[]
+	int dp[n - 1];
+	dp[0] = difference[0];
+	int result = 0;
+	for (int i = 1; i < n - 1; ++i) {
+		dp[i] = max(difference[i], difference[i] + dp[i - 1]);
+		result = max(result, dp[i]);
+	}
+	cout << result << "\n";
+
+
+
+	return 0;
+}
+
+
+
+
