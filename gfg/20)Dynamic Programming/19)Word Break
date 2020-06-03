@@ -1,0 +1,58 @@
+/*LEETCODE 139 : https://leetcode.com/problems/word-break/description/
+Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note:
+
+The same word in the dictionary may be reused multiple times in the segmentation.
+You may assume the dictionary does not contain duplicate words.
+Example 1:
+
+Input: s = "leetcode", wordDict = ["leet", "code"]
+Output: true
+Explanation: Return true because "leetcode" can be segmented as "leet code".
+*/
+
+
+class Solution {
+public:
+    
+    unordered_map<string, bool> mp;     //used for memoization
+    
+    unordered_set<string> h;            //used to store dictionary, we can also use trie data structure instead
+    bool helper(string str){
+        int n = str.size();
+        if(n==0) return true;
+        
+        if(mp.find(str)!=mp.end()) return mp[str];      
+        
+        //check prefix of all sizes
+        for(int i=1;i<=n;++i){          //length
+            if(h.find(str.substr(0,i))!=h.end() && helper(str.substr(i, n-i))) {
+                cout<<str.substr(0,i)<<", ";
+                mp.insert({str, true});
+                return mp[str];
+            }
+        }
+        mp.insert({str, false});
+        return mp[str];
+    }
+    
+    
+    bool wordBreak(string s, vector<string>& wordDict) {
+        
+        //SOLUTION LINK : https://www.geeksforgeeks.org/word-break-problem-dp-32/
+        
+        h.clear();
+        for(string s:wordDict){
+            h.insert(s);
+        }
+        
+        //method 1 : naive recursion + dp memoization
+        mp.clear();
+        return helper(s);
+        
+        //method 2 : dp tabulation
+        //LEFT !!!
+        
+    }
+};
