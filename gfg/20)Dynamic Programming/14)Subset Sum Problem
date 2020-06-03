@@ -112,7 +112,65 @@ int main()
 }
 
 
+//3)
+/*LEETCODE : 1155
+You have d dice, and each die has f faces numbered 1, 2, ..., f.
 
+Return the number of possible ways (out of fd total ways) modulo 10^9 + 7 to roll the dice so the sum of the face up
+numbers equals target.
+*/
+
+//SOLUTION LINK : https://www.geeksforgeeks.org/dice-throw-dp-30/
+#define M 1000000007
+
+class Solution {
+public:
+    
+    int helper(int m, int n, int sum, vector<vector<int>> &mem){
+        if(n==0){
+            return (sum==0)?1:0;
+        }
+
+        if(mem[n][sum]!=-1) return mem[n][sum];
+        int cnt = 0;
+        for(int i=1;i<=m;++i){
+            if (sum-i>=0) cnt = (cnt + (helper(m, n-1, sum-i, mem)%M)) %M;
+        }
+        mem[n][sum] = cnt;
+        return cnt;
+    }
+    
+    int helper_tabulation(int f, int d, int target){
+        
+        //dp[i][j] represents the ways to roll i dices to get j as sum
+        int dp[d+1][target+1];
+        memset(dp, 0, sizeof(dp[0][0])*(d+1)*(target+1));
+        
+        //table entries for only 1 dice
+        for(int i=1;i<=target&&i<=f;++i) dp[1][i] = 1;
+        
+        for(int i=2;i<=d;++i){
+            for(int j=1;j<=target;++j){
+                dp[i][j] = 0;
+                for(int k=1;k<=f;++k){
+                    if(j-k>=0) dp[i][j] = (dp[i][j] + (dp[i-1][j-k]%M))%M;
+                }
+            }
+        }
+        
+        return dp[d][target];
+    }
+    
+    int numRollsToTarget(int d, int f, int target) {
+        
+        //method 1 : recursion + dp memoization
+	    // vector<vector<int>> mem(d+1, vector<int> (target+1, -1));   //used for memoization
+	    // return helper(f, d, target, mem);
+        
+        //method 2 : dp tabulation
+        return helper_tabulation(f, d, target); 
+    }
+};
 
 
 
