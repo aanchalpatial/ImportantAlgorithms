@@ -55,6 +55,21 @@ int minimumJumps_tabulation(int arr[], int n){  //O(n^2)
     return tab[n-1];
 }
 
+bool helper_greedy(vector<int> nums){
+        int n = nums.size();
+        
+        //right to left
+        int leftMostGoodIndex = n-1;
+        for(int i=n-2;i>=0;--i){
+            if(i+nums[i]>=leftMostGoodIndex){
+                leftMostGoodIndex = i;
+            }
+        }
+        
+        return (leftMostGoodIndex==0)?true:false;
+        
+    }
+
 int main() {
     
     int arr[] = {4, 1, 5, 3, 1, 3, 2, 1, 8};
@@ -64,6 +79,18 @@ int main() {
     cout<<minimumJumps(arr, 0, n)<<endl;
     cout<<minimumJumps2(arr, n)<<endl;
     cout<<minimumJumps_tabulation(arr, n)<<endl;
+    
+    //method 3 : greedy     -> 93 %
+    //*** BEST SOLUTION ***
+        //Leetcode solution
+        //O(n) time & O(1) space
+        /*Approach : 
+        Iterating right-to-left, for each position we check if there is a potential 
+        jump that reaches a GOOD index (currPosition + nums[currPosition] >= leftmostGoodIndex).
+        If we can reach a GOOD index, then our position is itself GOOD. Also, this new
+        GOOD position will be the new leftmost GOOD index.
+        */
+        return helper_greedy(nums);
     
     
 	return 0;
