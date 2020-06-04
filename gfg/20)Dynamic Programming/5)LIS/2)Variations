@@ -9,7 +9,8 @@ See Video from P100 GFG .
 3) Maximum Length Bitonic Subsequence : 
 A Biotonic subsequence is a subsequence which is first increasing than decreasing.
 
-create lis[] & lds[](lis[] from starting from right end). result is maximum of (lis[i]+lds[i]-1) for all i from 0 to n-1 
+create lis[] & lds[]. lis[i] stores the length of the Longest Increasing subsequence ending with arr[i].
+result is maximum of (lis[i]+lds[i]-1) for all i from 0 to n-1 
 
 4) Building Bridges : https://www.geeksforgeeks.org/dynamic-programming-building-bridges/
 Sort pair of cities according to first index(city) and if first index are same then second index(city).
