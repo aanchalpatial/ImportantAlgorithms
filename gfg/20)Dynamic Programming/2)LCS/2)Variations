@@ -1,16 +1,264 @@
-See Video from P100 GFG .
+
+#include<bits/stdc++.h>
+using namespace std;
 
 
-1) Diff Utility / Version Control
+int lcs(string str, string str2, int m, int n) {
 
-2) Minimum insertion & deletions to convert str1 to str2 (Different from edit distance problem)
+	if (m == 0 || n == 0) {
+		return 0;
+	}
 
-3) Shortest Common Supersequence : https://www.geeksforgeeks.org/shortest-common-supersequence/
+	if (str[m - 1] == str2[n - 1]) {
+		return 1 + lcs(str, str2, m - 1, n - 1);
+	} else {
+		return max(lcs(str, str2, m - 1, n), lcs(str, str2, m, n - 1));
+	}
 
-4) Longest Palindrome Subsequence : https://www.geeksforgeeks.org/longest-palindromic-subsequence-dp-12/
+}
 
-5) Longest Repeating Subsequence : https://www.geeksforgeeks.org/longest-repeated-subsequence/
+int lcs_tabulation(string str, string str2) {
 
-6) Space optimized LCS : https://www.geeksforgeeks.org/space-optimized-solution-lcs/
+	int m = str.size(), n = str2.size();
 
-7) Printing LCS : https://www.geeksforgeeks.org/printing-longest-common-subsequence/
+	int dp[m + 1][n + 1];
+	for (int i = 0; i <= m; ++i) dp[i][0] = 0;
+	for (int i = 0; i <= n; ++i) dp[0][i] = 0;
+
+	for (int i = 1; i <= m; ++i) {
+		for (int j = 1; j <= n; ++j) {
+			if (str[i - 1] == str2[j - 1]) {
+				dp[i][j] = 1 + dp[i - 1][j - 1];
+			} else {
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+			}
+		}
+	}
+
+	return dp[m][n];
+}
+
+string lcs_print(string str, string str2) {
+	int m = str.size(), n = str2.size();
+
+	int dp[m + 1][n + 1];
+	for (int i = 0; i <= m; ++i) dp[i][0] = 0;
+	for (int i = 0; i <= n; ++i) dp[0][i] = 0;
+
+	for (int i = 1; i <= m; ++i) {
+		for (int j = 1; j <= n; ++j) {
+			if (str[i - 1] == str2[j - 1]) {
+				dp[i][j] = 1 + dp[i - 1][j - 1];
+			} else {
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+			}
+		}
+	}
+
+	//lcs table is created, now we will use it to print lcs
+	string result = "";
+
+	//start from rightmost bottom corner
+	int i = m, j = n;
+	while (i > 0 && j > 0) {
+
+		//a cell is either maximum of left & top cell or it is 1 + upper diagonal element
+
+		int left = dp[i][j - 1], top = dp[i - 1][j];
+		if (dp[i][j] == max(left, top)) {
+			if (dp[i][j] == left) {
+				--j;
+			} else {
+				--i;
+			}
+		} else {
+			result += str[i - 1];
+			--i, --j;
+		}
+	}
+
+	reverse(result.begin(), result.end());
+
+	return result;
+}
+
+int lps(string str) {
+
+	/*approach :
+	find lcs of given string & reverse of it
+	*/
+
+	string str2 = str;
+	reverse(str2.begin(), str2.end());
+
+	return lcs_tabulation(str, str2);
+}
+
+int scs(string str, string str2) {
+
+	//length of shortest common supersequence is = (length of str + length of str2) - (length of lcs of str & str2)
+	int m = str.size(), n = str2.size();
+	return (m + n) - lcs_tabulation(str, str2);
+}
+
+string scs_print(string str, string str2) {
+
+	int m = str.size(), n = str2.size();
+
+	int dp[m + 1][n + 1];
+	for (int i = 0; i <= m; ++i) dp[i][0] = 0;
+	for (int i = 0; i <= n; ++i) dp[0][i] = 0;
+
+	for (int i = 1; i <= m; ++i) {
+		for (int j = 1; j <= n; ++j) {
+			if (str[i - 1] == str2[j - 1]) {
+				dp[i][j] = 1 + dp[i - 1][j - 1];
+			} else {
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+			}
+		}
+	}
+
+	//lcs table is created, now we will use it to print scs
+	string result = "";
+
+	//start from rightmost bottom corner
+	int i = m, j = n;
+	while (i > 0 && j > 0) {
+
+		//a cell is either maximum of left & top cell or it is 1 + upper diagonal element
+
+		int left = dp[i][j - 1], top = dp[i - 1][j];
+		if (dp[i][j] == max(left, top)) {
+			if (dp[i][j] == left) {
+				result += str2[j - 1];			//added
+				--j;
+			} else {
+				result += str[i - 1];			//addes
+				--i;
+			}
+		} else {
+			result += str[i - 1];
+			--i, --j;
+		}
+	}
+
+	while (i > 0) {								//added
+		result += str[i - 1];
+		--i;
+	}
+	while (j > 0) {								//added
+		result += str2[j - 1];
+		--j;
+	}
+
+	reverse(result.begin(), result.end());
+
+	return result;
+}
+
+
+int lrs(string str) {
+	/*approach : lcs with itself + 1 restriction
+	The idea is to find the LCS(str, str)where str is the input string with the restriction
+	that when both the characters are same, they shouldn’t be on the same index in the two strings.
+	*/
+
+	int n = str.size();
+
+	int dp[n + 1][n + 1];
+	for (int i = 0; i <= n; ++i) dp[i][0] = 0;
+	for (int i = 0; i <= n; ++i) dp[0][i] = 0;
+
+	for (int i = 1; i <= n; ++i) {
+		for (int j = 1; j <= n; ++j) {
+			if (str[i - 1] == str[j - 1] && i != j) {		// restriction is i != j
+				dp[i][j] = 1 + dp[i - 1][j - 1];
+			} else {
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+			}
+		}
+	}
+
+	return dp[n][n];
+}
+
+int main() {
+
+
+	// string str = "AGGTAB", str2 = "GXTXAYB";
+	// cout << "Length of LCS is "
+	//      << lcs_tabulation( str, str2);
+
+
+	//1) Printing LCS
+	//https://www.geeksforgeeks.org/printing-longest-common-subsequence/
+	// string str = "AGGTAB", str2 = "GXTXAYB";
+	// cout << " LCS is : " << lcs_print(str, str2);
+
+	//2) Longest Palindromic Subsequence : lcs of given string & its reverse
+	//https://www.geeksforgeeks.org/longest-palindromic-subsequence-dp-12/
+	// string str = "GEEKSFORGEEKS";
+	// cout << "Length of LPS is " << lps(str) << "\n";
+
+	//3) Shortest Common supersequence : 
+	//length of shortest common supersequence is 
+	// = (length of str + length of str2) - (length of lcs of str & str2)
+	
+	//https://www.geeksforgeeks.org/shortest-common-supersequence/
+	/*
+	Given two strings str1 and str2, find the shortest string that has both str1 and str2 as subsequences.
+	Input:   str1 = "AGGTAB",  str2 = "GXTXAYB"
+	Output:  "AGXGTXAYB"
+	*/
+	// string str = "algorithm", str2 = "rhythm";
+	// cout << "Length of SCS is : " << scs(str, str2) << "\n";
+	// cout << " SCS is : " << scs_print(str, str2) << "\n";
+
+
+	//4) Longest Repeating Subsequence : lcs with itself + 1 restriction
+	//https://www.geeksforgeeks.org/longest-repeated-subsequence/
+	/*
+	Given a string, find length of the longest repeating subseequence such that the
+	two subsequence don’t have same string character at same position, i.e., any i’th character
+	in the two subsequences shouldn’t have the same index in the original string.
+
+	Input: str = "aabebcdd"
+	Output: 3
+	LRS is "abd"
+
+	Input: str = "abc"
+	Output: 0
+	There is no repeating subsequence
+
+	Input: str = "aab"
+	Output: 1
+	The two subssequence are 'a'(first) and 'a'(second).
+	Note that 'b' cannot be considered as part of subsequence
+	as it would be at same index in both.
+
+	Input: str = "aabb"
+	Output: 2
+
+	Input: str = "axxxy"
+	Output: 2
+	*/
+	// string str = "abc";
+	// cout << "Length of LRS is " << lrs(str);
+
+
+	//5)Space optimized LCS
+	// https://www.geeksforgeeks.org/space-optimized-solution-lcs/
+	/*
+	One important observation in above simple implementation is, in each iteration of outer loop we only,
+	 need values from all columns of previous row. So there is no need of storing all rows in 
+	 our DP matrix, we can just store two rows at a time and use them, in that way used space will
+	  reduce from L[m+1][n+1] to L[2][n+1]. Below is the implementation of above idea.
+	*/
+
+	return 0;
+}
+
+
+
+
