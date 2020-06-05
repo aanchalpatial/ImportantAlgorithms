@@ -1,0 +1,125 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+bool custom_next_permutation(string &str) {
+	//custom implementation of c++ stl next_permutation() function which  returns ‘true’ if
+	// the function could rearrange the object as a lexicographically GREATER permutation.
+	//Otherwise, it returns ‘false’.
+
+	/*approach :-
+	step 1 : find the index of rightmost character in previous permutation such that it is
+			 smaller than its next character, say called x
+
+	step 2 : find index of ceiling of str[x] on right of it , say called y. swap str[x] & str[y]
+	         Ceiling is the smallest character on right of str[x],
+	         which is greater than str[x]
+
+	step 3 : reverse (or sort) substring from x + 1 to end
+	*/
+
+	int n = str.size();
+
+	//step 1 :
+	int x = -1;
+	for (int i = n - 2; i >= 0; --i) {
+		if (str[i] < str[i + 1]) {
+			x = i;
+			break;
+		}
+	}
+
+	if (x == -1) {
+		//reached last permutation of string
+		return false;
+	}
+
+	//step 2 :
+	int diff = INT_MAX;
+	int y;
+	for (int i = x + 1; i < n; ++i) {
+		if (str[i] > str[x] && str[i] - str[x] < diff) {
+			diff = str[i] - str[x];
+			y = i;
+		}
+	}
+
+	swap(str[x], str[y]);
+
+	//step 3 :
+	reverse(str.begin() + x + 1, str.end());
+
+	return true;
+
+}
+
+bool custom_prev_permutation(string &str) {
+	//custom implementation of c++ stl prev_permutation() function which  returns ‘true’ if
+	// the function could rearrange the object as a lexicographically SMALLER permutation.
+	//Otherwise, it returns ‘false’.
+
+	/*approach :-
+	step 1 : find the index of rightmost character in previous permutation such that it is
+			 greater than its next character, say called x
+
+	step 2 : find index of floor of str[x] on right of it , say called y. swap str[x] & str[y]
+	         Floor is the largest character on right of str[x], which is smaller than str[x]
+
+	step 3 : reverse (or sort) substring from x + 1 to end
+	*/
+
+	int n = str.size();
+
+	//step 1 :
+	int x = -1;
+	for (int i = n - 2; i >= 0; --i) {
+		if (str[i] > str[i + 1]) {
+			x = i;
+			break;
+		}
+	}
+
+	if (x == -1) {
+		//reached first permutation of string
+		return false;
+	}
+
+	//step 2 :
+	int diff = INT_MAX;
+	int y;
+	for (int i = x + 1; i < n; ++i) {
+		if (str[i] < str[x] && str[x] - str[i] < diff) {
+			diff = str[x] - str[i];
+			y = i;
+		}
+	}
+
+	swap(str[x], str[y]);
+
+	//step 3 :
+	reverse(str.begin() + x + 1, str.end());
+
+	return true;
+
+}
+
+int main() {
+
+
+	//PROBLEM 2 : Find next lexicographic permutation of string
+	string str2 = "123";
+	//Method 1 : Using C++ STL next_permutation()
+	//Method 2 : Implementing custom next_permutation()
+	if (custom_next_permutation(str2))  cout << str2 << "\n";
+	else cout << "Given string is already last permutation of lexicographic order.\n";
+
+	//PROBLEM 3 : Find previous lexicographic permutation of string
+	string str3 = "321";
+	//Method 1 : Using C++ STL prev_permutation()
+	//Method 2 : Implementing custom prev_permutation()
+	if (custom_prev_permutation(str3))  cout << str3 << "\n";
+	else cout << "Given string is already the first permutation of lexicographic order.\n";
+
+
+	return 0;
+}
