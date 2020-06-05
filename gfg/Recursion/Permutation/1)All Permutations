@@ -21,20 +21,73 @@ void permutation_recursion(string str, int l, int r) {
 
 int main() {
 
-	//PROBLEM 1 : Print permutations of string
+	//PROBLEM 1 : Print all permutations of string
 	string str = "123";
 	permutation_recursion(str, 0, str.size() - 1);
 	cout << "\n";
-
+	
 	return 0;
 }
 
 
 
 
+//PROBLEM 2 : Print all unique permutations of given array of numbers
+//LeetCode 47 :
 
-
-
+class Solution {
+public:
+    
+    vector<vector<int>> result;
+    unordered_set<string> h;            
+    
+    void helper(vector<int> &nums, int n, int index){
+        
+        if(index==n){
+            
+            //method 1 : to avoid duplicate permutation
+//             string str = "";
+//             for(auto x:nums) str += to_string(x);
+            
+//             if(h.find(str)==h.end()){
+//                 h.insert(str);
+//                 result.push_back(nums);
+//             } 
+            
+            result.push_back(nums);
+        }
+        
+        
+        unordered_set<int> h2;      //method 2 : to avoid duplicate permutations
+        
+        for(int i=index;i<n;++i){
+            
+            if(h2.find(nums[i])==h2.end()){
+                swap(nums[i], nums[index]);
+                helper(nums, n, index+1);
+                swap(nums[i], nums[index]);
+                
+                h2.insert(nums[i]);
+            }
+            
+        }
+        
+    }
+    
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        
+        int n = nums.size();
+        result.clear();
+        h.clear();
+        
+        //method : backtracking
+        helper(nums, n, 0);
+        
+        return result;
+        
+        
+    }
+};
 
 
 
