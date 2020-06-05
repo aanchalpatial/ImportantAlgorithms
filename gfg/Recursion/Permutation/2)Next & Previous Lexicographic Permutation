@@ -14,7 +14,9 @@ bool custom_next_permutation(string &str) {
 	step 2 : find index of ceiling of str[x] on right of it , say called y. swap str[x] & str[y]
 	         Ceiling is the smallest character on right of str[x],
 	         which is greater than str[x]
-
+		 if there are multiple occurences  of ceilings, choose the righmost occurence
+		 say for "2,1,3,3,3" here x = 1, so celing of str[x] is 3 , so we have to choose the right most occurence i.e y = 4
+ = 
 	step 3 : reverse (or sort) substring from x + 1 to end
 	*/
 
@@ -38,7 +40,7 @@ bool custom_next_permutation(string &str) {
 	int diff = INT_MAX;
 	int y;
 	for (int i = x + 1; i < n; ++i) {
-		if (str[i] > str[x] && str[i] - str[x] < diff) {
+		if (str[i] > str[x] && str[i] - str[x] <= diff) {
 			diff = str[i] - str[x];
 			y = i;
 		}
@@ -88,7 +90,7 @@ bool custom_prev_permutation(string &str) {
 	int diff = INT_MAX;
 	int y;
 	for (int i = x + 1; i < n; ++i) {
-		if (str[i] < str[x] && str[x] - str[i] < diff) {
+		if (str[i] < str[x] && str[x] - str[i] <= diff) {
 			diff = str[x] - str[i];
 			y = i;
 		}
