@@ -1,0 +1,46 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void permutation_recursion(string str, int l, int r) {
+	//*** this method doesn't guarantee lexicographic ordering of permutation ***
+
+	if (l == r)
+		cout << str << ", ";
+	else
+	{
+		for (int i = l; i <= r; i++)
+		{
+			swap(str[l], str[i]);
+			permutation_recursion(str, l + 1, r);
+			swap(str[l], str[i]);   //backtrack
+		}
+	}
+}
+
+
+int main() {
+
+	//PROBLEM 1 : Print permutations of string
+	string str = "123";
+	permutation_recursion(str, 0, str.size() - 1);
+	cout << "\n";
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
