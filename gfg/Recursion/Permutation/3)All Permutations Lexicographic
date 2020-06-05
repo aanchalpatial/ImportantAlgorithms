@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void permutation_stl(string str) {
+
+	//sort(str.begin(), str.end());
+
+	do {
+		cout << str << ", ";
+	} while (next_permutation(str.begin(), str.end()));
+
+}
+
+void permutation_lexicographically(string str) {
+
+	//step 1 :
+	sort(str.begin(), str.end());
+
+	//step 2 :
+	bool flag = true;
+	while (flag) {
+		cout << str << ", ";
+    //=> below function is defined here : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Recursion/Permutation/2)Next%20%26%20Previous%20Lexicographic%20Permutation
+		flag = custom_next_permutation(str);    
+	}
+
+}
+
+int main() {
+
+	//PROBLEM 4 : Print permutations of string in lexicographic ordering
+	string str4 = "123";
+	//Method 1 : Using C++ STL next_permutation()
+	permutation_stl(str4);
+	cout << "\n";
+	//Method 2 : Implementing custom next_permutation()
+	permutation_lexicographically(str4);
+	cout << "\n";
+
+
+	return 0;
+}
