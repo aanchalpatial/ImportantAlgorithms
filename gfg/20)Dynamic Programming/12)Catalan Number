@@ -22,9 +22,13 @@ Time complexity of 2nd implementation is O(n2)
 
 Catalan numbers are a sequence of natural numbers that occurs in many interesting counting problems like following :-
 1) Count the number of possible Binary Search Trees with n keys 
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/15)%20Binary%20Search%20Tree/12)BST%20Construction/2)Unique%20Binary%20Search%20Trees
+
 2) Number of different Unlabeled & Labeled Binary Trees can be there with n nodes.
+
 3) Count the number of expressions containing n pairs of parentheses which are correctly matched. 
    For n = 3, possible expressions are ((())), ()(()), ()()(), (())(), (()()).
+
 4) Count the number of full binary trees (A rooted binary tree is full if every vertex has 
    either two children or no children) with n+1 leaves
 
