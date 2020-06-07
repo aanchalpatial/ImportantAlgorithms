@@ -1,0 +1,63 @@
+//Even though this question doesn't belong to Binary Search Tress, But is still included in this subsection because
+//it solution is based on the similar approach as Unique Binary Search Tree.
+
+/*LEETCODE :- 241
+Given a string of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. The valid operators are +, - and *.
+
+Example 2:
+Input: "2*3-4*5"
+Output: [-34, -14, -10, -10, 10]
+Explanation: 
+(2*(3-(4*5))) = -34 
+((2*3)-(4*5)) = -14 
+((2*(3-4))*5) = -10 
+(2*((3-4)*5)) = -10 
+(((2*3)-4)*5) = 10
+*/
+
+class Solution {
+public:
+    
+    vector<int> diffWaysToCompute(string input) {
+        
+        int n = input.size();
+        
+        //note :- catalan number gives the count of all different ways to add parenthesis
+        // catalan(n) = C(2n, n) / (1+n)
+        
+        //method 2 : naive recursion
+        
+        vector<int> result;
+        
+        for(int i=0;i<n;++i){
+            char ch = input[i];
+            
+            if(ch=='+'||ch=='-'||ch=='*'){
+                //Split input string into two parts and solve them recursively
+                vector<int> resultLeft = diffWaysToCompute(input.substr(0, i));
+                vector<int> resultRight = diffWaysToCompute(input.substr(i+1, n-i-1));
+                
+                for(auto l:resultLeft){
+                    for(auto r:resultRight){
+                        switch(ch){
+                            case '+': result.push_back(l+r);
+                                break;
+                            case '-': result.push_back(l-r);
+                                break;
+                            case '*': result.push_back(l*r);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        if(result.empty()){
+            //string contains only one number
+            result.push_back(stoi(input));
+        }
+        
+        return result;
+        
+    }
+};
