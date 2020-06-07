@@ -1,0 +1,191 @@
+/*LEETCODE 96
+Given n, how many structurally unique BST's (binary search trees) that store values 1 ... n?
+Example:
+
+Input: 3
+Output: 5
+Explanation:
+Given n = 3, there are a total of 5 unique BST's:
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+*/
+
+class Solution {
+public:
+    
+    long binomial(int n, int k){
+
+        //method 1 : simplification
+        long result = 1;
+        for(int i=0;i<k;++i){
+            result *= (n-i);
+            result /= (i+1);
+        }
+        return result;
+        
+        //method 2 : dp
+        //C(n, k) = C(n-1, k-1) + C(n-1, k) with base case C(n, 0) = 1;
+    }
+    
+    int F(int i, int n){
+        
+        return G(i-1) * G(n-i);             //product of left & right subtree
+    }
+    
+    int G(int n){
+        
+        if(n==0||n==1) return 1;
+        
+        int cnt = 0;
+        for(int i=1;i<=n;++i){
+            cnt += F(i, n);
+        }
+        return cnt;
+    }
+    
+    int helper_tabulation(int n){
+        
+        int dp[n+1];
+        memset(dp, 0, sizeof(dp));
+        //dp[i] represents count of structurally possible unique BST's of size i 
+        //dp[i] is G(i) in recursive implementation
+        dp[0] = 1;
+        dp[1] = 1;
+        
+        for(int i=2;i<=n;++i){
+            for(int j=1;j<=i;++j){
+                dp[i] += (dp[j-1] * dp[i-j]);
+            }
+        }
+        
+        // for(int i=0;i<=n;++i) cout<<dp[i]<<", ";
+        // cout<<"\n";
+        
+        return dp[n];
+    }
+    
+    int numTrees(int n) {
+        
+        //method 1 : naive solution 
+        //catalan number : O(n) time & O(1) space
+        //nth catalan number  = C(2n, n) / (n+1);
+        // long b = binomial(2*n, n);
+        // return b/(n+1);
+        
+        
+        
+        //*** SOLUTION LINK *** :- 
+        //https://leetcode.com/problems/unique-binary-search-trees/discuss/31666/DP-Solution-in-6-lines-with-explanation.-F(i-n)-G(i-1)-*-G(n-i)
+        
+        //method 2 : naive recursion
+        // G(n) = F(1, n) + F(2, n) + F(3, n) + ... + F(n, n) , where G(n) represents structurally unique BST's of size n
+        // F(i, n) = G(i-1) + G(n-i) ; where F(i, n) represents the number of unique BST's where the number 'i' is the root
+        // & number ranges from 1 to n & 1 <= i <= n
+        //return G(n);
+        
+        
+        
+        //method 3 : dp tabulation solution of method 2
+        return helper_tabulation(n);
+        
+    }
+};
+
+
+/*LEETCODE 95
+Given an integer n, generate all structurally unique BST's (binary search trees) that store values 1 ... n.
+Example:
+
+Input: 3
+Output:
+[
+  [1,null,3,2],
+  [3,2,null,1],
+  [3,1,null,null,2],
+  [2,1,3],
+  [1,null,2,null,3]
+]
+Explanation:
+The above output corresponds to the 5 unique BST's shown below:
+
+   1         3     3      2      1
+    \       /     /      / \      \
+     3     2     1      1   3      2
+    /     /       \                 \
+   2     1         2                 3
+*/
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    
+    vector<TreeNode*> G(int start, int end) {
+        
+        vector<TreeNode*> list;
+        
+        if(start>end) {
+            list.push_back(NULL);
+            return list;
+        }
+        if(start==end) {
+            TreeNode *root = new TreeNode(start);
+            list.push_back(root);
+            return list;
+        }
+        
+        
+        vector<TreeNode *> leftList, rightList;
+        for(int i=start;i<=end;++i){
+            
+            leftList = G(start, i-1);
+            rightList = G(i+1, end);
+            
+            //product of left & right lists
+            for(auto l:leftList){
+                for(auto r:rightList){
+                    TreeNode *root = new TreeNode(i);
+                    root->left = l;
+                    root->right = r;
+                    list.push_back(root);
+                }
+            }
+            
+        }
+        
+        return list;
+        
+    }
+    
+    vector<TreeNode*> generateTrees(int n) {
+        
+        //SIMILAR PROBLEM :- https://leetcode.com/problems/unique-binary-search-trees/description/
+        
+        //APPROACH :- https://leetcode.com/problems/unique-binary-search-trees/discuss/31666/DP-Solution-in-6-lines-with-explanation.-F(i-n)-G(i-1)-*-G(n-i)
+        
+        //G(n) = F(1, n) + F(2, n) + ... + F(n, n)
+        //F(i, n) = G(i-1) + G(n-i)
+        
+        if(n==0) return {};
+        
+        //method 1 : naive recursion
+        return G(1, n);
+        
+        
+        //method 2 : 
+        
+    }
+};
