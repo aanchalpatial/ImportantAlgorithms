@@ -1,0 +1,111 @@
+/*LEETCODE : 1472
+You have a browser of one tab where you start on the homepage and you can visit another url, get back in the history number of steps 
+or move forward in the history number of steps.
+
+Implement the BrowserHistory class:
+
+BrowserHistory(string homepage) Initializes the object with the homepage of the browser.
+void visit(string url) visits url from the current page. It clears up all the forward history.
+string back(int steps) Move steps back in history. If you can only return x steps in the history and steps > x, you will return 
+only x steps. Return the current url after moving back in history at most steps.
+string forward(int steps) Move steps forward in history. If you can only forward x steps in the history and steps > x, you will 
+forward only x steps. Return the current url after forwarding in history at most steps.
+ 
+*/
+
+/* note :-
+Two stacks (first solution) are natural fit for this problem. It's easier to implement during the contest.
+Using a single list (second solution) is faster, but it's a bit trickier to maintain the current position.
+*/
+
+// class BrowserHistory {
+// public:
+//     //METHOD 1 : using 2 stack
+//     //top of stack 1 stores current page
+//     stack<string> st1;      //used to store history + current page
+//     stack<string> st2;      //used to store forward history
+    
+//     BrowserHistory(string homepage) {
+//         st1.push(homepage);
+//     }
+    
+//     void visit(string url) {
+        
+//         //visits url from the current page. It clears up all the forward history.
+//         while(!st2.empty()){
+//             st2.pop();
+//         }
+//         st1.push(url);
+        
+//     }
+    
+//     string back(int steps) {
+//         //Move steps back in history. If you can only return x steps in the history and steps > x,
+//         //you will return only x steps. Return the current url after moving back in history at most steps.
+        
+//         while(st1.size()>1&&steps>0){           //note :-  homepage is never to be poppedd
+//             st2.push(st1.top());
+//             st1.pop();
+//             --steps;
+//         }
+        
+//         return st1.top();
+//  }
+    
+//     string forward(int steps) {
+        
+//         //Move steps forward in history. If you can only forward x steps in the history and steps > x,
+//         //you will forward only x steps. Return the current url after forwarding in history at most steps.
+//         while(!st2.empty()&&steps>0){
+//             st1.push(st2.top());
+//             st2.pop();
+//             --steps;
+//         }
+        
+//         return st1.top();
+        
+//     }
+// };
+
+
+class BrowserHistory {
+public:
+    
+    //METHOD 2 : using vector
+    vector<string> history;
+    int current_index;
+    
+    BrowserHistory(string homepage) {
+        history.push_back(homepage);
+        current_index = 0;
+    }
+    
+    void visit(string url) {
+        
+        ++current_index;
+        history.resize(current_index);
+        history.push_back(url);
+        
+    }
+    
+    string back(int steps) {
+        
+        current_index = max(0, current_index-steps);
+        return history[current_index];
+    }
+    
+    string forward(int steps) {
+        
+        current_index = min((int)history.size()-1, current_index+steps);
+        return history[current_index];
+        
+    }
+};
+
+/**
+ * Your BrowserHistory object will be instantiated and called as such:
+ * BrowserHistory* obj = new BrowserHistory(homepage);
+ * obj->visit(url);
+ * string param_2 = obj->back(steps);
+ * string param_3 = obj->forward(steps);
+ */
