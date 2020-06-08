@@ -11,6 +11,7 @@ using namespace std;
 int main() {
 	
 	//1) UNIQUE 1 : all elements occur even times except for one odd occuring elements
+	//LEETCODE 136
 	int arr[] = {1, 2, 3, 1, 3, 4, 4};
 	int n = sizeof(arr)/sizeof(arr[0]);
 	int result = arr[0];
@@ -19,6 +20,7 @@ int main() {
 	
 	
 	//2) UNIQUE 2 : all elements occur even times except for 2 odd occuring elements
+	//LEETCODE 260
 	/*
 	The first step is to do XOR of all elements present in array. XOR of all elements gives us XOR of x and y.
 	In the second step, we pick a set bit of xor2 and divide array elements in two groups. 
@@ -52,7 +54,7 @@ int main() {
 	
 	
 	//3) UNIQUE 3 :  every element occurs three times, except one element which occurs only once
-	//LEFT !!!
+	//LEETCODE 137
 	//https://www.geeksforgeeks.org/find-the-element-that-appears-once/
 	
 	
