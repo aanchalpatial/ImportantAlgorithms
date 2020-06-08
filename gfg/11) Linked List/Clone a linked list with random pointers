@@ -1,45 +1,55 @@
-//Given a linked list, where each node has 2 pointers, one simple next pointer pointing to next node and other random pointer pointing 
-//to any node. Clone this linked list.
-
-//Method 1) O(n) time & O(n) space:             
-//https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
-/*
-This method stores the next and random mappings (of original list) in an array first, then modifies the original 
-Linked List (to create copy), creates a copy. And finally restores the original list.
+/*LEETCODE :- 138
+Given a linked list, where each node has 2 pointers, one simple next pointer pointing to next node and other random pointer pointing 
+to any node. Clone this linked list.
 */
 
-//Method 2) O(n) time & O(1) space
-Node *cloneLinkedListWithRandomPointers(Node *head){
-    //Step 1: Add a duplicate node ahead of every node i.e 1->2->3-> to 1->1->2->2->3->3->
-    Node *temp = head;
-    while(temp!=NULL){
-        Node *c = new Node(temp->key);
-        Node * next = temp->next;
-        temp->next = c;
-        c->next = next;
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
         
-        temp = temp->next->next;
-    }
-    
-    //Step 2: Add random pointers to duplicate node using random pointers of original nodes
-    temp = head;
-    while(temp!=NULL){
-        temp->next->rand = temp->rand;
+        if(head==NULL) return NULL;
         
-        temp = temp->next->next;
-    }
-    
-    //Step 3: Separate original & duplicate list
-    Node *original = head;
-    Node *clone = head->next;
-    Node *cloneHead = head->next;
-    while(clone!=NULL&&original!=NULL){
-        original->next = original->next?original->next->next:original->next;    //RR    
-        clone->next = clone->next?clone->next->next:clone->next;                //RR
+        ///method 1) O(n) time & O(n) space:             
+        //https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
+        /*
+        This method stores the next and random mappings (of original list) in an array first, then modifies the original 
+        Linked List (to create copy), creates a copy. And finally restores the original list.
+        */
+
         
-        original = original->next;
-        clone = clone->next;
+        //method 2 : 
+        //O(n) time & O(1) sapce
+        
+        //step 1 : add duplicates nodes ahead of every node in linked list i.e 1->2->3-> to 1->1->2->2->3->3->
+        Node *curr = head;
+        while(curr!=NULL){
+            Node *nd = new Node(curr->val);
+            nd->next = curr->next;
+            curr->next = nd;
+            
+            curr = curr->next->next;
+        }
+        
+        //step 2 : add random pointer for duplicates node
+        curr = head;
+        while(curr!=NULL){
+            curr->next->random = (curr->random!=NULL)?curr->random->next:NULL;          //*** imp ***
+            curr = curr->next->next;
+        }
+        
+        //step 3 : segregate orignal nodes & duplicates nodes
+        curr = head;
+        Node *cloneHead = head->next;
+        Node *clone = cloneHead;
+        
+        while(curr!=NULL){
+            
+            curr->next = curr->next->next;
+            curr = curr->next;
+            
+            if(clone->next!=NULL) clone->next = clone->next->next;          
+            clone = clone->next;
+        }
+        return cloneHead;
     }
-    
-    return cloneHead;
-}
+};
