@@ -1,6 +1,8 @@
 /*LEETCODE :- 138
 Given a linked list, where each node has 2 pointers, one simple next pointer pointing to next node and other random pointer pointing 
 to any node. Clone this linked list.
+
+In other words, Return a deep copy of the list.
 */
 
 class Solution {
