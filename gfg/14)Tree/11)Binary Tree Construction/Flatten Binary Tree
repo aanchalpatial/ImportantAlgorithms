@@ -1,0 +1,52 @@
+//This problem is not the same as Convert Binary Tree to DLL, but has little bit similarity.
+/*LEETCODE :- 114
+iven a binary tree, flatten it to a linked list in-place.
+
+For example, given the following tree:
+
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+The flattened tree should look like:
+
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+*/
+
+class Solution {
+public:
+     TreeNode *previousNode;
+    
+    void helper(TreeNode *root){
+        
+        if(root==NULL) return;
+        
+        helper(root->right);
+        helper(root->left);
+        
+        root->right = previousNode;
+        root->left = NULL;
+        previousNode = root;
+       
+        
+    }
+    
+    void flatten(TreeNode* root) {
+        
+        //method : using reverse preorder traversal i.e Right, Left , Root
+        previousNode = NULL;
+        helper(root);
+        
+    }
+};
