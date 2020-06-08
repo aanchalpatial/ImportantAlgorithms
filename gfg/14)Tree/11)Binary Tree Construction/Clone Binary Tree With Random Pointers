@@ -19,6 +19,8 @@ struct Node
 Node* cloneTree(Node* root)
 {
    //we have similar type of question for singly linked list
+   //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/Clone%20a%20linked%20list%20with%20random%20pointers
+   
    if(root==NULL) return NULL;
     
     Node *nd = new Node(root->data);
