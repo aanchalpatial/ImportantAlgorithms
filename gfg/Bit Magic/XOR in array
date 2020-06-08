@@ -55,7 +55,35 @@ int main() {
 	
 	//3) UNIQUE 3 :  every element occurs three times, except one element which occurs only once
 	//LEETCODE 137
-	//https://www.geeksforgeeks.org/find-the-element-that-appears-once/
+	//https://www.youtube.com/watch?v=jO7uGdvGGC4
+        //https://www.youtube.com/watch?v=XPFp9Ct_-ek
+        /*
+        We can sum the bits in same positions for all the numbers and take modulo with 3. 
+        The bits for which sum is not multiple of 3, are the bits of number with single occurrence.
+        Let us consider the example array {5, 5, 5, 8}. The 101, 101, 101, 1000
+        Sum of first bits%3 = (1 + 1 + 1 + 0)%3 = 0;
+        Sum of second bits%3 = (0 + 0 + 0 + 0)%0 = 0;
+        Sum of third bits%3 = (1 + 1 + 1 + 0)%3 = 0;
+        Sum of fourth bits%3 = (1)%3 = 1;
+        Hence number which appears once is 1000
+        */
+        //O(32*n) time & O(1) space
+        int result = 0;
+        for(int i=0;i<32;++i){
+            int cnt = 0;            //count of set bits at ith positions of all numbers
+            for(int x:nums){
+                if(x&(1<<i)) ++cnt;
+            }
+            
+            if(cnt%3==0){
+                //ith bit of result is 0
+                
+            }else{
+                //ith bit if result is 1
+                result = result|(1<<i);
+            }
+        }
+        return result;
 	
 	
 	//4) UNIQUE 4 : You are given an array of n+2 elements. All elements of the array are in range 1 to n.
