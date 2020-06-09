@@ -1,4 +1,4 @@
-/*
+/*LEETCODE 93
 Given a string containing only digits, restore it by returning all possible valid IP address combinations.
 
 A valid IP address must be in the form of A.B.C.D, where A, B, C, and D are numbers from 0-255. 
@@ -25,7 +25,39 @@ public:
         return true;
     }
     
-    
+    void helper(string str, int k, vector<string> &result, string ip){
+        
+        if(k==0){
+            ip += str;
+            if(isValidIp(ip)) result.push_back(ip);
+            cout<<ip<<"\n";
+            return;
+        }
+        
+        int n = str.size();
+        
+        
+        //case 1 : consider 1 digit in one block
+        if(n<2) return;
+        string ip1 = ip + str.substr(0, 1) + ".";
+        helper(str.substr(1, n-1), k-1, result, ip1);
+        
+        
+        //case 1 : consider 2 digit in one block
+        if(n<3) return;
+        string ip2 = ip + str.substr(0, 2) + ".";
+        helper(str.substr(2, n-2), k-1, result, ip2);
+        
+        
+        //case 1 : consider 3 digit in one block
+        if(n<4) return;
+        string ip3 = ip + str.substr(0, 3) + ".";
+        helper(str.substr(3, n-3), k-1, result, ip3);
+        
+        
+        
+        
+    }
     
     vector<string> restoreIpAddresses(string str) {
         
@@ -38,20 +70,28 @@ public:
         //*** note *** :- only consider blocks with size less than 4, so don't loop for bigger length blocks
         //if we avoid this improvement, it leads to TLE !!!
         
-        for(int i=1;i<n;++i){
-            for(int j=i+1;j<n&&j-i<4;++j){      //note :- second terminating condition of loop
-                for(int k=j+1;k<n&&k-j<4;++k){  //note :- second terminating condition of loop
-                    string ip = str.substr(0, i) + "." +  str.substr(i, j-i) + "." + str.substr(j, k-j) + "." +  str.substr(k, n-k);
-                    if(isValidIp(ip)) result.push_back(ip);
-                }
-            }
-        }
-        return result;
+        // for(int i=1;i<n;++i){
+        //     for(int j=i+1;j<n&&j-i<4;++j){      //note :- second terminating condition of loop
+        //         for(int k=j+1;k<n&&k-j<4;++k){  //note :- second terminating condition of loop
+        //             string ip = str.substr(0, i) + "." +  str.substr(i, j-i) + "." + str.substr(j, k-j) + "." +  str.substr(k, n-k);
+        //             if(isValidIp(ip)) result.push_back(ip);
+        //         }
+        //     }
+        // }
+        // return result;
         
         
         
         //method 2 : backtracking approach
         //https://www.geeksforgeeks.org/program-to-generate-all-possible-valid-ip-addresses-from-given-string-set-2/?ref=rp
-        
+        /*
+        In each call we have three options to create a single block of numbers of a valid ip address:
+
+        -> Either select only a single digit, add a dot and move onto selecting other blocks (further function calls).
+        -> Or select two digits at the same time, add a dot and move further.
+        -> Or select three consecutive digits and move for the next block.
+        */
+        helper(str, 3, result, "");
+        return result;
     }
 };
