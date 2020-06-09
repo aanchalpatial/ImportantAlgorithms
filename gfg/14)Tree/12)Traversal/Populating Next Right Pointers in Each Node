@@ -1,0 +1,165 @@
+/*LEETCODE  116 & 117
+Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Initially, all next pointers are set to NULL
+*/
+
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+    Node* next;
+
+    Node() : val(0), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val) : val(_val), left(NULL), right(NULL), next(NULL) {}
+
+    Node(int _val, Node* _left, Node* _right, Node* _next)
+        : val(_val), left(_left), right(_right), next(_next) {}
+};
+*/
+
+class Solution {
+public:
+    
+    void preorder(Node *root){
+        if(root==NULL) return;
+        
+        if(root->left!=NULL) root->left->next = root->right;
+        if(root->right!=NULL) root->right->next = (root->next==NULL)?NULL:root->next->left;
+        
+        preorder(root->left);
+        preorder(root->right);
+    }
+    
+    Node *bfs(Node *root){
+        queue<Node *> q;
+        q.push(root);
+        while(!q.empty()){
+            int cnt = q.size();
+            for(int i=0;i<cnt;++i){
+                Node *curr = q.front();
+                q.pop();
+                curr->next = (i<cnt-1)?q.front():NULL;
+                if(curr->left!=NULL) q.push(curr->left);
+                if(curr->right!=NULL) q.push(curr->right);
+            }
+        }
+        return root;
+    }
+    
+    Node *getNextRight(Node *p){
+        
+        Node *temp = p->next;
+        
+        //traverse node's at current level & return the first child of first which node which
+        //lies on the right of p
+        
+        while(temp!=NULL){
+            if(temp->left!=NULL) return temp->left;
+            if(temp->right!=NULL) return temp->right;
+            temp = temp->next;
+        }
+        
+        return NULL;
+    }
+    
+    void connectIterative(Node *root){
+        
+        //note :- follows ( root, next, (left!=NULL)?left:right ) traversal
+        
+        //set next of root as NULL
+        root->next = NULL;
+        
+        Node *p = root;
+        
+        //set next of all levels one by one
+        while(p!=NULL){
+            
+            Node *q = p;
+            
+            //connect all child nodes of current level
+            while(q!=NULL){
+                
+                //set next of left child
+                if(q->left!=NULL){
+                    if(q->right!=NULL){
+                        q->left->next = q->right;
+                    }else{
+                        q->left->next = getNextRight(q);
+                    }
+                }
+                
+                //set next of right child
+                if(q->right!=NULL){
+                    q->right->next = getNextRight(q);
+                }
+                
+                //iterate while there are more nodes at same level
+                q = q->next;
+            }
+            
+            //start from 1st node of next level
+            if(p->left!=NULL){
+                p = p->left;
+            }else if(p->right!=NULL){
+                p = p->right;
+            }else {
+                p = getNextRight(p);
+            }
+            
+        }
+        
+        
+    }
+    
+    Node* connect(Node* root) {
+        
+        if(root==NULL) return root;
+        
+        //method 1 : bfs
+        //O(n) time & O(n) space
+        //return bfs(root);
+        
+        
+        //using the information that given tree is perfect binary tree
+        
+        //method 2 : preorder i.e (root, left, right) traversal
+        //note :- this approach "ONLY" works for perfect or complete binary trees
+        //O(n) time & O(1) space (if recursion call stack space is ignored as stated in problem description)
+        /*Method 2 of :- https://www.geeksforgeeks.org/connect-nodes-at-same-level/
+        
+        In this method we set nextRight in Pre Order fashion to make sure that the nextRight of parent is set before
+        its children. When we are at node p, we set the nextRight of its left and right children. Since the tree is
+        complete tree, nextRight of p’s left child (p->left->nextRight) will always be p’s right child, and 
+        nextRight of p’s right child (p->right->nextRight) will always be left child of p’s nextRight (if p is not
+        the rightmost node at its level). If p is the rightmost node, then nextRight of p’s right child will be NULL.
+        */
+        // preorder(root);
+        // return root;
+        
+        
+        
+        //method 3 :  (root, next, (left!=NULL)?left:right) traversal 
+        //O(n) time & O(1) space
+        /*iterative solution from here : https://www.geeksforgeeks.org/connect-nodes-at-same-level-with-o1-extra-space/
+        
+        The outer loop, goes through all the levels and the inner loop goes through all the nodes at every level.
+         Instead of traversing in Pre Order fashion (root, left, right), if we traverse the nextRight node before
+         the left and right children (root, nextRight, left), then we can make sure that all nodes at level i have
+         the nextRight set, before the level i+1 nodes.
+        */
+        connectIterative(root);
+        return root;
+        
+    }
+};
