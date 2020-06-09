@@ -1,0 +1,174 @@
+//Problem 1 :
+//note :- problem 1 is not a DP problem. It's second variation is a DP problem.
+/*LEETCODE 131
+Given a string s, partition s such that every substring of the partition is a palindrome.
+Return all possible palindrome partitioning of s.
+
+Example:
+Input: "aab"
+Output:
+[
+  ["aa","b"],
+  ["a","a","b"]
+]
+*/
+
+class Solution {
+public:
+    
+    bool isPalindrome(string str){
+        
+        int n = str.size();
+        for(int i=0;i<n/2;++i){
+            if(str[i]!=str[n-1-i]) return false;
+        }
+        return true;
+    }
+    
+    vector<vector<string>> result;
+    
+    void helper(string str, vector<string> partition){
+        int n = str.size();
+        if(n==0) {
+            result.push_back(partition);
+            return;
+        }
+        
+        //consider all substrings starting from beginning & check if current substring is palindrome
+        //if yes recurr for remaining part
+        
+        for(int i=1;i<=n;++i){
+            string sub = str.substr(0, i);
+            if(isPalindrome(sub)){
+                partition.push_back(sub);
+                helper(str.substr(i, n-i), partition);
+                partition.pop_back();                       //backtrack
+            }
+        }
+    }
+    
+    vector<vector<string>> partition(string s) {
+        
+        int n = s.size();
+        if(n==0) return {};
+        result.clear();
+        
+        //method 1 : backtracking
+        //The idea is to go through every substring starting from first character, check if it is palindrome.
+        //If yes, then add the substring to solution and recur for remaining part.
+        helper(s, {});
+        
+        return result;
+    }
+};
+
+
+
+//Problem 2 : 
+//note :- problem 2 is a variation of matrix chain multiplication problem & is solved similar to it
+/*LEETCODE 132
+Given a string s, partition s such that every substring of the partition is a palindrome
+Return the minimum cuts needed for a palindrome partitioning of s.
+
+Example:
+Input: "aab"
+Output: 1
+Explanation: The palindrome partitioning ["aa","b"] could be produced using 1 cut.
+*/
+//https://www.geeksforgeeks.org/palindrome-partitioning-dp-17/
+
+class Solution {
+public:
+    
+    bool isPalindrome(string str){
+        
+        int n = str.size();
+        for(int i=0;i<n/2;++i){
+            if(str[i]!=str[n-1-i]) return false;
+        }
+        return true;
+    }
+    
+    vector<vector<string>> result;
+    
+    void helper(string str, vector<string> partition){
+        int n = str.size();
+        if(n==0) {
+            result.push_back(partition);
+            return;
+        }
+        
+        //consider all substrings starting from beginning & check if current substring is palindrome
+        //if yes recurr for remaining part
+        
+        for(int i=1;i<=n;++i){
+            string sub = str.substr(0, i);
+            if(isPalindrome(sub)){
+                partition.push_back(sub);
+                helper(str.substr(i, n-i), partition);
+                partition.pop_back();                       //backtrack
+            }
+        }
+    }
+    
+    int minimumCuts(string str, int l, int r, vector<vector<int>> &mem){
+        
+        if(mem[l][r]!=-1) return mem[l][r];
+        
+        if(l==r||isPalindrome(str.substr(l, r-l+1))) {
+            mem[l][r] = 0;
+            return 0;
+        }
+        
+        
+        
+        int result = INT_MAX;
+        
+        for(int i=l;i<r;++i){
+            
+            //cout<<str.substr(l, i-l+1)<<", "<<str.substr(i+1, r-i)<<"\n";
+            
+            if(isPalindrome(str.substr(l, i-l+1))){
+                
+                int lCuts = minimumCuts(str, l, i, mem);
+                int rCuts = minimumCuts(str, i+1, r, mem);
+                
+                if(lCuts!=INT_MAX&&rCuts!=INT_MAX){
+                    int cuts = 1 + lCuts + rCuts; 
+                    result = min(result, cuts);
+                }
+                
+                
+            }
+            
+        }
+        
+        mem[l][r] = result;
+        return result;
+    }
+    
+    int minCut(string s) {
+        
+        int n = s.size();
+        if(n==0) return 0;
+        
+        //method 1 : backtracking 
+        //same method which is used in : LeetCode 131 - Palindrome Partitioning
+        //TLE !!!
+//         result.clear();
+//         helper(s, {});
+        
+//         int cuts = INT_MAX;
+//         for(auto v:result){
+//             cuts = min(cuts, (int)v.size()-1);
+//         }
+//         return cuts;
+        
+        
+        //method 2 : variation of matrix chain multiplication DP problem
+        vector<vector<int>> mem(n, vector<int>(n, -1));     //used for memoization
+        return minimumCuts(s, 0, n-1, mem);
+        
+        
+    }
+};
