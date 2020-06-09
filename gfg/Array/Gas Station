@@ -1,0 +1,76 @@
+/*LEETCODE : 134
+There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). 
+You begin the journey with an empty tank at one of the gas stations.
+
+Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.
+
+Note:-
+=> If there exists a solution, it is guaranteed to be unique.
+=> Both input arrays are non-empty and have the same length.
+=> Each element in the input arrays is a non-negative integer.
+*/
+
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        
+        int n = gas.size();
+        
+        
+        //method 1 : naive approach
+        //O(n^2) time & O(1) space
+        /*
+        In naive implementations we consider every index ONE BY ONE to be starting point of circular 
+        & check if complete circular tour is possible or not.
+        */
+//         for(int i=0;i<n;++i){            
+//             int k = i;
+//             int savings = gas[k]-cost[k];
+//             while(savings>=0){
+//                 ++k;
+//                 k = k%n;                //since route is circular
+//                 if(k==i) return i;
+//                 savings += (gas[k]-cost[k]);
+//             }
+//         }
+//         return -1;
+        
+        
+        //method 2 : 
+        //O(n) time & O(1) space
+        //https://www.youtube.com/watch?v=zcnVaVJkLhY
+        /*
+        say gas[] = {6, 7, 5, 4, 10, 6, 5};
+        &  cost[] = {5, 6, 6, 7, 8,  6, 4};
+        
+        we start from index 0, we can reach upto index 2 i.e starting from 0 we can't reach 3
+        so in the next iteration we instead of choosing start+1 (index 1) as next starting point, 
+        we choose index 3 as our next starting 
+        because if we are not able to reach index 3 from index 0, then will not be able to 
+        complete circular tour from any intermediate indexes as well.
+        */
+        for(int i=0;i<n;++i){ 
+            int start = i;
+            cout<<"start : "<<start<<"\n";
+            
+            int savings = gas[i]-cost[i];
+            if(savings<0){
+                continue;
+            }
+            while(savings>=0){
+                ++start;
+                start = start%n;                //since route is circular
+                if(start==i) return start;
+                savings += (gas[start]-cost[start]);
+            }
+            if(start>i) i = start-1;
+            
+        }
+        return -1;
+        
+        
+    }
+};
