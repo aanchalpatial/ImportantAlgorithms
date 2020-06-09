@@ -1,4 +1,4 @@
-
+//Problem 1 :
 //Given a sequence of matrices, find the most efficient way to multiply these matrices together.
 //The problem is not actually to perform the multiplications, but merely to decide in which order to perform the multiplication.
 
@@ -65,3 +65,4 @@ int main()
 //DP solution with tabulation is bit tricky to implement. 
 //It's implementation is somewhat like optimal strategy to win question : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/10)Optimal%20Game%20Strategy
 //Tabulation solution can be found at : https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/
+
