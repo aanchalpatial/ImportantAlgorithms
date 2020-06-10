@@ -30,3 +30,8 @@ Node* cloneTree(Node* root)
     return nd;
 }
 
+/*WE HAVE IN TOTAL 3 CLONING QUESTION :
+1)Clone a Linked List with random pointers : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/Clone%20a%20linked%20list%20with%20random%20pointers
+2)Clone a Tree with random pointers : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/14)Tree/11)Binary%20Tree%20Construction/Clone%20Binary%20Tree%20With%20Random%20Pointers
+3) Clone a graph : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/10)Clone%20a%20Graph
+*/
