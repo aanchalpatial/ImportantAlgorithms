@@ -1,0 +1,60 @@
+/*LEETCODE 152 : 
+Given an integer array nums, find the contiguous subarray within an array (containing at least one number) which has the largest product.
+*/
+
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        
+        int n = nums.size();
+        
+        
+        //method 1 : brute force
+        //O(n^3) time & O(1) space
+//         int result = INT_MIN;
+//         for(int i=0;i<n;++i){
+//             for(int j=i;j<n;++j){
+                
+//                 int product = nums[i];
+//                 for(int k=i+1;k<=j;++k) product *= nums[k];
+//                 result = max(result, product);
+//             }
+//         }
+//         return result;
+        
+        
+        //method 2 : 
+        //https://www.geeksforgeeks.org/maximum-product-subarray-set-3/?ref=rp
+        //O(n) time & O(1) space
+        /*
+        approach is to traverse array from left to right & keep track of 2 values i.e
+        maxValue & minValue which represents the maximum & minimum product value till current index
+        
+        minValue & maxValue are updated as follows :-
+        if current element is negative, minValue & maxValue are swapped
+        minValue depends upon the value of current index element or product of current index element with previous minValue
+        similarly, maxValue depends upon the value of current index element or product of current index element eith previous maxValue
+        */
+        int minValue = nums[0];
+        int maxValue = nums[0];
+        
+        int result = nums[0];
+        
+        for(int i=1;i<n;++i){
+            
+            cout<<nums[i]<<" : ";
+            
+            if(nums[i]<0){
+                swap(minValue, maxValue);
+            }
+            
+            minValue = min(nums[i], nums[i]*minValue);
+            maxValue = max(nums[i], nums[i]*maxValue);
+
+            result = max(result, maxValue);
+            cout<<minValue<<", "<<maxValue<<"\n";
+        }
+        return result;
+        
+    }
+};
