@@ -1,0 +1,53 @@
+/*LEETCODE 133
+Given a reference of a node in a connected undirected graph.
+
+Return a deep copy (clone) of the graph.
+*/
+
+class Solution {
+public:
+    
+    unordered_map<Node *, Node *> mp;       //keeps track of cloned nodes
+        
+    Node *dfs(Node *node){
+        
+        //if clone node for current node already exists return it
+        if(mp.find(node)!=mp.end()) return mp[node];
+        else{
+            
+            //create a clone node for current node
+            Node *clone = new Node(node->val);
+            mp.insert({node, clone});
+            
+            //for all its neighbors whether visited or not visited
+            for(auto nd: node->neighbors){
+                mp[node]->neighbors.push_back(dfs(nd));    
+            }
+            
+            return mp[node];
+        }
+        
+    }
+    
+    Node* cloneGraph(Node* node) {
+        
+        if(node==NULL) return NULL;
+        
+        /*
+        To clone a graph, you will need to traverse it. Both BFS and DFS are for this purpose. 
+        But that is not all you need. To clone a graph, you need to have a copy of each node and you need to
+        avoid copying the same node for multiple times. 
+        So you still need a mapping from an original node to its copy.
+        */
+        
+        mp.clear();
+        return dfs(node);
+        
+    }
+};
+
+
+/*WE HAVE 2 MORE CLONING QUESTION :
+1)Clone a Tree with random pointers : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/14)Tree/11)Binary%20Tree%20Construction/Clone%20Binary%20Tree%20With%20Random%20Pointers
+2)Clone a Linked List with random pointers : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/Clone%20a%20linked%20list%20with%20random%20pointers
+*/
