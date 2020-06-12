@@ -1,0 +1,61 @@
+//LEETCODE : 229
+
+//Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
+//Note: The algorithm should run in linear time and in O(1) space.
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        
+        //Majority Element I - https://leetcode.com/problems/majority-element/description/
+        //Boyer-Moore Voting Algorithm witk k = 2
+        
+        int n = nums.size();
+        if(n==0) return {};
+        
+        //note : there can be atmost (k-1) elements which occurs more than n/k times
+        
+        //method 1 : sorting
+        //O(nlogn) time & O(1) space
+        
+        //method 2 : hashmap
+        //O(n) time & O(n) space
+        
+        
+        //method 3 : Boyer-Moore Voting Algorithm witk k = 3
+        //O(n) time & O(1) space
+        //step 1 : find 2 candidates for majority elements
+        int count1 = 0, count2 = 0, candidate1 = INT_MAX, candidate2 = INT_MAX;
+        for(int i=0;i<n;++i){
+            if(nums[i]==candidate1) ++count1;
+            else if(nums[i]==candidate2) ++count2;
+            else if(count1 == 0){
+                candidate1 = nums[i];
+                ++count1;
+            }else if(count2 == 0){
+                candidate2 = nums[i];
+                ++count2;
+            }else{
+                --count1;
+                --count2;
+            }
+        }
+        
+        //step 2 : check if 2 candidates of step 1 are in fact majority elements
+        int actualCount1 = 0, actualCount2 = 0;
+        for(int i=0;i<n;++i){
+            if(nums[i]==candidate1) ++actualCount1;
+            else if(nums[i]==candidate2) ++actualCount2;
+        }
+        
+        vector<int> result;
+        
+        if(actualCount1>n/3) result.push_back(candidate1);
+        
+        if(actualCount2>n/3) result.push_back(candidate2);
+        
+        return result;
+        
+    }
+};
