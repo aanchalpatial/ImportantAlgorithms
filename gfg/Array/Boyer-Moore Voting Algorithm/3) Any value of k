@@ -1,0 +1,37 @@
+//Given an array of size n and a number k, find all elements that appear more than n/k times
+
+//https://www.geeksforgeeks.org/given-an-array-of-of-size-n-finds-all-the-elements-that-appear-more-than-nk-times/
+
+//method 1 : naive
+//O(n^2) time & O(1) space
+
+//method 2 : sorting
+//O(nlogn) time & O(1) space
+
+//method 2 : hashing
+//O(n) time & O(n) space
+
+///method 4 : generalized boyer-moore voting algorithm
+//O(nk) time & O(k) space
+/*
+Following is an interesting O(nk) solution:
+We can solve the above problem in O(nk) time using O(k-1) extra space. Note that there can never be more than k-1 elements in output.
+
+There are mainly three steps in this algorithm.
+
+1) Create a temporary array of size (k-1) to store elements and their counts (The output elements are going to be 
+among these k-1 elements). Following is structure of temporary array elements.
+
+struct eleCount {
+    int element;
+    int count;
+}; 
+struct eleCount temp[]; 
+This step takes O(k) time.
+
+2) Traverse through the input array and update temp[] (add/remove an element or increase/decrease count) for every traversed element. 
+The array temp[] stores potential (k-1) candidates at every step. This step takes O(nk) time.
+
+3) Iterate through final (k-1) potential candidates (stored in temp[]). or every element, check if it actually has count more than n/k.
+This step takes O(nk) time.
+*/
