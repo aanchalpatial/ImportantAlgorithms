@@ -63,6 +63,12 @@ int main() {
 //*** VARIATION 1 **** : Coin Change - Minimum number of coins
 //You have infinite supply of coins, each having some value. Can you figure out the MINIMUM number coins 
 //required so that coins to sum-up to a certain required value. 
+
+/*APPLICATION of variation 1 : LEETCODE 279
+https://leetcode.com/problems/perfect-squares/description/
+Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
+*/
+
 long long helper(int coins[],int n,int value){
     
     if(value==0) return 0;
@@ -144,6 +150,7 @@ long long minimumNumberOfCoins(int coins[],int n,int value)
     */
     return helper_dp2(coins, n, value);
 }
+
 
 
 
