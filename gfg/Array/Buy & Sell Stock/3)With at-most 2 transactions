@@ -1,0 +1,81 @@
+/*LEETCODE 123 :-
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+*/
+
+class Solution {
+public:
+    
+    
+    int buyAndSellStockI(vector<int> prices, int m, int n){
+        
+        if(m>=prices.size()) return 0;
+        
+        int min_so_far = prices[m];
+        int result = 0;
+        
+        for(int i=m+1;i<=n;++i){
+            result = max(result, prices[i]-min_so_far);
+            min_so_far = min(min_so_far, prices[i]);
+        }
+        
+        return result;
+        
+    }
+    
+
+    int maxProfit(vector<int>& prices) {
+        
+        int n = prices.size();
+        if(n==0) return 0;
+        
+        //method 1 : using Best Time to Buy and Sell Stock I
+        //O(n^2) time & O(1) space
+        /*
+        Max profit with 2 transaction = max{ max profit with 1 transaction of subarray 0 to i 
+                                            + max profit with 1 transaction of subarray i+1 to n-1}
+                                            ; 0<=i<=n-1
+        */
+        // int result = 0;
+        // for(int i=1;i<n;++i){
+        //     result = max(result, buyAndSellStockI(prices, 0, i) + buyAndSellStockI(prices, i+1, n-1));
+        // }
+        // return result;
+        
+        
+        //method 2 : 
+        //https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-most-twice/
+        //O(n) time & O(n) space
+        int profit[n];
+        memset(profit, 0, sizeof(profit));
+        
+        //step 1 : traverse from right to left & update profit[i] to represent max achievable profit 
+        //from 1 transaction in subarray prices[i to n-1]
+        int max_so_far = prices[n-1];
+    
+        for(int i=n-2;i>=0;--i){
+            profit[i] = max(profit[i+1], max_so_far-prices[i]);
+            max_so_far = max(max_so_far, prices[i]);
+            
+        }
+        for(auto x: profit) cout<<x<<", ";
+        cout<<"\n";
+        
+        //step 2 : traverse from left to right & update profit[i] to represent max achievable profit
+        //from *** 2 *** transaction in subarray prices[0 to i]
+        int min_so_far = prices[0];
+        
+        for(int i=1;i<n;++i){
+            profit[i] = max(profit[i-1], profit[i] + prices[i]-min_so_far);
+            min_so_far = min(min_so_far, prices[i]);
+        }
+        
+        
+        for(auto x: profit) cout<<x<<", ";
+        return profit[n-1];
+        
+    }
+};
