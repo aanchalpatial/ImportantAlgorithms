@@ -9,6 +9,17 @@ Note: You may not engage in multiple transactions at the same time (i.e., you mu
 
 */
 
+/*Minima - Maxima Approach :
+Following is algorithm for this problem : =
+1)Find the local minima and store it as starting index. If not exists, return.
+2)Find the local maxima. and store it as ending index. If we reach the end, set the end as ending index.
+3)Update the solution (Increment count of buy sell pairs)
+4)Repeat the above steps if end is not reached.
+
+Time Complexity: The outer loop runs till i becomes n-1. The inner two loops increment value of i in every iteration.
+So overall time complexity is O(n)
+*/
+
 class Solution {
 public:
     int maxProfit(vector<int>& prices) {
