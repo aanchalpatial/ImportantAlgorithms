@@ -1,0 +1,200 @@
+/*LEETCODE 188 :-
+Say you have an array for which the i-th element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most k transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+*/
+
+class Solution {
+public:
+    
+    int helper(vector<int> prices, int index, int k){
+        
+        //cout<<index<<", "<<k<<"\n";
+                
+        if(index>=prices.size()||k==0) return 0;
+        
+        //case 1 : current element is considered to begin transaction
+        int profit1 = 0;
+        
+        for(int j=index+1;j<prices.size();++j){     //trying all elements greater than prices[index] to end this transaction
+            if(prices[j]>prices[index]) profit1 = max(profit1, (prices[j] - prices[index]) + helper(prices, j+1, k-1));
+        }
+        
+        //case 2 : current element is not considered to begin transaction
+        int profit2 = helper(prices, index+1, k);
+
+        
+        return max(profit1, profit2);
+        
+    }
+    
+    int helper_tabulation(vector<int> prices, int k){
+        
+        int n = prices.size();
+        
+        
+         int dp[n][k+1];
+        //dp[i][j] represents the maximum profit with atmost j transactions from day i to n-1
+        memset(dp, 0, sizeof(dp[0][0])*n*(k+1));
+        //base conditions :-
+        // for(int i=0;i<n;++i) dp[i][0] = 0;
+        // for(int i=0;i<=k;++i) dp[n-1][i] = 0;
+        
+        for(int i=n-2;i>=0;--i){
+            
+            for(int j=1;j<=k;++j){
+                
+                //case 1 : ith element considered to begin transaction
+                for(int l=i+1;l<n;++l){
+                    if(prices[l]>prices[i]) {
+                        if(l==n-1){
+                            dp[i][j] = max(dp[i][j], prices[l]-prices[i]);
+                        }else{
+                            dp[i][j] = max(dp[i][j], prices[l]-prices[i] + dp[l+1][(j-1)]);
+                        }
+                    }
+                }
+                
+                //case 2 : ith element not considered to begin transaction
+                dp[i][j] = max(dp[i][j], dp[i+1][j]);
+            
+            }
+            
+        }
+        
+        // for(int i=0;i<n;++i){
+        //     for(int j=0;j<=k;++j){
+        //         cout<<dp[i][j]<<"\t";
+        //     }
+        //     cout<<"\n";
+        // }
+        
+        
+        return dp[0][k];
+    }
+    
+    int helper_tabulation2(vector<int> prices, int k){
+        
+        int n = prices.size();
+        
+         int dp[k+1][n];
+        //dp[i][j] represents the maximum profit with atmost i transactions upto day j(including j)
+        
+        memset(dp, 0, sizeof(dp[0][0])*(k+1)*n);
+        
+        
+        for(int i=1;i<=k;++i){
+            
+            for(int j=1;j<n;++j){
+                
+                //case 1 : jth element is not considered to end transaction
+                dp[i][j] = dp[i][j-1];
+                
+                //case 2 : jth element is considered to end transaction
+                for(int k=0;k<j;++k){
+                    dp[i][j] = max(dp[i][j], prices[j]-prices[k]+dp[i-1][k]);
+                }
+                
+            }
+            
+        }
+        
+        return dp[k][n-1];
+        
+    }
+    
+    int helper_tabulation_best(vector<int> prices, int k){
+        
+        /*TIME IMPROVEMENT :-
+        The above 2 solutions has time complexity of O(k*n^2). It can be reduced if we are able to 
+        calculate the maximum profit gained by selling shares on the ith day in constant time.
+
+        profit[t][i] = max(profit [t][i-1], max(price[i] – price[j] + profit[t-1][j]))
+                                    for all j in range [0, i-1]
+
+        If we carefully notice,
+        max(price[i] – price[j] + profit[t-1][j])
+        for all j in range [0, i-1]
+
+        can be rewritten as,
+        = price[i] + max(profit[t-1][j] – price[j])
+        for all j in range [0, i-1]
+        = price[i] + max(prevDiff, profit[t-1][i-1] – price[i-1])
+        where prevDiff is max(profit[t-1][j] – price[j])
+        for all j in range [0, i-2]
+
+        So, if we have already calculated max(profit[t-1][j] – price[j]) for all j in range [0, i-2], 
+        we can calculate it for j = i – 1 in constant time. In other words, we don’t have to look back
+        in the range [0, i-1] anymore to find out best day to buy. We can determine that in constant time
+        using below revised relation.*/
+        
+        
+        /*SPACE IMPROVEMENT :-
+        instead of dp[k+1][n], we will use dp[2][n]
+        */
+
+        int n = prices.size();
+        
+        //int dp[k+1][n];
+        int dp[2][n];
+        //dp[i][j] represents the maximum profit with atmost i transactions upto day j(including j)
+        
+        memset(dp, 0, sizeof(dp[0][0])*(2)*n);
+        
+        
+        for(int i=1;i<=k;++i){
+            
+            int prevDiff = INT_MIN;
+            
+            for(int j=1;j<n;++j){
+                
+                //case 1 : jth element is not considered to end transaction
+                dp[i%2][j] = dp[i%2][j-1];
+                
+                //case 2 : jth element is considered to end transaction
+                prevDiff = max(prevDiff, dp[(i-1)%2][j-1] - prices[j-1]);
+                dp[i%2][j] = max(dp[i%2][j], prices[j] + prevDiff);
+                
+                
+            }
+            
+        }
+        
+        return dp[k%2][n-1];
+    }
+    
+   
+    
+    int maxProfit(int k, vector<int>& prices) {
+          int n = prices.size();
+        if(n==0||k==0) return 0;
+        
+        
+        //method 1 : naive recursion
+        //TLE !!!
+        // return helper(prices, 0, k);
+        
+        //method 2 : dp tabulation
+        //RIGHT TO LEFT APPROACH : current element is considered to begin transaction 
+        //O(n^2*k) time & O(nk) space
+        //too much memory used ERROR !!!
+        //return helper_tabulation(prices, k);
+        
+        //method 3 : dp tabulation
+        //LEFT TO RIGHT APPROACH : current element is considered to end transaction
+        //O(n^2*k) time & O(nk) space
+        //too much memory used ERROR !!!
+        //return helper_tabulation2(prices, k);
+        
+        
+        //method 4 : time & space efficient version of method 3
+        //O(nk) time & O(n) space
+        //https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-most-k-times/
+        return helper_tabulation_best(prices, k);
+        
+    }
+    
+};
