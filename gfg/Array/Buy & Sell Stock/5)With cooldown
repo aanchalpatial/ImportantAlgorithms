@@ -1,0 +1,82 @@
+/*LEETCODE 309 :-
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one
+and sell one share of the stock multiple times) with the following restrictions:
+
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)
+*/
+
+class Solution {
+public:
+    
+    vector<int> mem;     //memoization
+    
+    int helper(vector<int> prices, int index){
+                
+        if(index>=prices.size()) return 0;
+        
+        
+        if(mem[index]!=-1) return mem[index];
+        
+        //case 1 : current element is considered to begin transaction
+        int j = index+1;
+        int profit1 = 0;
+        
+        for(int j=index+1;j<prices.size();++j){
+            if(prices[j]>=prices[j-1]) profit1 = max(profit1, (prices[j] - prices[index]) + helper(prices, j+2));
+        }
+        
+        //case 2 : current element is not considered to begin transaction
+        int profit2 = helper(prices, index+1);
+        
+        mem[index] = max(profit1, profit2);
+        
+        return mem[index];
+        
+    }
+    
+    int helper_tabulation(vector<int> prices){
+        
+        int n = prices.size();
+        
+        int dp[n+2];        
+        //2 extra element so that when last element i.e n-1th is considered as an end of transaction then dp[j+2] return 0;
+        //dp[i] represents maximum profit for an array starting with prices[i] till end
+        memset(dp, 0, sizeof(dp));
+        
+        for(int i=n-2;i>=0;--i){
+            dp[i] = dp[i+1];
+            for(int j=i+1;j<n;++j){
+                
+                if(prices[i]<=prices[j]) dp[i] = max(dp[i], prices[j]-prices[i]+dp[j+2]);   //j+2 because of cooldown
+                
+            }
+        }
+        
+        for(auto x: dp) cout<<x<<", ";
+        cout<<"\n";
+        
+        return dp[0];
+    }
+    
+    
+    int maxProfit(vector<int>& prices) {
+        
+        int n = prices.size();
+        
+        //method 1 : dp memoization
+        //TLE !!!
+        // mem.clear();
+        // for(int i=0;i<n;++i) mem.push_back(-1);
+        // return helper(prices, 0);
+        
+        
+        
+        //method 2 : dp tabulation
+        //O(n^2) time & O(n) space
+        return helper_tabulation(prices);
+        
+    }
+};
