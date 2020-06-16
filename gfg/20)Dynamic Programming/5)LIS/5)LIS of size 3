@@ -1,0 +1,78 @@
+/*LEETCODE :- 334. Increasing Triplet Subsequence
+Given an unsorted array return whether an increasing subsequence of length 3 exists or not in the array.
+
+Formally the function should:
+
+Return true if there exists i, j, k
+such that arr[i] < arr[j] < arr[k] given 0 ≤ i < j < k ≤ n-1 else return false.
+Note: Your algorithm should run in O(n) time complexity and O(1) space complexity.
+*/
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        
+        int n = nums.size();
+        if(n<3) return false;
+        
+        
+        //method 1 : using LIS
+        //LIS can be solved either in O(n^2) using dp 
+        // or in O(nlogn) using binary search based solution
+        
+        //binary search based solution : O(nlogn) time & O(1) space
+//         vector<int> lts;
+//         lts.push_back(nums[0]);
+        
+//         for(int i=1;i<nums.size();++i){
+//             int tail = lts.size()-1;
+//             if(lts[tail]<nums[i]) lts.push_back(nums[i]);
+//             else if(lts[tail]>nums[i]){
+//                 int index = lower_bound(lts.begin(), lts.end(), nums[i]) - lts.begin();
+//                 swap(lts[index], nums[i]);
+//             }
+//             if(lts.size()==3) break;
+//         }
+//         return (lts.size()==3)?true:false;
+        
+        
+        //method 2 : for every element find smallest on left & greatest on right
+        //O(n) time & O(n) space
+//         int small[n];
+//         small[0] = nums[0];
+//         for(int i=1;i<n;++i) small[i] = min(small[i-1], nums[i]);
+        
+        
+//         int big[n];
+//         big[n-1] = nums[n-1];
+//         for(int i=n-2;i>=0;--i) big[i] = max(big[i+1], nums[i]);
+        
+//         for(int i=0;i<n;++i){
+//             if(small[i]<nums[i]&&nums[i]<big[i]) return true;
+//         }
+//         return false;
+        
+        //method 3 : find first smallest, second smallest and then third
+        //O(n) time & O(1) space
+        int smallest1 = INT_MAX;
+        int smallest2 =  INT_MAX;
+        
+        for(int i=0;i<n;++i){
+            if(nums[i]<=smallest1){
+                smallest1 = nums[i];
+            }else if(nums[i]<=smallest2){
+                smallest2 = nums[i];
+            }else {
+                return true;
+            }
+        }
+        return false;
+        /*imp observation :-
+        I would like to point out that for [1, 3, 0, 5] we will eventually arrive at big = 3 and small = 0 so
+        big may come after small
+
+        However, the solution still works, because big only gets updated when there exists a small that comes before it.
+        */
+        
+    }
+};
