@@ -1,0 +1,42 @@
+/*LEETCODE 337
+The thief has found himself a new place for his thievery again. There is only one entrance to this area, 
+called the "root." Besides the root, each house has one and only one parent house. After a tour, the smart thief 
+realized that "all houses in this place forms a binary tree". It will automatically contact the police if 
+two directly-linked houses were broken into on the same night.
+
+Determine the maximum amount of money the thief can rob tonight without alerting the police.
+*/
+
+ unordered_map<TreeNode *, int> mp;      //used for memoization
+    
+    int helper(TreeNode *root){
+        if(root==NULL) return 0;
+        
+        if(mp.find(root)!=mp.end()) return mp[root];
+        
+        int sum = 0;
+        if(root->left!=NULL){
+            sum += helper(root->left->left) + helper(root->left->right);
+        }
+        if(root->right!=NULL){
+            sum += helper(root->right->left) + helper(root->right->right);
+        }
+        
+        int result = max(sum + root->val, helper(root->left) + helper(root->right));
+        mp.insert({root, result});
+        return result;
+    }
+    
+    int rob(TreeNode* root) {
+        
+        
+        //method 1 : dfs
+        //also works but, i was not able to apply memoization here, so this solution resulted in TLE !!!
+        //return max(helper(root, false), helper(root, true));
+        
+        
+        //method 2 : dfs + memoization
+        //https://leetcode.com/problems/house-robber-iii/discuss/79330/Step-by-step-tackling-of-the-problem
+        mp.clear();
+        return helper(root);
+    }
