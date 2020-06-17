@@ -67,7 +67,7 @@ public:
             for(auto x: v1) v.push_back(x);
         }
        //decreasingly sorted in terms of time
-        sort(v.begin(), v.end(), myComp);            //atmost 30 tweets will be sorted   
+        sort(v.begin(), v.end(), myComp);            //atmost (1+number_of_following)*10 tweets will be sorted   
         
         vector<int> result;
         
