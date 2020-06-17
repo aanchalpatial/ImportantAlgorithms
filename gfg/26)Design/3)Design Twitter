@@ -1,0 +1,180 @@
+/*LEETCODE 355
+Design a simplified version of Twitter where users can post tweets, follow/unfollow another user and is able to see 
+the 10 most recent tweets in the user's news feed. Your design should support the following methods:
+
+=> postTweet(userId, tweetId): Compose a new tweet.
+=> getNewsFeed(userId): Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be
+  posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
+=> follow(followerId, followeeId): Follower follows a followee.
+=> unfollow(followerId, followeeId): Follower unfollows a followee.
+*/
+
+
+//METHOD 1 :- SAVING TIME OF TWEET       => 95 %
+struct User{
+    stack<pair<int, int>> tweets;           //time of tweet, tweet id
+    unordered_set<int> following;
+};
+
+bool myComp(pair<int, int> p1, pair<int, int> p2){
+    return p1.first>p2.first;
+}
+
+
+class Twitter {
+public:
+    unordered_map<int, User> allUsers;
+    int time;
+    
+    /** Initialize your data structure here. */
+    Twitter() {
+        time = 0;
+    }
+    
+    /** Compose a new tweet. */
+    void postTweet(int userId, int tweetId) {
+        if(allUsers.find(userId)==allUsers.end()){
+            struct User obj;
+            allUsers.insert({userId, obj});
+        }
+        
+        allUsers[userId].tweets.push({time, tweetId});
+        ++time;
+        
+    }
+    
+    vector<pair<int, int>> fetchFromStack(stack<pair<int, int>> st){
+        vector<pair<int, int>> result;
+        int k = 10;
+        while(k>0&&!st.empty()){
+            --k;
+            result.push_back(st.top());
+            st.pop();
+        }
+        return result;
+    }
+    
+    /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
+    vector<int> getNewsFeed(int userId) {
+        //get 10 tweets each from user of userId & all the people user is following
+        
+        int k = 10;
+        
+        vector<pair<int, int>> v = fetchFromStack(allUsers[userId].tweets);
+        
+        for(int f: allUsers[userId].following){
+            vector<pair<int, int>> v1 = fetchFromStack(allUsers[f].tweets);
+            for(auto x: v1) v.push_back(x);
+        }
+       //decreasingly sorted in terms of time
+        sort(v.begin(), v.end(), myComp);            //atmost 30 tweets will be sorted   
+        
+        vector<int> result;
+        
+        for(int i=0;i<min(10, (int)v.size());++i){
+            result.push_back(v[i].second);
+        }
+        return result;
+        
+    }
+    
+    /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
+    void follow(int followerId, int followeeId) {
+        if(followerId==followeeId) return;
+        allUsers[followerId].following.insert(followeeId);
+    }
+    
+    /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
+    void unfollow(int followerId, int followeeId) {
+    if(followerId==followeeId) return;
+        allUsers[followerId].following.erase(followeeId);
+    }
+};
+
+
+
+
+//METHOD 2 :- STORING ALL TWEETS IN ONE PLACE    => 12%
+// struct User{
+//     int id;
+//     unordered_set<int> following;
+// };
+
+// class Twitter {
+// public:
+    
+//     unordered_map<int, User> allUsers;
+//     stack<pair<int, int>> tweets;           //stores userId who created tweet & tweetId
+//     /** Initialize your data structure here. */
+//     Twitter() {
+        
+//     }
+    
+//     /** Compose a new tweet. */
+//     void postTweet(int userId, int tweetId) {
+        
+//         if(allUsers.find(userId)==allUsers.end()){      //creating user if  user is new
+//             struct User obj;
+//             obj.id = userId;
+//             allUsers.insert({userId, obj});
+//         }
+        
+//         tweets.push({userId, tweetId});
+        
+//     }
+    
+//     /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
+//     vector<int> getNewsFeed(int userId) {
+        
+//         vector<int> feed;
+        
+//         unordered_set<int> h = allUsers[userId].following;
+//         h.insert(userId);
+        
+//         // cout<<userId<<" is following : ";
+//         // for(auto x: h) cout<<x<<", ";
+//         // cout<<"\n";
+        
+//         int k = 10;
+//         stack<pair<int, int>> temp;
+//         while(k>0&&!tweets.empty()){
+//             pair<int, int> p =  tweets.top();
+//             tweets.pop();
+//             temp.push(p);
+//             int id = p.first;
+//             int tweet = p.second;
+//             if(h.find(id)!=h.end()){
+//                 --k;
+//                 feed.push_back(tweet);
+//             }
+            
+//         }
+        
+//         while(!temp.empty()){
+//             tweets.push(temp.top());
+//             temp.pop();
+//         }
+        
+//         return feed;
+        
+//     }
+    
+//     /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
+//     void follow(int followerId, int followeeId) {
+//         allUsers[followerId].following.insert(followeeId);
+//     }
+    
+//     /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
+//     void unfollow(int followerId, int followeeId) {
+//         allUsers[followerId].following.erase(followeeId);
+//     }
+// };
+
+/**
+ * Your Twitter object will be instantiated and called as such:
+ * Twitter* obj = new Twitter();
+ * obj->postTweet(userId,tweetId);
+ * vector<int> param_2 = obj->getNewsFeed(userId);
+ * obj->follow(followerId,followeeId);
+ * obj->unfollow(followerId,followeeId);
+ */
