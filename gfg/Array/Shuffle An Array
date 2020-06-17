@@ -1,0 +1,82 @@
+/*LEETCODE 384 : https://leetcode.com/problems/shuffle-an-array/description/
+Given an array, write a program to generate a random permutation of array elements. This question is also
+asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation
+of array element should equally likely.
+*/
+
+/*Solution : https://www.geeksforgeeks.org/shuffle-a-given-array-using-fisher-yates-shuffle-algorithm/
+Let the given array be arr[]. A simple solution is to create an auxiliary array temp[] which is initially a copy of arr[]. 
+Randomly select an element from temp[], copy the randomly selected element to arr[0] and remove the selected element from temp[].
+Repeat the same process n times and keep copying elements to arr[1], arr[2], … . The time complexity of this solution will be O(n^2).
+
+Fisher–Yates shuffle Algorithm works in O(n) time complexity. The assumption here is, we are given a function rand() that 
+generates random number in O(1) time.
+The idea is to start from the last element, swap it with a randomly selected element from the whole array (including last).
+Now consider the array from 0 to n-2 (size reduced by 1), and repeat the process till we hit the first element.
+
+Following is the detailed algorithm :
+To shuffle an array a of n elements (indices 0..n-1):
+  for i from n - 1 downto 1 do
+       j = random integer with 0 <= j <= i
+       exchange a[j] and a[i]
+*/
+
+static auto x = [](){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
+
+class Solution {
+public:
+    vector<int> arr;    //O(n) space
+    vector<int> perm;
+    int n;
+    
+    Solution(vector<int>& nums) {   //O(n)
+        arr = nums;
+        perm = nums;
+        n = nums.size();
+    }
+    
+    /** Resets the array to its original configuration and return it. */
+    vector<int> reset() {   //O(n)
+        return arr;
+    }
+    
+    /** Returns a random shuffling of the array. */
+    vector<int> shuffle() { 
+        
+        if(arr.size()==0) return arr;
+        
+        //method 1 : O(n^2) time & O(n) space
+//         perm.clear();
+//         vector<int> temp;
+//         for(int i=0;i<arr.size();++i) temp.push_back(arr[i]);
+        
+//         while(temp.size()!=0){  //O(n^2) since erase() takes O(n) 
+//             int randomIndex = rand()%temp.size();
+//             perm.push_back(temp[randomIndex]);
+//             temp.erase(temp.begin()+randomIndex);    //ersae() operation is O(n)
+//         }
+//         return perm;
+        
+        //method 2 : fisher-yates shuffle algorithm
+        //O(n) time & O(1) space
+        //now randomise this perm
+        for(int i=0;i<n-1;++i){
+            int randomIndex = rand()%(n-i)+i;
+            swap(perm[i], perm[randomIndex]);
+        }
+        return perm;
+        
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(nums);
+ * vector<int> param_1 = obj->reset();
+ * vector<int> param_2 = obj->shuffle();
+ */
