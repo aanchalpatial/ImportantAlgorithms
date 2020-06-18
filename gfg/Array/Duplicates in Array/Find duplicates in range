@@ -13,6 +13,37 @@ else  // i.e., A[abs(A[i])] is negative
 */
 //Above approach can't work for negative & 0 numbers.
 
+/*LEETCODE 442
+Given an array of integers, 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
+Find all the elements that appear twice in this array.
+Could you do it without extra space and in O(n) runtime?
+*/
+
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        
+        vector<int> result;
+        
+        //method : using index to store value
+        //if nums[i] is negative means i+1 exits in array
+        //O(n) time & O(1) space
+        for(int i=0;i<nums.size();++i){
+            int index = abs(nums[i])-1;
+            
+            if(nums[index]<0) result.push_back(index+1);
+            else nums[index] *= -1;
+        }
+        return result;
+        
+        
+        //COMPARE WITH :- LEETCODE 287
+        
+    }
+};
+
+
+//*** APPLICATIONS ***
 
 #include <iostream>
 using namespace std;
