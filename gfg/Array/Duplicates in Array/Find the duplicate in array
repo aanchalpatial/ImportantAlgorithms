@@ -1,0 +1,88 @@
+/*LEETCODE 287
+Given an array nums containing n + 1 integers where each integer is between 1 and n (inclusive), prove that
+at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.
+
+Note:
+
+You must not modify the array (assume the array is read only).
+You must use only constant, O(1) extra space.
+Your runtime complexity should be less than O(n2).
+There is only one duplicate number in the array, but it could be repeated more than once.
+*/
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        
+        int m = nums.size();
+        int n = m-1;
+        
+        //method 1 : brute force
+        //O(n^2) time & O(1) space
+        
+        //method 2 : using hashset
+        //O(n) time & O(n) space
+        // unordered_set<int> h;
+        // for(int i=0;i<m;++i){
+        //     if(h.find(nums[i])!=h.end()) return nums[i];
+        //     h.insert(nums[i]);
+        // }
+        // return -1;
+        
+        
+        //method 3 : sorting
+        //O(nlogn) time & O(1) space
+        // sort(nums.begin(), nums.end());
+        // for(int i=0;i<m-1;++i){
+        //     if(nums[i]==nums[i+1]) return nums[i];
+        // }
+        // return -1;
+        
+        
+        //method 4 : using the fact that elements are in range 1 to n (both inclusive)
+        //O(n) time & O(1) space
+//         int result;
+//         for(int i=0;i<m;++i){
+//             int index = abs(nums[i]);
+//             if(nums[index]<0){
+//                 result = abs(nums[i]);
+//                 break;
+//             }else{
+//                 nums[index] *= -1;
+//             }
+//         }
+        
+//         for(int i=0;i<m;++i) nums[i] = abs(nums[i]);            //re-storing original vector
+//         return result;
+        
+        
+        //*** NOTE ***
+        //any of othe above method doesn't satisfy all requirements of question
+        //method 1 : time has to be less than O(n^2)
+        //method 2 : extra space has to be constant
+        //method 3 : sorting requires modification of array which is not allowed
+        //method 4 : modification of array is not allowed
+        
+        
+        //method 5 : floyd's cycle detection method/ slow-fast pointer method
+        //https://leetcode.com/problems/find-the-duplicate-number/solution/
+        //*** SATISFIES ALL QUESTION REQUIREMENTS ***
+        //O(n) time & O(1) space
+        int slow = nums[0], fast = nums[0];
+        while(true){
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            if(slow==fast) break;
+        }
+        slow = nums[0];
+        while(slow!=fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+        
+        
+        
+        //COMPARE WITH :- LEETCODE 442
+    }
+};
