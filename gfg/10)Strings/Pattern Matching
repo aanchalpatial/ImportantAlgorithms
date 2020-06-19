@@ -7,6 +7,7 @@
 //Naive approach can be modified to work in O(n) time IN CASE when all characters in pattern are distinct(Not implemented)
 
 //3) Rabin Karp Algorithm: O((n-m+1)*m) in worst case, but works better than naive on average, 0(1) space
+//https://www.geeksforgeeks.org/rabin-karp-algorithm-for-pattern-searching/
 //Worst case occurs in cases such as when str = "AAAAAA" & patt = "AAA"
 /*Approach: Using hash & sliding window(i.e ROLLING HASH).
 We compare hashvalue SUM(eg: hashvalue sum of "abc" is 97+98+99) of pattern and current window of str and if they match
@@ -15,7 +16,9 @@ then ONLY we start comparing individual characters.*/
 To improve on this situation we instead use WEIGHTED hashvalue sum.
 https://drive.google.com/file/d/13BJUAHiYyJU2AibcSUAHBEkbCRNuhBYP/view?usp=sharing*/
 //We use Horner's Rule to compute weighted hashvalue of pattern in O(n)
-//Code Implementation LEFT
+
+//application : LEETCODE 1044 Longest Duplicate Substring
+//https://leetcode.com/problems/longest-duplicate-substring/description/
 
 //4) KMP Algorithm: O(n) in worst case & 0(m) space for lps[] array
 //https://github.com/ap0996/ImportantAlgorithms/blob/master/KMP%20pattern%20matching
