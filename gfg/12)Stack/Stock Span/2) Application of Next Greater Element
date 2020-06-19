@@ -38,3 +38,116 @@ public:
         
     }
 };
+
+
+//PROBLEM 2 :
+/*LEETCODE 503 : Next Greater Element II
+Given a circular array (the next element of the last element is the first element of the array), 
+print the Next Greater Number for every element. The Next Greater Number of a number x is the first greater number
+to its traversing-order next in the array, which means you could search circularly to find its next greater number. 
+If it doesn't exist, output -1 for this number.
+*/
+
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& nums) {
+        
+        int n = nums.size();
+        if(n==0) return {};
+        if(n==1) return {-1};
+
+        
+        //method 1 : appending first n-1 element after given n elements 
+        //& then using standard stockspan
+        //O(n) time & O(n) space
+        
+        vector<int> arr = nums;
+        for(int i=0;i<n-1;++i) arr.push_back(nums[i]);
+        int m = arr.size();
+        
+        vector<int> result;
+        stack<int> st;
+        st.push(arr[m-1]);
+        //result.push_back(-1);
+        
+        for(int i=m-2;i>=0;--i){
+            while(!st.empty()&&st.top()<=arr[i]){
+                st.pop();
+            }
+            
+            if(i<n){
+                if(st.empty()) result.push_back(-1);
+                else result.push_back(st.top());
+            }
+            
+            st.push(arr[i]);
+        }
+        reverse(result.begin(), result.end());
+        return result;
+        
+    }
+};
+
+//PROBLEM 3 : 
+/*LEETCODE 556 : Next Greater Element III
+Given a positive 32-bit integer n, you need to find the smallest 32-bit integer which has exactly the
+same digits existing in the integer n and is greater in value than n. If no such positive 32-bit integer exists, you need to return -1.
+
+Example 1:
+Input: 12
+Output: 21
+ 
+Example 2:
+Input: 21
+Output: -1
+*/
+
+class Solution {
+public:
+    int nextGreaterElement(int m) {
+        
+        string str = to_string(m);
+        int n = str.size();
+        
+        //this problem is same as finding next permutation in lexicographic order
+        //LEETCODE 31 : https://leetcode.com/problems/next-permutation/description/
+        
+        //step 1 : find the right most element which is smaller than its next character
+        int index = -1;
+        for(int i=n-2;i>=0;--i){
+            if(str[i]<str[i+1]){
+                index = i;
+                break;
+            }
+        }
+        
+        if(index==-1){
+            //given string is already the last permutation in lexicographic order
+            return -1;
+        }
+        
+        //step 2 : find ceiling of str[index] on it's right i.e find the smallest element which is 
+        //is greater than str[index] on right of it
+        int ceilingIndex = -1;
+        int diff = INT_MAX;
+        for(int i=index+1;i<n;++i){
+            if(str[i]>str[index]&&str[i]-str[index]<=diff){
+                diff = str[i] - str[index];
+                ceilingIndex = i;
+            }
+        }
+        
+        //step 3 : 
+        swap(str[index], str[ceilingIndex]);
+        cout<<str<<", ";
+        
+        //step 4 : 
+        reverse(str.begin()+index+1, str.end());
+        cout<<str<<", ";
+        
+        if(str.length()>=10&&str>to_string(INT_MAX)) return -1;
+        
+        return stoi(str);
+        
+    }
+};
