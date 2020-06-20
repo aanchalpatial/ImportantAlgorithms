@@ -1,0 +1,54 @@
+/*LEETCODE 131
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+*/
+
+class Solution {
+public:
+    
+    bool isPalindrome(string str){
+        
+        int n = str.size();
+        for(int i=0;i<n/2;++i){
+            if(str[i]!=str[n-1-i]) return false;
+        }
+        return true;
+    }
+    
+    vector<vector<string>> result;
+    
+    void helper(string str, vector<string> partition){
+        int n = str.size();
+        if(n==0) {
+            result.push_back(partition);
+            return;
+        }
+        
+        //consider all substrings starting from beginning & check if current substring is palindrome
+        //if yes recurr for remaining part
+        
+        for(int i=1;i<=n;++i){
+            string sub = str.substr(0, i);
+            if(isPalindrome(sub)){
+                partition.push_back(sub);
+                helper(str.substr(i, n-i), partition);
+                partition.pop_back();                       //backtrack
+            }
+        }
+    }
+    
+    vector<vector<string>> partition(string s) {
+        
+        int n = s.size();
+        if(n==0) return {};
+        result.clear();
+        
+        //method 1 : backtracking
+        //The idea is to go through every substring starting from first character, check if it is palindrome.
+        //If yes, then add the substring to solution and recur for remaining part.
+        helper(s, {});
+        
+        return result;
+    }
+};
