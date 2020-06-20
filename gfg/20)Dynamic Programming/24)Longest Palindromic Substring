@@ -138,3 +138,54 @@ bool isPalindrome(string s, int i, int j){  //O(n) time & space
           
     }
 };
+
+
+
+//PROBLEM 2 : 
+/*LEETCODE 647
+Given a string, your task is to count how many palindromic substrings in this string.
+The substrings with different start indexes or end indexes are counted as different substrings even they consist of same characters.
+*/
+class Solution {
+public:
+    int countSubstrings(string s) {
+        
+        int n = s.size();
+        
+        //method : dp tabulation
+        //O(n^2) time & O(n^2) space
+        //aproach similar to longest palindromic substring
+        bool dp[n][n];
+        //dp[i][j] states whether substring from i to j is palindrome or not
+        memset(dp, false, sizeof(dp[0][0])*n*n);
+        
+        //length 1 palindromes
+        for(int i=0;i<n;++i) dp[i][i] = true;
+        
+        //length 2 palindromes
+        for(int i=0;i<n-1;++i) {
+            if(s[i]==s[i+1]) dp[i][i+1] = true;
+        }
+        
+        
+        for(int window=3;window<=n;++window){
+            
+            for(int k=0;k<=n-window;++k){
+                if(s[k]==s[k+window-1]&&dp[k+1][k+window-2]) dp[k][k+window-1] = true;
+            }
+            
+        }
+        
+        int result = 0;
+        
+        //number of palindrome is equal to number of true values in upper triangle of dp[][]
+        
+        for(int i=0;i<n;++i){
+            for(int j=i;j<n;++j){
+                if(dp[i][j]) ++result;
+            }
+        }
+        
+        return result;
+    }
+};
