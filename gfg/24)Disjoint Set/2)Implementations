@@ -1,6 +1,6 @@
 /*
 TIME COMPLEXITY :-
-Above problem can be solved using graphs( bfs to be more specific), find() & union() both are O(n)
+Above problem can be solved using connected components approach, find() & union() both are O(n)
 In simple Union implementation, find() & union() both are O(n)
 Union By Rank Implementation, find() & union() both are O(logn)
 Union By Rank & Path Compression Implementation, find() & union() both are AMORTIZED O(1), proof is in T.H Cormen P:573
