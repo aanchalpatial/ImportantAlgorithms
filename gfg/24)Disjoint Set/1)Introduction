@@ -26,6 +26,59 @@ SOLUTION :
 In the end there are 2 groups of friends: one group is {1, 2, 4, 5}, the other is {3}.
 Above problem can be solved using BFS, but Disjoint Set Data Structure will be more efficient for these type of problem.
 
+int find(int parent[], int x){       //return representative of the group which includes x
+        if(parent[x]==x) return x;
+        parent[x] = find(parent, parent[x]);            //path compression optimisation
+        return parent[x];
+    }
+    
+    void Union(int parent[], int rank[], int x, int y){
+        int x_rep = find(parent, x), y_rep = find(parent, y);
+        if(x_rep==y_rep) return;
+        
+        if(rank[x_rep]<rank[y_rep]){
+            parent[x_rep] = y_rep;
+        }else if(rank[x_rep]>rank[y_rep]){
+            parent[y_rep] = x_rep;
+        }else{
+            parent[x_rep] = y_rep;
+            rank[y_rep]++;
+        }
+        
+    }
+    
+    
+    int findCircleNum(vector<vector<int>>& M) {
+        
+        int n = M.size();
+        
+        //method 1 : connected components using dfs
+        
+        //method 2 : union-find
+        //https://github.com/ap0996/ImportantAlgorithms/edit/master/gfg/24)Disjoint%20Set/1)Introduction
+        int parent[n];
+        int rank[n];            //union by rank optimisation
+        for(int i=0;i<n;++i) {
+            parent[i] = i;
+            rank[i] = 0;
+        }
+        
+        for(int i=0;i<n;++i){
+            for(int j=i+1;j<n;++j){
+                if(M[i][j]==1){
+                    Union(parent, rank, i, j);
+                }
+            }
+        }
+        
+        int count = 0;
+        for(int i=0;i<n;++i){
+            if(parent[i]==i) ++count;
+        }
+        return count;
+        
+    }
+
 
 DATA STRUCTURES USED : 
 1) Array : An array of integers, called parent[]. If we are dealing with n items, i’th element of the array represents the i’th item.
