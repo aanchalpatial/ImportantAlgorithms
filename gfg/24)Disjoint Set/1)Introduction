@@ -13,7 +13,9 @@ achieve this.
 https://www.topcoder.com/community/competitive-programming/tutorials/disjoint-set-data-structures/
 https://www.geeksforgeeks.org/disjoint-set-data-structures/
 
-PROBLEM :
+PROBLEM : LEETCODE 547
+//NOTE :- this problem can also be solved using connected components in a graph approach
+//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/6)%20Number%20of%20Strongly%20Connected%20Components
 Let’s consider the following problem: In a room are N persons, and we will define two persons are friends if they are 
 directly or indirectly friends. If A is a friend with B, and B is a friend with C, then A is a friend of C too. A group of friends
 is a group of persons where any two persons in the group are friends. Given the list of persons that are directly friends find 
@@ -35,7 +37,7 @@ then parent[i] = i. If i is not the representative of his set, then it can be fo
 the representative.
 
 TIME COMPLEXITY :
-Above problem can be solved using graphs( bfs to be more specific), find() & union() both are O(n)
+find() & union() both are O(n)
 In simple Union implementation, find() & union() both are O(n)
 Union By Rank Implementation, find() & union() both are O(logn)
 Union By Rank & Path Compression Implementation, find() & union() both are AMORTIZED O(1), proof is in T.H Cormen P:573
