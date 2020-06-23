@@ -1,4 +1,5 @@
 //Serialization is to store a tree in an array so that it can be later restored and Deserialization is reading tree back from the array.
+//https://www.geeksforgeeks.org/serialize-deserialize-binary-tree/
 
 /*this  function serializes 
 the binary tree and stores 
