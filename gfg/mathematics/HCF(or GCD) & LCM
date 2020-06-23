@@ -1,12 +1,12 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-findGCD(a, b)
+int findGCD(a, b)
 {
     if (a == 0)
         return b;
 
-    return gcd(b % a, a);
+    return findGCD(b % a, a);
 }
 
 int main(){
@@ -19,6 +19,11 @@ int main(){
   //METHOD 2:-
   //Euclidean method
   cout<<findGCD(a,b);
+  
+  
+  //lcm * hcf = a * b;
+  int lcm = (a*b)/findGCD(a,b);
+  cout<<lcm;
   
   
   return 0;}
