@@ -1,0 +1,62 @@
+/*LEETCODE 1091
+In an N by N square grid, each cell is either empty (0) or blocked (1).
+
+A clear path from top-left to bottom-right has length k if and only if it is composed of cells C_1, C_2, ..., C_k such that:
+
+Adjacent cells C_i and C_{i+1} are connected 8-directionally (ie., they are different and share an edge or corner)
+C_1 is at location (0, 0) (ie. has value grid[0][0])
+C_k is at location (N-1, N-1) (ie. has value grid[N-1][N-1])
+If C_i is located at (r, c), then grid[r][c] is empty (ie. grid[r][c] == 0).
+Return the length of the shortest such clear path from top-left to bottom-right.  If such a path does not exist, return -1.
+*/
+
+class Solution {
+public:
+    int R[8] = {1,1,0,-1,1,0,-1,-1};
+    int C[8] = {1,0,1,1,-1,-1,0,-1};
+    
+    
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        
+        int n = grid.size();
+        if(grid[0][0]==1||grid[n-1][n-1]==1) return -1;
+        vector<vector<bool>> visited(n, vector<bool>(n, false));
+        
+        //method 1 : dfs will most probably lead to time limit exceeded
+        //TLE !!!
+        
+        
+        //method 2 : this is a classic bfs problem
+        //bfs will lead to shortest path "automatically", 
+        queue<pair<int, int>> q;
+        q.push({0, 0,});
+        visited[0][0] = true;
+        
+        int distance = 0;
+        while(!q.empty()){
+            ++distance;
+            int size = q.size();
+            for(int i=0;i<size;++i){
+                pair<int, int> cell = q.front();
+                q.pop();
+                
+                if(cell.first==n-1&&cell.second==n-1) return distance;
+                
+                for(int k=0;k<8;++k){
+                    int newR = cell.first + R[k];
+                    int newC = cell.second + C[k];
+
+                    if(newR>=0&&newR<n&&newC>=0&&newC<n&&grid[newR][newC]==0&&!visited[newR][newC]) {
+                        visited[newR][newC] = true;
+                        q.push({newR, newC});
+                    }
+                }
+                
+            }
+            
+        }
+        return -1;
+        
+        
+    }
+};
