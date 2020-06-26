@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
+/*Problem Statement
 https://www.geeksforgeeks.org/optimal-strategy-for-a-game-dp-31/
 Problem statement: Consider a row of n coins of values v1 . . . vn, where n is even. 
 We play a game against an opponent by alternating turns. In each turn, a player selects either the first or last coin
@@ -10,6 +10,10 @@ Determine the maximum possible amount of money we can definitely win if we move 
 NOTE :- The opponent is as clever as the user.
 NOTE :- Greedy approach won't work. Does choosing the highest valued at each move give an optimal solution?
         NO, Greedy Approach fails for this example : {8, 15, 3, 7}
+
+or 
+
+LEETCODE 877 Stone Game
 */
 
 /*Approach : 
