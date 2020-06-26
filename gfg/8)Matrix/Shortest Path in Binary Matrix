@@ -60,3 +60,78 @@ public:
         
     }
 };
+
+
+
+/*LEETCODE 909. Snakes and Ladders
+https://leetcode.com/problems/snakes-and-ladders/description/
+*/
+class Solution {
+public:
+    
+    pair<int, int> positionOf(int num, int n){      //most important function
+        --num;
+        int row = n-1 - (num/n);
+        int col;
+        if(n%2==0) col = ((row)%2==1)?num%n:n-1-(num%n);
+        else col = ((row)%2==0)?num%n:n-1-(num%n);
+        return {row, col};
+    }
+
+    int snakesAndLadders(vector<vector<int>>& board) {
+        
+        int n = board.size();
+        
+        //method 1 : dfs
+        //TLE
+        
+        //method 2 : bfs
+        //important observation :- shortest distance in graph & matrix is inherently solved using bfs
+        //dfs will mostly lead to TLE
+        
+        vector<vector<bool>> visited(n, vector<bool>(n, false));
+        visited[n-1][0] = true;
+        
+        queue<pair<int, pair<int, int>>> q;         //number & its position on board
+        q.push({1, {n-1, 0}});
+        
+        int distance = 0;
+        
+        while(!q.empty()){
+            int size = q.size();
+            for(int i=0;i<size;++i){
+                int num = q.front().first;
+                pair<int, int> cell = q.front().second;
+                q.pop();
+                
+                //cout<<num<<" : "<<cell.first<<", "<<cell.second<<"\n";
+                
+                if(num==(n*n)) return distance;     //reached n*n
+                
+                for(int k=1;k<=6;++k){      //6 sides of dice
+                    int next_num = num+k;
+                    if(next_num>(n*n)) break;
+                    pair<int, int> cell = positionOf(next_num, n);
+                    int newR = cell.first;
+                    int newC = cell.second;
+                    if(board[newR][newC]!=-1){
+                        next_num = board[newR][newC];
+                        pair<int, int> cell2 = positionOf(next_num, n);
+                        newR = cell2.first;
+                        newC = cell2.second;
+                    }
+                    if(!visited[newR][newC]){
+                        visited[newR][newC] = true;
+                        q.push({next_num, {newR, newC}});
+                    }
+                }
+                
+                
+            }
+            // cout<<"\n";
+            ++distance;
+        }
+        return -1;
+        
+    }
+};
