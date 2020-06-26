@@ -24,7 +24,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//queue implementation using circular array
+//Design circular queue implementation using array
+//LEETCODE 622. Design Circular Queue
 struct myQueue {
     int *arr;
     int size;   //** number of elements in queue
