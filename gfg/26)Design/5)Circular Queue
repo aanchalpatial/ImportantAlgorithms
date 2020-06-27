@@ -1,0 +1,53 @@
+//note :- This problem is also studied in queue section again
+
+//Design circular queue implementation using array
+//LEETCODE 622. Design Circular Queue
+struct myQueue {
+    int *arr;
+    int size;   //** number of elements in queue
+    int cap;    //capacity of queue
+    int front;
+    myQueue(int n){
+        cap = n;
+        size = 0;       //there are 0 elements in queue in the start
+        front = 0;
+        arr = new int[n];
+        for(int i=0;i<n;++i) arr[i] = 0;
+    }
+    
+    void push(int x){
+        if(size==cap) {
+            cout<<"Overflow !!"<<endl;
+            return;
+        }
+        int rear = (front + size - 1)% cap; //**imp**
+        rear = (rear+1)%cap;
+        arr[rear] = x;
+        ++size;
+    }
+    void pop(){
+        if(size==0) {
+            cout<<"Underflow !!";
+            return;
+        }
+        arr[front] = 0; //optional
+        front = (front+1)%cap;
+        --size;
+    }
+    
+    bool isFull(){
+        if(cap==size) return true;
+        else return false;
+    }
+    
+    boll isEmpty(){
+        if(size==0) return true;
+        else return false;
+    }
+    
+    
+    void displayArray(){
+        for(int i=0;i<cap;++i) cout<<arr[i]<<" ";
+        cout<<endl;
+    }
+};
