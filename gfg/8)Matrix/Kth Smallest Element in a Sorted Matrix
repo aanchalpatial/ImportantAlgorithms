@@ -1,0 +1,98 @@
+/*LEETCODE 378
+Given a n x n matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.
+
+Note that it is the kth smallest element in the sorted order, not the kth distinct element.
+*/
+
+struct heapNode{
+    int r;
+    int c;
+    int d;
+    
+    heapNode(int row, int col, int data){
+        r = row;
+        c = col;
+        d = data;
+    }
+};
+
+struct myComp{
+    bool operator()(heapNode *h1, heapNode *h2){
+        return h1->d>h2->d;
+    }
+};
+
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        
+        
+        int m = matrix.size(), n = matrix[0].size();
+        
+        //naive method : store all elements in a vector & then sort it
+        //O(mnlogmn) time & O(mn) space
+        //beats 19 % solutions
+        // vector<int> arr;
+        // for(int i=0;i<m;++i){
+        //     for(int j=0;j<n;++j){
+        //         arr.push_back(matrix[i][j]);
+        //     }
+        // }
+        // sort(arr.begin(), arr.end());
+        // return arr[k-1];
+        
+        
+        //method 2 : similar to merge k-sorted arrays solution using heaps
+        //O((mn)logm) time & O(m) sapce
+        //beats 19 % solutions
+//         priority_queue<heapNode *, vector<heapNode *>, myComp> minh;
+        
+//         for(int i=0;i<m;++i){
+//             heapNode *node = new heapNode(i, 0, matrix[i][0]);
+//             minh.push(node);
+//         }
+        
+//         while(k>1){
+//             --k;
+            
+//             heapNode *node = minh.top();
+//             minh.pop();
+            
+//             if(node->c+1==matrix[node->r].size()) continue;
+            
+//             heapNode *newNode = new heapNode(node->r, node->c+1, matrix[node->r][node->c+1]);
+//             minh.push(newNode);
+            
+//         }
+        
+//         return minh.top()->d;
+        
+        
+        
+        //method 3 : binary search on range
+        //for explanation
+        //https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/301357/Java-0ms-(added-Python-and-C++):-Easy-to-understand-solutions-using-Heap-and-Binary-Search?page=2
+        //for code
+        //https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173/Share-my-thoughts-and-Clean-Java-Code
+        int lo = matrix[0][0], hi = matrix[m-1][n-1];
+        
+        while(lo<hi){
+            
+            int mid = lo + (hi-lo)/2;
+            
+            //find all elements smaller than or equal to middle
+            int count = 0;
+            for(int i=0;i<m;++i){
+                int j = n-1;
+                while(j>=0&&matrix[i][j]>mid) --j;
+                count += (j+1);
+            }
+            
+            
+            if(count<k) lo = mid+1;
+            else hi = mid;
+        }
+        return lo;
+        
+    }
+};
