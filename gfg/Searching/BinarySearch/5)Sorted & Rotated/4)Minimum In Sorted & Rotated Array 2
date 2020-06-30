@@ -7,3 +7,31 @@ Find the minimum element.
 
 The array may contain duplicates.
 */
+
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        
+        int n = nums.size();
+        
+        //corner cases
+        if(is_sorted(nums.begin(), nums.end())) return nums[0];
+        else if(is_sorted(nums.begin(), nums.end(), greater<int>())) return nums[n-1];
+        
+        //method : 
+        //O(logn) time & O(1) space
+         int l = 0, r = n-1;
+        while(l<r){
+            
+            int mid = l + (r-l)/2;
+            
+            if(nums[mid]==nums[r]) --r;             //to handle duplicates
+            else if(nums[mid]<nums[r]){
+                r = mid;
+            }else l = mid+1;
+            
+        }
+        return nums[r];
+    }
+};
