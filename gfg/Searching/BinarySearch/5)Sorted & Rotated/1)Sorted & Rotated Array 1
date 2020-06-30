@@ -1,71 +1,106 @@
-//Find element in increasingly sorted and then rotated array in O(log n) time 
-//Can be done by brute force in O(n) time
-//Expected time complexity : O(log n) time
-//First find local maxima in array and then divide the array in 2 sub array from 0 to local_maxima & local_maxima+1 to n-1
-//Then search for element in 2 sub arrays separately using binary search
-//https://ide.geeksforgeeks.org/wKFOi0Vln4
+/*LEETCODE 33. Search in Rotated Sorted Array
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
 
-#include <bits/stdc++.h>
-using namespace std;
+(i.e., [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]).
 
-int binary_search(int arr[], int low, int high, int x){
-  if(low>high) return -1;                 
-  int mid = low + ((high-low)/2);
-  if(arr[mid] == x) return mid;
-  else if(x<arr[mid]) return binary_search(arr,low,mid-1,x);
-  else if(x>arr[mid]) return binary_search(arr,mid+1,high,x);
-}
+You are given a target value to search. If found in the array return its index, otherwise return -1.
 
-int find_local_maxima(int arr[], int n, int low, int high){                                             //RR
-    int left_corner = arr[0];
-    int right_corner = arr[n-1];
-    
-    if(high < low) return -1;   // arr is sorted but there are 0 rotations
-    if(high == low) return low;
-    
-    int mid = low + ((high-low)/2);
-    if(mid < high && arr[mid] > arr[mid+1]) return mid;
-    else if( arr[mid] < left_corner ) return find_local_maxima(arr,n,low,mid-1);
-    else if( arr[mid] > right_corner) return find_local_maxima(arr,n,mid+1,high);
-}
+You may assume no duplicate exists in the array.
 
-int find_element_sorted_rotated_array(int arr[], int n, int ele)
-{
-    // find local maxima/pivot
-    int local_maxima = find_local_maxima(arr, n, 0, n-1);
-    
-    if( local_maxima == -1) return binary_search(arr, 0, n-1, ele);   
-    if( arr[local_maxima] == ele ) return local_maxima;
-    
-    int index1 = binary_search(arr, 0, local_maxima, ele);
-    int index2 = binary_search(arr, local_maxima+1, n-1, ele);
-    
-    if(index1 != -1) return index1;
-    else if(index2 != -1) return index2;
-    else return -1;
-    
-}
+Your algorithm's runtime complexity must be in the order of O(log n).
+*/
 
-int main()
-{
-    //int arr[] = { 1,2,3,5,6,7,8,9,10};
-    //after 3 counterclockwise rotations
-    int arr[] = {5, 6, 7, 8, 9, 10, 1, 2, 3};
-    int size = sizeof(arr)/sizeof(arr[0]);
+class Solution {
+public:
     
-    //VARIATION 1)
-    int result = find_element_sorted_rotated_array(arr,size,5);
-    if(result != -1) cout<<" found element in array at index : "<<result<<endl;
-    else cout<<"Element not found.";
+    int findLocalMaxima(vector<int> nums, int l, int r){
+        //base case
+        if(l==r) return l;
+        
+        int mid = l+(r-l)/2;
+        
+        //handling corner cases
+        if(mid==l&&nums[mid]>=nums[mid+1]) return mid;
+        else if(mid==r&&nums[mid-1]<=nums[mid]) return mid;
+        
+        //using modified binary search to find local maxima
+        if(mid-1>=0&&mid+1<nums.size()&&nums[mid-1]<=nums[mid]&&nums[mid]>=nums[mid+1]) return mid;
+        else if(nums[0]>nums[mid]) return findLocalMaxima(nums, l, mid);
+        else if(nums[mid]>nums[r]) return findLocalMaxima(nums, mid+1, r);
+        
+        //when array is sorted & 0 rotated
+        return -1;
+        
+    }
     
-    //VARIATION 2) Find maximum element in sorted and then rotated array
-    int max_index = find_local_maxima(arr, size, 0, size-1);
-    cout<<"Maximum element : "<<arr[max_index]<<endl;
     
-    //VARIATION 3) Find minimum element in sorted and then rotated array
-    int min_index = max_index + 1;
-    cout<<"Minimum element  : "<<arr[min_index]<<endl;
     
-    return 0;
-}
-
+    int search(vector<int>& nums, int target) {
+        
+        int n = nums.size();
+        
+        //method 1 : linear scane
+        //O(n) time & O(1) space
+        
+        //method 2 : 2 pass of binary search
+        //NOTE :- this method can't be extended for duplicates i.e Search in Rotated Sorted Array II
+        //O(logn) time & O(1) space
+        /*
+        step 1 : find pivot element , 
+        as element before pivot including itself & elements after pivot bot set of numbers will be guaranteed sorted
+        step 2 : do 2 separate binary search one for nums[0...mid] & other for nums[mid+1....n-1] 
+        */
+        
+        //step 1 : find local maxima using modified binary search
+//         int m = findLocalMaxima(nums, 0 ,nums.size()-1);  //not linearly
+//         cout<<"local maxima : "<<m<<", "<<nums.size()-1<<endl;
+//         //if m == -1 or nums.size()-1, it implies the given vector is incresingly sorted
+//         if(m==-1||m==(nums.size()-1)) {
+//             int index = lower_bound(nums.begin(), nums.end(), target)-nums.begin();
+//             return (index>=0&&index<nums.size()&&nums[index]==target)?index:-1;
+//         }
+        
+        
+//         //step 2 : apply binary search on 2 sorted subarrays
+//         int index1 = lower_bound(nums.begin(), nums.begin()+m+1, target) - nums.begin();
+//         int index2 = lower_bound(nums.begin()+m+1, nums.end(), target) - (nums.begin()+m+1);
+        
+//         if(index1>=0&&nums[index1]==target) return index1;
+//         else if(m+1+index2<nums.size()&&nums[m+1+index2]==target) return m+1+index2;
+//         else return -1;
+        
+        
+        
+        
+        
+        //method 3 : 1 pass of binary search
+        //O(logn) time & O(1) space
+        /*
+        find middle element check it against target, if fount return middle index
+        else 
+            if nums[low...mid] is sorted : -
+                    if target is in between range nums[low] to nums[mid], recurr for nums[low...mid]
+                    else recurr for nums[mid+1 ... high]
+            else            note :- (nums[mid+1 ... high] is guarnteed sorted)
+                    if target is in between range nums[mid+1] to nums[high], recurr for nums[mid+1 ... high]
+                    else recurr for nums[low ... mid]
+        */
+        int low = 0, high = n-1;
+        while(low<=high){
+            
+            int mid = low + (high-low)/2;
+            if(nums[mid]==target) return mid;
+            
+            if(nums[low]<=nums[mid]){
+                if(target>=nums[low]&&target<=nums[mid]) high = mid-1;
+                else low = mid+1;
+            }else{
+                if(target>=nums[mid+1]&&target<=nums[high]) low = mid+1;
+                else high = mid-1;
+            }
+            
+        }
+        return -1;
+        
+    }
+};
