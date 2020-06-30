@@ -32,7 +32,7 @@ bool DetectCycleUndirectedGraph(vector<int> adj[], int v){
 
 
 //2
-//Detection of a Cycle in an DIRECTED Graph
+//Detection of a Cycle in an DIRECTED Graph     :   LEETCODE 207. Course Schedule
 //Note: undirected cycle detection will FAIL in this case
 //eg:   1->2<-3 will return true if we use undirected graph approach
 //there is cycle in directed graph if there is a back edge, so we use an array which is used to keep track of vertices in recursion stack
