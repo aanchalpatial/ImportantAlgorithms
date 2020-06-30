@@ -8,6 +8,7 @@ Find the minimum element.
 The array may contain duplicates.
 */
 
+//https://www.geeksforgeeks.org/find-minimum-element-in-a-sorted-and-rotated-array/
 
 class Solution {
 public:
