@@ -7,6 +7,9 @@ Find the minimum element.
 
 You may assume no duplicate exists in the array.
 */
+
+//https://www.geeksforgeeks.org/find-minimum-element-in-a-sorted-and-rotated-array/
+
 class Solution {
 public:
     int findMin(vector<int>& nums) {
