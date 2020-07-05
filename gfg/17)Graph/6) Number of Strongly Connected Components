@@ -227,7 +227,7 @@ int main()
 //2)
 //Finding Strongly connected components of an DIRECTED graph
 //There are 2 different algorithms available: 
-//2A) Kosaraju's algorithm O(V+E) , 2 dfs traversals	: dfs then reverse then dfs
+//2A) Kosaraju's algorithm O(V+E) , 2 dfs traversals	: dfs then reverse then dfs 
 //https://www.geeksforgeeks.org/strongly-connected-components/
 /*Algorithm:-
 1) Create an empty stack ‘S’ and do DFS traversal of a graph. In DFS traversal, after calling recursive DFS for adjacent vertices
