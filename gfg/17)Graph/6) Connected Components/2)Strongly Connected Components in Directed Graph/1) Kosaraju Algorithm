@@ -1,0 +1,99 @@
+//2)
+//Finding Strongly connected components of an DIRECTED graph
+//There are 2 different algorithms available: 
+//2A) Kosaraju's algorithm O(V+E) , 2 dfs traversals	: dfs then reverse then dfs 
+//https://www.geeksforgeeks.org/strongly-connected-components/
+/*Algorithm:-
+1) Create an empty stack ‘S’ and do DFS traversal of a graph. In DFS traversal, after calling recursive DFS for adjacent vertices
+   of a vertex, push the vertex to stack. In the above graph, if we start DFS from vertex 0, we get vertices in stack as 1, 2, 4, 3, 0.
+   (this idea is similar to the idea of using stack in dfs based topological sort solution, i.e add vertex in stack only when all its dependents
+   are in stack)
+2) Reverse directions of all arcs to obtain the transpose graph.
+3) One by one pop a vertex from S while S is not empty. Let the popped vertex be ‘v’. Take v as source and do DFS (call DFSUtil(v)). 
+   The DFS starting from v prints strongly connected component of v. In the above example, we process vertices in 
+   order 0, 3, 4, 2, 1 (One by one popped from stack).
+*/
+/*Why Kosaraju's Algo works?
+DFS of a graph produces a single tree if all vertices are reachable from the DFS starting point. Otherwise DFS produces a forest. 
+So DFS of a graph with only one SCC always produces a tree. The important point to note is DFS may produce a tree or a forest when 
+there are more than one SCCs depending upon the chosen starting point.
+To find and print all SCCs, we would want to start DFS from vertex 4 (which is a sink vertex), then move to 3 which is sink in
+the remaining set (set excluding 4) and finally any of the remaining vertices (0, 1, 2).
+So how do we find this sequence of picking vertices as starting points of DFS?
+Solution: So if we do a DFS of the reversed graph using sequence of vertices in stack, we process vertices from sink to
+source (in reversed graph). That is what we wanted to achieve and that is all needed to print SCCs one by one.
+*/
+#include <bits/stdc++.h>
+using namespace std;
+
+void addEdge(vector<int> adj[], int u, int v){
+    adj[u].push_back(v);
+}
+
+void dfsPush(vector<int> adj[], bool visited[], int s, stack<int> &st){
+    visited[s] = true;
+    for(auto v:adj[s]){
+        if(visited[v]==false){
+            dfsPush(adj, visited, v, st);
+        }
+    }
+    st.push(s);
+}
+void dfsPrint(vector<int> adj[], bool visited[], int s){
+    cout<<s<<" ";
+    visited[s] = true;
+    for(auto v:adj[s]){
+        if(visited[v]==false){
+            dfsPrint(adj, visited, v);
+        }
+    }
+}
+
+void stronglyConnectedComponentsDirectedGraph(vector<int> adj[], int v){
+    stack<int> st;
+    
+    //Step 1: dfs
+    bool visited[v] = {false};
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            dfsPush(adj, visited, i, st);
+        }
+    }
+    
+    //Step 2: Reverse directed graph
+    vector<int> adjr[v];
+    for(int i=0;i<v;++i){
+        for(int j=0;j<adj[i].size();++j){
+            adjr[adj[i][j]].push_back(i);
+        }
+    }
+    
+    //Step 3: dfs while popping
+    bool visited2[v] = {false};
+    while(!st.empty()){
+        int u = st.top();
+        st.pop();
+        if(visited2[u]==false){
+            dfsPrint(adjr, visited2, u);
+            cout<<endl;
+        }
+    }
+}
+
+int main() {
+    
+    int v = 5;
+    vector<int> adj[v];
+    addEdge(adj, 0, 2);
+    addEdge(adj, 0, 3);
+    addEdge(adj, 1, 0);
+    addEdge(adj, 2, 1);
+    addEdge(adj, 3, 4);
+    
+    stronglyConnectedComponentsDirectedGraph(adj, v);
+    
+    
+	return 0;
+}
+
+
