@@ -1,11 +1,36 @@
 //1)
-//ARTICULATION POINT (or CUT VERTICES) : 
-/*articulations points in a graph are those vertices removing which leads to increase in the number of strongly connected components
-
+//ARTICULATION POINT (or CUT VERTICES) : are those VERTICES removing which leads to increase in the number of strongly connected components
+//https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/
+/*in other words,
 For connected graph, an articulation point is a vertec removing which disconnects the graph
 For disconnected undirected graph, an articulation point is a vertex removing which increases number of connected components.
-
-Articulation points represent vulnerabilities in a connected network – single points whose failure would split the network into 2 or more components.
 */
+
+//Finding all articulation points :-
+
+//method 1 : A simple approach is to one by one remove all vertices and see if removal of a vertex increases number of connected components (We can either use BFS or DFS). 
+//O(V*(V+E)) time 
+
+//method 2 : dfs based using discovery time(disc[]) & lowest reachable discovery time (low[]) of dfs tree
+//O(V+E) time 
+
+
+//2)
+//BRIDGES (or CUT EDGES) : are those EDGES removing which leads to increase in the number of strongly connected components
+//https://www.geeksforgeeks.org/bridge-in-a-graph/
+/*note :-
+Articulation Points & Bridges represent ***vulnerabilities*** in a connected network and are useful for designing reliable networks. 
+For example, in a wired computer network, an articulation point indicates the critical computers and a bridge indicates the critical wires or connections.
+whose failures would split the network into 2 or more components
+*/
+
+//Finding all Bridges :-
+
+//method 1 : A simple approach is to one by one remove all edges and see if removal of an edge increases number of connected components (We can either use BFS or DFS). 
+//O(E*(V+E)) time 
+
+//method 2 : dfs based using discovery time(disc[]) & lowest reachable discovery time (low[]) of dfs tree
+//O(V+E) time 
+
 
 //kosaraju's algorithm takes 2 traversal of graph, to find SCC, whereas tarjan's algorithm find SCC in 1 traversal of graph only
