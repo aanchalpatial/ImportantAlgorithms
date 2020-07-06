@@ -1,0 +1,113 @@
+//note :- we are only considering articulation point & bridges for undirected graphs, but when we will use articulation point in 
+//tarjans algorithm, we will modify it for directed edges
+
+//1)
+//ARTICULATION POINT (or CUT VERTICES) : are those VERTICES removing which leads to increase in the number of strongly connected components
+//https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/
+/*in other words,
+For connected graph, an articulation point is a vertec removing which disconnects the graph
+For disconnected undirected graph, an articulation point is a vertex removing which increases number of connected components.
+*/
+
+//Finding all articulation points :-
+
+//method 1 : A simple approach is to one by one remove all vertices and see if removal of a vertex increases number of connected components (We can either use BFS or DFS). 
+//O(V*(V+E)) time 
+
+//method 2 : dfs based using discovery time(disc[]) & lowest reachable discovery time (low[]) of dfs tree
+//O(V+E) time 
+/*Approach :-
+The idea is to use DFS (Depth First Search). In DFS, we follow vertices in tree form called DFS tree. In DFS tree, a vertex u is parent of another vertex v,
+if v is discovered by u (obviously v is an adjacent of u in graph). In DFS tree, a vertex u is articulation point if one of the following two conditions is true.
+1) u is root of DFS tree and it has at least two children.
+2) u is not root of DFS tree and it has a child v such that no vertex in subtree rooted with v has a back edge to one of the ancestors (in DFS tree) of u i.e
+    "low[v] >= disc[u]"
+
+We do DFS traversal of given graph with additional code to find out Articulation Points (APs). In DFS traversal, we maintain a parent[] array 
+where parent[u] stores parent of vertex u. Among the above mentioned two cases, the first case is simple to detect. For every vertex, count children.
+If currently visited vertex u is root (parent[u] is NIL) and has more than two children, print it.
+How to handle second case? The second case is trickier. We maintain an array disc[] to store discovery time of vertices. For every node u, we need to 
+find out the earliest visited vertex (the vertex with minimum discovery time) that can be reached from subtree rooted with u. So we maintain 
+an additional array low[] which is defined as follows.
+low[] is defined as follows :-
+low[u] = min(disc[u], disc[w]) , where w is an ancestor of u
+and there is a back edge from some descendant of u to w.
+*/
+
+void dfs(vector<int> adj[], bool visited[], int disc[], int low[], int parent[], bool ap[], int u){
+    
+    static int time = 0;
+    
+    int children = 0;          //keeps track of number of children in dfs tree
+    visited[u] = true;
+    disc[u] = low[u] = ++time;
+    
+    for(int v: adj[u]){
+        if(visited[v]==false){
+            ++children;
+            parent[v] = u;
+            dfs(adj, visited, disc, low, parent, ap, v);
+            
+            // Check if the subtree rooted with v has a connection to 
+            // one of the ancestors of u
+            low[u] = min(low[u], low[v]);
+            
+            //rule 1 :
+            if(parent[u]==-1&&children>1) ap[u] = true;
+            
+            //rule 2 :
+            if(parent[u]!=-1&&low[v]>=disc[u]) ap[u] = true;
+            
+            
+        }else if(v!=parent[u]){     //back edge
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    
+}
+
+void findArticulationPoints(vector<int> adj[], int v){
+    
+    bool visited[v];
+    int disc[v];    //discovery time of vertices
+    int low[v];     //lowest reachable discovery time of vertices
+    int parent[v];
+    bool ap[v];     //stores true for vertices which are articulation points
+    
+    memset(visited, false, v);
+    memset(parent, -1, v);          //-1 represents no parent
+    memset(ap, false, v);
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            dfs(adj, visited, disc, low, parent, ap, i);
+        }
+    }
+    
+    cout<<"Articulation Points in Graph are : ";
+    for(int i=0;i<v;++i){
+        if(ap[i]) cout<<i<<", ";
+    }
+    cout<<"\n";
+    
+}
+
+int main() {
+    
+    //articulation point
+    int v, e;
+    cin>>v>>e;
+    
+    vector<int> adj[v];
+    
+    for(int i=0;i<e;++i){
+        int u, v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    findArticulationPoints(adj, v);
+    
+    return 0;
+}
