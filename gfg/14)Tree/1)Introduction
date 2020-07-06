@@ -1,3 +1,6 @@
+//tree vs graphs : a tree is a DAG (Directed acyclic graph) with restriction that any node can only have 1 parent
+//tree is a restricted version of graph
+
 //used to represent HEIRARCHIAL data
 //previously studied data structures were all linear such as arrays, linked list, stack and queue whereas tree is NON LINEAR
 
