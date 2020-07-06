@@ -1,0 +1,92 @@
+//2)
+//BRIDGES (or CUT EDGES) : are those EDGES removing which leads to increase in the number of strongly connected components
+//https://www.geeksforgeeks.org/bridge-in-a-graph/
+/*note :-
+Articulation Points & Bridges represent ***vulnerabilities*** in a connected network and are useful for designing reliable networks. 
+For example, in a wired computer network, an articulation point indicates the critical computers and a bridge indicates the critical wires or connections.
+whose failures would split the network into 2 or more components
+*/
+
+//Finding all Bridges :-
+
+//method 1 : A simple approach is to one by one remove all edges and see if removal of an edge increases number of connected components (We can either use BFS or DFS). 
+//O(E*(V+E)) time 
+
+//method 2 : dfs based using discovery time(disc[]) & lowest reachable discovery time (low[]) of dfs tree
+//O(V+E) time
+/*Approach :-
+We do DFS traversal of the given graph.
+In DFS tree an edge (u, v) (u is parent of v in DFS tree) is bridge if there does not exist any other alternative to reach u or an ancestor of u
+from subtree rooted with v. As discussed in the previous post, the value low[v] indicates earliest visited vertex reachable from subtree rooted with v. 
+The condition for an edge (u, v) to be a bridge is, “low[v] > disc[u]”.
+*/
+
+using namespace std;
+
+void dfs(vector<int> adj[], bool visited[], int disc[], int low[], int parent[], int u){
+    
+    static int time = 0;
+    
+    visited[u] = true;
+    disc[u] = low[u] = ++time;
+    
+    for(int v: adj[u]){
+        if(visited[v]==false){
+            parent[v] = u;
+            dfs(adj, visited, disc, low, parent, v);
+            
+            // Check if the subtree rooted with v has a connection to 
+			// one of the ancestors of u
+            low[u] = min(low[u], low[v]);
+            
+            
+            //rule :
+            if(low[v]>disc[u]) cout<<u<<"-"<<v<<"\n";
+            
+            
+        }else if(v!=parent[u]){     //back edge
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    
+}
+
+void findBridges(vector<int> adj[], int v){
+    
+    bool visited[v];
+    int disc[v];    //discovery time of vertices
+    int low[v];     //lowest reachable discovery time of vertices
+    int parent[v];
+    
+    memset(visited, false, v);
+    memset(parent, -1, v);          //-1 represents no parent
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            dfs(adj, visited, disc, low, parent, i);
+        }
+    }
+    
+}
+
+int main() {
+    
+    //bridges
+    int v, e;
+    cin>>v>>e;
+    
+    vector<int> adj[v];
+    
+    for(int i=0;i<e;++i){
+        int u, v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    cout<<"Bridges in Graph are : \n";
+    findBridges(adj, v);
+    
+    return 0;
+}
+
