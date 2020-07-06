@@ -1,3 +1,6 @@
+//note :- we are only considering articulation point & bridges for undirected graphs, but when we will use articulation point in 
+//tarjans algorithm, we will modify it for directed edges
+
 //1)
 //ARTICULATION POINT (or CUT VERTICES) : are those VERTICES removing which leads to increase in the number of strongly connected components
 //https://www.geeksforgeeks.org/articulation-points-or-cut-vertices-in-a-graph/
@@ -13,6 +16,102 @@ For disconnected undirected graph, an articulation point is a vertex removing wh
 
 //method 2 : dfs based using discovery time(disc[]) & lowest reachable discovery time (low[]) of dfs tree
 //O(V+E) time 
+/*Approach :-
+The idea is to use DFS (Depth First Search). In DFS, we follow vertices in tree form called DFS tree. In DFS tree, a vertex u is parent of another vertex v,
+if v is discovered by u (obviously v is an adjacent of u in graph). In DFS tree, a vertex u is articulation point if one of the following two conditions is true.
+1) u is root of DFS tree and it has at least two children.
+2) u is not root of DFS tree and it has a child v such that no vertex in subtree rooted with v has a back edge to one of the ancestors (in DFS tree) of u i.e
+    "low[v] >= disc[u]"
+
+We do DFS traversal of given graph with additional code to find out Articulation Points (APs). In DFS traversal, we maintain a parent[] array 
+where parent[u] stores parent of vertex u. Among the above mentioned two cases, the first case is simple to detect. For every vertex, count children.
+If currently visited vertex u is root (parent[u] is NIL) and has more than two children, print it.
+How to handle second case? The second case is trickier. We maintain an array disc[] to store discovery time of vertices. For every node u, we need to 
+find out the earliest visited vertex (the vertex with minimum discovery time) that can be reached from subtree rooted with u. So we maintain 
+an additional array low[] which is defined as follows.
+low[] is defined as follows :-
+low[u] = min(disc[u], disc[w]) , where w is an ancestor of u
+and there is a back edge from some descendant of u to w.
+*/
+
+void dfs(vector<int> adj[], bool visited[], int disc[], int low[], int parent[], bool ap[], int u){
+    
+    static int time = 0;
+    
+    int children = 0;          //keeps track of number of children in dfs tree
+    visited[u] = true;
+    disc[u] = low[u] = ++time;
+    
+    for(int v: adj[u]){
+        if(visited[v]==false){
+            ++children;
+            parent[v] = u;
+            dfs(adj, visited, disc, low, parent, ap, v);
+            
+            // Check if the subtree rooted with v has a connection to 
+            // one of the ancestors of u
+            low[u] = min(low[u], low[v]);
+            
+            //rule 1 :
+            if(parent[u]==-1&&children>1) ap[u] = true;
+            
+            //rule 2 :
+            if(parent[u]!=-1&&low[v]>=disc[u]) ap[u] = true;
+            
+            
+        }else if(v!=parent[u]){     //back edge
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    
+}
+
+void findArticulationPoints(vector<int> adj[], int v){
+    
+    bool visited[v];
+    int disc[v];    //discovery time of vertices
+    int low[v];     //lowest reachable discovery time of vertices
+    int parent[v];
+    bool ap[v];     //stores true for vertices which are articulation points
+    
+    memset(visited, false, v);
+    memset(parent, -1, v);          //-1 represents no parent
+    memset(ap, false, v);
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            dfs(adj, visited, disc, low, parent, ap, i);
+        }
+    }
+    
+    cout<<"Articulation Points in Graph are : ";
+    for(int i=0;i<v;++i){
+        if(ap[i]) cout<<i<<", ";
+    }
+    cout<<"\n";
+    
+}
+
+int main() {
+    
+    //articulation point
+    int v, e;
+    cin>>v>>e;
+    
+    vector<int> adj[v];
+    
+    for(int i=0;i<e;++i){
+        int u, v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    findArticulationPoints(adj, v);
+    
+    return 0;
+}
+
 
 
 //2)
@@ -30,7 +129,198 @@ whose failures would split the network into 2 or more components
 //O(E*(V+E)) time 
 
 //method 2 : dfs based using discovery time(disc[]) & lowest reachable discovery time (low[]) of dfs tree
-//O(V+E) time 
+//O(V+E) time
+/*Approach :-
+We do DFS traversal of the given graph.
+In DFS tree an edge (u, v) (u is parent of v in DFS tree) is bridge if there does not exist any other alternative to reach u or an ancestor of u
+from subtree rooted with v. As discussed in the previous post, the value low[v] indicates earliest visited vertex reachable from subtree rooted with v. 
+The condition for an edge (u, v) to be a bridge is, “low[v] > disc[u]”.
+*/
+
+using namespace std;
+
+void dfs(vector<int> adj[], bool visited[], int disc[], int low[], int parent[], int u){
+    
+    static int time = 0;
+    
+    visited[u] = true;
+    disc[u] = low[u] = ++time;
+    
+    for(int v: adj[u]){
+        if(visited[v]==false){
+            parent[v] = u;
+            dfs(adj, visited, disc, low, parent, v);
+            
+            // Check if the subtree rooted with v has a connection to 
+			// one of the ancestors of u
+            low[u] = min(low[u], low[v]);
+            
+            
+            //rule :
+            if(low[v]>disc[u]) cout<<u<<"-"<<v<<"\n";
+            
+            
+        }else if(v!=parent[u]){     //back edge
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    
+}
+
+void findBridges(vector<int> adj[], int v){
+    
+    bool visited[v];
+    int disc[v];    //discovery time of vertices
+    int low[v];     //lowest reachable discovery time of vertices
+    int parent[v];
+    
+    memset(visited, false, v);
+    memset(parent, -1, v);          //-1 represents no parent
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            dfs(adj, visited, disc, low, parent, i);
+        }
+    }
+    
+}
+
+int main() {
+    
+    //bridges
+    int v, e;
+    cin>>v>>e;
+    
+    vector<int> adj[v];
+    
+    for(int i=0;i<e;++i){
+        int u, v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    cout<<"Bridges in Graph are : \n";
+    findBridges(adj, v);
+    
+    return 0;
+}
 
 
-//kosaraju's algorithm takes 2 traversal of graph, to find SCC, whereas tarjan's algorithm find SCC in 1 traversal of graph only
+//3)
+//TARJAN'S ALGORITHM : disc[] + low[] + stack
+//Kosaraju's algorithm takes 2 traversal of graph, to find SCC, whereas tarjan's algorithm find SCC in 1 traversal of graph only
+//https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/
+/*Approach :
+arjan Algorithm is based on following facts:
+1. DFS search produces a DFS tree/forest
+2. Strongly Connected Components form subtrees of the DFS tree.
+3. If we can find the head of such subtrees, we can print/store all the nodes in that subtree (including head) and that will be one SCC.
+4. There is no back edge from one SCC to another (There can be cross edges, but cross edges will not be used while processing the graph).
+
+To find head of a SCC, we calculate disc and low array (as done for articulation point, bridge, biconnected component).
+
+We do dfs & maintain disc[] and low[] as well. We keep pushing vertices in stack as we are traversing them. Whenever we find a vertex(say k) whose all children
+have been processed and whose disc[k] = low[k] , this found vertex is beginning of some strongly connected component. We keep pushing vertices from stack until the 
+popped vertex is same as considered vertex(i.e k).
+
+Since the graph is directed, there can be cross edges in dfs tree as well, but note that these cross edges are to be avoided and not used in calculation of
+disc[] & low[] values. Only tree edges and back edges dictates disc[] & low[] values.
+*/
+
+using namespace std;
+
+void dfs(vector<int> adj[], bool visited[], int disc[], int low[], bool recursionStack[], stack<int> &st, int u){
+    
+    static int time = 0;
+    
+    visited[u] = true;
+    recursionStack[u] = true;
+    st.push(u);
+    disc[u] = low[u] = ++time;
+    
+    
+    for(int v: adj[u]){
+        if(visited[v]==false){
+           
+            dfs(adj, visited, disc, low, recursionStack, st, v);
+            
+            // Check if the subtree rooted with v has a connection to 
+			// one of the ancestors of u
+            low[u] = min(low[u], low[v]);
+            
+            
+        }else if(recursionStack[v]==true){     
+            // Update low value of 'u' only of 'v' is still in stack 
+            // (i.e. it's a back edge, not cross edge). 
+            low[u] = min(low[u], disc[v]);
+        }
+    }
+    
+    //rule : if all it's adjacents are processed and disc[u] == low[u]
+    
+    if(disc[u]==low[u]){
+        
+        while(!st.empty()){
+            int node = st.top();
+            cout<<node<<", ";
+            recursionStack[node] = false;
+            st.pop();
+            if(node==u) break;
+        }
+        cout<<"\n";
+        
+    }
+    
+    
+}
+
+void findSCC(vector<int> adj[], int v){
+    
+    bool visited[v];
+    int disc[v];    //discovery time of vertices
+    int low[v];     //lowest reachable discovery time of vertices
+    bool recursionStack[v];     // to differentiate between back edge & cross edge
+    stack<int> st;
+    
+    memset(recursionStack, false, v);
+    memset(visited, false, v);
+    //memset(disc, -1, v);
+    
+    for(int i=0;i<v;++i){
+        if(visited[i]==false){
+            dfs(adj, visited, disc, low, recursionStack, st, i);
+        }
+    }
+    
+}
+
+int main() {
+    
+    //bridges
+    int v, e;
+    cin>>v>>e;
+    
+    vector<int> adj[v];
+    
+    for(int i=0;i<e;++i){
+        int u, v;
+        cin>>u>>v;
+        adj[u].push_back(v);
+       // adj[v].push_back(u);      //because graph is directed
+    }
+    
+    // for(int i=0;i<v;++i){
+    //     cout<<i<<" : ";
+    //     for(int x: adj[i]) cout<<x<<", ";
+    //     cout<<"\n";
+    // }
+    
+    cout<<"Strongly Connected Components in Graph are : \n";
+    findSCC(adj, v);
+    
+    return 0;
+}
+
+
+
