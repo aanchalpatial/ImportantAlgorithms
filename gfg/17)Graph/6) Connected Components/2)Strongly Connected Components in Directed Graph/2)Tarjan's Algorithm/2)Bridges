@@ -7,7 +7,45 @@ For example, in a wired computer network, an articulation point indicates the cr
 whose failures would split the network into 2 or more components
 */
 
-//Finding all Bridges :-
+//PROBLEM 1 
+//Given an edges, find whether it is an bridge or not
+/*
+The task is to check whether an edge is a bridge or not.You can do so by removing the edge and running dfs on the remaining graph.
+If the some vertices remain unvisited then it is a bridge.
+
+Boundary Case: What if  we have disconnected components (graph) ?
+
+In this case, We will run the dfs taking taking root as one of the vertices of the edge which we are going to remove. Check if the other vertex of the same edge 
+is reachable or not.
+
+If not reachable , then edge is not a bridge.
+
+If reachable ,then check for bridge by removing the edge and running dfs again using one of the vertex of removed edge.
+*/
+bool isBridge(list<int> adj[], int V, int s, int e) {
+    // Code here
+    bool visited[V];
+    memset(visited,false,sizeof(visited));
+    
+    dfs(adj,s,visited);
+    
+    if(visited[e]==false) return false;
+    
+    for(int i=0;i<V;++i) visited[i] = false;
+    
+    adj[s].remove(e);
+    adj[e].remove(s);
+    
+    dfs(adj,s,visited);
+    
+    if(visited[e]==false) return true;
+    
+    return false;
+}
+
+
+//PROBLEM 2 
+//Finding ALL Bridges :-
 
 //method 1 : A simple approach is to one by one remove all edges and see if removal of an edge increases number of connected components (We can either use BFS or DFS). 
 //O(E*(V+E)) time 
