@@ -7,6 +7,10 @@ Dijkstra’s algorithm. (We will study them in greedy & dp)
 Can we do even better for Directed Acyclic Graph (DAG)? We can calculate single source shortest distancesin O(V+E) time for DAGs.
 The idea is to use Topological Sorting.
 */
+
+/*Why this method works ?
+Since the graph is acyclic, once topological sorting is done, there will never be an edge going from forward side to backward according to topological order.
+*/
 //time: O(V+E)
 /*
 1) Initialize dist[] = {INF, INF, ….} and dist[s] = 0 where s is the source vertex.
