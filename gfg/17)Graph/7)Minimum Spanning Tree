@@ -1,5 +1,5 @@
 /*
-Given a connected and undirected graph, a spanning tree of that graph is a subgraph that is a tree and connects all the vertices
+Given a WEIGHTED CONNECTED and UNDIRECTED graph, a spanning tree of that graph is a subgraph that is a tree and connects all the vertices
 together. A single graph can have many different spanning trees.
 
 A minimum spanning tree (MST) or minimum weight spanning tree for a weighted, connected and undirected graph is a spanning tree 
@@ -12,7 +12,7 @@ Applications: Network design., CLuster Ananlysis & Approximation algorithms for 
 */
 
 //1)
-//Prim's Algorithm : 
+//Prim's Algorithm : Greedy Algorithm
 /*Approach: 
 A group of edges that connects two set of vertices in a graph is called cut in graph theory. So, at every step of Prim’s algorithm,
 we find a cut (of two sets, one contains the vertices already included in MST and other contains rest of the verices), pick the
