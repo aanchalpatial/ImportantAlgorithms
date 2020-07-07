@@ -1,0 +1,120 @@
+//Shortest Path In WEIGHTED DIRECTED GRAPH WITH ONLY POSITIVE EDGES
+//2 Methods : DJikstra & Bellmon Ford Algorithms
+
+
+//METHOD 1) DJisktra's Algorithm : Find Shortest Path in weighted graphs with only positive edges
+//O(E+VlogV)
+/*Algorithm:
+1) Create a set sptSet (shortest path tree set) that keeps track of vertices included in shortest path tree, i.e.,
+   whose minimum distance from source is calculated and finalized. Initially, this set is empty.
+2) Assign a distance value to all vertices in the input graph. Initialize all distance values as INFINITE. Assign distance value 
+   as 0 for the source vertex so that it is picked first.
+3) While sptSet doesn’t include all vertices
+ ….a) Pick a vertex u which is not there in sptSet and has minimum distance value.
+ ….b) Include u to sptSet.
+ ….c) Update distance value of all adjacent vertices of u. To update the distance values, iterate through all adjacent vertices. 
+      For every adjacent vertex v, if sum of distance value of u (from source) and weight of edge u-v, is less than the distance value
+      of v, then update the distance value of v.
+*/
+/*Important Points:
+->We can create a parent array, update the parent array when distance is updated and 
+    use it show the shortest path from source to different vertices.
+->The code finds shortest distances from source to all vertices. If we are interested only in shortest distance from the source
+    to a single target, we can break the for the loop when the picked minimum distance vertex is equal to target
+->Time Complexity of the implementation is O(V^2). If the input graph is represented using adjacency list, it can be reduced 
+    to O(E log V) with the help of binary heap.
+->Dijkstra’s algorithm doesn’t work for graphs with negative weight edges. For graphs with negative weight edges, Bellman–Ford 
+    algorithm can be used.
+*/
+
+
+/*There are many different approaches to implement DJikstra's:
+1) DJikstra using adjacency matric representation: O(V^2)
+https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+
+2) DJikstra using adjacency list representation with CUSTOM made min heap : O(ElogV)
+https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/
+
+3) Djisktra using C++ STL set : O(ElogV)
+https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-set-in-stl/
+The second implementation is time complexity wise better, but is really complex as we have implemented our own priority queue. 
+STL provides priority_queue, but the provided priority queue doesn’t support decrease key and delete operations.Above operations 
+can be easily implemented by set data structure of c++ STL
+
+4) Djikstra using C++ STL priority_queue : O(ElogV) i.e APPROACH IMPLEMENTED BELOW
+https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-using-priority_queue-stl/
+However, the problem is, priority_queue doesn’t support decrease key. To resolve this problem, do not update a key,but insert one 
+more copy of it.Whenever distance of a vertex is reduced, we add one more instance of vertex in priority_queue. Even if there are
+multiple instances, we only consider the instance with minimum distance and ignore other instances.
+*/
+
+//Djikstra using priority_queue
+#include <bits/stdc++.h>
+using namespace std;
+
+void addEdge(vector<pair<int, int>> adj[], int u, int v, int weight){
+    adj[u].push_back(make_pair(v, weight));
+    //since graph is undirected
+    adj[v].push_back(make_pair(u, weight)); 
+}
+
+struct myComp{
+    bool operator()(pair<int, int> p1, pair<int, int> p2){
+        return p1.first>p2.first;
+    }
+};
+
+void djikstra(vector<pair<int, int>> adj[], int source, int V){
+    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> pq;      //pair of (distance, vertext)
+    pq.push(make_pair(0, source));
+    
+    int distance[V];
+    for(int i=0;i<V;++i) distance[i] = INT_MAX;
+    distance[source] = 0;
+    
+    while(!pq.empty()){
+        pair<int, int> u = pq.top();
+        pq.pop();
+        //update all neighbours of current vertext 'p'
+        for(auto v:adj[u.second]){
+            if(distance[v.first]>distance[u.second]+v.second){
+                distance[v.first] = distance[u.second]+v.second;
+                pq.push(make_pair(distance[v.first], v.first));
+            }
+        }
+    }
+    
+    cout<<"Vertex\tDistance from source"<<endl;
+    for(int i=0;i<V;++i) {
+        cout<<i<<"\t"<<distance[i]<<endl;
+    }
+}
+
+
+int main() {
+    
+    int v = 9;
+    vector<pair<int, int>> adj[v];      //pair of (vertex, weight)
+    addEdge(adj, 0, 1, 4); 
+    addEdge(adj, 0, 7, 8); 
+    addEdge(adj, 1, 2, 8); 
+    addEdge(adj, 1, 7, 11); 
+    addEdge(adj, 2, 3, 7); 
+    addEdge(adj, 2, 8, 2); 
+    addEdge(adj, 2, 5, 4); 
+    addEdge(adj, 3, 4, 9); 
+    addEdge(adj, 3, 5, 14); 
+    addEdge(adj, 4, 5, 10); 
+    addEdge(adj, 5, 6, 2); 
+    addEdge(adj, 6, 7, 1); 
+    addEdge(adj, 6, 8, 6); 
+    addEdge(adj, 7, 8, 7); 
+    
+    djikstra(adj, 1, v);
+    
+	return 0;
+}
+
+
+//METHOD 2) : BELLMON FORD ALGORITH
+//O(VE)
