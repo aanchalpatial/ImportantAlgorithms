@@ -10,7 +10,7 @@ Using Topological Sorting : O(V+E)
 Problem 1C) : Single Source Shortest Path Problem in DIRECTED GRAPH with ONLY POSITIVE WEIGHTED EDGES
 DJikstra's Algorithm : O(ElogV)
 
-Problem 1D) : Single Source Shortest Path Problem in DIRECTED GRAPH with NEGATIVE WEIGHTED EDGES as well
+Problem 1D) : Single Source Shortest Path Problem in DIRECTED GRAPH with NEGATIVE WEIGHTED EDGES as well, And if there is a NEGATIVE WEIGHT CYCLE report it.
 Bellmon Ford Algorithm : O(VE)
 
 
