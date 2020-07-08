@@ -41,6 +41,8 @@ The idea is, assuming that there is no negative weight cycle, if we have calcula
 then an iteration over all edges guarantees to give shortest path with at-most (i+1) edges.
 */
 
+//Problem Link : https://practice.geeksforgeeks.org/problems/negative-weight-cycle/0
+
 #include<bits/stdc++.h>
 using namespace std;
 
