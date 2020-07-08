@@ -1,21 +1,10 @@
 
 /*
 The shortest path problem is about finding shortest path between the source point and every other point in the graph.
-This problem could be solved easily using (BFS) if all edge weights were (1), but in weighted graph weights can take any value. 
-*/
-/*
-There are different algorithms for finding shortest path BASED ON USE CASES:
-1)Unweighted Graph: ( bfs, O(V+E) )
-2)Weighted graph with only positive weighted edges: ( Bellmon Ford, O(VE) ) & ( DJikstra's, O(E+VlogV) )
-3)Wieghted graph with negative edges as well: ( Floyd–Warshall's, O(V^3) used to find transitive closure of graph)
-4)DAG : We can use any of bellmon ford, djikstra & floyd warshall based on use case BUT Solution based on topological sorting
-	is more efficient with time O(V+E)
+This problem could be solved easily using (BFS) if all the graph is undirected & unweighted.
 */
 
-
-
-//1)
-//Shortest Path in UNWEIGHTED graph
+//Shortest Path in UNDIRECTED & UNWEIGHTED graph
 //Hint :- Use BFS, it naturally finds shortest distance path, its the INHERENT NATURE of bfs
 //Time: Same as BFS i.e O(V+E)
 
