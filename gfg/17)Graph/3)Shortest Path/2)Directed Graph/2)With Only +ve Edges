@@ -117,6 +117,12 @@ int main() {
 	return 0;
 }
 
+/*Djikstra's Algorithm Follow Up Questions :- 
+1) Does Djikstra's Algorithm work in cases when there are negative weighted edges as well?		Ans: NO
+2) Does shortest path calculated using djikstra's changes when we add a value k to every edge ?		Ans: YES(because there may be more number of edges in shortest path currently)
+3) Does shortest path calculated using djikstra's changes when we multiply a value k to every edge ?	Ans: NO
+*/
+
 
 //METHOD 2) : BELLMON FORD ALGORITH
 //O(VE)
