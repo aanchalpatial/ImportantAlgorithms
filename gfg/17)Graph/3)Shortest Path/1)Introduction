@@ -9,11 +9,13 @@ Using Topological Sorting : O(V+E)
 
 Problem 1C) : Single Source Shortest Path Problem in DIRECTED GRAPH with ONLY POSITIVE WEIGHTED EDGES
 DJikstra's Algorithm : O(ElogV)
+Greedy Approach
 
 Problem 1D) : Single Source Shortest Path Problem in DIRECTED GRAPH with NEGATIVE WEIGHTED EDGES as well, And if there is a NEGATIVE WEIGHT CYCLE report it.
 Bellmon Ford Algorithm : O(VE)
-
+Dynamic Programming Approach
 
 Problem 2) :
 All Source Shortest Path Problem : Given a graph, find shortest distances between every pair of vertices in a given edge weighted directed Graph.
 Floyd Warshall Algorithm : O(V^3) 
+Dynamic Programming Approach
