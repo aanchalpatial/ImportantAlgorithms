@@ -1,6 +1,7 @@
 //Shortest Path In WEIGHTED DIRECTED GRAPH WITH NEGATIVE EDGES AS WELL
 
 //METHOD) : Bellmon Ford Algorithm
+//Dynamic Programming Based
 //O(VE) time 
 /*
 Dijkstra doesn’t work for Graphs with negative weight edges, Bellman-Ford works for such graphs. 
