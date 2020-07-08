@@ -122,3 +122,118 @@ int main() {
 */
 
 
+//APPLICATIONS : MINIMUM COST PATH
+//Problem Link : https://practice.geeksforgeeks.org/problems/minimum-cost-path/0
+/*
+Given a square grid of size N, each cell of which contains integer cost which represents a cost to traverse through that cell, 
+we need to find a path from top left cell to bottom right cell by which total cost incurred is minimum. You can move in 4 directions : up, down, left an right.
+Note : It is assumed that negative cost cycles do not exist in input matrix.
+
+Example:
+Input:
+2
+5
+31 100 65 12 18 10 13 47 157 6 100 113 174 11 33 88 124 41 20 140 99 32 111 41 20
+2
+42 93 7 14
+
+Output:
+327
+63
+
+Explanation:
+Testcase 1:
+Grid is:
+31, 100, 65, 12, 18,
+10, 13, 47, 157, 6,
+100. 113, 174, 11, 33,
+88, 124, 41, 20, 140,
+99, 32, 111, 41, 20
+A cost grid is given in below diagram, minimum
+cost to reach bottom right from top left
+is 327 (31 + 10 + 13 + 47 + 65 + 12 + 18 + 6 + 33 + 11 + 20 + 41 + 20)
+
+*/
+#include<bits/stdc++.h>
+using namespace std;
+
+struct myComp{
+    bool operator()(pair<int,pair<int, int>> p1, pair<int,pair<int, int>> p2){
+        return p1.first>p2.first;
+    }
+};
+int minimumCostPath(vector<int> grid[], int N){
+    
+    //djikstra algorithm
+    //O(ElogV)
+    
+    pair<int, int> src = make_pair(0,0);
+    pair<int, int> tgt = make_pair(N-1, N-1);
+    priority_queue<pair<int,pair<int, int>>, vector<pair<int,pair<int, int>>>, myComp> pq;
+    pq.push(make_pair(grid[src.first][src.second],src));
+    
+    int rowNbr[] = {-1,0,1,0};
+    int colNbr[] = {0,1,0,-1};
+    int distance[N][N];
+    for(int i=0;i<N;++i){
+        for(int j=0;j<N;++j){
+            distance[i][j] = INT_MAX;
+        }
+    }
+    distance[src.first][src.second] = grid[src.first][src.second];
+    
+    while(!pq.empty()){
+        pair<int, pair<int, int>> t = pq.top();
+        pq.pop();
+        pair<int, int> u = t.second;
+        int u_distance = t.first;
+        
+        
+        if(u.first==tgt.first&&u.second==tgt.second) break;
+        
+        for(int i=0;i<4;++i){
+            int r = u.first+rowNbr[i];
+            int c = u.second+colNbr[i];
+            if( (r>=0&&r<N)&&(c>=0&&c<N) ){
+               if(distance[r][c]>distance[u.first][u.second]+grid[r][c]){
+                   distance[r][c] = distance[u.first][u.second]+grid[r][c];
+                   pq.push(make_pair(distance[r][c], make_pair(r,c)));
+               }
+               
+            }
+        }
+        
+        
+    }
+    
+    // for(int i=0;i<N;++i){
+    //     for(int j=0;j<N;++j){
+    //         cout<<distance[i][j]<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+    
+    return distance[N-1][N-1];
+}
+int main()
+ {
+	int T;
+	cin>>T;
+	for(int j=0;j<T;++j){
+	    int n;
+	    cin>>n;
+	    vector<int> grid[n];
+	    for(int i=0;i<n;++i){
+	        for(int j=0;j<n;++j){
+	            int x;
+	            cin>>x;
+	            grid[i].push_back(x);
+	        }
+	    }
+	    
+	    int result = minimumCostPath(grid, n);
+	    cout<<result<<endl;
+	}
+	return 0;
+}
+
