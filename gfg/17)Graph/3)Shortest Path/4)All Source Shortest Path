@@ -1,3 +1,87 @@
-Problem 2) :
-All Source Shortest Path Problem : Given a graph, find shortest distances between every pair of vertices in a given edge weighted directed Graph.
-Floyd Warshall Algorithm : O(V^3) 
+// Problem) :
+// All Pair Shortest Path Problem : Given a graph, find shortest distances between every pair of vertices in a given edge weighted directed Graph.
+// Floyd Warshall Algorithm : O(V^3) 
+
+//https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/
+//https://www.youtube.com/watch?v=4OQeCuLYj-4
+//Problem Link : https://practice.geeksforgeeks.org/problems/implementing-floyd-warshall/0
+
+/*Algorithm : 
+We initialize the solution matrix same as the input graph matrix as a first step. 
+Then we update the solution matrix by considering all vertices as an intermediate vertex.
+The idea is to one by one pick all vertices and updates all shortest paths which include 
+the picked vertex as an intermediate vertex in the shortest path. When we pick vertex number
+k as an intermediate vertex, we already have considered vertices {0, 1, 2, .. k-1} 
+as intermediate vertices. For every pair (i, j) of the source and destination vertices respectively,
+there are 2 possible cases.
+1) k is not an intermediate vertex in shortest path from i to j. We keep the value of dist[i][j] as it is.
+2) k is an intermediate vertex in shortest path from i to j. We update the value of 
+   dist[i][j] as dist[i][k] + dist[k][j] if dist[i][j] > dist[i][k] + dist[k][j]
+*/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int v;
+	    cin>>v;
+	    
+	    int dis[v][v];
+	    for(int i=0;i<v;++i){
+	        for(int j=0;j<v;++j){
+	            cin>>dis[i][j];
+	        }
+	    }
+	    
+	    /* Add all vertices one by one to  
+    the set of intermediate vertices.  
+    ---> Before start of an iteration,  
+    we have shortest distances between all  
+    pairs of vertices such that the  
+    shortest distances consider only the  
+    vertices in set {0, 1, 2, .. k-1} as 
+    intermediate vertices.  
+    ----> After the end of an iteration,  
+    vertex no. k is added to the set of  
+    intermediate vertices and the set becomes {0, 1, 2, .. k} */
+	    for(int k=0;k<v;++k){
+	        for(int i=0;i<v;++i){
+	            for(int j=0;j<v;++j){
+	                if(dis[i][j]>(dis[i][k] + dis[k][j])){
+	                    dis[i][j] = dis[i][k] + dis[k][j];
+	                }
+	            }
+	        }
+	    }
+	    
+	    for(int i=0;i<v;++i){
+	        for(int j=0;j<v;++j){
+	            if(dis[i][j]==1e7) cout<<"INF ";
+	            else cout<<dis[i][j]<<" ";
+	        }
+	        cout<<"\n";
+	    }
+	    
+	}
+	return 0;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
