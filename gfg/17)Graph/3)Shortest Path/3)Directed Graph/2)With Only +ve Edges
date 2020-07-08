@@ -1,7 +1,6 @@
 //Shortest Path In WEIGHTED DIRECTED GRAPH WITH ONLY POSITIVE EDGES
-//There are 2 methods to solve this problem : Djikstra's Algorithm & Floyd Warshall Algorithm
 
-//METHOD 1) DJisktra's Algorithm : Find Shortest Path in weighted graphs with only positive edges
+//METHOD) DJisktra's Algorithm : Find Shortest Path in weighted graphs with only positive edges
 //O(E+VlogV)
 //note :- djikstra'a algorithm is very much similar to prim's algorithm for MST : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/7)Minimum%20Spanning%20Tree
 
@@ -123,5 +122,3 @@ int main() {
 */
 
 
-//METHOD 2) : Floyd Warshall Algorithm
-//LEFT !!!
