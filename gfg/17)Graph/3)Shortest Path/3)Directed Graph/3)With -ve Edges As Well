@@ -1,4 +1,113 @@
 //Shortest Path In WEIGHTED DIRECTED GRAPH WITH NEGATIVE EDGES AS WELL
 
-//METHOD) : Floyd–Warshall's
-//O(V^3)
+//METHOD) : Bellmon Ford Algorithm
+//O(VE) time 
+/*
+Dijkstra doesn’t work for Graphs with negative weight edges, Bellman-Ford works for such graphs. 
+Bellman-Ford is also SIMPLER than Dijkstra and suites well for distributed systems. 
+But time complexity of Bellman-Ford is O(VE), which is more than Dijkstra.
+*/
+/* Algorithm
+Following are the detailed steps.
+
+Input: Graph and a source vertex src
+Output: Shortest distance to all vertices from src. If there is a negative weight cycle, then shortest distances are not calculated, negative weight cycle is reported.
+
+1) This step initializes distances from the source to all vertices as infinite and distance to the source itself as 0. 
+    Create an array dist[] of size |V| with all values as infinite except dist[src] where src is source vertex.
+
+2) This step calculates shortest distances. Do following |V|-1 times where |V| is the number of vertices in given graph.
+…..a) Do following for each edge u-v
+………………If dist[v] > dist[u] + weight of edge uv, then update dist[v]
+………………….dist[v] = dist[u] + weight of edge uv
+
+
+
+
+3) This step reports if there is a negative weight cycle in graph. Do following for each edge u-v
+……If dist[v] > dist[u] + weight of edge uv, then “Graph contains negative weight cycle”
+The idea of step 3 is, step 2 guarantees the shortest distances if the graph doesn’t contain a negative weight cycle. 
+If we iterate through all edges one more time and get a shorter path for any vertex, then there is a negative weight cycle
+
+*/
+
+/* How does this work? 
+Like other Dynamic Programming Problems, the algorithm calculates shortest paths in a bottom-up manner. 
+It first calculates the shortest distances which have at-most one edge in the path. Then, it calculates the shortest paths with at-most 2 edges, and so on.
+After the i-th iteration of the outer loop, the shortest paths with at most i edges are calculated. 
+There can be maximum |V| – 1 edges in any simple path, that is why the outer loop runs |v| – 1 times. 
+The idea is, assuming that there is no negative weight cycle, if we have calculated shortest paths with at most i edges, 
+then an iteration over all edges guarantees to give shortest path with at-most (i+1) edges.
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Edge{
+    public:
+    int u, v, w;
+    Edge(int x, int y, int z){
+        u = x;
+        v = y;
+        w = z;
+    }
+};
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int v, e;
+	    cin>>v>>e;
+	    vector<Edge> arr;
+	    for(int i=0;i<e;++i){
+	        int x, y, z;
+	        cin>>x>>y>>z;
+	        Edge ed = Edge(x, y, z);
+	        arr.push_back(ed);
+	    }
+	    
+	    int dis[v];
+	    for(int i=0;i<v;++i) dis[i] = INT_MAX;
+	    dis[0] = 0;         //assuming 0 to be source
+	    
+	    for(int k=0;k<(v-1);++k){       //V-1 times
+	        for(Edge ed: arr){
+	            if(dis[ed.v]>dis[ed.u]+ed.w){
+	                dis[ed.v] = dis[ed.u] + ed.w;
+	            }
+	        }
+	    }
+	    
+	    int temp[v];
+	    for(int i=0;i<v;++i) temp[i] = dis[i];
+	    
+	    //checking for negative weight cycle
+	    for(Edge ed: arr){
+	        if(temp[ed.v]>temp[ed.u]+ed.w){
+	            temp[ed.v] = temp[ed.u] + ed.w;
+	            
+	        }
+	    }
+	    
+	    bool negativeWeightCycle = false;
+	    for(int i=0;i<v;++i){
+	        if(dis[i]>temp[i]) {
+	            negativeWeightCycle = true;
+	            break;
+	        }
+	    }
+	    if(negativeWeightCycle) cout<<"Contains negative weight cycle.";
+	    else {
+            cout<<"Shortest Distances from 0 : ";
+            for(int i=0;i<v;++i) cout<<dis[i]<<", ";
+            cout<<"\n";
+        }
+	}
+	return 0;
+}
