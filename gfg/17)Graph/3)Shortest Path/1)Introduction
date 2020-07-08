@@ -12,6 +12,7 @@ DJikstra's Algorithm : O(ElogV)
 Greedy Approach
 
 Problem 1D) : Single Source Shortest Path Problem in DIRECTED GRAPH with NEGATIVE WEIGHTED EDGES as well, And if there is a NEGATIVE WEIGHT CYCLE report it.
+Note : Similar to bellmon ford, Negative weight cycle is not allowed in any of the previous algorithms as well. Bellmon ford can also report negative weight cycles.
 Bellmon Ford Algorithm : O(VE)
 Dynamic Programming Approach
 
