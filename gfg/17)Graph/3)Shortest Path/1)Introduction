@@ -1,2 +1,19 @@
-//
+Problem 1) :
+Single Source Shortest Path Problem : Given a graph and a source vertex src in graph, find shortest paths from src to all vertices in the given graph
 
+Problem 1A) : Single Source Shortest Path Problem in UNDIRECTED UNWEIGHTED GRAPH
+Inherently solved using BFS : O(V+E)
+
+Problem 1B) : Single Source Shortest Path Problem in DIRECTED ACYCLIC GRAPH
+Using Topological Sorting : O(V+E)
+
+Problem 1C) : Single Source Shortest Path Problem in DIRECTED GRAPH with ONLY POSITIVE WEIGHTED EDGES
+DJikstra's Algorithm : O(ElogV)
+
+Problem 1D) : Single Source Shortest Path Problem in DIRECTED GRAPH with NEGATIVE WEIGHTED EDGES as well
+Bellmon Ford Algorithm : O(VE)
+
+
+Problem 2) :
+All Source Shortest Path Problem : Given a graph, find shortest distances between every pair of vertices in a given edge weighted directed Graph.
+Floyd Warshall Algorithm : O(V^3) 
