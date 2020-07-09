@@ -4,7 +4,12 @@ calculated as |i1 – i2| + |j1 – j2|, where i1, j1 are the row number and col
 number and column number of the nearest cell having value 1.
 */
 void nearest(vector<vector<int>> arr, int row, int col) {
-
+    
+    /*main trick of solving this problem is that if go with simple approach 
+        of find nearest 1 for every cell, solution will give TLE.
+        so instead we have to go other way round, begin with all 1's and update shortest distance 
+        of all their neighbours accordingly
+        */
     //multi source bfs
     int rowNbr[] = {-1,0,1,0};
     int colNbr[] = {0,1,0,-1};
