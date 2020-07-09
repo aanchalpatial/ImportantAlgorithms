@@ -1,0 +1,67 @@
+//4)
+/*Given a square chessboard of N x N size, the position of Knight and position of a target is given. We need to find out
+minimum steps a Knight will take to reach the target position.
+The first line of input contains an integer T denoting the number of test cases. Then T test cases follow. Each test case contains
+an integer n denoting the size of the square chessboard. The next line contains the X-Y coordinates of the knight. The next line 
+contains the X-Y coordinates of the target. 
+*/
+//Note:- We have to convert X-Y co-ordinate to matrix index for input of knight & target
+#include<bits/stdc++.h>
+using namespace std;
+
+int minimumStepToCapture(pair<int, int> knight, pair<int, int> target, int n){
+    bool visited[n+1][n+1];
+    for(int i=0;i<n+1;++i){
+        for(int j=0;j<n+1;++j){
+            visited[i][j] = false;
+        }
+    }
+    
+    int rowNbr[] = {-2, -1, 1, 2, -2, -1, 1, 2};
+    int colNbr[] = {1, 2, 2, 1, -1, -2, -2, -1};
+    queue<pair<int, int>> q;
+    q.push(knight);
+    visited[knight.first][knight.second] = true;
+    
+    int steps = 0;
+    while(!q.empty()){
+        int cnt = q.size();
+        for(int i=0;i<cnt;++i){
+            pair<int, int> cell = q.front();
+            q.pop();
+            if(cell.first==target.first&&cell.second==target.second) return steps;
+            for(int i=0;i<8;++i){
+                int r = cell.first+rowNbr[i];
+                int c = cell.second+colNbr[i];
+                if( (r>=0&&r<n)&&(c>=0&&c<n)&&visited[r][c]==false ) {
+                    q.push(make_pair(r,c));
+                    visited[r][c]=true;
+                }
+            }
+        }
+        ++steps;
+
+    }
+    
+}
+
+int main()
+ {
+	int T;
+	cin>>T;
+	for(int j=0;j<T;++j){
+	    int n;
+	    cin>>n;
+	    pair<int, int> knight;
+	    pair<int, int> target;
+	    int p,q,r,s;
+	    cin>>p>>q>>r>>s;
+	    //converting x-y co-ordinates to matrix indexes
+	    knight = make_pair(n-q,p-1);    
+	    target = make_pair(n-s,r-1);
+	    
+	    int result = minimumStepToCapture(knight, target, n);
+	    cout<<result<<endl;
+	}
+	return 0;
+}
