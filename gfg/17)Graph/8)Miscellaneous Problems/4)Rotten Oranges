@@ -1,0 +1,71 @@
+//2) Minimum time required to rot all oranges
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int timeToRot(vector<int> adj[], int n, int m){
+    //bfs is suitable for this question
+    
+    queue<pair<int, int>> q;
+    for(int i=0;i<n;++i){
+        for(int j=0;j<m;++j){
+            if(adj[i][j]==2) q.push(make_pair(i,j));
+        }
+    }
+    int rowNbr[] = {-1, 1, 0, 0};
+    int colNbr[] = {0, 0, -1, 1};
+    int time = 0;
+    while(!q.empty()){
+        ++time;
+        int cnt = q.size();
+        for(int i=0;i<cnt;++i){
+            pair<int, int> p = q.front();
+            q.pop();
+            int r = p.first;
+            int c = p.second;
+            //checking all four neighbours
+            for(int j=0;j<4;++j){
+                int rr = r+rowNbr[j];
+                int cc = c+colNbr[j];
+                if( (rr>=0&&rr<n)&&(cc>=0&&cc<m)&&(adj[rr][cc]==1) ) {
+                    adj[rr][cc] = 2;
+                    q.push(make_pair(rr,cc));
+                }
+            }
+        }
+    }
+    for(int i=0;i<n;++i){
+        for(int j=0;j<m;++j){
+            if(adj[i][j]==1) return -1;
+        }
+    }
+    return time-1;
+}
+int main()
+ {
+	int T;
+	cin>>T;
+	for(int j=0;j<T;++j){
+	    int n, m;
+	    cin>>n>>m;
+	    vector<int> adj[n];
+	    for(int i=0;i<n;++i){
+	        for(int j=0;j<m;++j){
+	            int x;
+	            cin>>x;
+	            adj[i].push_back(x);
+	        }
+	    }
+	    
+	    int result = timeToRot(adj, n, m);
+	    cout<<result<<endl;
+	}
+	return 0;
+}
+
+
+
+
+
+
+
