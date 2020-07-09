@@ -1,0 +1,32 @@
+
+//1) Count the total number of ways or paths that exist between two vertices in a directed graph. These paths doesn’t contain a cycle.
+// Function to find paths between 2 nodes
+int cnt;
+void dfs(list<int> A[], int s, int d, bool visited[]){
+    
+    if(s==d) {
+        ++cnt;
+        return;
+    }
+    //cout<<s<<", ";
+    visited[s] = true;
+
+    for(auto u: A[s]){
+        if(visited[u]==false){
+            dfs(A,u, d, visited);
+        }
+    }
+    visited[s] = false;     //imp step
+}
+
+int Graph::countPaths(int s, int d) {
+    // Your code here
+    cnt = 0;
+    bool visited[V] = {false};
+    
+    dfs(adj,s,d,visited);
+    return cnt;
+    
+}
+
+
