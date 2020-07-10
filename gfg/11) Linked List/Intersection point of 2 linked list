@@ -44,3 +44,8 @@ void intersectionOfLinkedLists(Node *head1, Node *head2){
     }
     cout<<"No intersection point."<<endl;
 }
+
+//Method 3 : We can link last node linked list 1 to its head, now there exists a cycle. Now we can Find first node of loop approach to find intersection point.
+//*** INTERESTING APPROACH ***
+
+
