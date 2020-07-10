@@ -1,0 +1,110 @@
+//Problem Link : https://practice.geeksforgeeks.org/problems/alien-dictionary/1
+/*
+Given a sorted dictionary of an alien language having N words and k starting alphabets of standard dictionary. Find the order of characters in the alien language.
+Note: Many orders may be possible for a particular test case, thus you may return any valid order.
+
+Example:
+Input:
+2
+5 4
+baa abcd abca cab cad
+3 3
+caa aaa aab
+
+Output:
+1
+1
+
+Explanation:
+Test Case 1:
+Input:  Dict[ ] = { "baa", "abcd", "abca", "cab", "cad" }, k = 4
+Output: Function returns "bdac"
+Here order of characters is 'b', 'd', 'a', 'c'
+Note that words are sorted and in the given language "baa"
+comes before "abcd", therefore 'b' is before 'a' in output.
+Similarly we can find other orders.
+
+Test Case 2:
+Input: Dict[] = { "caa", "aaa", "aab" }, k = 3
+Output: Function returns "cab"
+*/
+
+/*Approach 
+https://www.techiedelight.com/find-correct-order-alphabets-dictionary-ancient-origin/
+https://www.youtube.com/watch?v=hCrbYOlQFrY
+*/
+
+string findOrder(string dict[], int N, int K) {
+    //words are sorted lexicographically by the rules of this new alien language. 
+    //Derive the order of letters in this language.
+    //hint : we have to somehow use topological sort
+    
+    //step 1 : build graph & it's adjacency list
+    
+    //there is an edge between 2 characters u->v if u comes before v
+    //in lexicographic ordering of alien dictionart
+    
+    unordered_map<char, int> indegree;
+    for(int i=0;i<N;++i){
+        for(int j=0;j<dict[i].size();++j){
+            if(indegree.find(dict[i][j])==indegree.end()){
+                indegree.insert({dict[i][j], 0});
+            }
+        }
+    }
+    
+    unordered_map<char, vector<char>> adj;
+    
+    //iterate through adjacent words & find first mis-matching character
+    for(int i=1;i<N;++i){
+        string word1 = dict[i];
+        string word2 = dict[i-1];
+        for(int j=0;j<word1.size()&&j<word2.size();++j){
+            if(word1[j]!=word2[j]){
+                adj[word2[j]].push_back(word1[j]);
+                indegree[word1[j]]++;
+                break;
+            }
+        }
+    }
+    
+    
+    
+    
+    // for(auto p: adj){
+    //     cout<<p.first<<" : ";
+    //     for(char ch: p.second) cout<<ch<<", ";
+    //     cout<<"\n";
+    // }
+    
+    // for(auto p: indegree){
+    //     cout<<p.first<<", "<<p.second<<"\n";
+    // }
+    
+    //step : topological sort of graph formed in step 1
+    //it is given in the problem that given ordering of words is valid, i.e there exits no cycles
+    //so now we have to find topological sort for DAG formed in step 1
+    //kahn's algorithm
+    
+    queue<char> q;
+    for(auto p: indegree){
+        if(p.second==0) q.push(p.first);
+    }
+    
+    string topologicalSorting = "";
+    while(!q.empty()){
+        char u = q.front();
+        q.pop();
+        
+        topologicalSorting += u;
+        
+        for(char v: adj[u]){
+            indegree[v]--;
+            if(indegree[v]==0) q.push(v);
+        }
+    }
+    
+    // cout<<"Required Ordering : "<<topologicalSorting<<"\n";
+    return topologicalSorting;
+    
+}
