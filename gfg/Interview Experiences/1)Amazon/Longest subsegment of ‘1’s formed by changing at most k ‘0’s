@@ -1,0 +1,95 @@
+/*https://www.geeksforgeeks.org/longest-subsegment-1s-formed-changing-k-0s/
+Given a binary array a[] and a number k, we need to find length of he longest subsegment of ‘1’s possible by changing at most k ‘0’s.
+*/
+
+using namespace std;
+
+int longestSubarrayOf1(int arr[], int n){
+    int length = 0;
+    for(int i=0;i<n;++i){
+        if(arr[i]==0) continue;
+        int j=i;
+        while(j<n&&arr[j]!=0){
+            ++j;
+        }
+        length = max(length, j-i);
+        j = i-1;
+    }
+    return length;
+}
+
+int longestSubsegmentOf1(int arr[], int n, int k){
+    /*observation
+    maximum subsegment can be formed only by changing 0's which are consecutive
+    */
+    queue<int> q;       //keeps track of converted nodes
+    int i = 0;
+    while(k>0&&i<n){
+        if(arr[i]==0){
+            arr[i] = 1;
+            q.push(i);
+            --k;
+        }
+        ++i;
+    }
+    
+    // for(int i=0;i<n;++i) cout<<arr[i]<<", ";
+    // cout<<"\n";
+
+    if(i==n) return n;
+    
+    int result = longestSubarrayOf1(arr, n);
+    
+    for(;i<n;++i){
+        if(arr[i]==0){
+            arr[q.front()] = 0;
+            q.pop();
+            arr[i] = 1;
+            q.push(i);
+            result = max(result, longestSubarrayOf1(arr, n));
+        }
+    }
+    
+    return result;
+if(arr[i]==0){
+                arr[i] = 1;
+                q.push(i);
+                --k;
+            }
+            ++i;}
+
+int main() {
+    
+    //longest subsegment of 1's formed by changing atmost k 0's to 1
+    int t;
+    cin>>t;
+    while(t>0){
+        --t;
+        int n, k;
+        cin>>n>>k;
+        int arr[n];
+        for(int i=0;i<n;++i) cin>>arr[i];
+        
+        int result = 0;
+        
+        //method 1 : naive approach
+        //O(n^2) time & O(k) space
+        //result = longestSubsegmentOf1(arr, n, k);
+        
+        //method 2 : 2 pointer approach
+        //O(n) time & O(1) space
+        //[l, r] range consists atmost k 0's
+        int l = 0, r = 0;       //try to maximise this range
+        for(;r<n;++r){
+            if(arr[r]==0) --k;
+            while(k<0){
+                if(arr[l]==0) ++k;
+                ++l;
+            }
+            result = max(result, r-l+1);
+        }
+        
+        cout<<result<<"\n";
+    }
+    return 0;
+}
