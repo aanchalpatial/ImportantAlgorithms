@@ -7,8 +7,10 @@ Your task is to find the maximum contigious subarray sum.*/
 //method 2 : Using kadane's algorithm
 /*
 Return maximum of :
-->sum of normal subarray &
-->sum of circular subarray
+->kadane(given array) &
+->sum - MINIMUM subarray sum of given array i.e kadane(invert all elements of given array) + sum
+
+where sum : is sum of all elements of array
 */
 //O(n) time & O(1) space
 int kadane(int arr[], int n){
