@@ -1,0 +1,30 @@
+using namespace std;
+int main() {
+    
+    int a = 100, b = 40;
+    
+    //swap 2 variables without using 3 variable
+    //https://www.geeksforgeeks.org/swap-two-numbers-without-using-temporary-variable/
+    
+    //method 1 : addition & substraction
+    //note :- may cause overflow
+    // a = a + b;
+    // b = a - b;
+    // a = a - b;
+    
+    //method 2 : multiplication & division
+    //note :- doesn't work 0 value
+    // a = a * b;
+    // b = a / b;
+    // a = a / b;
+    
+    //method 3 : xor
+    a = a^b;
+    b = a^b;
+    a = a^b;
+    
+    //all 3 methods fail, pointer is pointing to same variable
+    //so we need to handle this case explicitly
+    
+    cout<<a<<", "<<b;
+}
