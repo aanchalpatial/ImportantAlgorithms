@@ -193,6 +193,15 @@ int main()
 
 //2) COUNT INVERSIONS IN ARRAY
 //Naive solution is 0(n^2), do it in 0(nlogn) time
+//method 1 : brute force
+//O(n^2) time & O(1) space
+// int count = 0;
+// for(int i=0;i<size;++i){
+//     for(int j=i+1;j<size;++j){
+//         if(arr[i]>arr[j]) ++count;
+//     }
+// }
+// cout<<count<<"\n";
 //Approach is based on merge sort. While implementing merge sort total number of inversions is equal:-
 //number of inversions in left half + inversions in right half +inversion while merging
 
@@ -256,6 +265,8 @@ int main()
    
    return 0;
 }
+//method 3 : using self balancing bst like avl trees
+//method 4 : using trie
 
 
 //MERGE SORT FOR LINKED LISTS : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/MergeSort
