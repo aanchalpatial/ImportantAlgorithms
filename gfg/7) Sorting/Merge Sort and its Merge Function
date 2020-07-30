@@ -192,81 +192,130 @@ int main()
 }
 
 //2) COUNT INVERSIONS IN ARRAY
-//Naive solution is 0(n^2), do it in 0(nlogn) time
-//method 1 : brute force
-//O(n^2) time & O(1) space
-// int count = 0;
-// for(int i=0;i<size;++i){
-//     for(int j=i+1;j<size;++j){
-//         if(arr[i]>arr[j]) ++count;
-//     }
-// }
-// cout<<count<<"\n";
-//Approach is based on merge sort. While implementing merge sort total number of inversions is equal:-
-//number of inversions in left half + inversions in right half +inversion while merging
+int merge(int arr[], int l, int mid, int r) {
+    int temp[r - l + 1];
+    int i = l, j = mid + 1, k = 0;
 
-#include <bits/stdc++.h>
-using namespace std;
+    int mergeInversions = 0;
 
-int countMergeInversions(int arr[], int l, int h, int m){
-    int size1 = m-l+1;
-    int size2 = h-m;
-    int arr1[size1];
-    int arr2[size2];
-    for(int i=0;i<size1;++i){
-        arr1[i] = arr[l+i];
-    }
-    for(int i=0;i<size2;++i){
-        arr2[i] = arr[i+m+1];
-    }
-    int i=0,j=0,k=l;
-    int mergeCount = 0;
-    while(i<size1&&j<size2){
-        if(arr1[i]<=arr2[j]){
-            arr[k] = arr1[i];
-            ++i;
-        }else{
-            arr[k] = arr2[j];
-            ++j;
-            mergeCount += size1-i;              //******** important ********
+    while (i <= mid && j <= r) {
+        if (arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
+        } else {
+            mergeInversions += (mid - i + 1);
+            temp[k++] = arr[j++];
         }
-        ++k;
     }
-    while(i<size1){
-        arr[k] = arr1[i];
-        ++i;
-        ++k;
+    while (i <= mid) {
+        temp[k++] = arr[i++];
     }
-    while(j<size2){
-        arr[k] = arr2[j];
-        ++j;
-        ++k;
+    while (j <= r) {
+        temp[k++] = arr[j++];
     }
-    return mergeCount;
-    
+
+    for (int m = l; m <= r; ++m) arr[m] = temp[m - l];
+
+    return mergeInversions;
 }
-int countInversions(int arr[], int l, int h){
-    int result = 0;
-    if(l<h){
-        int m = l +(h-l)/2;
-        result += countInversions(arr, l, m);
-        result += countInversions(arr, m+1, h);
-        result += countMergeInversions(arr, l, h, m);
+
+int mergeSort(int arr[], int l, int r) {
+
+    int inversions = 0;
+
+    if (l < r) {
+        int mid = l + (r - l) / 2;
+        inversions += mergeSort(arr, l, mid);
+        inversions += mergeSort(arr, mid + 1, r);
+        inversions += merge(arr, l, mid, r);
     }
-   return result; 
+
+    return inversions;
 }
-int main()
-{
-   int arr[] = {40, 30, 20, 10, 4};
-   int n = sizeof(arr)/sizeof(arr[0]);
-   
-   int result = countInversions(arr, 0, n-1);
-   cout<<"Number of inversions: "<<result;
-   
-   return 0;
+
+int main() {
+
+
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+#endif
+
+    // mettlIssues();
+
+    //Problem : count inversions
+    int size;
+    cin >> size;
+    int arr[size];
+    for (int i = 0; i < size; ++i) {
+        cin >> arr[i];
+    }
+
+    //method 1 : brute force
+    //O(n^2) time & O(1) space
+    // int count = 0;
+    // for(int i=0;i<size;++i){
+    //     for(int j=i+1;j<size;++j){
+    //         if(arr[i]>arr[j]) ++count;
+    //     }
+    // }
+    // cout<<count<<"\n";
+
+    //method 2 : enhanced merge sort
+    //https://www.geeksforgeeks.org/counting-inversions/
+    cout << mergeSort(arr, 0, size - 1);
+
+    //method 3 : augmented self balancing bst
+    /*approach
+    =>
+    augment every node to keep track of size of its right subtree
+
+    =>
+    1) Create an empty AVL Tree.  The tree is augmented here
+       such that every node also maintains size of subtree
+       rooted with this node.
+
+    2) Initialize inversion count or result as 0.
+
+    3) Iterate from 0 to n-1 and do following for every
+       element in arr[i]
+         a) Insert arr[i] into the AVL Tree.  The insertion
+            operation also updates result.  The idea is to
+            keep counting greater nodes when tree is traversed
+            from root to a leaf for insertion.
+
+    4) Return result.
+
+    =>
+    More explanation for step 3.a:
+    1) When we insert arr[i], elements from arr[0] to arr[i-1] are already inserted into AVL Tree.
+    All we need to do is count these nodes.
+    2) For insertion into AVL Tree, we traverse tree from root to a leaf by comparing every node
+    with arr[i[]. When arr[i[ is smaller than current node, we increase inversion count by 1 plus
+    the number of nodes in right subtree of current node. Which is basically count of
+    greater elements on left of arr[i], i.e., inversions.
+    */
+
+
+    //method 4 : implementing method 3 using set STL & upper_bound()
+    // multiset<int> mySet;
+    // long int inversionCount = 0;
+    // mySet.insert(arr[0]);
+    // for (int i = 1; i < size; ++i) {
+
+    //     mySet.insert(arr[i]);
+    //     multiset<int>:: iterator itr = mySet.upper_bound(arr[i]);
+    //     inversionCount += distance(itr, mySet.end());
+
+    // }
+    // cout << inversionCount << "\n";
+
+
+    //method 5 : using Trie
+    //https://www.geeksforgeeks.org/count-inversions-in-an-array-set-4-using-trie/?ref=rp
+
+    return 0;
 }
-//method 3 : using self balancing bst like avl trees
-//method 4 : using trie
+
+
 
 
 //MERGE SORT FOR LINKED LISTS : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/MergeSort
