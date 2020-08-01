@@ -1,0 +1,131 @@
+//Given a 2D array, find the maximum sum subarray in it. 
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int helper(int **grid, int m, int n){
+
+    /*Approach :-
+    The Naive Solution for this problem is to check every possible rectangle in given 2D array. This solution requires 6 nested loops –
+
+     -> 4 for start and end coordinate of the 2 axis O(n^4)
+     -> and 2 for the summation of the sub-matrix O(n^2).
+    Overall time complexity of this solution would be O(n^4).
+    */
+    
+    int pre[m][n];
+    memset(pre, 0, sizeof(pre[0][0])*m*n);
+    
+    pre[0][0] = grid[0][0];
+    for(int j=1;j<n;++j) pre[0][j] = pre[0][j-1] + grid[0][j];
+    for(int i=1;i<m;++i) pre[i][0] = pre[i-1][0] + grid[i][0];
+    
+    for(int i=1;i<m;++i){
+        for(int j=1;j<n;++j){
+            pre[i][j] = grid[i][j] + pre[i-1][j] + pre[i][j-1] - pre[i-1][j-1];
+        }
+    }
+    
+    
+    
+    int result = INT_MIN;
+    for(int r1=0;r1<m;++r1){
+        for(int c1=0;c1<n;++c1){
+            for(int r2=r1;r2<m;++r2){
+                for(int c2=c1;c2<n;++c2){
+                    
+                    int sum = pre[r2][c2] - pre[r1][c2] - pre[r2][c1] + pre[r1][c1];
+                    result = max(result, sum);
+                }
+            }
+        }
+    }
+    return result;
+}
+
+int kadane(int arr[], int size){
+    int dp[size];
+    dp[0] = arr[0];
+    for(int i=1;i<size;++i){
+        dp[i] = max(arr[i], dp[i-1]+arr[i]);
+    }
+    int result = dp[0];
+    for(int i=1;i<size;++i){
+        result = max(result, dp[i]);
+    }
+    return result;
+}
+
+int helper2(int **grid, int R, int C){
+    /*https://www.youtube.com/watch?v=-FgseNO-6Gk&t=1423s
+    https://www.geeksforgeeks.org/maximum-sum-rectangle-in-a-2d-matrix-dp-27/
+    Efficient Approach –
+Kadane’s algorithm for 1D array can be used to reduce the time complexity to
+O(n^3). The idea is to fix the left and right columns one by one and find the \maximum sum contiguous rows for every left and right column pair. We basically
+find top and bottom row numbers (which have maximum sum) for every fixed left and
+right column pair. To find the top and bottom row numbers, calculate sun of 
+elements in every row from left to right and store these sums in an array say 
+temp[]. So temp[i] indicates sum of elements from left to right in row i. If we
+apply Kadane’s 1D algorithm on temp[], and get the maximum sum subarray of temp, 
+this maximum sum would be the maximum possible sum with left and right as boundary
+columns. To get the overall maximum sum, we compare this sum with the maximum sum 
+so far.
+    */
+    int result = INT_MIN;
+    for(int l=0;l<C;++l){
+        for(int r=l;r<C;++r){
+            //for every left & right pair of columns,
+            //find top & bottom row numbers which have maximum sum
+            //using kadane
+            int temp[R];
+            memset(temp, 0, sizeof(temp));
+            for(int i=0;i<R;++i){
+                for(int j=l;j<=r;++j){      //can be done in constant time using prefix array for every row
+                    temp[i] += grid[i][j];
+                }
+            }
+            int sum = kadane(temp, R);
+            result = max(result, sum);
+        }
+    }
+    return result;
+}
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int **grid;
+	    int m, n;
+	    cin>>m>>n;
+	    grid = new int*[m];
+	    for(int i=0;i<m;++i) grid[i] = new int[n];
+	    
+	    for(int i=0;i<m;++i){
+	        for(int j=0;j<n;++j){
+	            cin>>grid[i][j];
+	        }
+	    }
+	    
+	    //method 1 : brute force + prefix sum array
+	    //O((mn)^2) time & O(mn) space
+	    // cout<<helper(grid, m, n)<<"\n";
+	    
+	    //method 2 : kadane for 2d arrays
+	    //O(m*n^2) time
+	   cout<<helper2(grid, m, n)<<"\n";
+	    
+	    
+	}
+	return 0;
+}
+
+
+
+
