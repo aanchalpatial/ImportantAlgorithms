@@ -29,12 +29,3 @@ int main()
     }
     
     
-//KADANE 2.0 :  ***imp***
-//Note : Not an application of kadane
-///Given an array find the maximum sum that we can have by adding no 2 consecutive elements.
-//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/13)Maximum%20sum%20with%20no%20consecutives
-
-//APPLICATIONS OF KADANE :
-//1) Find maximum sum subarray with the condition that you are allowed to skip at most one element.
-//https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/17)Max%20sum%20subarray%20by%20removing%20at%20most%20one%20element
-
