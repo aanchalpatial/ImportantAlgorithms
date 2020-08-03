@@ -1,0 +1,103 @@
+//https://www.geeksforgeeks.org/multiply-large-numbers-represented-as-strings/
+//https://practice.geeksforgeeks.org/problems/multiply-two-strings/1
+/*
+Given two numbers as strings. The numbers may be very large (may not fit in long long int), the task is to find product of these two numbers.
+
+Examples:
+
+Input : num1 = 4154  
+        num2 = 51454
+Output : 213739916 
+
+Input :  num1 = 654154154151454545415415454  
+         num2 = 63516561563156316545145146514654 
+Output : 41549622603955309777243716069997997007620439937711509062916
+*/
+
+string multiplyWithOneDigit(string a, int digit){
+    string str = "";
+    int carry = 0;
+    for(int i=a.size()-1;i>=0;--i){
+        int num = (a[i] - '0');
+        long product = (num * digit) + carry;
+        str += ('0' + (product%10));
+        product /= 10;
+        carry = product;
+        // cout<<str<<", ";
+    }
+    if(carry>0) str += ('0' + carry);
+    return str;
+}
+
+string sumOf(string s1, string s2){
+    
+    string result = "";
+    int m = s1.size(), n = s2.size();
+    int i = 0, j = 0;
+    int carry = 0;
+    while(i<m&&j<n){
+        int sum = (s1[i]-'0') + (s2[j]-'0') + carry;
+        result += ('0' + sum%10);
+        sum /= 10;
+        carry = sum;
+        ++i;
+        ++j;
+    }
+     while(i<m){
+        int sum = (s1[i]-'0') + carry;
+        result += ('0' + sum%10);
+        sum /= 10;
+        carry = sum;
+        ++i;
+    }
+     while(j<n){
+        int sum = (s2[j]-'0') + carry;
+        result += ('0' + sum%10);
+        sum /= 10;
+        carry = sum;
+        ++j;
+    }
+    if(carry>0) result += ('0' + carry);
+    return result;
+}
+
+string multiplyStrings(string a, string b) 
+{
+    
+    if(a=="0"||b=="0") return "0";
+    bool flag = false;
+    if(a[0]=='-') {
+        flag = !flag;
+        a = a.substr(1, a.size()-1);
+    }
+    if(b[0]=='-') {
+        flag = !flag;
+        b = b.substr(1, b.size()-1);
+    }
+    
+    
+    //method : string to integer, then multiply, integer to string
+    //this method will not work because the mulitiplication result may
+    //be large enough such that it can't even be stored in long long int
+    
+    //method : school multiplication
+    vector<string> partialSums;
+    
+    for(int i=b.size()-1;i>=0;--i){
+        string pro = multiplyWithOneDigit(a, b[i]-'0');
+        for(int j=i;j<b.size()-1;++j) pro = "0" + pro;
+        // cout<<pro<<"\n";
+        partialSums.push_back(pro);
+    }
+    
+    string result = "";
+    
+    for(int i=0;i<partialSums.size();++i){
+         result = sumOf(result, partialSums[i]);   
+    }
+    reverse(result.begin(), result.end());
+    while(result[0]=='0'&&result.size()>1){ //removing any leading 0's
+        result = result.substr(1, result.size()-1);
+    }
+    return (flag)?"-" + result: result;
+}
