@@ -270,7 +270,7 @@ int main() {
 
     =>
     1) Create an empty AVL Tree.  The tree is augmented here
-       such that every node also maintains size of subtree
+       such that every node also maintains size of right subtree
        rooted with this node.
 
     2) Initialize inversion count or result as 0.
@@ -295,7 +295,7 @@ int main() {
     */
 
 
-    //method 4 : implementing method 3 using set STL & upper_bound()
+    //method 4 : implementing method 3 using MULTISET STL & upper_bound()
     // multiset<int> mySet;
     // long int inversionCount = 0;
     // mySet.insert(arr[0]);
