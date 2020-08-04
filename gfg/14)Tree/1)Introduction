@@ -3,6 +3,57 @@ a tree is a UNDIRECTED, CONNECTED & ACYCLIC GRAPH with restriction that any node
 graphs can have cycles but not trees
 all trees are graphs but not vice versa
 tree are used to represent HEIRARCHIAL data (using parent child relationships) whereas graphs don't represent data heirarchally
+
+To check whether a given graph is a tree or not :
+https://www.geeksforgeeks.org/check-given-graph-tree/
+An undirected graph is tree if it has following properties.
+1) There is no cycle.
+2) The graph is connected.
+
+bool dfs(vector<int> adj[], int visited[], int u, int parent){
+    
+    
+    visited[u] = true;
+    
+    for(int v: adj[u]){
+        
+        if(visited[v]==false){
+            if(dfs(adj, visited, v, u)) return true;
+        }else if(v!=parent){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+bool isTree(int n, int m, int a[][2])
+{
+    // to check whether given graph is a tree or not :
+    //we have to check 2 things
+    //1) whether graph is connected or not
+    //2) whether graph is acyclic or not
+    
+    vector<int> adj[n+1];
+    for(int i=0;i<m;++i){
+        int u = a[i][0], v = a[i][1];
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    int visited[n+1];
+    memset(visited, false, sizeof(visited));
+    
+    
+    bool containsCycle = dfs(adj, visited, 1, -1);  
+    
+    if(containsCycle) return false;
+    
+    for(int i=1;i<=n;++i){
+        if(visited[i]==false) return false;
+    }
+    return true;
+}
 */
 
 
