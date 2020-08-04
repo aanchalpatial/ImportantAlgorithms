@@ -1,0 +1,170 @@
+/*
+Given a boolean 2D array, where each row is sorted. Find the row with the maximum number of 1s.
+Example:
+
+Input matrix
+0 1 1 1
+0 0 1 1
+1 1 1 1  // this row has maximum 1s
+0 0 0 0
+
+Output: 2
+*/
+//https://www.geeksforgeeks.org/find-the-row-with-maximum-number-1s/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int findLeftMostOne(int **mat, int i, int c1, int c2, int m){
+        int index = -2;      //index of rightmost 0
+        int l = c1, r = c2;
+        while(l<=r){
+            int mid = l + (r-l)/2;
+            if(mid==0&&mat[i][mid]==1) {
+                index = -1;
+                break;
+            }else if(mid==m-1&&mat[i][mid]==0){
+                index = m-1;
+                break;
+            }else if(mat[i][mid]==0){
+                if(mat[i][mid+1]==1){
+                    index = mid;
+                    break;
+                }else{
+                    l = mid+1;
+                }
+                
+            }else r = mid-1;
+        }
+        return index;
+        
+        
+
+}
+
+
+int maxOnesRow(int **mat,int n,int m)
+{
+    //method 1 : brute force 
+    //O(nm) time & O(1) space
+    // int result = -1;
+    // int maxCount = -1;
+    
+    // for(int i=0;i<n;++i){
+    //     int count = 0;
+    //     for(int j=0;j<m;++j){
+    //         if(mat[i][j]==1) ++count;
+    //     }
+    //     if(count>maxCount){
+    //         maxCount = count;
+    //         result = i;
+    //     }
+    // }
+    
+    // return result;
+    
+    //method 2 : since each row is sorted, we can apply binary search on each 
+    //row to count number of 1's in it
+    //O(nlogm) time & O(1) space
+    // int result = -1;
+    // int maxCount = -1;
+    
+    // for(int i=0;i<n;++i){
+        
+    //     int index = -2;      //index of rightmost 0
+    //     int l = 0, r = m-1;
+    //     while(l<=r){
+    //         int mid = l + (r-l)/2;
+    //         if(mid==0&&mat[i][mid]==1) {
+    //             index = -1;
+    //             break;
+    //         }else if(mid==m-1&&mat[i][mid]==0){
+    //             index = m-1;
+    //             break;
+    //         }else if(mat[i][mid]==0){
+    //             if(mat[i][mid+1]==1){
+    //                 index = mid;
+    //                 break;
+    //             }else{
+    //                 l = mid+1;
+    //             }
+                
+    //         }else r = mid-1;
+    //     }
+        
+    //     // cout<<"index : "<<index<<"\t";
+        
+    //     if(index!=-2){
+    //         int count = m-1 - (index+1) + 1;
+    //         // cout<<count<<"\n";
+    //         if(count>maxCount){
+    //             maxCount = count;
+    //             result = i;
+    //         }
+    //     }
+        
+    // }
+    
+    // return result;
+    
+        //method 3 : searching from top-right corner
+    //O(m+n) time & O(1) space
+    /*
+    Following method works in O(m+n) time complexity in worst case.
+
+    Step1: Get the index of first (or leftmost) 1 in the first row.
+
+    Step2: Do following for every row after the first row
+    …IF the element on left of previous leftmost 1 is 0, ignore this row.
+    …ELSE Move left until a 0 is found. Update the leftmost index to this index and 
+    max_row_index to be the current row.
+
+The time complexity is O(m+n) because we can possibly go as far left as we came ahead in the first step.
+    */
+    int result = 0;
+    int i = m-1;
+    while(i>=0&&mat[0][i]==1){
+        --i;
+    }
+    int leftMostIndexOfOne = i+1;
+    
+    for(int i=1;i<n;++i){
+        if(leftMostIndexOfOne==0) break;
+        if(mat[i][leftMostIndexOfOne-1]==1){
+            int leftMostIndexOfOne = findLeftMostOne(mat, i, 0, leftMostIndexOfOne-1, m);
+            result = i;
+        }
+    }
+    
+    return result;
+}
+
+
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int n, m;
+	    cin>>n>>m;
+	    int **mat;
+	    mat = new int*[n];
+	    for(int i=0;i<n;++i){
+	        mat[i] = new int[m];
+	    }
+	    
+	    for(int i=0;i<n;++i){
+	        for(int j=0;j<m;++j){
+	            cin>>mat[i][j];
+	        }
+	    }
+	    
+	    cout<<maxOnesRow(mat, n, m)<<"\n";
+	}
+	return 0;
+}
