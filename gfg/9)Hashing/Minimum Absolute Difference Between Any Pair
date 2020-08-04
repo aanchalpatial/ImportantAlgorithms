@@ -1,0 +1,59 @@
+/*
+Given an array of integers of size N, the task is to find the minimum absolute difference between any pair of elements in the array.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. Then T test cases follow. The first line of each test case contains a single integer N, size of the array. The second line of each test case contains N space-separated values of the array arr[].
+
+Output:
+For each testcase, in a new line, the minimum absolute difference between any pair of elements in the array gets printed.
+
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function getMinDiff() which takes the array arr[] and the size of the array (N) as arguments and returns the minimum absolute difference.
+
+Expected Auxiliary Space: O(n)
+Expected Time Complexity: O(n)
+
+Constraints:
+1 ≤ T ≤ 100
+2 ≤ N ≤ 104
+1 ≤ A[i] ≤ 104
+*/
+
+#define MAX 10000
+int getMinDiff(int a[], int n)
+{
+    // method 1 : brute force
+    //O(n^2) time & O(1) space
+    
+    //method 2 : sorting
+    //O(nlogn) time & O(1) space
+    
+    //method 3 : hashmap
+    //O(MAX)
+    int hash[MAX+1];
+    memset(hash, 0, sizeof(hash));
+    
+    for(int i=0;i<n;++i) {
+        hash[a[i]]++;
+        if(hash[a[i]]>1) return 0;
+    }
+    
+    //traverse through the hash array and calculate the distance
+    //between two nearest elements.
+    int diff = INT_MAX;
+    for(int i=0;i<=MAX;++i){
+        if(hash[i]>0){
+            ++i;
+            int length = 1;
+            while(i<=MAX&&hash[i]==0){
+                ++i;
+                ++length;
+            }
+            if(i<=MAX){
+                diff = min(diff, length);
+            }
+            --i;
+        }
+    }
+    return diff;
+}
