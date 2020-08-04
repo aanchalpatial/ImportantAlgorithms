@@ -1,0 +1,75 @@
+using namespace std;
+
+int main() {
+    
+    //Problem 1 : find whether a given number is power of k or not
+    //where k is some power of 2 i.e k = 2, 4, 8, 16, ...
+    
+    //there are 3 generic methods
+    
+    //let's say k = 4 i.e find whether given number is power of 4 or not
+    
+    //METHOD 1 : simple iteration
+    // while(num!=1){
+    //     // cout<<num<<", ";
+    //     if(num%4!=0) return false;
+    //     num /= 4;
+    // }
+    // return true;
+    
+    //METHOD 2 : using logarithms
+    //A number will be a power of 4 if floor(log4(num))=ceil(log4(num) because
+    //log4 of a number that is a power of 4 will always be an integer.
+    // float l = log(num)/log(4);
+    // float f = floor(l), c = ceil(l);
+    // return (l==f);
+    
+    //METHOD 3 : using bits
+    //if number of set bits is 1 and set bit is and 
+    //even indexed bit from right end starting with 0
+    //O(1) time & O(1) space
+    // int setBits = __builtin_popcount(num);
+    // if(setBits==1){
+    //     for(int i=0;i<32;++i){
+    //         if(num&(1<<i)){
+    //             return (i%2==0);
+    //         }
+    //     }
+    // }
+    // return false;
+    
+    
+    /*NOTE :- we have 1 extra method for k = 2 ONLY
+    METHOD :  If we subtract a power of 2 numbers by 1 then all unset bits
+    after the only set bit become set; and the set bit become unset.
+    We can say n is a power of 2 or not based on value of n&(n-1).
+    The expression n&(n-1) will not work when n is 0
+    */
+    
+    
+    
+    
+    //Problem 2 : For k = 3;
+    //Method 1 & Method 2  remains same
+    //Method 3 : Any integer number other than power of 3 which divides
+    //highest power of 3 value that integer can hold 3^19 = 1162261467 
+    //return (1162261467%n==0)?true:false;
+    
+    
+    //Problem 3 : Given two numbers as strings, find if one is a power of other
+    //The approach is simple. First, find smaller of the two strings and then
+    //multiply it with itself until it becomes equal to or greater than the 
+    //larger string. If they are equal, return true, else return false.
+    
+    
+    //Problem 4 : Check if the number is a Prime power number
+    /*
+    The idea is use Seive of Eratosthenes to find all the prime number. 
+    Then, Iterate over all the prime numbers and check that if any prime number
+    divides the given number N, if yes then divide it until it becomes 1 or not
+    divisible by that prime number. Finally, check that the number is equal to 1,
+    If yes then return prime number otherwise given number cannot be expressed
+    as a prime number raised to some power.
+    */
+    
+}
