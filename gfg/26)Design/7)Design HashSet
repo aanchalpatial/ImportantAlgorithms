@@ -47,18 +47,69 @@ public:
     this functionality can be implemented using vector.resize(new_size, initial_value_for new sizes);
     */
     
-    int capacity;
-    vector<int> *bucket;
+    class MyHashSet {
+public:
     
+    //method 1 : naive approach
+    //bool arr[1000001]
+    //O(1) time for all 3 operations
+    
+    
+    //method 2 : implement hashing
+    //time complexity depends how good our hash functions is
+    /*things we need to take care of :-
+    1) bucket size
+    2) hash function
+    3) open addressing(linear probing/quadratic probing /double hashing) VS chaining
+    4) load factor (NOT IMPLEMENTED BUT SHOULD HAVE) :- The load factor is a measure of how 
+    full the HashSet is allowed to get
+    before its capacity is automatically increased. When the number of entries in the hash table 
+    exceeds the product of the load factor and the current capacity, the hash table is rehashed 
+    (that is, internal data structures are rebuilt) so that the hash table has approximately
+    twice the number of buckets.
+    also, load factor = number of entries in hash / number of buckets
+    
+    */
+    
+    int capacity;
+    vector<vector<int>> bucket;
+    float loadFactor;
+    int count;              //number of elements in hash set
     
     /** Initialize your data structure here. */
     MyHashSet() {
+        loadFactor = 0.75;
         capacity = 5000;
-        bucket = new vector<int>[capacity];
+        bucket.resize(capacity, vector<int>());
+        count = 0;
     }
     
     int hashOf(int key){
         return key%capacity;
+    }
+    
+    void rehash(){
+        
+        /*
+        Rehashing can be done as follows:
+        https://www.geeksforgeeks.org/load-factor-and-rehashing/
+        For each addition of a new entry to the map, check the load factor.
+        If it’s greater than its pre-defined value (or default value of 0.75 if not given), then Rehash.
+        For Rehash, make a new array of double the previous size and make it the new bucketarray.
+        Then traverse to each element in the old bucketArray and call the insert() for each 
+        so as to insert it into the new larger bucket array.
+        */
+        
+        vector<vector<int>> oldBucket = bucket;
+        capacity *= 2;  //double the capacity
+        vector<vector<int>> newBucket(capacity, vector<int>());
+        bucket = newBucket;
+        count = 0;
+        
+        for(int i=0;i<(capacity/2);++i){
+            for(int j=0;j<oldBucket[i].size();++j) add(oldBucket[i][j]);
+        }
+        
     }
     
     void add(int key) {
@@ -66,6 +117,7 @@ public:
         
         int index = hashOf(key);
         bucket[index].push_back(key);
+        ++count;
         
         // for(int i=0;i<6;++i){
         //     cout<<"bucket["<<i<<"] = ";
@@ -73,6 +125,13 @@ public:
         //     cout<<"\n";
         // }
         // cout<<"\n";
+        
+        if(count>(capacity*loadFactor)){
+            //rehash called
+            rehash();
+        }
+        
+        
     }
     
     void remove(int key) {
@@ -89,6 +148,7 @@ public:
             }
         }
         bucket[index].erase(bucket[index].begin()+k);
+        --count;
         
     }
     
