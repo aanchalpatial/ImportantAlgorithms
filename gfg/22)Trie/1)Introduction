@@ -5,6 +5,8 @@ TRIE(or Digital Tree) Data Structure is best suited for following operations on 
 4) Prefix Search  :0(prefix_length+output_length)	i.e Used in Auto Complete / Google Suggestions, Camel Case
 5) Lexicographic ordering of words  :0(output_length)
 
+WHY TRIE ?? : https://www.geeksforgeeks.org/advantages-trie-data-structure/
+
 
 #include <bits/stdc++.h>
 using namespace std;
