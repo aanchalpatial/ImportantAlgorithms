@@ -23,7 +23,7 @@ public:
 //         return result;
         
         
-        //method 2 : 
+        //method 2 : SIMILAR TO KADANE
         //https://www.geeksforgeeks.org/maximum-product-subarray-set-3/?ref=rp
         //O(n) time & O(1) space
         /*
