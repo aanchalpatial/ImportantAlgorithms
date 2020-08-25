@@ -2,6 +2,7 @@
 // Naive Approach : O(n * m) using hashing, where n is the number of ranges, m is the maximum size of ranges.
 
 //Using Prefix Sum : O(n) time, O(1) extra space
+//https://www.geeksforgeeks.org/maximum-occurred-integer-in-n-ranges-set-2/
 
 #include <bits/stdc++.h>
 using namespace std;
