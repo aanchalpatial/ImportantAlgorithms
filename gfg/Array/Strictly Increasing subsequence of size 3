@@ -28,8 +28,8 @@ vector<int> find3Numbers(vector<int> arr, int N) {
     //METHOD 3 : create 2 auxillary array
     //*** BEST METHOD ***
     //O(n) time & O(n) space
-    //Use Auxiliary Space. Find "SMALLER" element in the range [0, i-1] and
-    //"GREATER" element in the range [i+1, n-1] for each valid i(index).
+    //Use Auxiliary Space. Find "SMALLEST" element in the range [0, i-1] and
+    //"GREATEST" element in the range [i+1, n-1] for each valid i(index).
     int lSmaller[N];
     lSmaller[0] = INT_MAX;
     for(int i=1;i<N;++i){
