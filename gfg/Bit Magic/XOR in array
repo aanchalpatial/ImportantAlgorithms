@@ -95,7 +95,24 @@ int main() {
 	*/
 	//Another Index based method discussed here : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/Array/Find%20duplicates%20in%20range
 	
-	//5) You are given a list of n-1 integers and these integers are in the range of 1 to n
+	//5) You are given a read only array of n integers from 1 to n. Each integer appears exactly once except A which appears twice and B which is missing. Return A and B.
+	//https://www.interviewbit.com/problems/repeat-and-missing-number-array/
+	/*
+	    Sum(Actual) = Sum(1...N) + A - B
+
+	    Sum(Actual) - Sum(1...N) = A - B. 
+
+	    Sum(Actual Squares) = Sum(1^2 ... N^2) + A^2 - B^2
+
+	    Sum(Actual Squares) - Sum(1^2 ... N^2) = (A - B)(A + B) 
+
+	    = (Sum(Actual) - Sum(1...N)) ( A + B). 
+	We can use the above 2 equations to get the value of A and B.
+	
+	Note : Take extra care of overflows
+	*/
+	
+	//6) You are given a list of n-1 integers and these integers are in the range of 1 to n
     //Find the Missing Number
     /*Similar to UNIQUE 4
     1. XOR all the array elements, let the result of XOR be X1.
