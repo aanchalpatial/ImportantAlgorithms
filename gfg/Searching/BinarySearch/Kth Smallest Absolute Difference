@@ -3,3 +3,28 @@ Then sort this array and print the k-th minimum value from this array. This will
 take time O(n^2 + n^2 * log(n^2)) = O(n^2 + 2*n^2*log(n)).*/
 //An Efficient Solution is based on Binary Search.
 //https://www.geeksforgeeks.org/k-th-smallest-absolute-difference-two-elements-array/
+//https://practice.geeksforgeeks.org/problems/smallest-absolute-difference/0
+
+/*
+1) Sort the given array a[].
+2) We can easily find the least possible absolute
+   difference in O(n) after sorting. The largest
+   possible difference will be a[n-1] - a[0] after
+   sorting the array. Let low = minimum_difference
+   and high = maximum_difference.
+3) while low < high:
+4)     mid = (low + high)/2
+5)     if ((number of pairs with absolute difference
+                                <= mid) < k):
+6)        low = mid + 1
+7)     else:
+8)        high = mid
+9) return low
+We need a function that will tell us number of pairs with difference <= mid efficiently.
+Since our array is sorted, this part can be done like this:
+
+1) result = 0
+2) for i = 0 to n-1:
+3)     result = result + (upper_bound(a+i, a+n, a[i] + mid) - (a+i+1))
+4) return result
+*/
