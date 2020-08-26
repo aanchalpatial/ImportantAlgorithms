@@ -4,7 +4,7 @@
 using namespace std;
 
 
-int countSetBits(int n){
+int countSetBits(int n){		//0(32)
     
     int setBits = 0;
     while(n>0){
@@ -14,7 +14,7 @@ int countSetBits(int n){
     return setBits;
 }
 
-int countSetBits2(int n){
+int countSetBits2(int n){			//Brian Karnighan Algorithm, 0(no of set bits)
     
     int setBits = 0;
     while(n>0){
@@ -25,7 +25,7 @@ int countSetBits2(int n){
 }
 
 
-int countSetBits3(int n){
+int countSetBits3(int n)			//0(1)
     
     //assumption : int is 32 bits long
     
