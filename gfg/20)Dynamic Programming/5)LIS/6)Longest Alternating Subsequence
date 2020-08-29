@@ -1,0 +1,72 @@
+/*
+A sequence {x1, x2, .. xn} is alternating sequence if its elements satisfy one of the following relations :
+
+x1 < x2 > x3 < x4 > x5..... or  x1 >x2 < x3 > x4 < x5.....
+
+Your task is to find the longest such sequence.
+*/
+//Proble Link : https://practice.geeksforgeeks.org/problems/longest-alternating-subsequence/0
+//Solution Link : https://www.geeksforgeeks.org/longest-alternating-subsequence/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int las(int arr[], int N){
+    
+    //method : application of longest increasing subsequence
+    // https://www.geeksforgeeks.org/longest-alternating-subsequence/
+    
+    
+    
+    int dp[N][2];
+    /*
+    dp[i][0] : length of longest alternating subsequence ending at i & last element is greater than it's previous element
+    dp[i][1] : length of longest alternating subsequence ending at i & last element is smaller than it's previous element
+    */
+    
+    for(int i=0;i<N;++i) {
+        dp[i][0] = 1;
+        dp[i][1] = 1;
+        // cout<<dp[i][0]<<", "<<dp[i][1]<<"\n";
+    }
+    
+    int result = 1;
+    
+    for(int i=1;i<N;++i){
+        for(int j=0;j<i;++j){
+            
+            if(arr[j]<arr[i]) dp[i][0] = max(dp[i][0], 1+dp[j][1]);
+            
+            if(arr[j]>arr[i]) dp[i][1] = max(dp[i][1], 1+dp[j][0]);
+            
+        }
+        
+        result = max(result, max(dp[i][0], dp[i][1]));
+        
+    }
+    
+    return result;
+    
+}
+
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int size;
+	    cin>>size;
+	    int arr[size];
+	    for(int i=0;i<size;++i){
+	        cin>>arr[i];
+	    }
+	    
+	    cout<<las(arr, size)<<"\n";
+	}
+	return 0;
+}
