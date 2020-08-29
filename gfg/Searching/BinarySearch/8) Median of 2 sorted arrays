@@ -4,4 +4,7 @@
 //Variation 2 : Different Sized Arrays
 //https://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes/
 //https://www.geeksforgeeks.org/median-two-sorted-arrays-different-sizes-ologminn-m/#:~:text=The%20median%20is%20the%20(n,element%20among%20the%20two%20arrays.
-//Problem Link : https://leetcode.com/problems/median-of-two-sorted-arrays/description/
+//Problem Link : https://www.interviewbit.com/problems/median-of-array/
+
+//Follow Up : Matrix Median
+//https://www.interviewbit.com/problems/matrix-median/
