@@ -1,11 +1,11 @@
 //SORT 2 TYPES OF ELEMENTS
 //2 types of elements can either be  negative and positive elements OR even and odd elements OR 0s&1s in a binary array
-//Naive solution takes 0(n) time & 3 traversals of array
+//Naive solution takes 0(n) time & 3 traversals of array			//STABLE
 //Instead use either lomuto or hoare partition to segregate in 0(n) time & 1 traversal of array
 #include <iostream>
 using namespace std;
 
-void segregateLomuto(int arr[], int n){
+void segregateLomuto(int arr[], int n){				//NOT STABLE
     int i = 0;
     for(int j=i;j<n;++j){
         if(arr[j]%2 ==0){
@@ -15,7 +15,7 @@ void segregateLomuto(int arr[], int n){
     }
 }
 
-void segregateHoare(int arr[], int n){
+void segregateHoare(int arr[], int n){				//NOT STABLE
     int i = -1, j = n;
     while(true){
         do{
