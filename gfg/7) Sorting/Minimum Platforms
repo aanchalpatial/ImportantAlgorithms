@@ -1,30 +1,94 @@
 /*Given arrival and departure times of all trains that reach a railway station. Your task is to find the
 minimum number of platforms required for the railway station so that no train waits.*/
 
-//APPROACH:
-/*
- Step1: create multimap
- Step2: store all arrival & departure times in it.
- Step3: Traverse map and if second value of map is 'a' then platform required will increment by 1, otherwise decrement by 1.
- Step4: keep update the maximum platform needed after each inc/dec operations.
-*/
+#include<bits/stdc++.h>
+using namespace std;
 
-int findPlatform(int arr[], int dep[], int n)
-{
-	// Your code here
-	//int second part of macp
-	//0 represents arrival, 1 represents departure
-	multimap<int, int> m;
-	for(int i=0;i<n;++i) m.insert(make_pair(arr[i],0));
-	for(int i=0;i<n;++i) m.insert(make_pair(dep[i],1));
-	
-	int result = 0;
-	int x = 0;
-	for(auto i: m){
-	    if(i.second == 0) ++x;
-	    else if(i.second == 1) --x;
-	    result = max(result, x);
+bool myComp(pair<int, int> p1, pair<int, int> p2){
+    
+    return ( (p1.first==p2.first)?(p1.second<p2.second):(p1.first<p2.first) );
+    
+}
+
+int minimumPlatforms(int arr[], int dep[], int N){
+    
+    //method 1 : consider every interval one by one & then 
+    //check the number of overlapping intervals with it
+    //O(n^2) time & O(1) space
+    
+    
+    //method 2 : sorting all times, incrementing when arrival 
+    //time comes & decrementing when departure time comes
+    //https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station/
+    //O(nlogn) time & O(n) space
+    // vector<pair<int, int>> v;      
+    // for(int i=0;i<N;++i) {
+    //     v.push_back({arr[i], 0});    //0 represents arrival time
+    //     v.push_back({dep[i], 1});   //1 represents departure time
+    // }
+    // sort(v.begin(), v.end(), myComp);
+    
+    // // for(auto p: v) cout<<"("<<p.first<<","<<p.second<<") ";
+    // // cout<<"\n";
+    
+    // int result = 0;
+    // int platforms = 0;
+    // for(int i=0;i<v.size();++i){
+    //     if(v[i].second==0) ++platforms;
+    //     else --platforms;
+        
+    //     result = max(result, platforms);
+    // }
+    // return result;
+    
+    //method 3 : prefix sum + hashing
+    //O(n) time & O(2361) space
+    //https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station-set-2-map-based-approach/
+    //ASSUMPTION : Consider that all the trains arrive on the same day and leave on the same day.
+    /*
+    If all the arrival and departure occur on the same day then we can use and auxiliary array to
+    compute the required number of the platform in O(n).
+    Whenever an arrival occurs we increase the count of the required platform when a departure occurs
+    we decrease the required platform at that point of time, after that, we take the cumulative sum,
+    which would provide the required number of platform for all point of time, out of these values 
+    maximum value is our answer.
+    */
+    int time[2400] = {0};
+    for(int i=0;i<N;++i){
+        time[arr[i]]++;
+        //once train departs we decrease the platform count
+        time[dep[i]+1]--;       //RRRRR
+    }
+    
+    int result = time[0];
+    for(int i=1;i<2400;++i){
+        time[i] += time[i-1];
+        result = max(result, time[i]);
+    }
+    
+    return result;
+}
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int size;
+	    cin>>size;
+	    int arr[size], dep[size];
+	    for(int i=0;i<size;++i){
+	        cin>>arr[i];
+	    }
+	    for(int i=0;i<size;++i){
+	        cin>>dep[i];
+	    }
+	    
+	    cout<<minimumPlatforms(arr, dep, size)<<"\n";
 	}
-	return result;
-	
+	return 0;
 }
