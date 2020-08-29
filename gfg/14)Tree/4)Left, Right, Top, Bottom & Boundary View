@@ -220,7 +220,7 @@ Output 2:
      *****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
 */
 
-//SOLUTION is simple : root->data + leftView + leaves(not bottomView) + rightView(in reverse)
+//SOLUTION is simple : root->data + leftView(except leaf) + leaves(not bottomView) + rightView(in reverse & except leaf)
 //BUT the trick here is to print leftView of left subtree of root, leaves of left subtree of root, leaves of right subtree of root &
 //then right view(in reverse) of right subtree of root.
 
