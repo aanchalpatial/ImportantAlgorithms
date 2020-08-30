@@ -103,6 +103,40 @@ The above algorithm can be extended to handle such cases by adding a SPECIAL CHA
 inorder and preorder traversals.
 */
 
+//METHOD 3 : Using only preorder traversal
+//only preorder traversal cann't uniquely determine a tree, but if we add "$" after every node & we add type to every NULL nodes whether it is left or right 
+//then preorder only is enough to determine uniquely
+//now we can use similar substring finding approach as we did in method 2
 
+void preorder(TreeNode *root, string &str, string type){
+        if(root==NULL) {
+            str += type + "$";
+            return;
+        }
+        
+        str += to_string(root->val)+"$";
+        
+        preorder(root->left, str, "left");
+        preorder(root->right, str, "right");
+        
+    }
+    
+    bool isSubtree(TreeNode* s, TreeNode* t) {
+        
+        //preorder of t is a substring of preorder of s
+        /*
+        But, in order to use this approach, we need to treat the given tree in a different manner. 
+        Rather than assuming a nullnull value for the childern of the leaf nodes, we need to treat the 
+        left and right child as a lnulll and rnull value respectively. 
+        we will we using a type variable to accomplish this purpose
+        */
+        string preorderS = "$", preorderT = "$";
+        preorder(s, preorderS, "left");
+        preorder(t, preorderT, "left");
+        cout<<preorderS<<", "<<preorderT<<"\n";
+        
+        return (preorderS.find(preorderT)!=string::npos);
+        
+    }
 
 
