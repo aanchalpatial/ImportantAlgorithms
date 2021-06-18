@@ -5,6 +5,13 @@
 //*** INTERESTING FACT ***
 //Two Pointer Technique questions CAN ALSO BE DONE via and in hashing there is no compulsion of array to be sorted but hashing
 //requires EXTRA SPACE : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Pair%20With%20Given%20Sum
+/*						SORTING				vs 			Hashing
+1) Find pairs with given sum :		O(nlogn) time & O(1) space				O(n) time & O(n) space
+
+2) Find triplet with given sum :	O(n^2) time & O(1) space				O(n^2) time & O(n) space
+
+3) Find quadruplets with given sum :	O(n^3) time & O(1) space				O(n^2) time & O(n^2) space
+*/
 
 //3 APPLICATIONS:-
 //1) Given a sorted array A (sorted in ascending order), having N integers, find if there exists any pair of elements (A[i], A[j])
