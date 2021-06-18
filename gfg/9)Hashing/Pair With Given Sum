@@ -3,7 +3,13 @@
 //There is another O(n) solution if array is sorted, then we can use 2 pointer approach as well.
 //Two Pointer Technique questions CAN ALSO BE DONE via and in hashing there is no compulsion of array to be sorted but hashing
 //requires EXTRA SPACE : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/7)%20Sorting/Two%20Pointers%20Technique
+/*						SORTING				vs 			Hashing
+1) Find pairs with given sum :		O(nlogn) time & O(1) space				O(n) time & O(n) space
 
+2) Find triplet with given sum :	O(n^2) time & O(1) space				O(n^2) time & O(n) space
+
+3) Find quadruplets with given sum :	O(n^3) time & O(1) space				O(n^2) time & O(n^2) space
+*/
 
 //1) Find PAIRS with given sum
 //METHOD 1 : naive approach is O(n^2) time & O(1) space
