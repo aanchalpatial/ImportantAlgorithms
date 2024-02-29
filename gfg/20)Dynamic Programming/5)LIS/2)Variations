@@ -21,6 +21,7 @@ chain of pairs such that is if (a, b) , (c, d) form chain than b<c.
 Sort the pair of elements according to first value.
 Then find lis() in sorted array with minor change of replacing arr[j]<=arr[i] with arr[j].second <= arr[i].first.
 Note :- This is INFACT the ACTIVITY SELECTION PROBLEM and can be solved with greedy approach as well.
+Note :- This is a more specific version of building bridges problem
 //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/5)LIS/3)Activity%20Selection%20Problem
 
 6) Box Stacking Problem : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/5)LIS/4)Box%20Stacking%20Problem
