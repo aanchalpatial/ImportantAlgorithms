@@ -106,7 +106,7 @@ public:
         //method 1 : naive approach is using dfs/bfs
         //O(n) time & O(1) space
         
-        //method 2 : 
+        //method 2 : see P100 video first: https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-Tree/video/MTQ3NA%3D%3D
         //O(logn^2) time & O(1) space
         //is O(logn^2) better than O(n) ? : https://stackoverflow.com/questions/13710629/on2-vs-o-nlogn2#:~:text=6%20Answers&text=n%20is%20only%20less%20than,which%20algorithm%20is%20better...
         

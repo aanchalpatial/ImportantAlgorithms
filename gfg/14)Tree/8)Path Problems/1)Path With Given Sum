@@ -7,6 +7,7 @@ downwards (traveling only from parent nodes to child nodes).
 
 //APPLICATION of Subarray with given sum :- 
 //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/9)Hashing/Subarray%20With%20Given%20Sum
+//https://www.geeksforgeeks.org/number-subarrays-sum-exactly-equal-k/
 
 class Solution {
 public:

@@ -302,10 +302,10 @@ void printBoundary(Node *root)
      hsh.clear();
      vector<int> v;
      v.push_back(root->data);
-     leftViewIterative(root->left, v);							//RRRRR
+     leftViewIterative(root->left, v);							//RRRRR, *****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
      inorder(root, v);
      vector<int> v2;
-     rightViewIterative(root->right, v2);						//RRRRR
+     rightViewIterative(root->right, v2);						//RRRRR, *****If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. *****
     
      for(int i=v2.size()-1;i>=0;--i) v.push_back(v2[i]);
      

@@ -5,7 +5,12 @@
 the binary tree and stores 
 it in the vector A*/
 
+// Naive approach is to store 2 traversals of tree say, inorder & preorder and then use them to deserialize the tree, since combination of
+// inorder & preorder/postorder uniquely represents a tree
+// this approach used 2 traversals of binary, hence we need to look for an efficient algo involving 1 traversal of binary tree
+
 //*** METHOD 1 : USING PREORDER ***
+// hint: use a special marker for NULL
 
 void preorder(Node *root, vector<int> &A){
     if(root==NULL) {

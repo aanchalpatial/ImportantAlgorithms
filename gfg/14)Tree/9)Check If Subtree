@@ -78,27 +78,27 @@ bool isSubTree(Node *T, Node *S){
 The above algorithm doesn't work for cases where a tree is present
 in another tree, but not as a subtree. Consider the following example.
 
-        Tree1
+    T:
+          x 
+        /    \
+      a       b
+     /         \
+    c            d
+    
+    S:
           x 
         /    \
       a       b
      /        
     c         
 
+Inorder traversals of T is: c, a, x, b, d
+Preorder traversals of T is: x, a, c, b, d
 
-        Tree2
-          x 
-        /    \
-      a       b
-     /         \
-    c            d
+Inorder traversals of S is: c, a, x, b
+Preorder traversals of S is: x, a, c, b
 
-Inorder and Preorder traversals of the big tree or Tree2 are.
-
-Inorder and Preorder traversals of small tree or Tree1 are
-
-The Tree2 is not a subtree of Tree1, but inS[] and preS[] are
-subarrays of inT[] and preT[] respectively.
+The S is not a subtree of T, but inS[] and preS[] are subarrays of inT[] and preT[] respectively.
 The above algorithm can be extended to handle such cases by adding a SPECIAL CHARACTER (in our case "#") whenever we encounter NULL in 
 inorder and preorder traversals.
 */
@@ -128,7 +128,7 @@ void preorder(TreeNode *root, string &str, string type){
         But, in order to use this approach, we need to treat the given tree in a different manner. 
         Rather than assuming a nullnull value for the childern of the leaf nodes, we need to treat the 
         left and right child as a lnulll and rnull value respectively. 
-        we will we using a type variable to accomplish this purpose
+        we will be using a type variable to accomplish this purpose
         */
         string preorderS = "$", preorderT = "$";
         preorder(s, preorderS, "left");

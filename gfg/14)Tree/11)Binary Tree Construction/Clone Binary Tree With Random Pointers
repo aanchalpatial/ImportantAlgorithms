@@ -15,20 +15,36 @@ struct Node
 };
 */
 
-
-Node* cloneTree(Node* root)
-{
-   //we have similar type of question for singly linked list
-   //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/Clone%20a%20linked%20list%20with%20random%20pointers
-   
-   if(root==NULL) return NULL;
+void populateMap(Node *original, unordered_map<Node *, Node *> &mp) {
+        if(original==NULL) return;
+        mp.insert({original, new Node(original->data)});
+        populateMap(original->left, mp);
+        populateMap(original->right, mp);
+    }
     
-    Node *nd = new Node(root->data);
-    nd->left = cloneTree(root->left);
-    nd->right = cloneTree(root->right);
-    nd->random = root->random;
-    return nd;
-}
+    Node *cloneTreeUtil(Node *original, unordered_map<Node *, Node *> &mp) {
+        if(original==NULL) return NULL;
+        Node *clone = mp[original];
+        clone->left = cloneTreeUtil(original->left, mp);
+        clone->right = cloneTreeUtil(original->right, mp);
+        if(original->random!=NULL) {
+            clone->random = mp[original->random];
+        }
+        return clone;
+    }
+    /* The function should clone the passed tree and return 
+       root of the cloned tree */
+    Node* cloneTree(Node* tree)
+    {
+       //Your code here
+       //we have similar type of question for singly linked list
+       //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/Clone%20a%20linked%20list%20with%20random%20pointers
+       Node *clonedRoot;
+       unordered_map<Node *, Node *> mp;
+       populateMap(tree, mp);
+       clonedRoot = cloneTreeUtil(tree, mp);
+       return clonedRoot;
+    }
 
 /*WE HAVE IN TOTAL 3 CLONING QUESTION :
 1)Clone a Linked List with random pointers : https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/11)%20Linked%20List/Clone%20a%20linked%20list%20with%20random%20pointers

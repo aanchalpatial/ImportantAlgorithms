@@ -8,29 +8,33 @@
  from both of these results
  */
 
-int getMaxSum(Node *root) 
-{
-    // Add your code here
+int getMaxSumUtil(Node *root, unordered_map<Node *, int> &um) {
     if(root==NULL) return 0;
     if(root->left==NULL&&root->right==NULL) return root->data;
     
-    int lc = getMaxSum(root->left);     //left child
-    int rc = getMaxSum(root->right);    //right child
+    if(um.find(root)==um.end()) {
+        // Add your code here
+        // choice 1: we consider the current node
+        int sum1 = root->data;
+        if(root->left!=NULL) sum1 += getMaxSumUtil(root->left->left, um);
+        if(root->left!=NULL) sum1 += getMaxSumUtil(root->left->right, um);
+        if(root->right!=NULL) sum1 += getMaxSumUtil(root->right->left, um);
+        if(root->right!=NULL) sum1 += getMaxSumUtil(root->right->right, um);
     
-    int llc = 0;    //left of left child
-    int lrc = 0;    //right of left child
-    int rrc = 0;    //right of right child
-    int rlc = 0;    //left of right child
+        // choice 2: when we don't consider the current node
+        int sum2 = getMaxSumUtil(root->left, um) + getMaxSumUtil(root->right, um);
     
-    if(root->left!=NULL) {
-        llc =  getMaxSum(root->left->left);
-        lrc = getMaxSum(root->left->right);
-    }
-    if(root->right!=NULL) {
-        rrc =  getMaxSum(root->right->right);
-        rlc = getMaxSum(root->right->left);
+        um[root] = max(sum1, sum2);
     }
     
-    return max( llc+lrc+rrc+rlc+root->data, lc+rc );
+    return um[root];
+}
+//Function to return the maximum sum of non-adjacent nodes.
+int getMaxSum(Node *root) 
+{
+    unordered_map<Node *, int> um;      // need to use hashing to store result of overlapping/repeasting subproblems
+    return getMaxSumUtil(root, um);
     
 }
+
+// time: O(n) & space: O(n)

@@ -2,7 +2,7 @@
 //At each second all the adjacent nodes of current NODES are burnt
 
 // *** HINT ***: For given leaf node we need to find the FARTHEST NODE from it in binary tree and 
-//And the reuired Farthest node can only be reachable through one of the ancestors of given leaf
+//And the required Farthest node can only be reachable through one of the ancestors of given leaf
 
 /*APPROACH 1 : APPLICATION of Nodes at K Distance Approach : 
 https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/14)Tree/15)Nodes%20At%20k%20Distance/1)Nodes%20At%20k%20Distance

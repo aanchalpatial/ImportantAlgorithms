@@ -55,7 +55,7 @@ public:
     
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
         
-        //method 1 : postorder + unique identifier approach as string
+        //method 1 : preorder + unique identifier approach as string
         //serialization is a unique representation of the tree.
         //O(n^2) time & O(n^2) space
         mp.clear();

@@ -75,7 +75,7 @@ void bfsLineByLine2(Node *root){
 //2) depth first traversal: recursion(standard) VS iterative methods
 
 //2a)inorder: O(n) time & O(h) space; where h is height of tree
-//RECURSIVE METHOD
+//2aa)RECURSIVE METHOD
 void inorder(Node *root){
     if(root!=NULL){
         inorder(root->left);
@@ -83,7 +83,7 @@ void inorder(Node *root){
         inorder(root->right);
     }
 }
-//ITERATIVE METHOD
+//2ab)ITERATIVE METHOD
 //hint: Use Stacks
 /*Approach:
 1) Create an empty stack S.
@@ -95,7 +95,8 @@ void inorder(Node *root){
      c) Go to step 3.
 5) If current is NULL and stack is empty then we are done.
 */
-void inOrder(struct Node *root) 
+// 2aba) inOrderIterative1: O(n) time & O(h) space
+void inOrderIterative1(struct Node *root)       // from gfg
 { 
     stack<Node *> s; 
     Node *curr = root; 
@@ -110,17 +111,43 @@ void inOrder(struct Node *root)
         curr = s.top(); 
         s.pop(); 
   
-        cout << curr->data << " "; 
+        cout << curr->data << ", "; 
         
         curr = curr->right; 
     } 
+}
+// 2abb) inOrderIterative2: O(n) time & O(h) space
+void inOrderIterative2(Node* root) {            // *** simpler iterative solution ***
+    stack<Node *> st;
+    Node *curr = root;
+    jump:
+    while(curr!=NULL) {
+        st.push(curr);
+        curr = curr->left;
+    }
+    
+    while(!st.empty()) {
+        // keep pushing node in stack until there is no left child
+        
+        Node *temp = st.top();
+        cout<<temp->data<<", ";
+        st.pop();
+        if(temp->right!=NULL) {
+            curr = temp->right;
+            goto jump;
+        }
+    }
+    
+    return result;
+    
 }
 
 
 
 
 //2b)preorder: O(n) time & O(h) space
-//RECURSIVE METHOD
+
+//2ba)RECURSIVE METHOD
 void preorder(Node *root){
     if(root!=NULL){
         cout<<root->key<<", ";
@@ -128,8 +155,12 @@ void preorder(Node *root){
         preorder(root->right);
     }
 }
-//ITERATIVE METHOD
-/*Approach:
+
+//2bb)ITERATIVE METHOD
+
+// 2bba) preorderIterative1: O(n) time & O(n) space
+/* preorderIterative1                   // from gfg
+Approach:
 1) Create an empty stack nodeStack and push root node to stack.
 2) Do following while nodeStack is not empty.
 ….a) Pop an item from stack and print it.
@@ -139,6 +170,30 @@ void preorder(Node *root){
 Right child is pushed before left child to make sure that left subtree is processed first.
 
 */
+
+// 2bbb) preorderIterative2: O(n) time & O(h) space
+void preorderIterative2(Node *root) {               // *** simpler iterative solution ***
+
+    stack<Node *> st;
+    Node *curr = root;
+    
+    jump:
+    while(curr!=NULL) {
+        cout<<curr->data<<", ";
+        st.push(curr);
+        curr = curr->left;
+    }
+    
+    while(!st.empty()) {
+        Node *temp = st.top();
+        st.pop();
+        if(temp->right!=NULL) { 
+            curr = temp->right;
+            goto jump;
+        }
+    }
+
+}
 
 //2c)postorder: O(n) time & O(h) space
 void postorder(Node *root){

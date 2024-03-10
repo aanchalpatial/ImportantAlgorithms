@@ -14,7 +14,7 @@ int helper(Node *root){
     int ls = helper(root->left);
     int rs = helper(root->right);
     
-    if(root->left!=NULL&&root->right!=NULL){    
+    if(root->left!=NULL&&root->right!=NULL){            // RRR
         //we will only update result for current node if both left & right subtree are not NULL
         //because if either of them is NULL we we won't have 2 leaves to make path between them 
         result = max(result, ls+rs+root->data);

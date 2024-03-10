@@ -35,7 +35,7 @@ void convert(Node *head, TreeNode *&root) {
     // root = helper(v, 0);
     
     
-    //METHOD 2 : using queue
+    //METHOD 2 : line by line level order traversal, using queue
     //O(n) time & O(width)
     Node *curr = head;
     root = new TreeNode(curr->data);    //make head as root

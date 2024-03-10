@@ -14,7 +14,7 @@ void nodesAtDistanceK(Node *root, int k){
 //Iterative Version: BFS, O(n) time & O(w) space , preferred for skewed trees
 
 
-//2) count all distinct nodes that are distance k from a leaf node. Here, k distance from leaf means k levels higher than a leaf node.
+//2) count all distinct nodes that are distance k from any leaf node. Here, k distance from leaf means k levels higher than a leaf node.
 //For example, if k is more than the height of Binary Tree, then nothing should be counted.
 /*
 Approach:
@@ -22,30 +22,29 @@ The idea is to traverse the tree. Keep storing all ancestors till we hit a leaf 
 we print the ancestor at distance k. We also need to keep track of nodes that are already printed as output.
 For that we use a hash set.
 */
-void inorder(Node *root, int k, vector<Node *> &path, unordered_set<Node *> &h, int pathLength){
+void helper(Node *root, int k, unordered_set<Node *> &h, vector<Node *> path, int dist) {
     if(root==NULL) return;
-    
     path.push_back(root);
-    ++pathLength;
-    
-    if(root->left==NULL&&root->right==NULL&&pathLength-k-1>=0){
-        //current node is a leaf node
-        if(h.find(path[pathLength-k-1])==h.end()) h.insert(path[pathLength-k-1]);
+    if(root->left==NULL&&root->right==NULL) {
+        // current node is a leaf
+        if(dist-k>=0&&h.find(path[dist-k])==h.end()) {
+            h.insert(path[dist-k]);
+        }
         path.pop_back();
         return;
     }
     
-    inorder(root->left, k, path, h, pathLength);
-    inorder(root->right, k, path, h, pathLength);
     
+    helper(root->left, k, h, path, 1 + dist);
+    helper(root->right, k, h, path, 1 + dist);
     path.pop_back();
 }
-
-int printKDistantfromLeaf(Node* node, int k)
+//Function to return count of nodes at a given distance from leaf nodes.
+int printKDistantfromLeaf(Node* root, int k)
 {
-	//Add your code here. 
-	vector<Node *> path;
-	unordered_set<Node *> h;
-	inorder(node, k, path, h, 0);
-	return h.size();
+    //Add your code here. 
+    unordered_set<Node *> h;
+    vector<Node *> path;
+    helper(root, k, h, path, 0);
+    return h.size();
 }

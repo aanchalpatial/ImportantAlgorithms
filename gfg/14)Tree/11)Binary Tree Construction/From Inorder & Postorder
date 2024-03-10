@@ -2,7 +2,7 @@
 //When we are building binary tree using inorder & POSTORDER we will decrement global variable starting from n-1 & right child recursive
 //call will be before left child recursive call.
 int postIndex;
-Node *postorder(int post[], int in[] , int l, int h){
+Node *postorderReverse(int post[], int in[] , int l, int h){           // RRR:  Reversal of postorder i.e Reverse(Left-Right-Root) i.e (Root-Right-Left);
     if(l>h) return NULL;
     
     Node *temp = new Node(post[postIndex]);
@@ -11,8 +11,8 @@ Node *postorder(int post[], int in[] , int l, int h){
     if(l==h) return temp;
     
     int index = searchIndex(in, l, h, temp->data);
-    temp->right = postorder(post, in, index+1, h);
-    temp->left = postorder(post, in, l, index-1);
+    temp->right = postorderReverse(post, in, index+1, h);
+    temp->left = postorderReverse(post, in, l, index-1);
    
     
     return temp;
@@ -21,6 +21,6 @@ Node *buildTree(int in[], int post[], int n)
 {
     // Your code here
     postIndex = n-1;
-    Node *root = postorder(post, in, 0, n-1);
+    Node *root = postorderReverse(post, in, 0, n-1);
     return root;
 }
