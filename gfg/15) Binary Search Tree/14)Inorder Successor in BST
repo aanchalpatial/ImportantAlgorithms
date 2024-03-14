@@ -59,14 +59,15 @@ Node * inOrderSuccessor(Node *root, Node *x)
     //key greater than the key of input node
     
     //case 1 : right child of x is not null then
-    //return the smallest value node in x's right
-    //subtree
+    //return the smallest value node in x's right subtree
+    // note: this case is also used while deleting a node from bst
+
     //case 2 : right child of x is null then use
     //modified bst search to find inorder succ.
     
     //case 1 : 
     if(x->right!=NULL){
-        //return smallest in right sub-tree
+        //return leftmost node in right sub-tree
         Node *curr = x->right;
         while(curr->left!=NULL){
             curr = curr->left;
@@ -77,7 +78,7 @@ Node * inOrderSuccessor(Node *root, Node *x)
         Node *succ = NULL;
         while(root){
             if(x->data<root->data){
-                succ = root;
+                succ = root;                    // *** RRR ***
                 root = root->left;
             }else if(x->data>root->data){
                 root = root->right;

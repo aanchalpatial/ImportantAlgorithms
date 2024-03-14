@@ -1,3 +1,4 @@
+// Problem 1:
 // For every element of the array, one needs to find the Ceiling on Left Side.
 
 //Naive approach is O(n^2) time & O(1) space
@@ -21,4 +22,51 @@ void ceilOnLeft(int arr[], int n){
     for(int i=0;i<n;++i) cout<<ceil[i]<<" ";
     cout<<endl;
     
+}
+
+// Problem 2:
+// https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-BST/problem/smaller-on-right
+/*
+Given an array arr[] of N elements. The task is to count maximum number of distinct smaller elements on 
+right side of any array element. For example, in {10, 6, 9, 7, 20, 19, 21, 18, 17, 16}, the result is 4.  
+Note that 20 has maximum 4 smaller elements on right side. 
+Other elements have less count, for example 10 has 3 smaller elements on right side.
+*/
+
+// hint: start traversing array from right, and then the problem becomes similar to problem 1
+#include<bits/stdc++.h>
+using namespace std;
+
+int countSmallerOnRight(int arr[], int n) {
+    set<int> s;
+    
+    int result = 0;
+    for(int i=n-1;i>=0;--i) {       // O(n)
+        s.insert(arr[i]);
+        auto itr = s.lower_bound(arr[i]);   // O(logn)
+        int tempDistance = distance(s.begin(), itr);
+        result = max(result, tempDistance);
+    }
+    return result;
+}
+
+int main()
+ {  
+    //fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+	int T;
+	cin>>T;
+	while(T--){
+	    int size;
+	    cin>>size;
+	    int arr[size];
+	    for(int i=0;i<size;++i){
+	        cin>>arr[i];
+	    }
+	    cout<<countSmallerOnRight(arr, size)<<endl;
+	    // time: O(nlogn) & space: O(n)
+	}
+	return 0;
 }

@@ -28,7 +28,10 @@
 //is present in map but since keys are distinct in map , count actually returns 0 or 1.
 
 //lower_bound() vs upper_bound : 
-//Lower bound: first element that is greater-or-equal. Upper bound: first element that is strictly greater.
+//Lower bound: first element that is greater-or-equal, also known as ceiling
+// lower_bound is also indirectly used to search for the element in set & vector 
+// Upper bound: first element that is strictly greater.
+// https://stackoverflow.com/questions/41958581/difference-between-upper-bound-and-lower-bound-in-stl
 
 //In erase() function argument can either be an ITERATOR or KEY or RANGE
 

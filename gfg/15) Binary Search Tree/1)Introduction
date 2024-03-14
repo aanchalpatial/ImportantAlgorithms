@@ -1,5 +1,5 @@
 //If we only have search, insert and delete or a subset of these operations then hash table is the most efficient implementation
-//BUT if along with search, insert and delete we also have either find closest or sorted traversal or both 
+//BUT if along with search, insert and delete we also have to find either closest or sorted traversal or both 
 //then BALANCED BINARY SEARCH TREE is the most efficient data structure
 //https://www.geeksforgeeks.org/advantages-of-bst-over-hash-table/
 
@@ -73,7 +73,7 @@ Node *iterativeInsertBST(Node *root, int x){        //O(h) time & O(1) space
                 cout<<"inserted to the left of "<<prev->data<<endl; 
                 prev->left = new Node(x);
             }else {
-                cout<<"inserted to the left of "<<prev->data<<endl; 
+                cout<<"inserted to the right of "<<prev->data<<endl; 
                 prev->right = new Node(x);
             }
         }
@@ -207,3 +207,15 @@ Node *iterativeCeilBST(Node *root, int x){     //O(h) time & O(1) space, better 
 
 
 
+// TRAVERSALS
+/*
+For a binary following traversals can uniquely identify it:
+- a combination of inorder and preorder(or postorder)
+- level order traversal with markers for null children
+
+For binary search tree:
+- since a bst is a subset of a binary tree, above 2 methods also hold true
+- preorder individually can uniquely identify a bst: https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-BST/problem/preorder-to-postorder4423
+- level order can individually identify a bst: https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-BST/problem/convert-level-order-traversal-to-bst
+ - whereas postorder individually can't
+*/

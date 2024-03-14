@@ -6,6 +6,7 @@
 2)QuickSelect               : O(n^2) in worst case & O(n) in average case
 3)Inorder traversal of BST  : O(logn+k) 
 4)Augmented BST             : O(logn)
+5)Morris traversal         : O(n) time & O(1) space
 5)Heap Data Structure       : n+klogn(Min Heap) & k+nlogk(Max Heap)
 6)Median Order Statistics   : O(n)
 *IN A STREAM OF INPUT : https://www.geeksforgeeks.org/kth-largest-element-in-a-stream/
@@ -66,7 +67,7 @@ https://www.geeksforgeeks.org/find-k-th-smallest-element-in-bst-order-statistics
 
 
 //2) Find Kth LARGEST element in BST
-//The idea is to do reverse inorder traversal of BST. The reverse inorder traversal traverses all nodes in decreasing order.
+//The idea is to do REVERSE inorder traversal of BST. The reverse inorder traversal traverses all nodes in decreasing order.
 //While doing the traversal, we keep track of count of nodes visited so far. When the count becomes equal to k, we stop the traversal
 //and print the key
 

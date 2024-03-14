@@ -64,7 +64,7 @@ Properties that maintain balance in Red Black Tree:
 
 
 
-/*APPLICATIONS:
+/*APPLICATIONS of self balancing bst:
 1) Maintain a sorted stream of data( sorted set of data) 
 2) To implement doubly ended priority queue(also singly implemented priority queue are best implemented by heap)
 3) To solve problems like: find ceil/floor/greater/count greater/smaller/count smaller in a stream of data
