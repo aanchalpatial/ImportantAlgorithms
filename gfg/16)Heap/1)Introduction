@@ -76,7 +76,8 @@ class MinHeap{
     }
     
     //heapify is used as a subroutine in Build Heap & Extract Minimum
-    //Given a binary tree with AT MOST 1 possible violation,FIX it
+    //Given a complete binary tree with AT MOST 1 possible violation,FIX it
+    // fix the given node(if required), and recursively fix the swapped child
     void heapify(int i){        //O(logn) time
         int l;
         if(left(i)<size) l = left(i);
@@ -150,6 +151,7 @@ class MinHeap{
         extractMin();
     }
     
+
     //given a random array, rearrange its elements to form a min heap
     void buildHeap(){       //O(n) : explained below    ******RR******
         

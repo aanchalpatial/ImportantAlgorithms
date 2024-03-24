@@ -33,8 +33,12 @@ bool isBridge(list<int> adj[], int V, int s, int e) {
     
     for(int i=0;i<V;++i) visited[i] = false;
     
-    adj[s].remove(e);
-    adj[e].remove(s);
+    // adj[s].remove(e);
+    // adj[e].remove(s);
+    // remove edge e-s
+    adj[e].erase(remove(adj[e].begin(), adj[e].end(), s), adj[e].end());
+    // remove edge s-e
+    adj[s].erase(remove(adj[s].begin(), adj[s].end(), e), adj[s].end());
     
     dfs(adj,s,visited);
     

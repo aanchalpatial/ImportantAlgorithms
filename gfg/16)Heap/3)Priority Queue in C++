@@ -1,7 +1,9 @@
 //Priority Queue is always implemented using Heap Data Structure
 
-//MAX Heap(**default**) in C++ STL priority_queue<int> pq;    //similar to build heap function is O(n) time     ***RR***
-//MIN Heap in C++ STL priority_queue<int, vector<int>, greater<int>> pq;  //similar to build heap function is O(n) time     ****RR****
+//MAX Heap(**default**) in C++ STL 
+priority_queue<int> pq;
+//MIN Heap in C++ STL 
+priority_queue<int, vector<int>, greater<int>> pq;  
 //https://www.geeksforgeeks.org/implement-min-heap-using-stl/
 //Functions push() for insert is O(logn), pop() for extract maximum/minimum is O(logn), top() for get maximum/minimum
 //Note:- C++ priority queue doesn't support decrease key function
@@ -9,7 +11,10 @@
 //Create a priority queue from an array DIRECTLY
 int arr[] = {10, 5, 15};
 int n = sizeof(arr)/sizeof(arr[0]);
-priority_queue<int> pq(arr, arr+n);
+priority_queue<int> pq(arr, arr+n);       // O(n) time operation, ****RR****
+//Create a priority queue from an array DIRECTLY
+vector<int> v = {10, 5, 15};
+priority_queue<int> pq(v.begin(), v.empty());       // O(n) time operation, ****RR****
 
 /*APPLICATIONS:
 1) Djikstra
@@ -29,5 +34,5 @@ bool myComp(data_type x, data_type y) {
 struct myComp{
   bool operator()(data_type x, data_type y){
     return x>y; //for min heap
-    }
+  }
 }

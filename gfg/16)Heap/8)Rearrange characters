@@ -55,3 +55,14 @@ void rearrangeString(string str){
 	if(result.size()==str.size()) cout<<result<<endl;
 	else cout<<"Not Possible"<<endl;
 }
+
+// METHOD 2: Linear time approach
+// Time complexity: O(N) & Auxiliary Space: O(N+26), as there are 26 lowercase english characters
+/*
+Rearrange characters in a String such that no two adjacent characters are same using Frequency:
+To solve the problem using this approach follow the below idea:
+
+Fill all the even positions of the result string first, with the highest frequency character. 
+If there are still some even positions remaining, fill them first. Once even positions are done, then fill the odd positions. 
+This way, it can be ensured that no two adjacent characters are the same. 
+*/

@@ -1,5 +1,5 @@
 /*
-Given a WEIGHTED CONNECTED and UNDIRECTED graph, a spanning tree of that graph is a subgraph that is a tree and connects all the vertices
+Given a WEIGHTED CONNECTED and UNDIRECTED graph, a spanning tree of that graph is a subgraph that is a tree(connected, acyclic graph) and connects all the vertices
 together. A single graph can have many different spanning trees.
 
 A minimum spanning tree (MST) or minimum weight spanning tree for a weighted, connected and undirected graph is a spanning tree 
@@ -21,8 +21,41 @@ minimum weight edge from the cut and include this vertex to MST Set (the set tha
 /*VERY SIMILAR TO DJIKSTRA's
 There are many different approaches to implement Prim's (which are same as Djisktra):
 
-1) O(V^2) with adjacency matrix 
-
+1) O(V^2) with adjacency matrix or list
+*/
+int prims1(int V, vector<vector<int>> adj[]) {
+    // METHOD 1:
+    // Time: O(V^2), but can optimise if we use min heap for finding minimum
+    vector<int> key(V, INT_MAX);
+    key[0] = 0;
+    vector<int> inMst(V, false);
+    int weight = 0;
+    for(int i=0;i<V;++i) {
+        int minKey = INT_MAX;
+        int minKeyVertex = -1;
+        // step 1: finding min weighted vertex which has not been included in inMst yet
+        for(int j=0;j<V;++j) {
+            if(inMst[j]==false&&key[j]<minKey) {
+                minKey = key[j];
+                minKeyVertex = j;
+            }
+        }
+        // add to inMst & total weight so far
+        inMst[minKeyVertex] = true;
+        weight += minKey;
+        // step 2: update adjacents, decrease key if required
+        for(int j=0;j<adj[minKeyVertex].size();++j) {
+            int adjV = adj[minKeyVertex][j][0];
+            int adjVWeight = adj[minKeyVertex][j][1];
+            if(inMst[adjV]==false&&key[adjV]>adjVWeight) {          // Relax function
+                key[adjV] = adjVWeight;
+            }
+        }
+    }
+    return weight;
+}
+// Time: O(V^2), but can optimise if we use min heap for finding minimum
+/*
 2) O(ElogV) with adjacency list + CUSTOM binary heap
 
 3) O(ElogV) with C++ STL priority_queue i.e APPROACH IMPLEMENTED BELOW
@@ -31,10 +64,6 @@ However, the problem is, priority_queue doesn’t support decrease key. To resol
 modified so that decrease key is never required. The idea is, not to insert all vertices in priority queue, but only those which
 are not MST and have been visited through a vertex that has included in MST. We keep track of vertices included in MST in a separate
 boolean array inMST[].
-This is where Prim's implementation DIFFERS FROM DJIKSTRA's. In Dijkstr's algorithm, we didn't need this array as distances always
-increase. We require this array here because key value of a processed vertex may decrease if not checked.
-In other words, Unlike Dijkstra’s implementation, a boolean array inMST[] is mandatory here because the key values of newly inserted
-items can be less than the key values of extracted items. So we must not consider extracted items.
 */
 //Prims using C++ STL priority_queue : (Carefully read commments to understabd difference from DJIKSTRA's code)
 //Djikstra's code is available at: https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/17)Graph/3)Shortest%20Path
@@ -53,35 +82,38 @@ struct myComp{
     }
 };
 
-void prims(vector<pair<int, int>> adj[], int source, int V){
-    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> pq;      //pair of (key, vertex)
-    pq.push(make_pair(0, source));
-    
-    int key[V];    //renamed from distance[] in DJIKSTRA's
-    for(int i=0;i<V;++i) key[i] = INT_MAX;
-    key[source] = 0;
-    
-    int inMST[V] = {false}; //not in DJIKSTRA's
-    int parent[V] = {-1};   //not in DJIKSTRA's
-    
-    while(!pq.empty()){
-        pair<int, int> u = pq.top();
-        pq.pop();
-        inMST[u.second] = true;
-        //update all neighbours of current vertext 'p'
-        for(auto v:adj[u.second]){
-            if(key[v.first]>v.second&&inMST[v.first]==false){   //condition different from Djisktra
-                key[v.first] = v.second;
-                pq.push(make_pair(key[v.first], v.first));
-                parent[v.first] = u.second;
+int prims2(int V, vector<vector<int>> adj[]) {
+    /* METHOD 2: min heap approach, we can either use custom min heap or the one provided in c++ stl
+    but the min heap provided in c++ still doesn't have decrease key operation required in step 2 of previous approach
+    To resolve this problem, The prim's algorithm can be modified so that decrease key is never required. 
+    The idea is, not to insert all vertices in priority queue, but only those which are not in MST and have been visited through a vertex that has included in MST. 
+    We keep track of vertices included in MST in a separate boolean array inMST[].
+    */
+    // Time: O(V+E)logV
+    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> minH;        // <weight, vertex>
+    minH.push({0, 0});
+    vector<bool> inMst(V, false);
+    int weight = 0;
+    while(!minH.empty()) {                  
+        // step 1: find min weighted vertex
+        pair<int, int> v = minH.top();
+        minH.pop();
+        /* step 2(due to the modification discussed above): different key values for same vertex may exist in the priority queue. 
+        The one with the least key value is always processed first. 
+        Therefore, ignore the rest.*/
+        if(inMst[v.second]==true) { continue; } // *** RRR ***
+        inMst[v.second] = true;
+        weight += v.first;
+        // step 3: push adjacents
+        for(int j=0;j<adj[v.second].size();++j) {
+            int adjV = adj[v.second][j][0];
+            int adjVWeight = adj[v.second][j][1];
+            if(inMst[adjV]==false) {                    // Relax function
+                minH.push({adjVWeight,  adjV});
             }
         }
     }
-    
-    
-    for(int i=1;i<V;++i) {                  //V-1 Edges
-        cout<<parent[i]<<" - "<<i<<endl;
-    }
+    return weight;
 }
 
 
@@ -104,10 +136,29 @@ int main() {
     addEdge(adj, 6, 8, 6); 
     addEdge(adj, 7, 8, 7); 
     
-    prims(adj, 0, v);
+    int mstWeight = prims(adj, 0, v);
+    cout<<mstWeight;
     
 	return 0;
 }
+
+
+// *** IMPORTANT ***
+/* Prims algorith for MST is very similar to djiktra's algorith for shortest path in +ve weighted edges graph 
+Prim and Dijkstra algorithms are almost the same, except for the "relax function".
+
+The only difference I see is that Prim's algorithm stores a minimum cost edge whereas Dijkstra's algorithm 
+stores the total cost from a source vertex to the current vertex.
+
+This is where Prim's implementation DIFFERS FROM DJIKSTRA's. In Dijkstr's algorithm, we didn't need inMST[] array as distances
+ always increase. We require this array here because key value of a processed vertex may decrease if not checked.
+In other words, Unlike Dijkstra’s implementation, a boolean array inMST[] is mandatory in prims because the key values 
+of newly inserted items can be less than the key values of extracted items. So we must not consider extracted items.
+
+prims vs dj 1: https://www.diffchecker.com/OYmwegCu/
+
+prims vs dj 2: https://www.diffchecker.com/tzAhTYuj/
+*/
 
 
 //2)  

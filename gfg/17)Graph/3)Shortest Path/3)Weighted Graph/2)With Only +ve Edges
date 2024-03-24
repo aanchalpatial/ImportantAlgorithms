@@ -31,7 +31,39 @@
 /*There are many different approaches to implement DJikstra's:
 1) DJikstra using adjacency matric representation: O(V^2)
 https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+*/
 
+vector <int> dijkstra1(int V, vector<vector<int>> adj[], int S) {
+    // METHOD 1:
+    // Time: O(V^2), but can optimise if we use min heap for finding minimum
+    vector<int> key(V, INT_MAX);        // should be called distance vector
+    key[S] = 0;
+    vector<int> inMst(V, false);        // should be called finalised vector
+    for(int i=0;i<V;++i) {
+        int minKey = INT_MAX;
+        int minKeyVertex = -1;
+        // step 1: finding min weighted vertex which has not been included in inMst yet
+        for(int j=0;j<V;++j) {
+            if(inMst[j]==false&&key[j]<minKey) {
+                minKey = key[j];
+                minKeyVertex = j;
+            }
+        }
+        // add to inMst & total weight so far
+        inMst[minKeyVertex] = true;
+        // step 2: update adjacents, decrease key if required
+        for(int j=0;j<adj[minKeyVertex].size();++j) {
+            int adjV = adj[minKeyVertex][j][0];
+            int adjVWeight = adj[minKeyVertex][j][1];
+            if(inMst[adjV]==false&&key[adjV]>key[minKeyVertex] + adjVWeight) {          // Relax function
+                key[adjV] = key[minKeyVertex] + adjVWeight;
+            }
+        }
+    }
+    return key;
+}
+
+/*
 2) DJikstra using adjacency list representation with CUSTOM made min heap : O(ElogV)
 https://www.geeksforgeeks.org/dijkstras-algorithm-for-adjacency-list-representation-greedy-algo-8/
 
@@ -64,29 +96,33 @@ struct myComp{
     }
 };
 
-void djikstra(vector<pair<int, int>> adj[], int source, int V){
-    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> pq;      //pair of (distance, vertext)
-    pq.push(make_pair(0, source));
-    
-    int distance[V];
-    for(int i=0;i<V;++i) distance[i] = INT_MAX;
-    distance[source] = 0;
-    
-    while(!pq.empty()){
-        pair<int, int> u = pq.top();
-        pq.pop();
-        //update all neighbours of current vertext 'p'
-        for(auto v:adj[u.second]){
-            if(distance[v.first]>distance[u.second]+v.second){
-                distance[v.first] = distance[u.second]+v.second;
-                pq.push(make_pair(distance[v.first], v.first));
+vector <int> dijkstra2(int V, vector<vector<int>> adj[], int S) {
+    /* METHOD 2: min heap approach, we can either use custom min heap or the one provided in c++ stl
+    but the min heap provided in c++ still doesn't have decrease key operation required in step 2 of previous approach
+    To resolve this problem, The prim's algorithm can be modified so that decrease key is never required. 
+    The idea is, not to insert all vertices in priority queue, but only those which are not in MST and have been visited through a vertex that has included in MST. 
+    We keep track of vertices included in MST in a separate boolean array inMST[].
+    */
+    // Time: O(V+E)logV
+    vector<int> key(V, INT_MAX);        // should be called distance
+    key[S] = 0;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, myComp> minH;        // <weight, vertex>
+    minH.push({0, S});
+    while(!minH.empty()) {                  
+        // step 1: find min weighted vertex
+        pair<int, int> v = minH.top();
+        minH.pop();
+        // step 3: push adjacents
+        for(int j=0;j<adj[v.second].size();++j) {
+            int adjV = adj[v.second][j][0];
+            int adjVWeight = adj[v.second][j][1];
+            if(key[adjV]>key[v.second] + adjVWeight) {          // Relax function
+                key[adjV] = key[v.second] + adjVWeight;
+                minH.push({adjVWeight,  adjV});
             }
         }
     }
-    
-    cout<<"Vertex\tDistance from source"<<endl;
-    for(int i=0;i<V;++i) {
-        cout<<i<<"\t"<<distance[i]<<endl;
+    return key;
     }
 }
 
@@ -110,10 +146,32 @@ int main() {
     addEdge(adj, 6, 8, 6); 
     addEdge(adj, 7, 8, 7); 
     
-    djikstra(adj, 1, v);
+    vector<int> distance = djikstra2(v, adj, 1);
+
+    cout<<"Vertex\tDistance from source"<<endl;
+    for(int i=0;i<V;++i) {
+        cout<<i<<"\t"<<distance[i]<<endl;
+    }
     
 	return 0;
 }
+
+// *** IMPORTANT ***
+/* Prims algorith for MST is very similar to djiktra's algorith for shortest path in +ve weighted edges graph 
+Prim and Dijkstra algorithms are almost the same, except for the "relax function".
+
+The only difference I see is that Prim's algorithm stores a minimum cost edge whereas Dijkstra's algorithm 
+stores the total cost from a source vertex to the current vertex.
+
+This is where Prim's implementation DIFFERS FROM DJIKSTRA's. In Dijkstr's algorithm, we didn't need inMST[] array as distances
+ always increase. We require this array here because key value of a processed vertex may decrease if not checked.
+In other words, Unlike Dijkstra’s implementation, a boolean array inMST[] is mandatory in prims because the key values 
+of newly inserted items can be less than the key values of extracted items. So we must not consider extracted items.
+
+prims vs dj 1: https://www.diffchecker.com/OYmwegCu/
+
+prims vs dj 2: https://www.diffchecker.com/tzAhTYuj/
+*/
 
 /*Djikstra's Algorithm Follow Up Questions :- 
 1) Does Djikstra's Algorithm work in cases when there are negative weighted edges as well?		Ans: NO

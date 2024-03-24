@@ -1,17 +1,17 @@
 Problem 1) :
 Single Source Shortest Path Problem : Given a graph and a source vertex src in graph, find shortest paths from src to all vertices in the given graph
 
-Problem 1A) : Single Source Shortest Path Problem in UNDIRECTED UNWEIGHTED GRAPH
+Problem 1A) : Single Source Shortest Path Problem in UNWEIGHTED GRAPH
 Inherently solved using BFS : O(V+E)
 
-Problem 1B) : Single Source Shortest Path Problem in DIRECTED ACYCLIC GRAPH
+Problem 1B) : Single Source Shortest Path Problem in WEIGHTED DIRECTED ACYCLIC GRAPH(i.e without cycles)
 Using Topological Sorting : O(V+E)
 
-Problem 1C) : Single Source Shortest Path Problem in DIRECTED GRAPH with ONLY POSITIVE WEIGHTED EDGES
+Problem 1C) : Single Source Shortest Path Problem in WEIGHTED GRAPH with ONLY POSITIVE WEIGHTED EDGES
 DJikstra's Algorithm : O(ElogV)
 Greedy Approach
 
-Problem 1D) : Single Source Shortest Path Problem in DIRECTED GRAPH with NEGATIVE WEIGHTED EDGES as well, And if there is a NEGATIVE WEIGHT CYCLE report it.
+Problem 1D) : Single Source Shortest Path Problem in WEIGHTED GRAPH with NEGATIVE WEIGHTED EDGES as well, And if there is a NEGATIVE WEIGHT CYCLE report it.
 Note : Similar to bellmon ford, Negative weight cycle is not allowed in any of the previous algorithms as well. Bellmon ford can also report negative weight cycles.
 Bellmon Ford Algorithm : O(VE)
 Dynamic Programming Approach

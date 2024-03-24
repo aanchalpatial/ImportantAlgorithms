@@ -1,6 +1,6 @@
 //Calculation of a Median of a Stream.
 //Note:- Any algorithm that can guarantee output of i-elements after processing i-th element, is said to be online algorithm
-Median can be defined as the element in the data set which separates the higher half of the data sample from the lower half
+//Median can be defined as the element in the data set which separates the higher half of the data sample from the lower half
 
 //1) NAIVE approach is to use Insertion Sort & during each step of iteration calculate median: O(n^2)
 

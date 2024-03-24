@@ -14,7 +14,7 @@
 
 //Better is Using Max Heap: O( n+klogn )
 void kLargestElementsUsingMaxHeap(int arr[], int n, int k){     
-    priority_queue<int> pq(arr, arr+n);
+    priority_queue<int> pq(arr, arr+n);     //O(n)
     cout<<"Largest K Elements:  ";
     while(k>0){                 //O(klogn)
         cout<<pq.top()<<", ";
@@ -26,7 +26,7 @@ void kLargestElementsUsingMaxHeap(int arr[], int n, int k){
 
 //Best Approach is to use Min Heap: O( k+(n-k)logk )
 void kLargestElementsUsingMinHeap(int arr[], int n, int k){
-    priority_queue<int, vector<int>, greater<int>> pq(arr, arr+k);    O(k)
+    priority_queue<int, vector<int>, greater<int>> pq(arr, arr+k);    //O(k)
     for(int i=k;i<n;++i){         //(n-k)*logk
         if(arr[i]>pq.top()){
             pq.pop();

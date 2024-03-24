@@ -74,7 +74,9 @@ void shortestPathDAG(vector<pair<int, int>> adj[], int v, int s){
     //initialise distance to 0 of the source node
     //say node 0 is source
     shortestPath[s] = 0;
+    
     for(int u: result){
+        // for every adjacent of vertex u in topological sort, we apply djikstra's relax operation
         for(pair<int, int> v: adj[u]){
             
             if(shortestPath[v.first]>shortestPath[u]+v.second){
