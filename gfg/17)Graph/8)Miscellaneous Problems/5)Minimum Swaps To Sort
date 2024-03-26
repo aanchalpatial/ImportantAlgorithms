@@ -45,3 +45,7 @@ int minSwaps(int A[], int N){
     }
     return result;
 }
+
+
+// Method 2: Using cycle sort
+// https://github.dev/aanchalpatial/ImportantAlgorithms/blob/4f864671ef5c05f00b565e923f821adcf89aacbd/gfg/7%29%20Sorting/Minimum%20swaps%20to%20sort%3A%20Cycle%20Sort

@@ -3,8 +3,7 @@ See Video from P100 GFG .
 
 1) Minimum deletions to make given array sorted : arr.size()-lis()
 
-2) Maximum Sum Increasing Subsequence : dp code similar to lis() with minor changes such as replacind 1 with arr[i] beacause now we don't
-                                        need longest increasing subsequence, instead we need maximum sum increasing subsequence
+2) Maximum Sum Increasing Subsequence : dp code similar to lis() with minor changes such as replacind 1 with arr[i] beacause now we don't need longest increasing subsequence, instead we need maximum sum increasing subsequence
                                      
 3) Maximum Length Bitonic Subsequence : 
 A Biotonic subsequence is a subsequence which is first increasing than decreasing.

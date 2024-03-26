@@ -48,7 +48,7 @@ Reverse the resultant list and return its head.
 //Problem 2 : Given two numbers represented by two lists, write a function that returns the difference list.
 
 //There are *** 2 variation *** to this question based on the fact that whether number is represented from start to end ot end to start.
-//1) List1: 5->6->3  // represents number 365
+//1) List: 5->6->3  // represents number 365
 //2) List: 5->6->3  // represents number 563
 
 //Variation 2 :

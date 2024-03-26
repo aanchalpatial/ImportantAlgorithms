@@ -2,3 +2,7 @@
 //ADVANTAGES: this sorting algo does MINIMUM number of memory writes out of all other sorting algo's.It can be useful in cases 
 //where memory write is costly.
 //https://www.geeksforgeeks.org/cycle-sort/
+
+
+// Can also be solved using cycles in a graph
+// https://github.dev/aanchalpatial/ImportantAlgorithms/blob/4f864671ef5c05f00b565e923f821adcf89aacbd/gfg/17%29Graph/8%29Miscellaneous%20Problems/5%29Minimum%20Swaps%20To%20Sort

@@ -1,6 +1,11 @@
 //Given two strings S and T, find count of distinct occurrences of T in S as a sub-sequence.
 
 /*
+Input: S = banana, T = ban
+Output: 3
+Explanation: T appears in S as below three subsequences.
+[ban], [ba  n], [b   an]
+
 m: Length of str1 (first string)
 n: Length of str2 (second string)
 

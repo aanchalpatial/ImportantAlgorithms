@@ -31,7 +31,7 @@ void reorderList(Node* head) {
     // requirements : in place & no wapping of values i.e only
     //modification of pointers is allowed
     
-    //step 1 : split list in 2 halves
+    //step 1 : split list in 2 halves, by finding middle node
     Node *prev_slow = NULL;
     Node *slow = head, *fast = head;
     while(fast!=NULL&&fast->next!=NULL){

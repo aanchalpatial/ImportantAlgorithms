@@ -47,7 +47,7 @@ bool detectLoop4(Node *head){
 }
 
 //Method 5) O(n) time, O(1) space, doesn't modify linked list structure or pointers
-//***FLOYD DETECTION METHOD*** (very popular algo, best solution availabe for loop detection)
+//***FLOYD DETECTION METHOD or The tortoise and hare method*** (very popular algo, best solution availabe for loop detection)
 //Approach: We maintain 2 pointers i.e slow and fast. If there is a loop in linked list then these 2 will definately meet(ANYWHERE in loop)
 //and if not then fast pointer will reach end .
 //Mathematics behind it from vedeo of Linked list track
@@ -118,7 +118,7 @@ void findLoopLength(Node *head){
     while(fast!=NULL&&fast->next!=NULL){
         slow = slow->next;
         fast = fast->next->next;
-        if(slow==fast) {
+        if(slow==fast) {          // Note: add this check here & not in while condition because initial node is same for slow & fast
             loopFound = true;
             break;
         }

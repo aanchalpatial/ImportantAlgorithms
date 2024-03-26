@@ -2,7 +2,7 @@
 //eg: 2->9->4->8->5->6-> into 2->4->8->6->9->5->
 
 //Naive approach: 2 traversals
-first find the last node of the linked list.then again traverse the linked list and if we find an odd node , remove this
+// first find the last node of the linked list.then again traverse the linked list and if we find an odd node , remove this
 //node from here and add it at the end;
 
 //Efficient: 1 traversal

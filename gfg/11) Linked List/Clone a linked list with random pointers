@@ -11,12 +11,29 @@ public:
         
         if(head==NULL) return NULL;
         
-        ///method 1) O(n) time & O(n) space:             
-        //https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
-        /*
-        This method stores the next and random mappings (of original list) in an array first, then modifies the original 
-        Linked List (to create copy), creates a copy. And finally restores the original list.
-        */
+        ///method 1)
+        // Using hash map, we create a mapping between node of original and it's counterpart in cloned list  
+        // then we traverse again & set next & random pointers using this hashmap        
+        // https://www.geeksforgeeks.org/a-linked-list-with-next-and-arbit-pointer/
+        // Time: O(n) & Space: O(n)
+        // step 1: create a mapping of original & clone node
+        unordered_map<Node *, Node *> mp;
+        Node *curr = head;
+        while(curr!=NULL) {
+            Node *curr2 = new Node(curr->data);
+            mp.insert({curr, curr2});
+            curr = curr->next;
+        }
+        
+        //step 2: traverse the original list again & set next & random reference in clone list 
+        curr = head;
+        while(curr!=NULL) {
+            Node *curr2 = mp[curr];
+            curr2->next = mp[curr->next];
+            curr2->arb = mp[curr->arb];
+            curr = curr->next;
+        }
+        return mp[head];
 
         
         //method 2 : 

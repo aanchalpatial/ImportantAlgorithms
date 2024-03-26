@@ -16,7 +16,7 @@ Why linked list over arrays?
 /*2)Doubly Linked List:
 Advantages  ->traversal in both direction
             ->delete a given node in O(1) 
-            (Trick Question :- Deletion singly linked list can be made O(1) by copying data and pointer of next node 
+            (Trick Question :- Deletion in singly linked list can be made O(1) by copying data and pointer of next node 
             and then deleting the next node but this trick fails if the last node is to be deleted)
             ->insert/delete a node BEFORE(AFTER is O(1) in both singly & doubly linked list) given node in O(1)
             ->You can't implement deque with singly linked list
@@ -86,16 +86,16 @@ void nodeFromEnd(Node *head, int n){
 //Approach: Reverse the links rather than reversing the data (we use 3 pointers PREVIOUS, CURRENT and NEXT).
 Node *reverseSinglyLinkedList(Node *head){
     Node *prevNode = NULL;      //RR
-        Node *currNode = head;      //RR
+    Node *currNode = head;      //RR
+    
+    while(currNode!=NULL){
+        Node *nextNode = currNode->next;
+        currNode->next = prevNode;
         
-        while(currNode!=NULL){
-            Node *nextNode = currNode->next;
-            currNode->next = prevNode;
-            
-            
-            prevNode = currNode;
-            currNode = nextNode;
-        }
+        
+        prevNode = currNode;
+        currNode = nextNode;
+    }
     return prevNode;
 }
 //C) Recursive solution to reverse a linked list: 2 recursive solutions
@@ -107,7 +107,7 @@ Node *recursiveReverseSinglyLinkedList(Node *prev, Node *curr){
     return recursiveReverseSinglyLinkedList(curr, next);
 }
 
-//C2:
+//C2: Tricky recursive implementation
 Node *recursive2ReverseSinglyLinkedList(Node *head){
     if(head == NULL||head->next==NULL) return head;
     Node *rest_head = recursive2ReverseSinglyLinkedList(head->next);
@@ -175,6 +175,7 @@ Node * removeDuplicates( Node *head)
 }
 
 //5) Swap kth node from beggining & end
+// https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-LinkedList/problem/swap-kth-node-from-beginning-and-kth-node-from-end-in-a-singly-linked-list
 //Use Approach used in 2nd application + consider special situations separately
 /*Consider the following testcases:
 Let X be the kth node from beginning and Y be the kth node from end. Following are the interesting cases that must be handled.
