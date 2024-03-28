@@ -79,16 +79,20 @@ int main() {
 }
 
 //Application 2):
+// https://takeuforward.org/data-structure/implement-k-stacks-in-a-single-array/#google_vignette
+// https://www.youtube.com/watch?v=S5cYO9k1Ja8
+// https://www.naukri.com/code360/problems/n-stacks-in-an-array_1164271?leftPanelTabValue=PROBLEM
 //The task is to create a data structure "kStacks" that represents k stacks.
 //Method 1 (Divide the array in k parts)
 /*Method 2 (A space-efficient implementation):
-Following are the two extra arrays are used:
+Following are the two extra arrays being used:
 1) top[]: This is of size k and stores indexes of top elements in all stacks.
 2) next[]: This is of size n and stores indexes of next item for the items in array arr[]. Here arr[] is actual array that stores k stacks.
 Together with k stacks, a stack of free slots in arr[] is also maintained. The top of this stack is stored in a variable ‘free’.
 All entries in top[] are initialized as -1 to indicate that all stacks are empty. All entries next[i] are initialized as i+1 because 
 all slots are free initially and pointing to next slot. Top of free stack, ‘free’ is initialized as 0.
-*/
+IMPORTANT: - For index i in arr[] which have a valid data, corresponding next[i] stores previous index where previous value of stack is stored
+// otherwise next[i] stores the next available index of arr[] where we can push new data*/
 #include <bits/stdc++.h>
 using namespace std;
 

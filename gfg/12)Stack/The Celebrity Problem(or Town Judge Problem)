@@ -75,7 +75,6 @@ int getId(int M[MAX][MAX], int n)
     label:
     if(flag) return k;
     else return -1;
-    
 }
 
 
@@ -102,3 +101,30 @@ Algorithm :
 whom the celebrity knows. if the count of persons who knows the celebrity is n-1 and the count of people whom the
 celebrity knows is 0 then return the id of celebrity else return -1.
 */
+int celebrity(vector<vector<int> >& M, int n) {
+    // method 3: 2 pointer approach
+    // Time: O(n) & Space: O(1)
+    // we apply the same logic of elimination we applied in previous solution
+    // but not with stack but with 2 pointers
+    int i = 0, j = n-1;
+    while(i<j) {
+        if(M[i][j]==1) {
+            ++i;
+        } else {
+            --j;
+        }
+    }
+    // now let's verify
+    int c = i;
+    for(int i=0;i<n;++i) {
+        if(M[c][i]==1) {
+            return -1;
+        }
+    }
+    for(int i=0;i<n;++i) {
+        if(c!=i&&M[i][c]==0) {
+            return -1;
+        }
+    }
+    return c;
+}

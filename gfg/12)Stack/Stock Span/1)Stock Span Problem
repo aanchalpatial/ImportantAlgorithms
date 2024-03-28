@@ -1,9 +1,21 @@
-/*
+/* Note: - DEFINATELY WATCH P100 video on this
 The stock span problem is a financial problem where we have a series of n daily price quotes for a stock and we need to calculate
-span of stock’s price for all n days. The span Si of the stock’s price on a given day i is defined as the maximum number of
-consecutive days just before the given day(including the given day), for which the price of the stock on the current day is 
+span of stock’s price for all n days. The span S[i] of the stock’s price on a given day i is defined as the maximum number of
+consecutive days JUST before the given day(including the given day), for which the price of the stock on the current day is 
 less than or equal to its price on the given day.
-For example, if an array of 7 days prices is given as {100, 80, 60, 70, 60, 75, 85}, then the span values for 
+
+or in other words,
+int S[i] = 1;
+int j = i - 1;
+while(j>=0&&price[j]<=price[i]) { --j; ++S[i];}
+
+or in other words,
+span[i] = i - (index of (position wise)closest greater on left side)
+if no closest greater exisits, span[i] = i + 1
+
+Example 1: prices = [13, 15, 12, 14, 16, 8, 6, 4, 10, 30]
+           span   = [1,  2,  1,  2,  5,  1, 1, 1, 4,  10]
+Example 2, if an array of 7 days prices is given as {100, 80, 60, 70, 60, 75, 85}, then the span values for 
 corresponding 7 days are {1, 1, 1, 2, 1, 4, 6}
 */
 

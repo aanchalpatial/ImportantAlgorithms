@@ -5,6 +5,9 @@
 
 //Naive is O(n^3), do it in O(n)
 
+// The idea is to find the next smaller and previous smaller of each element and 
+// update the maximum of window with size as the difference in their indices.
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -47,6 +50,8 @@ void printMaxOfMin(int arr[], int n){
         result[len] = max(result[len], arr[i]);
     }
     //some of the entries must still be zero
+    // Fill them by taking values from right side of ans[]
+    // *** RRR ***
     for(int i=n-1;i>=1;--i) result[i] = max(result[i], result[i+1]);
     
     

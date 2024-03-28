@@ -1,6 +1,6 @@
-//Given a stack, the task is to sort it such that the top of the stack has the greatest element.
+//Given a stack, the task is to sort it in increasing order such that the top of the stack has the greatest element.
 //CONDITION :- You can't use any loops, you can only use stack data structure operations.
-
+// https://www.geeksforgeeks.org/problems/sort-a-stack/1
 /*The idea of the solution is to hold all values in Function Call Stack until the stack becomes empty. When the stack
 becomes empty, insert all held items one by one in sorted order. Here sorted order is important.
 */
@@ -25,13 +25,7 @@ void sortStack(stack<int> &s){
     }
 }
 
-
-
-
-
-
-
-
+// Time: O(n^2) & Space: If recursion stack is ignored then O(1), otherwise O(n)
 
 //VARIANT OF ABOVE PROBLEM :  Reverse a stack using recursion
 /*
