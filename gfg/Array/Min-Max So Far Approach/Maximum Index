@@ -38,11 +38,14 @@ int maxIndexDiff(int arr[], int n)
     //     }
     // }
     // sort(arr, arr+n);
-    // int p = INT_MAX;
+    // int minLeftIndexSoFar = INT_MAX;
     // for(int i=0;i<n;++i){
-    //     if(mp[arr[i]][0]<p) p = mp[arr[i]][0];
+    //    // now the a[i] <= a[j] condition is automatcally valid, since array is sorted
+    //    // we just need to maximise j-i
+    //     if(mp[arr[i]][0]<minLeftIndexSoFar) minLeftIndexSoFar = mp[arr[i]][0];
     //     int size = mp[arr[i]].size();
-    //     result = max(result, mp[arr[i]][size-1]-p);
+    //     int possibleRightIndex = mp[arr[i]][size-1];
+    //     result = max(result, possibleRightIndex-minLeftIndexSoFar);
     // }
     // return result;
     
@@ -51,18 +54,18 @@ int maxIndexDiff(int arr[], int n)
     
     /*
     To solve this problem, we need to get two optimum indexes of arr[]: left index i and right index j.
-    For an element arr[i], we do not need to consider arr[i] for left index if there is an element smaller than arr[i] 
+    For an element arr[i], we do not need to consider i for left index if there is an element smaller than arr[i] 
     on left side of arr[i]. Similarly, if there is a greater element on right side of arr[j] then we do not need to consider
     this j for right index. So we construct two auxiliary arrays LMin[] and RMax[] such that LMin[i] holds the smallest 
     element on left side of arr[i] including arr[i], and RMax[j] holds the greatest element on right side
     of arr[j] including arr[j]. After constructing these two auxiliary arrays, we traverse both of these arrays 
-    from left to right. While traversing LMin[] and RMa[] if we see that LMin[i] is greater than RMax[j], then we 
-    must move ahead in LMin[] (or do i++) because all elements on left of LMin[i] are greater than or equal to LMin[i]. 
+    from left to right. While traversing LMin[] and RMax[] if we see that LMin[i] is greater than RMax[j], then we 
+    must move ahead in LMin[] (or do i++) because all elements on left of LMin[i] are greater than or equal to RMax[i]. 
     Otherwise we must move ahead in RMax[j] to look for a greater j – i value.
     */
     
     
-    int lmin[n];//lamx[i] stores smallest element in range 0 to i
+    int lmin[n];//lmin[i] stores smallest element in range 0 to i
     int rmax[n];//rmax[i] stores largest element in range i to n-1
     lmin[0] = arr[0];
     for(int i=1;i<n;++i) lmin[i] = min(lmin[i-1], arr[i]);

@@ -51,7 +51,7 @@ vector<bool> processQueries(int arr[], int n, vector<pair<int, int>> &queries,
     // cout<<"\n";
     
     
-    //now suppose the range is [l, r] then only if right[l]>=left[r] 
+    //now suppose the range is [l, r] then only if *** right[l]>=left[r] ***
     //is true, the range forms a mountain like pattern because
     //first decreasing index should come after the last 
     //increasing index for every element

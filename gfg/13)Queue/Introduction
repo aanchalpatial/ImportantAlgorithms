@@ -25,13 +25,14 @@
 using namespace std;
 
 //Design circular queue implementation using array
+// Hint: Use %cap
 //LEETCODE 622. Design Circular Queue
 struct myQueue {
     int *arr;
     int size;   //** number of elements in queue
     int cap;    //capacity of queue
     int front;
-    myQueue(int n){
+    myQueue(int n) {
         cap = n;
         size = 0;       //there are 0 elements in queue in the start
         front = 0;

@@ -1,6 +1,6 @@
 //Given a number n, print first n number(in increasing order) such that all these numbers have digits in set {5, 6}
 //O(n) time expected
-//Hint : Use Queue & Store numbers in strongs as they can be very large
+//Hint : Use Queue & Store numbers in strings as they can be very large
 
 #include <bits/stdc++.h>
 using namespace std;

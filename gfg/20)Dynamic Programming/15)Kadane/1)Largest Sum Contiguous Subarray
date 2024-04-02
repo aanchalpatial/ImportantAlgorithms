@@ -11,6 +11,7 @@ int maxSubarraySum(int arr[], int n){   //** DP Solution : O(n) **
     //kadane Algorithm : Largest Sum Contigous Subarray
     int dp[n];
     int dp[0] = arr[0];
+    // ** kadane **: dp[i] represents the maximum sum of subarray ending at i
     
     for(int i=1;i<n;++i){
         dp[i] = max(arr[i], dp[i-1]+arr[i]);
@@ -38,3 +39,43 @@ int main()
 //1) Find maximum sum subarray with the condition that you are allowed to skip at most one element.
 //https://github.com/ap0996/ImportantAlgorithms/blob/master/gfg/20)Dynamic%20Programming/17)Max%20sum%20subarray%20by%20removing%20at%20most%20one%20element
 
+
+// Similar problem
+/*Longest Subarray Of Evens And Odd
+You are given an array of size n. Find the maximum possible length of a subarray such that its elements are arranged alternately either as even and odd or odd and even .
+
+Example 1:
+
+Input:
+n = 5
+a[] = {10,12,14,7,8}
+Output: 3
+Explanation: The max length of subarray
+is 3 and the subarray is {14 7 8}. Here 
+the array starts as an even element and 
+has odd and even elements alternately.
+*/
+int maxEvenOdd(int arr[], int n) 
+{ 
+    
+    // naive is O(n^2)
+    
+    // method 2: kadane algorith logic
+    int result[n];
+    // result[i] represent the length of longest subarray of evens & odd ending at i
+    result[0] = 1;
+    for(int i=1;i<n;++i) {
+        if((arr[i-1]%2==0&&arr[i]%2==1)||(arr[i-1]%2==1&&arr[i]%2==0)) {
+            // either previous is even & current is odd OR
+            // previous is odd & current is odd
+            result[i] = 1 + result[i-1];
+        }  else {
+            result[i] = 1;
+        }
+    }
+    int length = result[0];
+    for(int i=1;i<n;++i) {
+        length = max(length, result[i]);
+    }
+    return length;
+}

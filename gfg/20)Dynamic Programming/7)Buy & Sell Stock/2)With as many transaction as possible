@@ -6,15 +6,17 @@ and sell one share of the stock multiple times).
 
 Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
 
-
 */
 
+// Note: - This is not a dynamic programming solution, it is actually part of array tack of P100 course
+
 /*Minima - Maxima Approach :
-Following is algorithm for this problem : =
-1)Find the local minima and store it as starting index. If not exists, return.
-2)Find the local maxima. and store it as ending index. If we reach the end, set the end as ending index.
-3)Update the solution (Increment count of buy sell pairs)
-4)Repeat the above steps if end is not reached.
+if you map stock prices on a map, you will see that you will book the max profit if you buy stock at 
+starting of increasing slope and then sell it just before it about to go down i.e at it's peak
+OR in other words,
+We are using Local Maxima to find the days when we can sell and local minima to find the days when the prices of 
+the stock is minimum so that we can buy on that day and gain the maximum profit.
+// Time: O(n) & Space: O(1)
 
 Time Complexity: The outer loop runs till i becomes n-1. The inner two loops increment value of i in every iteration.
 So overall time complexity is O(n)

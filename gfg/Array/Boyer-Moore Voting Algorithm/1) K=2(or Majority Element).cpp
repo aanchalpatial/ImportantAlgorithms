@@ -133,7 +133,7 @@ public:
         int candidate, cnt;
         for(int i=0;i<nums.size();){
             candidate = nums[i];
-            cnt = 1;
+            cnt = 1;        // initial value of count
             while(cnt>0){
                 ++i;
                 if(i>nums.size()-1) break;

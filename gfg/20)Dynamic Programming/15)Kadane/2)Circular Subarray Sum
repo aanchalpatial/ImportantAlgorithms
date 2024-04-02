@@ -8,7 +8,7 @@ Your task is to find the maximum contigious subarray sum.*/
 /*
 Return maximum of :
 ->kadane(given array) &
-->sum - MINIMUM subarray sum of given array i.e kadane(invert all elements of given array) + sum
+->sum of given array - MINIMUM subarray sum of given array (OR kadane(invert all elements of given array) + sum)
 
 where sum : is sum of all elements of array
 */
@@ -34,8 +34,8 @@ int circularSubarraySum(int arr[], int num){                      //************
     
     
     //to find maximum sum in circular subarray , find minimum sum subarray and SUBSTRACT it from the overall sum
-    //but INSTEAD of modifying kadnae's to find minimum sum subarray, we invert all elements and then ADD it's maximum sum
-    //with overall sum which gives us the intended result
+    //but INSTEAD of modifying kadnae's to find minimum sum subarray, we invert all elements(multiply by -1) 
+    // and then ADD it's maximum sum with overall sum which gives us the intended result
     
     //all elements are inverted
     for(int i=0;i<num;++i) arr[i] *= -1;

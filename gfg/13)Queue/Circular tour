@@ -1,0 +1,81 @@
+// https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-Queue/problem/circular-tour-1587115620
+/*
+Suppose there is a circle. There are N petrol pumps on that circle. You will be given two sets of data.
+1. The amount of petrol that every petrol pump has.
+2. Distance from that petrol pump to the next petrol pump.
+Find a starting point where the truck can start to get through the complete circle without exhausting its petrol in between.
+Note :  Assume for 1 litre petrol, the truck can go 1 unit of distance.
+
+Example 1:
+
+Input:
+N = 4
+Petrol = 4 6 7 4
+Distance = 6 5 3 5
+Output: 1
+Explanation: There are 4 petrol pumps with
+amount of petrol and distance to next
+petrol pump value pairs as {4, 6}, {6, 5},
+{7, 3} and {4, 5}. The first point from
+where truck can make a circular tour is
+2nd petrol pump. Output in this case is 1
+(index of 2nd petrol pump).
+
+*/
+
+int tour(petrolPump p[],int n)
+    {
+       //Your code here
+        // naive approach
+        // Time: O(n^2) & Space: O(1)
+        // for(int i=0;i<n;++i) {
+            
+        //     int petrolLeft = p[i].petrol - p[i].distance;
+        //     int j = i;
+        //     bool possible = false;
+        //     while(petrolLeft>=0) {
+        //         ++j;
+        //         j %=n;
+        //         if(i==j) {
+        //             possible = true;
+        //             break;
+        //         }
+        //         petrolLeft += (p[j].petrol - p[j].distance);
+        //     }
+        //     if(possible) {
+        //         return i;
+        //     }
+        // }
+        // return -1;
+        
+        // efficient approach
+        // Time: O(n) && Space: O(1)
+        /*
+        The idea is that instead of checking the whole array for each starting point, 
+        we can store the current tour inside a queue. At the moment, the current amount of 
+        petrol becomes inefficient (i.e., negative) to reach the next petrol pump, 
+        remove the current starting point from the queue and consider the next point 
+        as the new starting point. Instead of building a separate queue, 
+        we can use the array itself as a queue with the help of start and end pointers.
+
+        NOTE : Each petrol pump will be added in the queue at most twice and will be removed at most once.
+        */
+        int start = 0;
+        while(start<n) {
+            int end = start;
+            int petrolAvailable = p[end].petrol - p[end].distance;
+            while(petrolAvailable>=0) {
+                ++end;
+                end %= n;   // increment end in circular way
+                if(start==end) {
+                    return start;
+                }
+                petrolAvailable += (p[end].petrol - p[end].distance);
+            }
+            while(start<n&&petrolAvailable<0) {
+                petrolAvailable -= (p[start].petrol - p[start].distance);
+                ++start;
+            }
+        }
+        return -1;
+    }

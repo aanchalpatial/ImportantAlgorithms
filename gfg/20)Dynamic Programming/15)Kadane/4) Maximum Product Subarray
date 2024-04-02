@@ -44,7 +44,7 @@ public:
             
             cout<<nums[i]<<" : ";
             
-            if(nums[i]<0){
+            if(nums[i]<0){                      // *** RRR ***
                 swap(minValue, maxValue);
             }
             
