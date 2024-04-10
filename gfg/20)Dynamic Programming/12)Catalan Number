@@ -18,7 +18,7 @@ Above formula reduces to : Catalan(n) = (k=2)to(n)PI((n+k)/k) for all n>=0
 Time complexity of 1st implementation is O(n).
 
 2) Catalana(n) = (i=0)to(n)SIGMA(Catalan(i)*Catalan(n-i)) ; Base case : Catalan(0) = 1
-Time complexity of 2nd implementation is O(n2)
+Time complexity of 2nd implementation is O(n^2)
 
 Catalan numbers are a sequence of natural numbers that occurs in many interesting counting problems like following :-
 1) Count the number of possible Binary Search Trees with n keys 

@@ -41,7 +41,7 @@ public:
         
         int n = nums.size();
         
-        //method 1 : linear scane
+        //method 1 : linear search
         //O(n) time & O(1) space
         
         //method 2 : 2 pass of binary search
@@ -81,7 +81,7 @@ public:
         find middle element check it against target, if fount return middle index
         else 
             if nums[low...mid] is sorted : -
-                    if target is in between range nums[low] to nums[mid], recurr for nums[low...mid]
+                    if target is in between range nums[low] to nums[mid], recurr for nums[low...mid-1]
                     else recurr for nums[mid+1 ... high]
             else            note :- (nums[mid+1 ... high] is guarnteed sorted)
                     if target is in between range nums[mid+1] to nums[high], recurr for nums[mid+1 ... high]

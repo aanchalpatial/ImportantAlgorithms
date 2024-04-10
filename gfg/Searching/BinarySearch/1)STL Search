@@ -9,7 +9,7 @@ upper_bound() : first element that is strictly greater.
 upper_bound(first_itr, last_itr, ele)
 Return Value: ele < return_value            
               Returns an iterator pointing to the element just greater than ele.
-              * if ele is greater than the largest array element(rightmost element) , largest element index is returned
+              * if ele is greater than the largest array element(rightmost element), last iterator is returned
 
 
 lower_bound() : first element that is greater-or-equal. 

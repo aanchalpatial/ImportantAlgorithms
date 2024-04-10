@@ -7,6 +7,7 @@ individual strings is preserved.
 
 bool relativeOrdering(string A, string B, string C, int i, int j, int k){
     //checking relative ordering
+    // note: you can see overlapping subproblems here, hence you can using wither memoization or tabulation to reduce time
     if(k==C.size()){
         if(i==A.size()&&j==B.size()) return true;
         else return false;

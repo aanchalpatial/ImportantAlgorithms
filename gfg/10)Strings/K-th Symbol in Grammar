@@ -32,7 +32,7 @@ public:
         
         //method 2 :
         //pattern found is as follows : to find next row from current row, invert all 0's & 1's and 
-        //append is to current row
+        //append to current row
         
         
         //method 3 :

@@ -22,16 +22,23 @@ bool myComp(Job j1, Job j2){
 void printJobScheduling(Job arr[], int n) 
 { 
     // your code here
+    /*
+    we will sort the jobs in descending order of their profits. We will then iterate through the sorted jobs 
+    and try to fit each job into the latest possible slot before its deadline.
+    */
+    int maxDeadline = arr[0].dead;
+    for(int i=1;i<n;++i) maxDeadline = max(maxDeadline, arr[i].dead);
+    vector<bool> sequence(maxDeadline, false);
+
     sort(arr, arr+n, myComp);
     
-    bool sequence[n] = {false};
     int profit = 0;
     int cnt = 0;
     
     for(int i=0;i<n;++i){
         int d = arr[i].dead-1;
         int p = arr[i].profit;
-        for(int j=min(n,d);j>=0;--j){                       // *** important ***
+        for(int j=d;j>=0;--j){                       // *** important ***
             if(sequence[j]==false){ //schedule job as last as possible i.e as right as possible
                 sequence[j] = true;
                 profit += p;
@@ -44,3 +51,5 @@ void printJobScheduling(Job arr[], int n)
     cout<<cnt<<" "<<profit<<endl;
     
 } 
+
+// O(nlogn) solution: https://www.geeksforgeeks.org/job-sequencing-problem/

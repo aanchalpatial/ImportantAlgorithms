@@ -13,6 +13,13 @@ are in general more efficient than other techniques like Dynamic Programming. Bu
 
 https://www.geeksforgeeks.org/greedy-algorithms/
 
-Applications: Activity Selection Problem, Fractional Knapsack, Job Sequencing, Huffman Coding, Prim's, Kruskal's & Djikstra's .
-              Also used to find close to optimal solutions for NP Hard Problems such as Travelling Salesman Problem.
+Applications: 
+Activity Selection Problem, 
+Fractional Knapsack, 
+Job Sequencing, 
+Huffman Coding, 
+Prim's, Kruskal's for MST
+Djikstra's for shortest path.
+              
+Also used to find close to optimal solutions for NP Hard Problems such as Travelling Salesman Problem.
               

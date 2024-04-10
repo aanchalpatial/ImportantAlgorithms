@@ -55,8 +55,9 @@ public:
             if(nums[mid-1]>nums[mid]) return nums[mid];
             
             if(nums[mid]<nums[r]){
+                // right part is sorted, min ele is in left part
                 r = mid;
-            }else l = mid+1;
+            }else l = mid+1;        // left part is sorted, min ele in in right part
             
         }
         return -1;

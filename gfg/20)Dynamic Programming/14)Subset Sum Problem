@@ -50,9 +50,8 @@ int main() {
 
 
 //2)
-//Given a set of numbers, check whether it can be partitioned into two subsets such that the sum of elements
-//in both subsets is same or not.
-
+//Given a set of numbers, check whether it can be partitioned into two subsets such that the sum of elements in both subsets is same or not.
+// https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-DP/problem/subset-sum-problem2643
 /*Approach :
 Say sum of all elements in array is x. Then if it is possible to partition set into 2 subsets with equal sums then the sum of 
 each partition is definitely x/2 .

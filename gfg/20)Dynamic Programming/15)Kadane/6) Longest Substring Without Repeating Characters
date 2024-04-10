@@ -1,0 +1,58 @@
+//Given a string, find the length of the longest substring without repeating characters.
+// https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
+int lengthOfLongestSubstring(string s) {
+
+    // method 1: O(n) & space: O(n)
+    // similar to kadane since question invloved substring/subarray
+    int dp[n];
+    /* 
+    dp[i] represents the length of longest substring without repeating characters ending at i
+    Case 1: if s[i] is not present in dp[i-1], dp[i] = dp[i-1] + 1, 
+    Case 2: else dp[i] =  i- (previous index of s[i]) + 1
+    */
+    // note: we will use previous index of s[i] to handle both cases
+    // if(previous index of s[i] < (i-dp[i-1])), it implies that s[i] is distinct w.r.t to dp[i-1]
+
+    dp[0] = 1;
+    vector<int> hash(256, -1); 
+    hash[s[0]] = 0;   
+    // stores last seen index of characters, -1 means char has not been seen yet
+    for(int i=1;i<n;++i) {
+        char ch = s[i];
+        int previousIndex = hash[ch];
+        hash[ch] = i;
+        bool distinctFlag = previousIndex<(i-dp[i-1]);  // represents if s[i] is distinct w.r.t dp[i-1]
+        if(distinctFlag) {
+            dp[i] = dp[i-1] + 1;
+        } else {
+            dp[i] = i - previousIndex;
+        }
+    }
+    int result = 0;
+    for(int i=0;i<n;++i) {
+        result = max(result, dp[i]);
+    }
+    return result;
+    // note: - space can be optimised, if you look closely for every iteration i we only need
+    // dp[] value of i-1, so instead of storing these values in array we can just keep an extra variable
+    // to store previous value
+    // In this way space used will be constant
+    
+    
+    //method 2 : sliding window
+    //[i,j] contains unique characters only, try to maximise it
+    //Use extra space to store the last indexes of already visited characters
+    
+    int result = 0;
+    unordered_map<char, int> mp;
+    for(int i=0,j=0;j<s.size();++j){
+        if(mp.find(s[j])!=mp.end()){
+            i = max(i, mp[s[j]]+1);
+            mp[s[j]] = j;
+        }
+        result = max(result, j-i+1);
+        mp.insert(make_pair(s[j], j));
+    }
+    return result;
+}

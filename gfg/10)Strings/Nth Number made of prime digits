@@ -1,47 +1,30 @@
 /*Given a number 'N'. The task is to find the Nth number whose each digit is a prime number i.e 2, 3, 5, 7. 
 In other words you have to find nth number of this sequence : 2, 3, 5, 7, 22, 23 ,.. and so on.
 */
+// https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-Strings/problem/nth-number-made-of-prime-digits4319
 
 //1):Naive
 //O(n) solution is to precompute all values upto the maximum limit of n
- {
-	int T;
-	cin>>T;
-	for(int j=0;j<T;++j){
-	    int n;
-	    cin>>n;
-	    int pr[4] = {2,3,5,7};
-	    vector<int> v;
-	    for(int i=0;i<4;++i) v.push_back(pr[i]);
-	    for(int i=0;i<4;++i){
-	        for(int j=0;j<4;++j){
-	            v.push_back((pr[i]*10)+pr[j]);
-	        }
-	    }
-	    for(int i=0;i<4;++i){
-	        for(int j=0;j<4;++j){
-	            for(int k=0;k<4;++k){
-	                v.push_back((pr[i]*100)+(pr[j]*10)+(pr[k]));
-	            }
-	        }
-	    }
-	    for(int i=0;i<4;++i){
-	        for(int j=0;j<4;++j){
-	            for(int k=0;k<4;++k){
-	                for(int l=0;l<4;++l){
-	                    if(v.size()>100){
-	                        goto comeOutOfNestedLoops;
-	                    }
-	                    v.push_back((pr[i]*1000)+(pr[j]*100)+(pr[k]*10)+(pr[l]));
-	                }
-	            }
-	        }
-	    }
-	    comeOutOfNestedLoops:
-	    cout<<v[n-1]<<endl;
-	}
-	return 0;
-}
+    int primeDigits(int n)
+    {
+        //code here
+        int arr[] = {2, 3, 5, 7};
+        queue<int> q;
+        q.push(0);
+        while(!q.empty()) {
+            int num = q.front();
+            q.pop();
+            for(int i=0;i<4;++i) {
+                int newNum = (num * 10) + arr[i];
+                --n;
+                q.push(newNum);
+                if(n==0) {
+                    return newNum;
+                }
+            }
+        }
+        return -1;
+    }
 
 //2): Efficient
 /*O(log n) solution is based on the fact that :

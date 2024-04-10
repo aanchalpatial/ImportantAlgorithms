@@ -58,4 +58,6 @@ int main() {
 }
 
 
-
+// Applications: Stickler Thief
+// https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-DP/problem/stickler-theif-1587115621
+// This is the same problem: https://github.dev/aanchalpatial/ImportantAlgorithms/blob/490fcbbdb805f6ea7a9831e51aed341eb3330b5c/gfg/20%29Dynamic%20Programming/21%29House%20Robber/House%20Robber%20I

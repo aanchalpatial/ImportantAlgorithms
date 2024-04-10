@@ -28,3 +28,46 @@ Since our array is sorted, this part can be done like this:
 3)     result = result + (upper_bound(a+i, a+n, a[i] + mid) - (a+i+1))
 4) return result
 */
+
+int countPairs(int a[], int n, int mid) {       // O(nlogn)
+    int count = 0;
+    for(int i=0;i<n;++i) {
+        int temp = upper_bound(a+i, a+n, a[i]+mid) - (a+i+1);
+        count += temp;
+    }
+    return count;
+}
+int kthDiff(int a[], int n, int k) {
+    
+    // naive is O(n^2)
+    // vector<int> absDiff;
+    // for(int i=0;i<n;++i) {
+    //     for(int j=i+1;j<n;++j) {
+    //         absDiff.push_back(abs(a[i]-a[j]));
+    //     }
+    // }
+    // sort(absDiff.begin(), absDiff.end());
+    
+    // return absDiff[k-1];
+    
+    
+    // method 2: binary search on ranges
+    // we can apply binary search on range [min absolute diff, max absolute diff]
+    // for every mid we can check if the number of absolute differences smaller than or equal to mid
+    // time: O(n*log(n)*log(maxAbsDiff-minAbsDiff))
+    sort(a, a+n);
+    int minAbsDiff, maxAbsDiff = a[n-1] - a[0];
+    for(int i=0;i<n-1;++i) {
+        minAbsDiff = min(minAbsDiff, a[i+1]-a[i]);
+    }
+    
+    int l = minAbsDiff, h = maxAbsDiff;
+    while(l<h) {
+        int mid = l + (h - l)/2;
+        // cout<<l<<", "<<mid<<", "<<h<<endl;
+        int count = countPairs(a, n, mid);
+        if(count<k) l=mid+1;
+        else h = mid;
+    }
+    return l;
+}

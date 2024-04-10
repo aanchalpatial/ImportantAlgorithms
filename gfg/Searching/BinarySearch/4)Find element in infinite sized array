@@ -1,5 +1,5 @@
 // C++ program to demonstrate working of an algorithm that finds 
-// an element in an array of infinite size 
+// an element in an sorted array of infinite size 
 // Expected Time Complexity : O(log n)
 
 #include<iostream> 

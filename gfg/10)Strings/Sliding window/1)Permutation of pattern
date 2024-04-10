@@ -1,0 +1,35 @@
+//2) Given a string and pattern string, find if a permutation of pattern exists in string at contigous locations.
+//Naive Approach is 0( (n-m+1)*m).
+//do it in 0(n) using sliding window and hash (i.e rolling hash)
+//Note:- Above approach is also used in Rabin Karp Algorithm for pattern searching
+bool checkHashEqual(int h1[], int h2[]){
+    for(int i=0;i<256;++i){
+        if(h1[i] != h2[i]) return false;
+    }
+    return true;
+}
+
+bool anagramSearch(string str, string patt){
+    int countStr[256] = {0};
+    int countPatt[256] = {0};
+    for(int i=0;i<patt.size();++i) countPatt[patt[i]]++;
+    
+    for(int i=0;i<patt.size();++i){
+        countStr[str[i]]++;
+    }
+    
+    if(checkHashEqual(countStr, countPatt)) return true;
+    for(int i=1;i<str.size()-patt.size()+1;++i){
+        --countStr[str[i-1]];
+        ++countStr[str[i+patt.size()-1]];
+        //printHash(countStr);
+        if(checkHashEqual(countStr, countPatt)) return true;
+    }
+    return false;
+}
+int main() {
+    string str = "acbkadkljas";
+    string patt = "jlk";
+    if (anagramSearch(str, patt)) cout<<"Yes";
+    else cout<<"No";
+}

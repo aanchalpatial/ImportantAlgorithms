@@ -1,0 +1,102 @@
+// Problem: https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-Searching/problem/allocate-minimum-number-of-pages0937
+// Solution: https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-Searching/video/MjEyNw%3D%3D
+
+/*
+You have N books, each with A[i] number of pages. M students need to be allocated contiguous books, with each student getting at least one book.
+Out of all the permutations, the goal is to find the permutation where the sum of maximum number of pages in a book allotted to a student should be minimum, out of all possible permutations.
+
+Note: Return -1 if a valid assignment is not possible, and allotment should be in contiguous order (see the explanation for 
+better understanding).
+
+ 
+
+Example 1:
+
+Input:
+N = 4
+A[] = {12,34,67,90}
+M = 2
+Output:113
+Explanation:Allocation can be done in 
+following ways:
+{12} and {34, 67, 90} Maximum Pages = 191
+{12, 34} and {67, 90} Maximum Pages = 157
+{12, 34, 67} and {90} Maximum Pages =113.
+Therefore, the minimum of these cases is 113,
+which is selected as the output.
+*/
+
+int sumOf(int arr[], int l, int r) {
+    int sum = 0;
+    for(int i=l;i<=r;++i) sum += arr[i];
+    return sum;
+}
+int helper(int arr[], int start, int n, int m, vector<vector<int>> &dp) {
+    if(m==1) {
+        return sumOf(arr, start, n-1);
+    }
+    if(start==n-1) return arr[start];
+    
+    if(dp[start][m]==INT_MAX) {
+        int result = INT_MAX;
+        for(int i=start+1;i<n;++i) {    // because each student should atleast get a book
+            int temp = helper(arr, i, n, m-1, dp);
+            int sum = sumOf(arr, start, i-1);
+            // cout<<i<<", "<<temp<<", "<<sum<<endl;
+            result = min(result, max(temp, sum));
+        }
+        dp[start][m] = result;            
+    }
+    return dp[start][m];
+} 
+bool isFeasible(int A[], int N, int M, int ans) {
+    int sum = 0;
+    int students = 1;
+    for(int i=0;i<N;++i) {
+        if(sum+A[i]>ans) {
+            ++students;
+            sum = A[i];
+        } else {
+            sum += A[i];
+        }
+    }
+    return students<=M;
+}
+
+// ** Function to find minimum number of pages. **
+int findPages(int A[], int N, int M) 
+{
+    //code here
+    if(N<M) return -1;
+    
+    // method 1: dp memoization
+    // time: O(NM) & space: O(NM)
+    // vector<vector<int>> dp(N, vector<int>(M+1, INT_MAX));
+    // return helper(A, 0, N, M, dp);
+    
+    // method 2: binary search on ranges
+    /*
+    If we look closely our required answer should be in range [max element in arr, sum]
+    so we can use binary search on this range to find the most efficient(minimum) answer.
+    // time: O(nlog(sum)) & space: O(1)
+    */
+    int maxEle = INT_MIN, sum = 0;
+    for(int i=0;i<N;++i) {
+        maxEle = max(maxEle, A[i]);
+        sum += A[i];
+    }
+    int l=maxEle, h=sum;
+    int result;
+    while(l<=h) {
+        int mid = l + (h-l)/2;
+        if(isFeasible(A, N, M, mid)==true) {
+            result = mid;
+            // if mid is a feasible solution, then there are chances that there is a 
+            // more efficient solution possible
+            h = mid-1;
+        } else {
+            l = mid+1;
+        }
+    }
+    return result;
+}

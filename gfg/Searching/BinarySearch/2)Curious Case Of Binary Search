@@ -1,8 +1,7 @@
 //Recursive
 int binary_search(int arr[], int l, int r, int x){
   if(l>r) return -1;
-  //int mid = (l+r)/2;                   // Wrong !!! Overflow can occur (https://thebittheories.com/the-curious-case-
-                                         //of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212)
+  //int mid = (l+r)/2;                   // Wrong !!! Overflow can occur (https://thebittheories.com/the-curious-case-of-binary-search-the-famous-bug-that-remained-undetected-for-20-years-973e89fc212)
   int mid = l + ((r-l)/2);
   if(arr[mid] == x) return mid;
   else if(x<arr[mid]) return binary_search(arr,l,mid-1,x);

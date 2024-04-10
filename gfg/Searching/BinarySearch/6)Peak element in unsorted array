@@ -1,3 +1,5 @@
+// This is an interesting question where we use binary search on unsorted array
+
 //Find Peak element in an UNSORTED ARRAY
 //Peak element : Aa element which is not smaller than its neighbours
 // left_neighbour <= element >= right_element
@@ -9,6 +11,13 @@
 
 //APPROACH:
 /*
+The interesting fact about using Binary search in this unsorted array problem is that if the element 
+to the left of the mid element is greater, then a peak will definitely be present in the left part of the array. 
+Note: - right part of the array may or may not have a peak, but since we are sure about the left part, we will move that way 
+
+Similarly if the element to the right of mid is greater ,then a peak would be present in 
+the right of the array. We will be using this logic to solve our problem.
+
 Find middle element, Check if it is peak, if so return it
 If middle element is smaller than left neighbour => peak lies in left subarray
 If middle element is smaller than right neighbour => peak lies in right subarray

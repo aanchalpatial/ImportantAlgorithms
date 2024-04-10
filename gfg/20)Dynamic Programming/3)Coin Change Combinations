@@ -1,3 +1,8 @@
+/*There are 2 types of problem under Coin change topic:
+Type 1: Coin change: number of ways(order doesn't matter)
+Type 2: Minimum number of coins
+*/
+
 //Given an infinite supply of certain coins. Find number of different combinations of coins which leads to given sum. 
 /*OR
 Given a value N, if we want to make change for N cents, and we have infinite supply of each of S = { S1, S2, .. , Sm} valued coins,
@@ -157,10 +162,12 @@ long long minimumNumberOfCoins(int coins[],int n,int value)
 
 
 //*** APPLICATIONS *** :- 
+// https://thinkable-diploma-ccd.notion.site/DP-number-of-ways-to-reach-top-ae03db2a5bc04f0ca5a845e5f0fbad61
 //Upcoming Problem 1 is not of coin change but used to show difference between 2 problems when order DOES & DOESN'T matter.
 //Note **differences** between Problem 1 & Problem 2 i.e Coin Change Method is used only when order doesn't matter.
 
 /*1)
+https://www.geeksforgeeks.org/problems/count-ways-to-reach-the-nth-stair-1587115620/1
 There are N stairs, a person standing at the bottom wants to reach the top. The person can climb either 1 stair or 2 stairs
 at a time. Count the number of ways, the person can reach the top (order does matter).
 */
@@ -181,6 +188,7 @@ long long countWays(int m){
 }
 
 /*2)
+https://www.geeksforgeeks.org/batch/placement-100-2019/track/DSASP-DP/problem/count-ways-to-nth-stairorder-does-not-matter1322
 There are N stairs, and a person standing at the bottom wants to reach the top. The person can climb either 
 1 stair or 2 stairs at a time. Count the number of ways, the person can reach the top (order does not matter).
 Note: Order does not matter means for n=4 {1 2 1},{2 1 1},{1 1 2} are considered same.
