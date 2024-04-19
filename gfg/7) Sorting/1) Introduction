@@ -4,19 +4,24 @@ and second_parameter is the iterator AFTER the last element of the container. Th
 of sorting the conatiner, eg: default order is increasing and we use "greater<int>" to reverse the order of sorting to decreasing or we 
 can create a new function specify our own order of sorting.
 */
-//sort() stl takes 0(nlogn) on average & worst cases. It is a hybrid of quicksort, heapsort and insertion sort.
+//sort() stl takes 0(nlogn) on average & worst cases. It is a hybrid of quicksort, heapsort and insertion sort, also known as introsort.
 
-//stable_sort() stl for stable sorting of containers
-//Bubble, Insertion & Merge Sort are stable.
-//Selection, Quick & Heap Sort are unstable.
-
-
+/*stable_sort() stl for stable sorting of containers
+Bubble, Insertion & Merge Sort are stable.
+Selection, Quick & Heap Sort are unstable.
+Stable sorting algorithms maintain the relative order of records with equal keys (i.e. values).
+ That is, a sorting algorithm is stable if whenever there are two records R and S with the same key and with 
+ R appearing before S in the original list, R will appear before S in the sorted list.
+*/
 
 //INSERTION SORT: This sorting algorithm is the best sorting algorithm when the array to be sorted is SMALL. It also beats quicksort in 
 //case the array is small. Recursive algo such as merge sort & quicksort perform poor when the array size is below a certain threshold.
 //In Place, Stable, Best Case: When array is sorted & worst case when array is reverse sorted
 
 //MERGE SORT: Not In Place in typical implementation( requires 0(n) space), well suited for linked list, used in external sorting
+// External sorting is a class of sorting algorithms that can handle massive amounts of data. External sorting is required 
+// when the data being sorted do not fit into the main memory of a computing device (usually RAM) and instead they 
+// must reside in the slower external memory, usually a disk drive.
 
 // ** SPECIAL CASES **
 //Sort Binary Array: Partition function of Quicksort
@@ -28,7 +33,8 @@ can create a new function specify our own order of sorting.
 //when only adjacent swaps allowed: Bubble sort
 //When array size is small OR array is already(or almost) sorted OR all elements are identical: INSERTION SORT
 /*when available extra space is less: selection, insertion & bubble sort don't use extra space BUT shall sort doesn't use extra space and 
-is 0(nlogn) time*/
+is 0(n*((logn)^2)) time*/
 /*The array has this property that every element in array is at most k distance from its position in sorted array
 where k is a positive integer smaller than size of array: Heap Sort with time 0(nlogk) */
 //External sorting: Merge Sort
+//Paraller sorting:  Mergesort & quicksort since they are divide & conquer algos

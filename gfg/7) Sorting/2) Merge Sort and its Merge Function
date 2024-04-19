@@ -44,7 +44,7 @@ void merge(int arr[], int l, int m, int r)
 {
 //naive : O(m+n) time & O(m+n) space
      
-     //method 2 : merge 2 sorted arrays in constant time
+     //method 2 : merge 2 sorted arrays in constant space
      //O(m+n) time & O(1) space
      /*
      we will use a mathematics trick to store 2 values at one index

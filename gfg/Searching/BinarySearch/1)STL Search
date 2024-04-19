@@ -26,7 +26,25 @@ Note :- Unlike lower_bound , the value pointed by the iterator returned by upper
         cannot be equivalent to val , only greater.
         
 Note :- ceil() & floor() generally used for single number but can also be used in an array
-        ceil returns element greater than or equal to current element, ceil of an element in array represents lower_bound()
-        floor returns element smaller than or equal to current element, 
-        no correspondence of floor to any of binary_search(), lower_bound() or upper_bound()
+        1) ceil returns element greater than or equal to current element, ceil of an element in array represents lower_bound()
+        
+        auto itr = sortedContainer.lower_bound(element);
+        if(itr!=sortedContainer.end()) {
+                ceil = (*itr) 
+        }
+        
+        
+        2) floor returns element smaller than or equal to current element, 
+        no direct correspondence of floor to any of binary_search(), lower_bound() or upper_bound(), but you can modify the result of upper_bound()
+        
+        auto itr = sortedContainer.upper_bound(element);
+        if(itr!=sortedContainer.begin()) {
+                --itr;
+                floor = (*itr)
+        }
+        
+
+        // IMP: - https://leetcode.com/problems/odd-even-jump/submissions/1235741044/
+        
+        
 
