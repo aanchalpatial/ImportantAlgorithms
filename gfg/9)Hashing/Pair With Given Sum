@@ -65,11 +65,12 @@ int main(){
         for(int i=0;i<n;++i){
             if(mp.find(-1*nums[i])!=mp.end()){
                 for(int k=0;k<mp[-1*nums[i]].size();++k){
-                    if(i!=mp[-1*nums[i]][k].first&&i!=mp[-1*nums[i]][k].second){
+                    if(i!=mp[-1*nums[i]][k].first&&i!=mp[-1*nums[i]][k].second){    // *** all three indices are unique ***
                         vector<int> v = {nums[i], nums[mp[-1*nums[i]][k].first], nums[mp[-1*nums[i]][k].second]};
+                        // sorting is required because otherwise you will have triplets with same value in different positions
                         sort(v.begin(), v.end());
                         string str = to_string(v[0]) + to_string(v[1]) + to_string(v[2]); 
-                        if(h.find(str)==h.end()){
+                        if(h.find(str)==h.end()){  // *** triplet is unique ***
                             result.push_back(v);
                             h.insert(str);
                         }
