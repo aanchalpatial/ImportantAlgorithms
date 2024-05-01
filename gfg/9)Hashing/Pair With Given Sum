@@ -82,9 +82,11 @@ int main(){
             }
             
         }
-            
-        
         return result;
+
+        // follow up 1: https://leetcode.com/problems/3sum-smaller/description/
+        // follow up 2: https://leetcode.com/problems/3sum-closest/description/
+        
   
   
   
