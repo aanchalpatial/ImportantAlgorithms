@@ -14,7 +14,7 @@ int n = sizeof(arr)/sizeof(arr[0]);
 priority_queue<int> pq(arr, arr+n);       // O(n) time operation, ****RR****
 //Create a priority queue from an array DIRECTLY
 vector<int> v = {10, 5, 15};
-priority_queue<int> pq(v.begin(), v.empty());       // O(n) time operation, ****RR****
+priority_queue<int> pq(v.begin(), v.end());       // O(n) time operation, ****RR****
 
 /*APPLICATIONS:
 1) Djikstra
